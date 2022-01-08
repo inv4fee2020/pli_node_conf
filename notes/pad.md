@@ -1,1 +1,1 @@
-# Notes on linux scipting
+# Notes on linux scripting
