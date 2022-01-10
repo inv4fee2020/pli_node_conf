@@ -1,5 +1,15 @@
 #!/bin/bash
+
 GREEN='\033[0;32m'
+echo -e "${GREEN}#########################################################################"
+echo -e "${GREEN}#########################################################################"
+echo -e "${GREEN}
+echo -e "${GREEN}     Script Deployment menthod
+echo -e "${GREEN}
+echo -e "${GREEN}#########################################################################"
+echo -e "${GREEN}#########################################################################"
+
+
 echo -e "${GREEN}#########################################################################"
 echo
 echo -e "${GREEN}## Setup: System updates..."
@@ -54,15 +64,36 @@ sudo cat /etc/group | grep $uservar
 
 sleep 1s
 
+
 echo -e "${GREEN}#########################################################################"
 echo
-echo -e "## Setup: Change SSH port..."
+echo -e "${GREEN}## Setup: Creating SSH keys for new acc user "
 echo 
-# !! IMPORTANT: DO NOT close existing ssh session...
-# !! Instead open a second connection to the new port
-#
-read -p 'Enter New SSH Port to use: ' vNEW_SSH_PORT
-sudo sed -i -e 's/\#Port 22/\Port $vNEW_SSH_PORT/g' /etc/ssh/sshd_config
+su $uservar
+cd ~/
+mkdir -p ~/.ssh && chmod 700 ~/.ssh
+touch ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys
+
+# create private & public keys -- no user interaction -- comment added
+# to aid in identifying key usage/purpose. To add as password to private
+# key, simply remote the '-P ""' at the end of the command.
+
+ssh-keygen -t rsa -b 4096 -f ~/.ssh/id_rsa_$uservar -C "pli_node $uservar" -q -P ""
+cat ~/.ssh/id_rsa_$uservar.pub >> ~/.ssh/authorized_keys
+
+echo -e "${GREEN}## IMPORTANT: Be sure to copy the private key to your local machine"
+echo -e "${GREEN}## IMPORTANT: where you will admin the node from & delete the private"
+echo -e "${GREEN}## IMPORTANT: key file from the PLI node"
+
+# The above ssh keys should ideally be generated on your local linux/mac workstation and then the 
+# public key file uploaded to the PLI node. The following code has been tested on this basis;
+# change the below values to suit your requirements..
+###
+###  cat id_rsa.pub | ssh root@198.51.100.0 "mkdir -p ~/.ssh && chmod \
+###  700 ~/.ssh && cat >> ~/.ssh/authorized_keys && chmod 600 ~/.ssh/authorized_keys"
+###
+
+sleep 3s
 
 echo -e "${GREEN}#########################################################################" 
 echo 
@@ -92,5 +123,22 @@ echo
 # source: https://handyman.dulare.com/ufw-block-messages-in-syslog-how-to-get-rid-of-them/
 sudo sed -i -e 's/\#& stop/\& stop/g' /etc/rsyslog.d/20-ufw.conf
 sudo cat /etc/rsyslog.d/20-ufw.conf | grep '& stop'
+
+
+echo -e "${GREEN}#########################################################################"
+echo
+echo -e "## Setup: Change SSH port..."
+echo 
+# !! IMPORTANT: DO NOT close existing ssh session...
+# !! Instead open a second connection to the new port
+#
+sleep 3
+read -p 'Enter New SSH Port to use: ' vNEW_SSH_PORT
+sudo sed -i -e 's/\#Port 22/\Port $vNEW_SSH_PORT/g' /etc/ssh/sshd_config
+echo
+echo -e "${GREEN}#########################################################################"
+echo
+echo -e "## Setup: Restart SSH service for port change to take effect..."
+echo 
 
 echo -e "${GREEN}#### Base System Setup Finished ####"
