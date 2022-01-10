@@ -41,7 +41,7 @@ echo -e "## Setup: Change SSH port..."
 #
 read -p 'Enter New SSH Port to use: ' vNEW_SSH_PORT
 sudo sed -i -e 's/\#Port 22/\Port $vNEW_SSH_PORT/g' /etc/ssh/sshd_config
-#sudo sed -i -e 's/\#Port 22/\Port 6222/g' /etc/ssh/sshd_config
+# sudo sed -i -e 's/\#Port 22/\Port 6222/g' /etc/ssh/sshd_config
 
 echo -e "## Check that the sshd is listening on new non-standard port
 sudo netstat -tpln | grep $vNEW_SSH_PORT
@@ -50,9 +50,12 @@ sleep 3s
 
 
 echo -e "## Setup: Configure Firewall..."
-sudo ufw allow 22/tcp && sudo ufw allow $vNEW_SSH_PORT/tcp    # default ssh & non-standard ssh port
-#sudo ufw allow 22/tcp && sudo ufw allow 6222/tcp    # default ssh & non-standard ssh port
-sudo ufw allow 6688/tcp && sudo ufw allow 6689/tcp  # node local job server http/https ports
+## default ssh & non-standard ssh port
+sudo ufw allow 22/tcp && sudo ufw allow $vNEW_SSH_PORT/tcp
+
+## sudo ufw allow 22/tcp && sudo ufw allow 6222/tcp    # default ssh & non-standard ssh port
+## node local job server http/https ports
+sudo ufw allow 6688/tcp && sudo ufw allow 6689/tcp
 
 
 echo -e "## Setup: Enable Firewall..."
