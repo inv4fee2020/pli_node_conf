@@ -43,10 +43,10 @@ read -p 'Enter New SSH Port to use: ' vNEW_SSH_PORT
 sudo sed -i -e 's/\#Port 22/\Port $vNEW_SSH_PORT/g' /etc/ssh/sshd_config
 # sudo sed -i -e 's/\#Port 22/\Port 6222/g' /etc/ssh/sshd_config
 
-echo -e "## Check that the sshd is listening on new non-standard port
-sudo netstat -tpln | grep $vNEW_SSH_PORT
+#echo -e "## Check that the sshd is listening on new non-standard port
+#sudo netstat -tpln | grep $vNEW_SSH_PORT
 
-sleep 3s
+#sleep 3s
 
 
 echo -e "## Setup: Configure Firewall..."
