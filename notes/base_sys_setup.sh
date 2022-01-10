@@ -1,15 +1,20 @@
 #!/bin/bash
 GREEN='\033[0;32m'
+echo -e "${GREEN}#########################################################################"
+echo
 echo -e "${GREEN}## Setup: System updates..."
 echo 
 sudo apt update -y && sudo apt upgrade -y
 
+echo -e "${GREEN}#########################################################################"
+echo
 echo -e "${GREEN}## Setup: Install necessary apps..."
 echo 
 sudo apt install net-tools git curl locate ufw -y 
 sudo updatedb
 
-
+echo -e "${GREEN}#########################################################################"
+echo
 echo -e "${GREEN}## Setup: Add new local admin account with sudo access..."
 echo 
 #   Generate the encrypted password to be passed as follows;
