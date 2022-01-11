@@ -1,5 +1,5 @@
 # pli_node_conf
-Misc. scripts for GoPlugin $PLI node setup
+Misc. scripts for GoPlugin $PLI node setup using the SCRIPT METHOD.
 
 
 ## base_sys_setup.sh
@@ -22,6 +22,7 @@ to successfully deploy the node.
 The script uses a base install folder '/pli_node' which is hard coded throughout but easily changed 
 with find/replace if necessary.
 
+---
 The following VARIABLES should be updated for your individual implementation;
 
 
@@ -39,6 +40,7 @@ The following VARIABLES should be updated for your individual implementation;
 |BASH_FILE3="3_InitiatorStartPM2.sh"||
 
 
+---
 
 The script performs the following actions;
 1. Updates Postgres DB password 'sed' find/replace on BASH_FILE1
