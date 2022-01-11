@@ -13,7 +13,8 @@ This script performs os level commands as follows;
 6. Modifies UFW firewall logging to use only the ufw.log file
 7. Modify SSH service to use alternate service port, update UFW & restart SSH
 
-
+---
+---
 ## pli_node_scripts.sh
 
 This scripts performs file manipulations & executes the various plugin bash scripts in order 
