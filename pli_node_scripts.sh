@@ -156,6 +156,7 @@ FUNC_NODE_DEPLOY(){
     sudo sed -i.bak "s/password.txt/$FILE_KEYSTORE/g" $BASH_FILE2
     sudo sed -i.bak "s/apicredentials.txt/$FILE_API/g" $BASH_FILE2
     sudo sed -i.bak "s/:postgres/:$DB_PWD_REPLACE/g" $BASH_FILE2
+    sudo sed -i.bak '/SECURE_COOKIES=false/d' $BASH_FILE2
     sudo cat 2_nodeStartPM2.sh | grep node
     sleep 1s
 
@@ -174,13 +175,20 @@ FUNC_NODE_DEPLOY(){
     echo 
     echo -e "${GREEN}## Install: Create TLS CA / Certificate & files / folders...${NC}"
     echo 
-    sudo su
-    sudo mkdir /pli_node/plugin-deployment/Plugin/tls && cd /pli_node/plugin-deployment/Plugin/tls
-openssl req -x509 -out server.crt -keyout server.key -newkey rsa:4096 \
+
+    sudo su -c "mkdir /pli_node/plugin-deployment/Plugin/tls && cd /pli_node/plugin-deployment/Plugin/tls; openssl req -x509 -out server.crt -keyout server.key -newkey rsa:4096 \
 -sha256 -days 3650 -nodes -extensions EXT -config \
 <(echo "[dn]"; echo CN=localhost; echo "[req]"; echo distinguished_name=dn; echo "[EXT]"; echo subjectAltName=DNS:localhost; echo keyUsage=digitalSignature; echo \
 extendedKeyUsage=serverAuth) -subj "/CN=localhost"
-exit
+exit"
+
+#    sudo su 
+#    sudo mkdir /pli_node/plugin-deployment/Plugin/tls && cd /pli_node/plugin-deployment/Plugin/tls
+#openssl req -x509 -out server.crt -keyout server.key -newkey rsa:4096 \
+#-sha256 -days 3650 -nodes -extensions EXT -config \
+#<(echo "[dn]"; echo CN=localhost; echo "[req]"; echo distinguished_name=dn; echo "[EXT]"; echo subjectAltName=DNS:localhost; echo keyUsage=digitalSignature; echo \
+#extendedKeyUsage=serverAuth) -subj "/CN=localhost"
+#exit
 
     echo 
     echo 
@@ -197,12 +205,12 @@ exit
     GO_VER=$(go version)
     go version; GO_EC=$?
     case $GO_EC in
-        1) echo -e "${GREEN}## Command exited with NO error...${NC}"
+        0) echo -e "${GREEN}## Command exited with NO error...${NC}"
             echo $GO_VER
             echo
             echo -e "${GREEN}## Install proceeding as normal...${NC}"
             ;;
-        0) echo -e "${RED}## Command exited with ERROR - updating bash profile...${NC}"
+        1) echo -e "${RED}## Command exited with ERROR - updating bash profile...${NC}"
             echo
             source ~/.profile;
             FUNC_EXIT_ERROR
