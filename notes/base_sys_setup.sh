@@ -84,14 +84,14 @@ FUNC_BASE_SETUP(){
     # key, simply remote the '-P ""' at the end of the command.
     # su $uservar
     
-    # sudo ssh-keygen -t rsa -b 4096 -f .ssh/id_rsa_$uservar -C "pli_node $uservar" -q -P ""
-    # sudo cat .ssh/id_rsa_$uservar.pub >> .ssh/authorized_keys
-    # sudo chown $uservar:$uservar -R .ssh && sudo chmod 640 .ssh
-    # sudo chmod 600 .ssh/authorized_keys
+    sudo ssh-keygen -t rsa -b 4096 -f .ssh/id_rsa_$uservar -C "pli_node $uservar" -q -P ""
+    sudo cat .ssh/id_rsa_$uservar.pub >> .ssh/authorized_keys
+    sudo chown $uservar:$uservar -R .ssh && sudo chmod 700 .ssh
+    sudo chmod 600 .ssh/authorized_keys
 
-    # echo -e "${GREEN}## IMPORTANT: Be sure to copy the private key to your local machine${NC}"
-    # echo -e "${GREEN}## IMPORTANT: where you will admin the node from & delete the private${NC}"
-    # echo -e "${GREEN}## IMPORTANT: key file from the PLI node${NC}"
+    echo -e "${GREEN}## IMPORTANT: Be sure to copy the private key to your local machine${NC}"
+    echo -e "${GREEN}## IMPORTANT: where you will admin the node from & delete the private${NC}"
+    echo -e "${GREEN}## IMPORTANT: key file from the PLI node${NC}"
 
     # The ssh keys should ideally be generated on your local linux/mac workstation and then the 
     # public key file uploaded to the PLI node. The following code has been tested on this basis;
