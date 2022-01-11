@@ -70,27 +70,28 @@ FUNC_BASE_SETUP(){
     sleep 1s
 
 
-    echo -e "${GREEN}#########################################################################"
-    echo
-    echo -e "${GREEN}## Setup: Creating SSH keys for new acc user ${NC}"
-    echo 
+    # echo -e "${GREEN}#########################################################################"
+    # echo
+    # echo -e "${GREEN}## Setup: Creating SSH keys for new acc user ${NC}"
+    # echo 
     #su $uservar
-    cd /home/$uservar
-    sudo mkdir -p .ssh 
-    sudo touch .ssh/authorized_keys && sudo chmod 777 .ssh/authorized_keys
+    # cd /home/$uservar
+    # sudo mkdir -p .ssh 
+    # sudo touch .ssh/authorized_keys && sudo chmod 777 .ssh/authorized_keys
 
     # create private & public keys -- no user interaction -- comment added
     # to aid in identifying key usage/purpose. To add as password to private
     # key, simply remote the '-P ""' at the end of the command.
-    #su $uservar
-    sudo ssh-keygen -t rsa -b 4096 -f .ssh/id_rsa_$uservar -C "pli_node $uservar" -q -P ""
-    sudo cat .ssh/id_rsa_$uservar.pub >> .ssh/authorized_keys
-    sudo chown $uservar:$uservar -R .ssh && sudo chmod 640 .ssh
-    sudo chmod 600 .ssh/authorized_keys
+    # su $uservar
+    
+    # sudo ssh-keygen -t rsa -b 4096 -f .ssh/id_rsa_$uservar -C "pli_node $uservar" -q -P ""
+    # sudo cat .ssh/id_rsa_$uservar.pub >> .ssh/authorized_keys
+    # sudo chown $uservar:$uservar -R .ssh && sudo chmod 640 .ssh
+    # sudo chmod 600 .ssh/authorized_keys
 
-    echo -e "${GREEN}## IMPORTANT: Be sure to copy the private key to your local machine${NC}"
-    echo -e "${GREEN}## IMPORTANT: where you will admin the node from & delete the private${NC}"
-    echo -e "${GREEN}## IMPORTANT: key file from the PLI node${NC}"
+    # echo -e "${GREEN}## IMPORTANT: Be sure to copy the private key to your local machine${NC}"
+    # echo -e "${GREEN}## IMPORTANT: where you will admin the node from & delete the private${NC}"
+    # echo -e "${GREEN}## IMPORTANT: key file from the PLI node${NC}"
 
     # The ssh keys should ideally be generated on your local linux/mac workstation and then the 
     # public key file uploaded to the PLI node. The following code has been tested on this basis;
