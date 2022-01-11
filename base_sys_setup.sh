@@ -112,6 +112,8 @@ FUNC_BASE_SETUP(){
     sleep 1s
 
 
+    echo 
+    echo 
     echo -e "${GREEN}#########################################################################"
     echo
     echo -e "${GREEN}## Setup: Creating SSH keys for new acc user ${NC}"
@@ -131,9 +133,11 @@ FUNC_BASE_SETUP(){
     sudo chown $VAR_USERNAME:$VAR_USERNAME -R .ssh && sudo chmod 700 .ssh
     sudo chmod 600 .ssh/authorized_keys
 
-    echo -e "${GREEN}## IMPORTANT: Be sure to copy the private key to your local machine${NC}"
-    echo -e "${GREEN}## IMPORTANT: where you will admin the node from & delete the private${NC}"
-    echo -e "${GREEN}## IMPORTANT: key file from the PLI node${NC}"
+    echo 
+    echo -e "${RED}## IMPORTANT: Be sure to copy the private key to your local machine${NC}"
+    echo -e "${RED}## IMPORTANT: where you will admin the node from & delete the private${NC}"
+    echo -e "${RED}## IMPORTANT: key file from the PLI node${NC}"
+    echo 
 
     # The ssh keys should ideally be generated on your local linux/mac workstation and then the 
     # public key file uploaded to the PLI node. The following code has been tested on this basis;
@@ -149,6 +153,8 @@ FUNC_BASE_SETUP(){
 
     sleep 3s
 
+    echo 
+    echo 
     echo -e "${GREEN}#########################################################################" 
     echo 
     echo -e "${GREEN}## Setup: Configure Firewall...${NC}"
@@ -159,6 +165,9 @@ FUNC_BASE_SETUP(){
     ## node local job server http/https ports
     sudo ufw allow $PLI_HTTP_PORT/tcp && sudo ufw allow $PLI_HTTPS_PORT/tcp
 
+
+    echo 
+    echo 
     echo -e "${GREEN}#########################################################################" 
     echo 
     echo -e "${GREEN}## Setup: Enable Firewall...${NC}"
@@ -169,6 +178,9 @@ FUNC_BASE_SETUP(){
     sudo ufw status verbose
 
 
+
+    echo 
+    echo 
     echo -e "${GREEN}#########################################################################"
     echo 
     echo -e "${GREEN}## Setup: Change UFW logging to ufw.log only${NC}"
@@ -178,6 +190,9 @@ FUNC_BASE_SETUP(){
     sudo cat /etc/rsyslog.d/20-ufw.conf | grep '& stop'
 
 
+
+    echo 
+    echo 
     echo -e "${GREEN}#########################################################################"
     echo
     echo -e "${GREEN}## Setup: Change SSH port & Secure Authentication methods...${NC}"
@@ -194,6 +209,9 @@ FUNC_BASE_SETUP(){
     sudo sed -i.bak -e 's/UsePAM yes/UsePAM no/g' $SSH_CONFIG_PATH
     
     
+
+    echo 
+    echo 
     echo -e "${GREEN}#########################################################################"
     echo
     echo -e "${GREEN}## Setup: Add new SSH port to firewall...${NC}"
