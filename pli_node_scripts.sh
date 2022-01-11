@@ -91,6 +91,8 @@ FUNC_NODE_DEPLOY(){
     
     if [ ! -d "/$PLI_DIR_BASE" ]; then
         sudo mkdir "/$PLI_DIR_BASE"
+        USER_ID=$(getent passwd $EUID | cut -d: -f1)
+        sudo chown $USER_ID:$USER_ID -R
     fi
     cd /pli_node
     sudo git clone https://github.com/GoPlugin/plugin-deployment.git && cd plugin-deployment
@@ -177,7 +179,7 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}## Install: Create TLS CA / Certificate & files / folders...${NC}"
     echo 
 
-    sudo su -c "mkdir $TLS_CERT_PATH && cd $TLS_CERT_PATH; openssl req -x509 -out server.crt -keyout server.key -newkey rsa:4096 \
+    sudo sh -c "mkdir $TLS_CERT_PATH && cd $TLS_CERT_PATH; openssl req -x509 -out server.crt -keyout server.key -newkey rsa:4096 \
 -sha256 -days 3650 -nodes -extensions EXT -config \
 <(echo "[dn]"; echo CN=localhost; echo "[req]"; echo distinguished_name=dn; echo "[EXT]"; echo subjectAltName=DNS:localhost; echo keyUsage=digitalSignature; echo \
 extendedKeyUsage=serverAuth) -subj "/CN=localhost"
@@ -208,7 +210,7 @@ exit"
             echo
             source ~/.profile;
             sudo sh -c 'echo "export PATH=$PATH:/usr/local/go/bin" >> /etc/profile'
-            echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.profile
+            echo "cat "export PATH=$PATH:/usr/local/go/bin" >> ~/.profile"
             echo
             echo -e "${RED}## Check GO Version manually...${NC}"
             sleep 2s
