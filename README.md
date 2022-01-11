@@ -34,6 +34,10 @@ The following VARIABLES should be updated for your individual implementation;
 
 | VARIABLE |  NOTE |
 |----------|-------|
+|PLI_BASE_DIR="pli_node"| base folder which holds all installs|
+|PLI_DEPLOY_DIR="plugin-deployment"|created by the initial git clone|
+|TLS_CERT_PATH="/$PLI_BASE_DIR/$PLI_DEPLOY_DIR/Plugin/tls"|full path for TLS cert generation|
+|TLS_SVC_PORT="6689"|TLS/SSL port for node server|
 |FILE_API=".env.apicred"||
 |FILE_KEYSTORE=".env.password"||
 |API_EMAIL="user123@gmail.com"||
