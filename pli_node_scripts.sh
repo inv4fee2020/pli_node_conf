@@ -129,7 +129,7 @@ FUNC_NODE_DEPLOY(){
     echo
     echo -e "${GREEN}## Install: PRE-CHECKS for bash file $BASH_FILE1...${NC}"
     echo 
-    
+
     sudo apt remove --autoremove golang -y
     sudo rm -rf /usr/local/go
 
@@ -176,10 +176,11 @@ FUNC_NODE_DEPLOY(){
     echo 
     sudo su
     sudo mkdir /pli_node/plugin-deployment/Plugin/tls && cd /pli_node/plugin-deployment/Plugin/tls
-    openssl req -x509 -out  server.crt  -keyout server.key \
-    -newkey rsa:2048 -nodes -sha256 -days 1826 \
-    -subj '/CN=localhost' -extensions EXT -config <(printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth\n" )
-    exit
+openssl req -x509 -out server.crt -keyout server.key -newkey rsa:4096 \
+-sha256 -days 3650 -nodes -extensions EXT -config \
+<(echo "[dn]"; echo CN=localhost; echo "[req]"; echo distinguished_name=dn; echo "[EXT]"; echo subjectAltName=DNS:localhost; echo keyUsage=digitalSignature; echo \
+extendedKeyUsage=serverAuth) -subj "/CN=localhost"
+exit
 
     echo 
     echo 
