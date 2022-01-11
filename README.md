@@ -37,3 +37,15 @@ The following VARIABLES should be updated for your individual implementation;
 |BASH_FILE1="1_prerequisite.bash"||
 |BASH_FILE2="2_nodeStartPM2.sh"||
 |BASH_FILE3="3_InitiatorStartPM2.sh"||
+
+
+
+The script performs the following actions;
+1. Updates Postgres DB password 'sed' find/replace on BASH_FILE1
+2. Removes existing Golang install as part of pre-requisite for BASH_FILE1
+3. Updates BASH_FILE2 to use new '.env' files & Postgres password
+4. Updates BASH_FILE2 with TLS certificate files & TLS Port
+5. Creates local certificate authority & TLS certificate for use with local job server
+6. Updates BASH_FILE2 with EXTERNAL_INITIATORS parameter
+7. Checks for the Golang path & updates bash profile as necessary
+8. Initialises the BASH_FILE2 PM2 service & sets PM2 to auto start on boot
