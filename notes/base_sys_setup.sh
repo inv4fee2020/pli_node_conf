@@ -112,7 +112,7 @@ FUNC_BASE_SETUP(){
     echo -e "${GREEN}## Setup: Configure Firewall...${NC}"
     echo 
     ## default ssh & non-standard ssh port
-    sudo ufw allow 22/tcp && sudo ufw allow $vNEW_SSH_PORT/tcp
+    sudo ufw allow 22/tcp
 
     ## sudo ufw allow 22/tcp && sudo ufw allow 6222/tcp    # default ssh & non-standard ssh port
     ## node local job server http/https ports
@@ -152,6 +152,12 @@ FUNC_BASE_SETUP(){
     sudo sed -i.bak -e 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
     sudo sed -i.bak -e 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
     
+    
+    echo -e "${GREEN}#########################################################################"
+    echo
+    echo -e "${GREEN}## Setup: Add new SSH port to firewall...${NC}"
+    echo
+    sudo ufw allow $vNEW_SSH_PORT/tcp
     
     echo
     echo -e "${GREEN}#########################################################################"
