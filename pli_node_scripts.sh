@@ -81,7 +81,9 @@ FUNC_NODE_DEPLOY(){
     FILE_KEYSTORE=".env.password"
 
     API_EMAIL="user123@gmail.com"
-    API_PASS="pass123"
+    API_PASS="passW0rd123"
+    # NOTE: error creating api initializer: must enter a password with 8 - 50 characters
+
     PASS_KEYSTORE="Som3$tr*nGp4$$w0Rd"
 
     ## Maintain teh single quotes as these are needed inorder to pass the var correctly as the 
