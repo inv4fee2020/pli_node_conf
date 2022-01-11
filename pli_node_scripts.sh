@@ -5,7 +5,34 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 
+## VARIABLE / PARAMETER DEFINITIONS
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    PLI_BASE_DIR="pli_node"
+    PLI_DEPLOY_DIR="plugin-deployment"
 
+    TLS_CERT_PATH="/$PLI_BASE_DIR/$PLI_DEPLOY_DIR/Plugin/tls"
+    TLS_SVC_PORT="6689"
+
+    ## .env.password OR password.txt == keystore (STRONG PASSWORD !!)
+    ## .env.apicred OR apicredentials.txt == Local Jobs Web Server credentials 
+    ## Default Postgresql DB NAME == plugin_mainnet_db
+
+    FILE_API=".env.apicred"
+    FILE_KEYSTORE=".env.password"
+    API_EMAIL="user123@gmail.com"
+    API_PASS="passW0rd123"
+    # NOTE: error creating api initializer: must enter a password with 8 - 50 characters
+
+    PASS_KEYSTORE="Som3$tr*nGp4$$w0Rd"
+
+    ## Maintain teh single quotes as these are needed inorder to pass the var correctly as the 
+    ## system expects it..
+    DB_PWD_FIND="'postgres'"
+    DB_PWD_REPLACE="testdbpwd1234"
+
+    BASH_FILE1="1_prerequisite.bash"
+    BASH_FILE2="2_nodeStartPM2.sh"
+    BASH_FILE3="3_InitiatorStartPM2.sh"
 
 
 FUNC_VALUE_CHECK(){
@@ -59,45 +86,15 @@ FUNC_NODE_DEPLOY(){
     echo
     echo -e "${GREEN}## Install: Clone repo to local install folder...${NC}"
     echo 
-
-    BASE_PLI_DIR="/pli_node"
     
-    if [ ! -d "$BASE_PLI_DIR" ]; then
-        sudo mkdir $BASE_PLI_DIR
+    if [ ! -d "/$PLI_DIR_BASE" ]; then
+        sudo mkdir "/$PLI_DIR_BASE"
     fi
     cd /pli_node
     sudo git clone https://github.com/GoPlugin/plugin-deployment.git && cd plugin-deployment
     sudo rm -f {apicredentials.txt,password.txt}
     sleep 2s
-
-
-
-
-    ## .env.password OR password.txt == keystore (STRONG PASSWORD !!)
-    ## .env.apicred OR apicredentials.txt == Local Jobs Web Server credentials 
-    ## Default Postgresql DB NAME == plugin_mainnet_db
-
-    FILE_API=".env.apicred"
-    FILE_KEYSTORE=".env.password"
-
-    API_EMAIL="user123@gmail.com"
-    API_PASS="passW0rd123"
-    # NOTE: error creating api initializer: must enter a password with 8 - 50 characters
-
-    PASS_KEYSTORE="Som3$tr*nGp4$$w0Rd"
-
-    ## Maintain teh single quotes as these are needed inorder to pass the var correctly as the 
-    ## system expects it..
-    DB_PWD_FIND="'postgres'"
-    DB_PWD_REPLACE="testdbpwd1234"
-
-    BASH_FILE1="1_prerequisite.bash"
-    BASH_FILE2="2_nodeStartPM2.sh"
-    BASH_FILE3="3_InitiatorStartPM2.sh"
-    #echo -e "run functions.. exit"
-
     
-
     sudo touch {$FILE_KEYSTORE,$FILE_API}
     sudo chmod 666 {$FILE_KEYSTORE,$FILE_API}
 
@@ -144,8 +141,7 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}## Install: EXECUTE bash file $BASH_FILE1...${NC}"
     echo 
 
-    sudo bash /pli_node/plugin-deployment/$BASH_FILE1
-
+    sudo bash /$PLI_BASE_DIR/$PLI_DEPLOY_DIR/$BASH_FILE1
 
     echo 
     echo 
@@ -159,7 +155,7 @@ FUNC_NODE_DEPLOY(){
     sudo sed -i.bak "s/apicredentials.txt/$FILE_API/g" $BASH_FILE2
     sudo sed -i.bak "s/:postgres/:$DB_PWD_REPLACE/g" $BASH_FILE2
     sudo sed -i.bak '/SECURE_COOKIES=false/d' $BASH_FILE2
-    sudo cat 2_nodeStartPM2.sh | grep node
+    sudo cat $BASH_FILE2 | grep node
     sleep 1s
 
 
@@ -167,8 +163,9 @@ FUNC_NODE_DEPLOY(){
     echo 
     echo -e "${GREEN}## Install: Update bash file $BASH_FILE2 with user TLS values...${NC}"
     echo 
-    sudo sed -i.bak "s/PLUGIN_TLS_PORT=0/PLUGIN_TLS_PORT=6689/g" $BASH_FILE2
-    sudo sed -i.bak "/^export PLUGIN_TLS_PORT=.*/a export TLS_CERT_PATH=/pli_node/plugin-deployment/Plugin/tls/server.crt\nexport TLS_KEY_PATH=/pli_node/plugin-deployment/Plugin/tls/server.key" $BASH_FILE2
+
+    sudo sed -i.bak "s/PLUGIN_TLS_PORT=0/PLUGIN_TLS_PORT=$TLS_SVC_PORT/g" $BASH_FILE2
+    sudo sed -i.bak "/^export PLUGIN_TLS_PORT=.*/a export TLS_CERT_PATH=$TLS_CERT_PATH/server.crt\nexport TLS_KEY_PATH=$TLS_CERT_PATH/server.key" $BASH_FILE2
     sudo cat $BASH_FILE2 | grep TLS
     sleep 1s
 
@@ -178,19 +175,12 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}## Install: Create TLS CA / Certificate & files / folders...${NC}"
     echo 
 
-    sudo su -c "mkdir /pli_node/plugin-deployment/Plugin/tls && cd /pli_node/plugin-deployment/Plugin/tls; openssl req -x509 -out server.crt -keyout server.key -newkey rsa:4096 \
+    sudo su -c "mkdir $TLS_CERT_PATH && cd $TLS_CERT_PATH; openssl req -x509 -out server.crt -keyout server.key -newkey rsa:4096 \
 -sha256 -days 3650 -nodes -extensions EXT -config \
 <(echo "[dn]"; echo CN=localhost; echo "[req]"; echo distinguished_name=dn; echo "[EXT]"; echo subjectAltName=DNS:localhost; echo keyUsage=digitalSignature; echo \
 extendedKeyUsage=serverAuth) -subj "/CN=localhost"
 exit"
 
-#    sudo su 
-#    sudo mkdir /pli_node/plugin-deployment/Plugin/tls && cd /pli_node/plugin-deployment/Plugin/tls
-#openssl req -x509 -out server.crt -keyout server.key -newkey rsa:4096 \
-#-sha256 -days 3650 -nodes -extensions EXT -config \
-#<(echo "[dn]"; echo CN=localhost; echo "[req]"; echo distinguished_name=dn; echo "[EXT]"; echo subjectAltName=DNS:localhost; echo keyUsage=digitalSignature; echo \
-#extendedKeyUsage=serverAuth) -subj "/CN=localhost"
-#exit
 
     echo 
     echo 

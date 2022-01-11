@@ -25,7 +25,7 @@ FUNC_BASE_SETUP(){
     echo
     echo -e "${GREEN}## Setup: Install necessary apps...${NC}"
     echo 
-    sudo apt install net-tools git curl locate ufw -y 
+    sudo apt install net-tools git curl locate ufw whois -y 
     sudo updatedb
 
     echo -e "${GREEN}#########################################################################"
