@@ -207,7 +207,12 @@ exit"
         1) echo -e "${RED}## Command exited with ERROR - updating bash profile...${NC}"
             echo
             source ~/.profile;
-            FUNC_EXIT_ERROR
+            sudo sh -c 'echo "export PATH=$PATH:/usr/local/go/bin" >> /etc/profile'
+            echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.profile
+            echo
+            echo -e "${RED}## Check GO Version manually...${NC}"
+            sleep 2s
+            #FUNC_EXIT_ERROR
             #exit 1
             ;;
         *) echo -e "${RED}## Command exited with OTHER ERROR...${NC}"
