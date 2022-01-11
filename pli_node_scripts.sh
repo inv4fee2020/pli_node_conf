@@ -118,7 +118,7 @@ FUNC_NODE_DEPLOY(){
     echo 
 
     sudo sed -i.bak "s/$DB_PWD_FIND/'$DB_PWD_REPLACE'/g" $BASH_FILE1
-    sudo cat $BASH_FILE1 | grep postgres
+    sudo cat $BASH_FILE1 | grep PASSWORD
     sleep 1s
 
 
