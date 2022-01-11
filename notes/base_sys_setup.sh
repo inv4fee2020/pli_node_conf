@@ -70,14 +70,14 @@ FUNC_BASE_SETUP(){
     sleep 1s
 
 
-    # echo -e "${GREEN}#########################################################################"
-    # echo
-    # echo -e "${GREEN}## Setup: Creating SSH keys for new acc user ${NC}"
-    # echo 
+    echo -e "${GREEN}#########################################################################"
+    echo
+    echo -e "${GREEN}## Setup: Creating SSH keys for new acc user ${NC}"
+    echo 
     #su $uservar
-    # cd /home/$uservar
-    # sudo mkdir -p .ssh 
-    # sudo touch .ssh/authorized_keys && sudo chmod 777 .ssh/authorized_keys
+    cd /home/$uservar
+    sudo mkdir -p .ssh 
+    sudo touch .ssh/authorized_keys && sudo chmod 777 .ssh/authorized_keys
 
     # create private & public keys -- no user interaction -- comment added
     # to aid in identifying key usage/purpose. To add as password to private
