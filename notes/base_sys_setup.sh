@@ -146,7 +146,7 @@ FUNC_BASE_SETUP(){
     
     sleep 3
     read -p 'Enter New SSH Port to use: ' vNEW_SSH_PORT
-    sudo sed -i.bak -e 's/\#Port 22/\Port $vNEW_SSH_PORT/g' /etc/ssh/sshd_config
+    sudo sed -i.bak 's/#Port 22/Port '"$vNEW_SSH_PORT"'/g' /etc/ssh/sshd_config
     sudo sed -i.bak -e 's/\#PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
     sudo sed -i.bak -e 's/PasswordAuthentication yes/PasswordAuthentication no/g' /etc/ssh/sshd_config
     sudo sed -i.bak -e 's/UsePAM yes/UsePAM no/g' /etc/ssh/sshd_config
