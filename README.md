@@ -12,7 +12,7 @@ Misc. scripts for GoPlugin $PLI node setup using the SCRIPT METHOD.
 This script performs os level commands as follows;
 1. Apply ubuntu updates
 2. Install misc. services & apps e.g. UFW, Curl, Git, locate 
-3. New Local Admin user & group
+3. New Local Admin user & group (Choice of interactive user input OR hardcode in VARS definition)
 4. SSH keys for the above 
 5. Applies UFW firewall minimum configuration & starts/enables service
 6. Modifies UFW firewall logging to use only the ufw.log file
