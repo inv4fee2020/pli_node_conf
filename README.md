@@ -25,18 +25,16 @@ with find/replace if necessary.
 The following VARIABLES should be updated for your individual implementation;
 
 '''
+
 FILE_API=".env.apicred"
 FILE_KEYSTORE=".env.password"
 API_EMAIL="user123@gmail.com"
-
-NOTE: error creating api initializer: must enter a password with 8 - 50 characters
-API_PASS="passW0rd123"
+API_PASS="passW0rd123"              #NOTE: Must be 8 - 50 characters. (error creating api initializer)
 PASS_KEYSTORE="Som3$tr*nGp4$$w0Rd"
-
-NOTE: Maintain teh single quotes as these are needed inorder to pass the var correctly as the system expects it..
-DB_PWD_FIND="'postgres'"
+DB_PWD_FIND="'postgres'"            #NOTE: Maintain the single quotes inorder to pass the VAR correctly as the system expects it..
 DB_PWD_REPLACE="testdbpwd1234"
 BASH_FILE1="1_prerequisite.bash"
 BASH_FILE2="2_nodeStartPM2.sh"
 BASH_FILE3="3_InitiatorStartPM2.sh"
+
 '''
