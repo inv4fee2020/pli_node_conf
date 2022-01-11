@@ -60,10 +60,15 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}## Install: Clone repo to local install folder...${NC}"
     echo 
 
-    sudo mkdir /pli_node && cd /pli_node
+    BASE_PLI_DIR="/pli_node"
+    
+    if [ ! -d "$BASE_PLI_DIR" ]; then
+        sudo mkdir $BASE_PLI_DIR
+    fi
+    cd /pli_node
     sudo git clone https://github.com/GoPlugin/plugin-deployment.git && cd plugin-deployment
     sudo rm -f {apicredentials.txt,password.txt}
-
+    sleep 2s
 
 
 
@@ -109,12 +114,35 @@ FUNC_NODE_DEPLOY(){
 
     echo -e "${GREEN}#########################################################################"
     echo
-    echo -e "${GREEN}## Install: Update bash file $BASH_FILE1 with user values...${NC}"
+    echo -e "${GREEN}## Install: UPDATE bash file $BASH_FILE1 with user values...${NC}"
     echo 
 
-    sudo sed -i.bak "s/$DB_FIND/'$DB_REPLACE'/g" $BASH_FILE1
+    sudo sed -i.bak "s/$DB_PWD_FIND/'$DB_PWD_REPLACE'/g" $BASH_FILE1
     sudo cat $BASH_FILE1 | grep postgres
     sleep 1s
+
+
+    echo 
+    echo 
+
+    echo -e "${GREEN}#########################################################################"
+    echo
+    echo -e "${GREEN}## Install: PRE-CHECKS for bash file $BASH_FILE1...${NC}"
+    echo 
+    
+    sudo apt remove --autoremove golang -y
+    sudo rm -rf /usr/local/go
+
+
+    echo 
+    echo 
+
+    echo -e "${GREEN}#########################################################################"
+    echo
+    echo -e "${GREEN}## Install: EXECUTE bash file $BASH_FILE1...${NC}"
+    echo 
+
+    sudo bash /pli_node/plugin-deployment/$BASH_FILE1
 
 
     echo 
@@ -127,7 +155,7 @@ FUNC_NODE_DEPLOY(){
 
     sudo sed -i.bak "s/password.txt/$FILE_KEYSTORE/g" $BASH_FILE2
     sudo sed -i.bak "s/apicredentials.txt/$FILE_API/g" $BASH_FILE2
-    sudo sed -i.bak "s/:postgres/:$DB_REPLACE/g" $BASH_FILE2
+    sudo sed -i.bak "s/:postgres/:$DB_PWD_REPLACE/g" $BASH_FILE2
     sudo cat 2_nodeStartPM2.sh | grep node
     sleep 1s
 
@@ -137,9 +165,7 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}## Install: Update bash file $BASH_FILE2 with user TLS values...${NC}"
     echo 
     sudo sed -i.bak "s/PLUGIN_TLS_PORT=0/PLUGIN_TLS_PORT=6689/g" $BASH_FILE2
-    sudo sed -i.bak "/^export PLUGIN_TLS_PORT=.*/a export \
-    TLS_CERT_PATH=/pli_node/plugin-deployment/Plugin/tls/server.crt\nexport \
-    TLS_KEY_PATH=/pli_node/plugin-deployment/Plugin/tls/server.key" $BASH_FILE2
+    sudo sed -i.bak "/^export PLUGIN_TLS_PORT=.*/a export TLS_CERT_PATH=/pli_node/plugin-deployment/Plugin/tls/server.crt\nexport TLS_KEY_PATH=/pli_node/plugin-deployment/Plugin/tls/server.key" $BASH_FILE2
     sudo cat $BASH_FILE2 | grep TLS
     sleep 1s
 
@@ -152,10 +178,8 @@ FUNC_NODE_DEPLOY(){
     sudo mkdir /pli_node/plugin-deployment/Plugin/tls && cd /pli_node/plugin-deployment/Plugin/tls
     openssl req -x509 -out  server.crt  -keyout server.key \
     -newkey rsa:2048 -nodes -sha256 -days 1826 \
-    -subj '/CN=localhost' -extensions EXT -config <( \
-    printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth")
+    -subj '/CN=localhost' -extensions EXT -config <(printf "[dn]\nCN=localhost\n[req]\ndistinguished_name = dn\n[EXT]\nsubjectAltName=DNS:localhost\nkeyUsage=digitalSignature\nextendedKeyUsage=serverAuth\n" )
     exit
-
 
     echo 
     echo 
