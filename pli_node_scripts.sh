@@ -89,8 +89,8 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}## Install: Clone repo to local install folder...${NC}"
     echo 
     
-    if [ ! -d "/$PLI_DIR_BASE" ]; then
-        sudo mkdir "/$PLI_DIR_BASE"
+    if [ ! -d "/$PLI_BASE_DIR" ]; then
+        sudo mkdir "/$PLI_BASE_DIR"
         USER_ID=$(getent passwd $EUID | cut -d: -f1)
         sudo chown $USER_ID:$USER_ID -R
     fi
