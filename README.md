@@ -1,6 +1,10 @@
 # pli_node_conf
 Misc. scripts for GoPlugin $PLI node setup using the SCRIPT METHOD.
 
+> NOTE: All values used in this code are for test purposes only & deployed to a test environment that is regularly deleted.
+> NOTE: Please ensure that you fork and update with your own values as necessary.
+>
+
 
 ## base_sys_setup.sh
 
