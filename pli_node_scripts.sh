@@ -9,9 +9,11 @@ NC='\033[0m' # No Color
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     PLI_BASE_DIR="pli_node"
     PLI_DEPLOY_DIR="plugin-deployment"
+    PLI_DEPLOY_PATH="/$PLI_BASE_DIR/$PLI_DEPLOY/"
 
     TLS_CERT_PATH="/$PLI_BASE_DIR/$PLI_DEPLOY_DIR/Plugin/tls"
-    TLS_SVC_PORT="6689"
+    PLI_HTTP_PORT="6688"
+    PLI_HTTPS_PORT="6689"
 
     ## .env.password OR password.txt == keystore (STRONG PASSWORD !!)
     ## .env.apicred OR apicredentials.txt == Local Jobs Web Server credentials 
@@ -164,7 +166,7 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}## Install: Update bash file $BASH_FILE2 with user TLS values...${NC}"
     echo 
 
-    sudo sed -i.bak "s/PLUGIN_TLS_PORT=0/PLUGIN_TLS_PORT=$TLS_SVC_PORT/g" $BASH_FILE2
+    sudo sed -i.bak "s/PLUGIN_TLS_PORT=0/PLUGIN_TLS_PORT=$PLI_HTTPS_PORT/g" $BASH_FILE2
     sudo sed -i.bak "/^export PLUGIN_TLS_PORT=.*/a export TLS_CERT_PATH=$TLS_CERT_PATH/server.crt\nexport TLS_KEY_PATH=$TLS_CERT_PATH/server.key" $BASH_FILE2
     sudo cat $BASH_FILE2 | grep TLS
     sleep 1s
