@@ -112,7 +112,7 @@ FUNC_NODE_DEPLOY(){
         #USER_ID=$(getent passwd $EUID | cut -d: -f1)
         sudo chown $USER_ID\:$USER_ID -R "/$PLI_BASE_DIR"
     fi
-    cd /pli_node
+    cd $PLI_BASE_DIR
     git clone https://github.com/GoPlugin/plugin-deployment.git && cd plugin-deployment
     rm -f {apicredentials.txt,password.txt}
     sleep 2s
