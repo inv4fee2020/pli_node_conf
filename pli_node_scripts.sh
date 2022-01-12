@@ -5,6 +5,7 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 
+FUNC_VARS(){
 ## VARIABLE / PARAMETER DEFINITIONS
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # Get current user id and store as var
@@ -45,10 +46,11 @@ NC='\033[0m' # No Color
     BASH_FILE1="1_prerequisite.bash"
     BASH_FILE2="2_nodeStartPM2.sh"
     BASH_FILE3="3_InitiatorStartPM2.sh"
+}
+
 
 
 FUNC_VALUE_CHECK(){
-    
     echo -e "${GREEN}#########################################################################"
     echo -e "${GREEN}#########################################################################"
     echo -e "${GREEN}"
@@ -83,6 +85,7 @@ FUNC_VALUE_CHECK(){
 
 
 FUNC_NODE_DEPLOY(){
+    FUNC_VARS;
     
     echo -e "${GREEN}#########################################################################"
     echo -e "${GREEN}#########################################################################"
@@ -243,6 +246,7 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
 
     echo -e "${GREEN}## Install: Start PM2 $BASH_FILE2 & set auto start on reboot...${NC}"
     echo 
+    cd $PLI_DEPLOY_PATH
     pm2 start $BASH_FILE2
     sleep 1s
     pm2 list 
@@ -268,6 +272,7 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
 
 
 FUNC_INITIATOR(){
+    FUNC_VARS;
 
 
     
