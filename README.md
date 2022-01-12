@@ -5,9 +5,22 @@ Misc. scripts for GoPlugin $PLI node setup using the SCRIPT METHOD.
 
 >> **NOTE: Please ensure that you fork and update with your own values as necessary.**
 
+---
 
-
+---
 ## base_sys_setup.sh
+
+
+The following VARIABLES should be updated at a minimum for your individual implementation;
+
+
+| VARIABLE |  NOTE |
+|----------|-------|
+|PLI_SSH_NEW_PORT="6222"| Change to suit your preference - should be a single value in the high range above 1025 & below 65535 e.g. 34022|
+
+You can reveiw the 'base_sys_setup' file for the full list of VARIABLES.
+
+---
 
 This script performs os level commands as follows;
 1. Apply ubuntu updates
@@ -29,25 +42,16 @@ The script uses a base install folder '/pli_node' which is hard coded throughout
 with find/replace if necessary.
 
 ---
-The following VARIABLES should be updated for your individual implementation;
+The following VARIABLES should be updated at a minimum for your individual implementation;
 
 
 | VARIABLE |  NOTE |
 |----------|-------|
-|PLI_BASE_DIR="pli_node"| base folder which holds all installs|
-|PLI_DEPLOY_DIR="plugin-deployment"|created by the initial git clone|
-|TLS_CERT_PATH="/$PLI_BASE_DIR/$PLI_DEPLOY_DIR/Plugin/tls"|full path for TLS cert generation|
-|TLS_SVC_PORT="6689"|TLS/SSL port for node server|
-|FILE_API=".env.apicred"||
 |FILE_KEYSTORE=".env.password"||
 |API_EMAIL="user123@gmail.com"||
 |API_PASS="passW0rd123"|Must be 8 - 50 characters. (error creating api initializer)|
 |PASS_KEYSTORE="Som3$tr*nGp4$$w0Rd"| Min. 12 characters, 3 lower, 3 upper, 3 numbers, 3 symbols & no more than 3 identical consecutive characters|
-|DB_PWD_FIND="'postgres'"|Maintain the single quotes inorder to pass the VAR correctly as the system expects it..|
 |DB_PWD_REPLACE="testdbpwd1234"||
-|BASH_FILE1="1_prerequisite.bash"||
-|BASH_FILE2="2_nodeStartPM2.sh"||
-|BASH_FILE3="3_InitiatorStartPM2.sh"||
 
 
 ---
@@ -61,3 +65,9 @@ The script performs the following actions;
 6. Updates BASH_FILE2 with EXTERNAL_INITIATORS parameter
 7. Checks for the Golang path & updates bash profile as necessary
 8. Initialises the BASH_FILE2 PM2 service & sets PM2 to auto start on boot
+
+9. External Initiators install & setup
+10. Performs authentication the plugin module & generates the initiator keys & output to file
+11. Manipulates the stored keys file & transfers to VARIABLES
+12. Auto generates the BASH_FILE3 file required to run the Initiator process
+13. Initialises the BASH_FILE3 PM2 service & updates PM2 to auto start on boot
