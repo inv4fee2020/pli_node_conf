@@ -50,7 +50,7 @@ The following VARIABLES should be updated at a minimum for your individual imple
 |API_EMAIL="user123@gmail.com"||
 |API_PASS="passW0rd123"|Must be 8 - 50 characters. (error creating api initializer)|
 |PASS_KEYSTORE="Som3$tr*nGp4$$w0Rd"| Min. 12 characters, 3 lower, 3 upper, 3 numbers, 3 symbols & no more than 3 identical consecutive characters|
-|DB_PWD_REPLACE="testdbpwd1234"||
+|DB_PWD_REPLACE="testdbpwd1234"|This is your new secure Postgres DB password|
 
 You can reveiw the 'pli_node_scripts' file for the full list of VARIABLES.
 
@@ -71,3 +71,7 @@ The script performs the following actions;
 11. Manipulates the stored keys file & transfers to VARIABLES
 12. Auto generates the BASH_FILE3 file required to run the Initiator process
 13. Initialises the BASH_FILE3 PM2 service & updates PM2 to auto start on boot
+
+---
+---
+
