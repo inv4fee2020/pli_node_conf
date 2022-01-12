@@ -68,7 +68,13 @@ FUNC_VALUE_CHECK(){
     # Ask the user acc for login details (comment out to disable)
     
         while true; do
-            read -r -p "please confirm that you have updated this script with your values ? (y/n) " _input
+            read -t10 -r -p "please confirm that you have updated this script with your values ? (Y/n) " _input
+            if [ $? -gt 128 ]; then
+                clear
+                echo
+                echo "timed out waiting for user response - proceeding as normal..."
+                FUNC_NODE_DEPLOY;
+            fi
             case $_input in
                 [Yy][Ee][Ss]|[Yy]* ) 
                     FUNC_NODE_DEPLOY
@@ -390,7 +396,13 @@ FUNC_DO_INIT_CHECK(){
     echo 
     
         while true; do
-            read -r -p "Do you wish to proceed to INITIATOR SETUP ? (y/n) " _input
+            read -t10 -r -p "Do you wish to proceed to INITIATOR SETUP ? (Y/n) " _input
+            if [ $? -gt 128 ]; then
+                #clear
+                echo
+                echo "timed out waiting for user response - proceeding as normal..."
+                FUNC_INITIATOR;
+            fi
             case $_input in
                 [Yy][Ee][Ss]|[Yy]* ) 
                     FUNC_INITIATOR
@@ -399,7 +411,8 @@ FUNC_DO_INIT_CHECK(){
                 [Nn][Oo]|[Nn]* ) 
                     FUNC_EXIT
                     ;;
-                * ) echo "Please answer (y)es or (n)o.";;
+                * ) echo "Please answer (y)es or (n)o."
+                    echo "NOTE: timeout value is (y)es";;
             esac
         done
 }
