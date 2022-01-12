@@ -27,6 +27,7 @@ FUNC_INITIATOR(){
     echo
     echo -e "${GREEN}## INSTALL LOCAL INITIATOR...${NC}"
     echo 
+    source ~/.profile
     cd $PLI_DEPLOY_PATH
     git clone https://github.com/GoPlugin/external-Initiator && cd $PLI_INITOR_DIR
     git checkout main
