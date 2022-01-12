@@ -70,8 +70,8 @@ FUNC_INITIATOR(){
     echo -e "${GREEN}## CAPTURE INITIATOR CREDENTIALS & FILE MANIPULATION...${NC}"
     echo 
     sed -i 's/ ║ /,/g;s/╬//g;s/═//g;s/║//g' $PLI_INIT_RAWFILE
-    sed -n '/xdc/,//p' $PLI_INIT_RAWFILE > $PLI_INIT_DATFILE
-    sed -i 's/,/\n/g;s/^.xdc//g' $PLI_INIT_DATFILE
+    sed -n '/'"$PLI_L_INIT_NAME"'/,//p' $PLI_INIT_RAWFILE > $PLI_INIT_DATFILE
+    sed -i 's/,/\n/g;s/^.'"$PLI_L_INIT_NAME"'//g' $PLI_INIT_DATFILE
     sed -i 's/^http.*//g' $PLI_INIT_DATFILE
     sed -i.bak '/^$/d;/^\s*$/d;s/[ \t]\+$//' $PLI_INIT_DATFILE
     cat $PLI_INIT_DATFILE
