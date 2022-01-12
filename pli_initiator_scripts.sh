@@ -27,20 +27,42 @@ FUNC_INITIATOR(){
     echo
     echo -e "${GREEN}## INSTALL LOCAL INITIATOR...${NC}"
     echo 
+
+    # Added to resolve error running 'plugin help'
     source ~/.profile
+    
     cd $PLI_DEPLOY_PATH
     git clone https://github.com/GoPlugin/external-Initiator && cd $PLI_INITOR_DIR
     git checkout main
     go install
 
 
+
     echo -e "${GREEN}#########################################################################"
     echo
     echo -e "${GREEN}## CREATE LOCAL INITIATOR...${NC}"
     echo 
-    plugin initiators create $PLI_L_INIT_NAME http://localhost:8080/jobs
+    export FEATURE_EXTERNAL_INITIATORS=true
+    plugin admin login
+    plugin initiators create $PLI_L_INIT_NAME http://localhost:8080/jobs >> init_creds
 
+sed -n '/xdc/,//p' init_credentials
+sed -i 's/╬//g' init_credentials
+sed -i 's/═//g' init_credentials
+sed -i 's/║//g' init_credentials
+sed -n '/xdc/,//p' init_credentials >> init.strip
+sed -i 's/,/\n/g' init.strip
+sed -i 's/^.xdc//g' init.strip
+sed -i 's/^http.*//g' init.strip
+sed '/^$/d' init.strip
+sed '/^\s*$/d' init.strip
 
+while read -r first second && read -r third fourth; do 
+  echo "$first $second $third $fourth"
+done < init.strip
+
+read -r -d '' first second third fourth <init.strip
+echo "$first $second $third $fourth"
 
 
     echo -e "${GREEN}#########################################################################"
