@@ -21,6 +21,6 @@ sudo rm -rf /usr/lib/postgresql/ && sudo rm -rf /var/lib/postgresql/ && sudo rm 
 
 sudo userdel -r postgres && sudo groupdel postgres
 
-cd ~/; rm -rf .cache/ && rm -rf .nvm && rm -rf .npm && rm -rf .plugin && rm -rf .pm2 && rm -rf work && rm -rf go
+cd ~/; sudo sh -c "rm -rf .cache/ && rm -rf .nvm && rm -rf .npm && rm -rf .plugin && rm -rf .pm2 && rm -rf work && rm -rf go && rm -rf .yarn*"
 sleep 0.5s
-sudo su -c "cd /root; rm -rf .cache/ && rm -rf .nvm && rm -rf .npm && rm -rf .plugin && rm -rf .pm2 && rm -rf work && rm -rf go"
+sudo su -c "cd /root; rm -rf .cache/ && rm -rf .nvm && rm -rf .npm && rm -rf .plugin && rm -rf .pm2 && rm -rf work && rm -rf go && rm -rf .yarn*"
