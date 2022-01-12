@@ -7,6 +7,9 @@ NC='\033[0m' # No Color
 
 ## VARIABLE / PARAMETER DEFINITIONS
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    # Get current user id and store as var
+    USER_ID=$(getent passwd $EUID | cut -d: -f1)
+    
     PLI_BASE_DIR="pli_node"
     PLI_DEPLOY_DIR="plugin-deployment"
     PLI_DEPLOY_PATH="/$PLI_BASE_DIR/$PLI_DEPLOY/"
@@ -91,7 +94,7 @@ FUNC_NODE_DEPLOY(){
     
     if [ ! -d "/$PLI_BASE_DIR" ]; then
         sudo mkdir "/$PLI_BASE_DIR"
-        USER_ID=$(getent passwd $EUID | cut -d: -f1)
+        #USER_ID=$(getent passwd $EUID | cut -d: -f1)
         sudo chown $USER_ID\:$USER_ID -R "/$PLI_BASE_DIR"
     fi
     cd /pli_node
@@ -185,6 +188,8 @@ FUNC_NODE_DEPLOY(){
 -sha256 -days 3650 -nodes -extensions EXT -config \
 <(echo "[dn]"; echo CN=localhost; echo "[req]"; echo distinguished_name=dn; echo "[EXT]"; echo subjectAltName=DNS:localhost; echo keyUsage=digitalSignature; echo \
 extendedKeyUsage=serverAuth) -subj "/CN=localhost"
+    sleep 1s
+
 
 
     echo 
@@ -226,8 +231,7 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
             ;;
     esac
 
-    #echo -e "${GREEN}## Install proceeding as normal...${NC}"
-
+    sleep 1s
 
 
     echo -e "${GREEN}## Install: Start PM2 $BASH_FILE2 & set auto start on reboot...${NC}"
@@ -239,6 +243,8 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
     sleep 2s
     pm2 list
     pm2 startup systemd
+
+    sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u $USER_ID --hp /home/$USER_ID
 
 
     }
