@@ -416,5 +416,23 @@ FUNC_EXIT_ERROR(){
 	exit 1
 	}
   
-FUNC_VALUE_CHECK;
+#FUNC_VALUE_CHECK;
 
+clear
+case "$1" in
+        fullnode)
+                FUNC_VALUE_CHECK
+                ;;
+        initiator)
+                FUNC_INITIATOR
+                ;;
+        *)
+                
+                echo 
+                echo 
+                echo "Usage: $0 {fullnode|initiator}"
+                echo 
+                echo "Use this shell script to deply plugin node."
+                echo 
+                echo 
+esac
