@@ -92,21 +92,21 @@ FUNC_NODE_DEPLOY(){
     if [ ! -d "/$PLI_BASE_DIR" ]; then
         sudo mkdir "/$PLI_BASE_DIR"
         USER_ID=$(getent passwd $EUID | cut -d: -f1)
-        sudo chown $USER_ID:$USER_ID -R
+        sudo chown $USER_ID\:$USER_ID -R "/$PLI_BASE_DIR"
     fi
     cd /pli_node
-    sudo git clone https://github.com/GoPlugin/plugin-deployment.git && cd plugin-deployment
-    sudo rm -f {apicredentials.txt,password.txt}
+    git clone https://github.com/GoPlugin/plugin-deployment.git && cd plugin-deployment
+    rm -f {apicredentials.txt,password.txt}
     sleep 2s
     
-    sudo touch {$FILE_KEYSTORE,$FILE_API}
-    sudo chmod 666 {$FILE_KEYSTORE,$FILE_API}
+    touch {$FILE_KEYSTORE,$FILE_API}
+    chmod 666 {$FILE_KEYSTORE,$FILE_API}
 
-    sudo echo $API_EMAIL > $FILE_API
-    sudo echo $API_PASS >> $FILE_API
-    sudo echo $PASS_KEYSTORE > $FILE_KEYSTORE
+    echo $API_EMAIL > $FILE_API
+    echo $API_PASS >> $FILE_API
+    echo $PASS_KEYSTORE > $FILE_KEYSTORE
 
-    sudo chmod 600 {$FILE_KEYSTORE,$FILE_API}
+    chmod 600 {$FILE_KEYSTORE,$FILE_API}
 
     # Remove the file if necessary; sudo rm -f {.env.apicred,.env.password}
 
@@ -120,8 +120,8 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}## Install: UPDATE bash file $BASH_FILE1 with user values...${NC}"
     echo 
 
-    sudo sed -i.bak "s/$DB_PWD_FIND/'$DB_PWD_REPLACE'/g" $BASH_FILE1
-    sudo cat $BASH_FILE1 | grep PASSWORD
+    sed -i.bak "s/$DB_PWD_FIND/'$DB_PWD_REPLACE'/g" $BASH_FILE1
+    cat $BASH_FILE1 | grep PASSWORD
     sleep 1s
 
 
@@ -145,7 +145,7 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}## Install: EXECUTE bash file $BASH_FILE1...${NC}"
     echo 
 
-    sudo bash /$PLI_BASE_DIR/$PLI_DEPLOY_DIR/$BASH_FILE1
+    bash /$PLI_BASE_DIR/$PLI_DEPLOY_DIR/$BASH_FILE1
 
     echo 
     echo 
@@ -155,11 +155,11 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}## Install: Update bash file $BASH_FILE2 with user CREDENTIALS values...${NC}"
     echo 
 
-    sudo sed -i.bak "s/password.txt/$FILE_KEYSTORE/g" $BASH_FILE2
-    sudo sed -i.bak "s/apicredentials.txt/$FILE_API/g" $BASH_FILE2
-    sudo sed -i.bak "s/:postgres/:$DB_PWD_REPLACE/g" $BASH_FILE2
-    sudo sed -i.bak '/SECURE_COOKIES=false/d' $BASH_FILE2
-    sudo cat $BASH_FILE2 | grep node
+    sed -i.bak "s/password.txt/$FILE_KEYSTORE/g" $BASH_FILE2
+    sed -i.bak "s/apicredentials.txt/$FILE_API/g" $BASH_FILE2
+    sed -i.bak "s/:postgres/:$DB_PWD_REPLACE/g" $BASH_FILE2
+    sed -i.bak '/SECURE_COOKIES=false/d' $BASH_FILE2
+    cat $BASH_FILE2 | grep node
     sleep 1s
 
 
@@ -168,9 +168,9 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}## Install: Update bash file $BASH_FILE2 with user TLS values...${NC}"
     echo 
 
-    sudo sed -i.bak "s/PLUGIN_TLS_PORT=0/PLUGIN_TLS_PORT=$PLI_HTTPS_PORT/g" $BASH_FILE2
-    sudo sed -i.bak "/^export PLUGIN_TLS_PORT=.*/a export TLS_CERT_PATH=$TLS_CERT_PATH/server.crt\nexport TLS_KEY_PATH=$TLS_CERT_PATH/server.key" $BASH_FILE2
-    sudo cat $BASH_FILE2 | grep TLS
+    sed -i.bak "s/PLUGIN_TLS_PORT=0/PLUGIN_TLS_PORT=$PLI_HTTPS_PORT/g" $BASH_FILE2
+    sed -i.bak "/^export PLUGIN_TLS_PORT=.*/a export TLS_CERT_PATH=$TLS_CERT_PATH/server.crt\nexport TLS_KEY_PATH=$TLS_CERT_PATH/server.key" $BASH_FILE2
+    cat $BASH_FILE2 | grep TLS
     sleep 1s
 
 
@@ -179,19 +179,20 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}## Install: Create TLS CA / Certificate & files / folders...${NC}"
     echo 
 
-    sudo sh -c "mkdir $TLS_CERT_PATH && cd $TLS_CERT_PATH; openssl req -x509 -out server.crt -keyout server.key -newkey rsa:4096 \
+    
+    mkdir $TLS_CERT_PATH && cd $TLS_CERT_PATH
+    openssl req -x509 -out server.crt -keyout server.key -newkey rsa:4096 \
 -sha256 -days 3650 -nodes -extensions EXT -config \
 <(echo "[dn]"; echo CN=localhost; echo "[req]"; echo distinguished_name=dn; echo "[EXT]"; echo subjectAltName=DNS:localhost; echo keyUsage=digitalSignature; echo \
 extendedKeyUsage=serverAuth) -subj "/CN=localhost"
-exit"
 
 
     echo 
     echo 
     echo -e "${GREEN}## Install: Update bash file $BASH_FILE2 with INITIATORS values...${NC}"
     echo 
-    sudo sed -i.bak "/^ export DATABASE_TIMEOUT=.*/a export FEATURE_EXTERNAL_INITIATORS=true" $BASH_FILE2
-    sudo cat $BASH_FILE2 | grep INITIATORS
+    sed -i.bak "/^ export DATABASE_TIMEOUT=.*/a export FEATURE_EXTERNAL_INITIATORS=true" $BASH_FILE2
+    cat $BASH_FILE2 | grep INITIATORS
     sleep 1s
 
 
@@ -231,13 +232,13 @@ exit"
 
     echo -e "${GREEN}## Install: Start PM2 $BASH_FILE2 & set auto start on reboot...${NC}"
     echo 
-    sudo pm2 start $BASH_FILE2
+    pm2 start $BASH_FILE2
     sleep 1s
-    sudo pm2 list 
+    pm2 list 
     
     sleep 2s
-    sudo pm2 list
-    sudo pm2 startup systemd
+    pm2 list
+    pm2 startup systemd
 
 
     }
