@@ -301,7 +301,8 @@ FUNC_INITIATOR(){
     echo -e "${GREEN}## CREATE LOCAL INITIATOR...${NC}"
     echo 
     export FEATURE_EXTERNAL_INITIATORS=true
-    plugin admin login
+    plugin admin login -f "../$FILE_API"
+    sleep 0.5s
     plugin initiators create $PLI_L_INIT_NAME http://localhost:8080/jobs > $PLI_INIT_RAWFILE
 
     # plugin initiators create xdc http://localhost:8080/jobs
