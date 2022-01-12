@@ -75,3 +75,17 @@ The script performs the following actions;
 ---
 ---
 
+
+## reset_pli.sh
+
+As the name suggests this script does a full reset of you local Plugin installation.
+
+There are no variables passed to this script.
+
+Basic function is to;
+- stop & delete all PM2 processes
+- stop all postgress services
+- uninstall all postgres related components
+- delete all postgres related system folders
+- remove the postgres user & group
+- delete all plugin installaton folders under the users $HOME folder
