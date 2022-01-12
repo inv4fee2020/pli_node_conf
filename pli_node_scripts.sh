@@ -260,8 +260,8 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
     sleep 2s
     pm2 list
     pm2 startup systemd
-
     sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u $USER_ID --hp /home/$USER_ID
+    pm2 save
 
     # INTERACTIVE: Calls function to check if user wants to proceed to next stage of setup.
     #FUNC_DO_INIT_CHECK;
@@ -379,6 +379,9 @@ EOF
     sleep 1s
     pm2 status
     sleep 3s
+    pm2 startup systemd
+    sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u $USER_ID --hp /home/$USER_ID
+    pm2 save
 
     FUNC_EXIT;
 }
