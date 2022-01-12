@@ -1,5 +1,5 @@
 #!/bin/bash
-
+start=`date +%s`
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
@@ -424,12 +424,16 @@ FUNC_DO_INIT_CHECK(){
 
 
 FUNC_EXIT(){
+    end=`date +%s`
+    runtime=$((end-start))
 	exit 0
 	}
 
 
 
 FUNC_EXIT_ERROR(){
+    end=`date +%s`
+    runtime=$((end-start))
 	exit 1
 	}
   
@@ -453,3 +457,6 @@ case "$1" in
                 echo 
                 echo 
 esac
+
+end=`date +%s`
+runtime=$((end-start))
