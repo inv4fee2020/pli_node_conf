@@ -3,7 +3,7 @@ Misc. scripts for GoPlugin $PLI node setup using the SCRIPT METHOD.
 
 > **NOTE: All values used in this code are for test purposes only & deployed to a test environment that is regularly deleted.**
 
->> **NOTE: Please ensure that you fork and update with your own values as necessary.**
+>> **NOTE: Please ensure that you clone/fork and update with your own values as necessary.**
 
 ---
 
@@ -38,8 +38,7 @@ This script performs os level commands as follows;
 This scripts performs file manipulations & executes the various plugin bash scripts in order 
 to successfully deploy the node. 
 
-The script uses a base install folder '/pli_node' which is hard coded throughout but easily changed 
-with find/replace if necessary.
+The script uses a base install folder '/pli_node' which is set as a VARIABLE.
 
 ---
 The following VARIABLES should be updated at a minimum for your individual implementation;
@@ -53,6 +52,7 @@ The following VARIABLES should be updated at a minimum for your individual imple
 |PASS_KEYSTORE="Som3$tr*nGp4$$w0Rd"| Min. 12 characters, 3 lower, 3 upper, 3 numbers, 3 symbols & no more than 3 identical consecutive characters|
 |DB_PWD_REPLACE="testdbpwd1234"||
 
+You can reveiw the 'pli_node_scripts' file for the full list of VARIABLES.
 
 ---
 
