@@ -28,8 +28,8 @@ FUNC_INITIATOR(){
     echo -e "${GREEN}## INSTALL LOCAL INITIATOR...${NC}"
     echo 
     cd $PLI_DEPLOY_PATH
-    sudo git clone https://github.com/GoPlugin/external-Initiator && cd $PLI_INITOR_DIR
-    sudo git checkout main
+    git clone https://github.com/GoPlugin/external-Initiator && cd $PLI_INITOR_DIR
+    git checkout main
     go install
 
 
@@ -37,7 +37,7 @@ FUNC_INITIATOR(){
     echo
     echo -e "${GREEN}## CREATE LOCAL INITIATOR...${NC}"
     echo 
-    sudo plugin initiators create $PLI_L_INIT_NAME http://localhost:8080/jobs
+    plugin initiators create $PLI_L_INIT_NAME http://localhost:8080/jobs
 
 
 
@@ -46,7 +46,7 @@ FUNC_INITIATOR(){
     echo
     echo -e "${GREEN}## CREATE INITIATOR PM2 SERVICE FILE: $BASH_FILE3 & file perms ${NC}"
     echo
-    sudo cat <<EOF >> $BASH_FILE3
+    cat <<EOF >> $BASH_FILE3
 #!/bin/bash
 export EI_DATABASEURL=postgresql://postgres:${DB_PWD_REPLACE}@127.0.0.1:5432/plugin_mainnet_db?sslmode=disable
 export EI_CHAINLINKURL=http://localhost:6688
@@ -58,15 +58,15 @@ echo *** Starting EXTERNAL INITIATOR ***
 external-initiator "{\"name\":\"$PLI_E_INIT_NAME\",\"type\":\"xinfin\",\"url\":\"https://pluginrpc.blocksscan.io\"}" --chainlinkurl "http://localhost:6688/"
 EOF
 
-    sudo cat $BASH_FILE3
-    sudo chmod u+x $BASH_FILE3
+    cat $BASH_FILE3
+    chmod u+x $BASH_FILE3
 
 
     echo -e "${GREEN}#########################################################################"
     echo
     echo -e "${GREEN}## START INITIATOR PM2 SERVICE $BASH_FILE3 ${NC}"
     echo    
-    sudo pm2 start $BASH_FILE3
+    pm2 start $BASH_FILE3
 
 }
 
