@@ -264,10 +264,10 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
     sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u $USER_ID --hp /home/$USER_ID
 
     # INTERACTIVE: Calls function to check if user wants to proceed to next stage of setup.
-    FUNC_DO_INIT_CHECK;
+    #FUNC_DO_INIT_CHECK;
 
     # NON-INTERACTIVE: Proceed with next stage of setup.
-    #FUNC_INITIATOR;
+    FUNC_INITIATOR;
     }
 
 
@@ -380,7 +380,7 @@ EOF
     pm2 status
     sleep 3s
 
-
+    FUNC_EXIT;
 }
 
 
