@@ -17,7 +17,7 @@ sudo apt --purge remove postgresql* -y && sudo apt purge postgresql* -y
 sudo apt --purge remove postgresql -y postgresql-doc -y postgresql-common -y
 sudo apt autoremove -y
 
-sudo rm -rf /usr/lib/postgresql/ && sudo rm -rf /var/lib/postgresql/ && sudo rm -rf /var/log/postgresql/ && sudo rm -rf /etc/postgresql/ && sudo m -rf /etc/postgresql-common/
+sudo rm -rf /usr/lib/postgresql/ && sudo rm -rf /var/lib/postgresql/ && sudo rm -rf /var/log/postgresql/ && sudo rm -rf /etc/postgresql/ && sudo rm -rf /etc/postgresql-common/
 
 sudo userdel -r postgres && sudo groupdel postgres
 
