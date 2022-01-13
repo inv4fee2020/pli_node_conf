@@ -89,3 +89,12 @@ Basic function is to;
 - delete all postgres related system folders
 - remove the postgres user & group
 - delete all plugin installaton folders under the users $HOME folder
+
+---
+---
+
+## Testing
+
+The scripts have been developed on ubuntu 20.x linux distros deployed within both a vmware esxi environment & racknerd VPS.
+
+Full deployment of the base node & external initiators was recorded at 15mins on racknerd with no user interaction. 
