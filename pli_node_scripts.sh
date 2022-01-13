@@ -11,7 +11,7 @@ FUNC_VARS(){
     USER_ID=$(getent passwd $EUID | cut -d: -f1)
     
     #source sample.vars
-    ~/"pli_$(hostname -f)".vars
+    source ~/"pli_$(hostname -f)".vars
 }
 
 
@@ -79,7 +79,7 @@ FUNC_NODE_DEPLOY(){
         #USER_ID=$(getent passwd $EUID | cut -d: -f1)
         sudo chown $USER_ID\:$USER_ID -R "/$PLI_BASE_DIR"
     fi
-    cd $PLI_BASE_DIR
+    cd /$PLI_BASE_DIR
     git clone https://github.com/GoPlugin/plugin-deployment.git && cd plugin-deployment
     rm -f {apicredentials.txt,password.txt}
     sleep 2s
