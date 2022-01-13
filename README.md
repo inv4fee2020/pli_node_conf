@@ -58,10 +58,7 @@ This function calls the 'initiator' function as part of executing all code.
 This function performs just the external initiator section and skips the main node deployment. 
 The key aspect to this function is the file manipulation to extract the access secrets/tokens and complete the registration process vastly reducing the chances of any errors.
 
-
 ---
----
-
 ### NOTE: The script uses a base install folder is your linux users $HOME folder - which is now set as a VARIABLE.
 
 The script performs the following actions;
