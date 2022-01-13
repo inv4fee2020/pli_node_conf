@@ -14,7 +14,7 @@ A sample vars file is included 'sample.vars'.
 
 This should be copied to your user $HOME folder using the following command;
 
->>>  cp sample.vars ~/"plinode_$(hostname -f).vars"
+>>>     cp sample.vars ~/"plinode_$(hostname -f).vars"
 
 The scripts check for that the local node variables file exists. If notm then the code prompts the user and exists.
 
@@ -24,7 +24,6 @@ The following VARIABLES should be updated at a minimum for your individual imple
 
 | VARIABLE |  NOTE |
 |----------|-------|
-|FILE_KEYSTORE=".env.password"||
 |API_EMAIL="user123@gmail.com"||
 |API_PASS="passW0rd123"|Must be 8 - 50 characters & NO special characters. (error creating api initializer)|
 |PASS_KEYSTORE="Som3$tr*nGp4$$w0Rd"| Min. 12 characters, 3 lower, 3 upper, 3 numbers, 3 symbols & no more than 3 identical consecutive characters|
@@ -108,10 +107,7 @@ Basic function is to;
 
 ## base_sys_setup.sh
 
-
 You can reveiw the 'sample.vars' file for the full list of VARIABLES.
-
----
 
 This script performs os level commands as follows;
 
