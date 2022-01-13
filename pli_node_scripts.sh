@@ -18,13 +18,13 @@ FUNC_VARS(){
     clear
     echo
     echo
-    echo "${RED} #### ERROR: No VARIABLES file found. ####${NC}"
+    echo -e "${RED} #### ERROR: No VARIABLES file found. ####${NC}"
     echo
-    echo "${RED} ..creating local vars file '$HOME/$PLI_VARS_FILE' ${NC}"
+    echo -e "${RED} ..creating local vars file '$HOME/$PLI_VARS_FILE' ${NC}"
     cp sample.vars ~/"pli_$(hostname -f)".vars
     echo
-    echo "${GREEN} please update the vars file with your specific values.. ${NC}"
-    echo "${GREEN} copy command to edit: nano ~/$PLI_VARS_FILE ${NC}"
+    echo -e "${GREEN} please update the vars file with your specific values.. ${NC}"
+    echo -e "${GREEN} copy command to edit: nano ~/$PLI_VARS_FILE ${NC}"
     sleep 3s
     #nano ~/$PLI_VARS_FILE
     exit 1
