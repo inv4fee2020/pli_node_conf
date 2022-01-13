@@ -9,7 +9,7 @@ pm2 stop all && pm2 delete all
 sudo systemctl status postgresql && sudo systemctl stop postgresql
 
 sudo rm -rf /usr/local/go
-sudo rm -rf /pli_node
+sudo rm -rf /$PLI_DEPLOY_PATH
 sudo rm -rf /usr/lib/postgresql/ && sudo rm -rf /var/lib/postgresql/ && sudo rm -rf /var/log/postgresql/ && sudo rm -rf /etc/postgresql/ && rsudo m -rf /etc/postgresql-common/
 
 
