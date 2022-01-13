@@ -9,7 +9,9 @@ FUNC_VARS(){
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # Get current user id and store as var
     USER_ID=$(getent passwd $EUID | cut -d: -f1)
-    source sample.vars
+    
+    #source sample.vars
+    ~/"pli_$(hostname -f)".vars
 }
 
 
@@ -27,7 +29,7 @@ FUNC_VALUE_CHECK(){
 
     echo -e "${GREEN}#########################################################################"
     echo
-    echo -e "${GREEN}## CONFIRM SCRIPTS EXPORT VALUES HAVE BEEN UPDATED...${NC}"
+    echo -e "${GREEN}## CONFIRM SCRIPTS VARIABLES FILE HAS BEEN UPDATED...${NC}"
     echo 
     # Ask the user acc for login details (comment out to disable)
     

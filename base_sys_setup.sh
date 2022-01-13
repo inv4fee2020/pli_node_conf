@@ -9,7 +9,8 @@ FUNC_VARS(){
 ## VARIABLE / PARAMETER DEFINITIONS
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    source sample.vars
+    #source sample.vars
+    source ~/"pli_$(hostname -f)".vars
 }
 
 FUNC_VALUE_CHECK(){
