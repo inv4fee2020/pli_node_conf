@@ -318,6 +318,7 @@ FUNC_INITIATOR(){
     sed -i 's/,/\n/g;s/^.'"$PLI_L_INIT_NAME"'//g' $PLI_INIT_DATFILE
     sed -i 's/^http.*//g' $PLI_INIT_DATFILE
     sed -i.bak '/^$/d;/^\s*$/d;s/[ \t]\+$//' $PLI_INIT_DATFILE
+    cp $PLI_INIT_DATFILE ~/$PLI_INIT_DATFILE
     cat $PLI_INIT_DATFILE
     sleep 1s
 
