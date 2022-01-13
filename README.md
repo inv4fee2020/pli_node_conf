@@ -14,7 +14,7 @@ A sample vars file is included 'sample.vars'.
 
 This should be copied to your user $HOME folder using the following command;
 
->>>  cp sample.vars ~/"pli_$(hostname -f)".vars
+>>>  cp sample.vars ~/"plinode_$(hostname -f).vars"
 
 The scripts check for 
 
