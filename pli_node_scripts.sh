@@ -9,28 +9,29 @@ FUNC_VARS(){
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # Get current user id and store as var
     USER_ID=$(getent passwd $EUID | cut -d: -f1)
-    PLI_VARS_FILE="plinode_$(hostname -f)".vars
-    #source sample.vars
-    if [ -e ~/$PLI_VARS_FILE ]; then
-        source ~/$PLI_VARS_FILE
-    fi
 
-    clear
-    echo
-    echo
-    echo -e "${RED} #### ERROR: No VARIABLES file found. ####${NC}"
-    echo
-    echo -e "${RED} ..creating local vars file '$HOME/$PLI_VARS_FILE' ${NC}"
-    cp sample.vars ~/$PLI_VARS_FILE
-    echo
-    echo -e "${GREEN} please update the vars file with your specific values.. ${NC}"
-    echo -e "${GREEN} copy command to edit: ${NC}"
-    echo
-    echo -e "${GREEN}nano ~/$PLI_VARS_FILE ${NC}"
-    echo
-    echo
-    #sleep 2s
-    exit 1
+
+    PLI_VARS_FILE="plinode_$(hostname -f)".vars
+    if [ ! -e "~/$PLI_VARS_FILE" ]; then
+        clear
+        echo
+        echo
+        echo -e "${RED} #### ERROR: No VARIABLES file found. ####${NC}"
+        echo
+        echo -e "${RED} ..creating local vars file '$HOME/$PLI_VARS_FILE' ${NC}"
+        cp sample.vars ~/$PLI_VARS_FILE
+        echo
+        echo -e "${GREEN} please update the vars file with your specific values.. ${NC}"
+        echo -e "${GREEN} copy command to edit: ${NC}"
+        echo
+        echo -e "${GREEN}nano ~/$PLI_VARS_FILE ${NC}"
+        echo
+        echo
+        #sleep 2s
+        exit 1
+    fi
+    source ~/$PLI_VARS_FILE
+
 }
 
 
