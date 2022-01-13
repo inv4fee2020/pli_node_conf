@@ -105,6 +105,9 @@ FUNC_BASE_SETUP(){
     echo -e "${GREEN}## Verify user account...${NC}"
     echo 
     sudo cat /etc/passwd | grep $VAR_USERNAME
+    
+    echo 
+    echo 
     echo -e "${GREEN}## Verify user group...${NC}"
     echo 
     sudo cat /etc/group | grep $VAR_USERNAME
