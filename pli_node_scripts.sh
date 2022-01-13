@@ -24,13 +24,12 @@ FUNC_VARS(){
     cp sample.vars ~/$PLI_VARS_FILE
     echo
     echo -e "${GREEN} please update the vars file with your specific values.. ${NC}"
-    echo -e "${GREEN} copy command to edit: nano ~/$PLI_VARS_FILE ${NC}"
+    echo -e "${GREEN} copy command to edit: ${NC}"
     echo
     echo -e "${GREEN}nano ~/$PLI_VARS_FILE ${NC}"
     echo
     echo
-    sleep 3s
-    #nano ~/$PLI_VARS_FILE
+    #sleep 2s
     exit 1
 }
 
