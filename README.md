@@ -16,7 +16,7 @@ This should be copied to your user $HOME folder using the following command;
 
 >>>  cp sample.vars ~/"plinode_$(hostname -f).vars"
 
-The scripts check for 
+The scripts check for that the local node variables file exists. If notm then the code prompts the user and exists.
 
 ---
 
