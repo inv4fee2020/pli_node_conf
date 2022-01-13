@@ -25,9 +25,9 @@ FUNC_VARS(){
     echo
     echo "${GREEN} please update the vars file with your specific values.. ${NC}"
     echo "${GREEN} copy command to edit: nano ~/$PLI_VARS_FILE ${NC}"
-    #sleep 3s
+    sleep 3s
     #nano ~/$PLI_VARS_FILE
-    FUNC_EXIT_ERROR;
+    exit 1
 }
 
 
