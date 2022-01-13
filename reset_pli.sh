@@ -1,5 +1,8 @@
 #!/bin/bash
 
+PLI_VARS_FILE="plinode_$(hostname -f).vars"
+source ~/$PLI_VARS_FILE
+
 ##  Rough script to roll back installation for testing purposes...
 ## Use with caution !
 #sudo su
