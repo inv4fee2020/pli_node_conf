@@ -12,7 +12,7 @@ FUNC_VARS(){
 
 
     PLI_VARS_FILE="plinode_$(hostname -f)".vars
-    if [ ! -e "~/$PLI_VARS_FILE" ]; then
+    if [ ! -e ~/$PLI_VARS_FILE ]; then
         clear
         echo
         echo
