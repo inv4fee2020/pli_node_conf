@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Authenticate sudo perms before script execution to avoid timeouts or errors
+sudo -l > /dev/null 2>&1
+
+PLI_VARS_FILE="plinode_$(hostname -f).vars"
+source ~/$PLI_VARS_FILE
+
 ##  Rough script to roll back installation for testing purposes...
 ## Use with caution !
 #sudo su
@@ -9,7 +15,7 @@ pm2 stop all && pm2 delete all
 sudo systemctl status postgresql && sudo systemctl stop postgresql
 
 sudo rm -rf /usr/local/go
-sudo rm -rf /pli_node
+sudo rm -rf /$PLI_DEPLOY_PATH
 sudo rm -rf /usr/lib/postgresql/ && sudo rm -rf /var/lib/postgresql/ && sudo rm -rf /var/log/postgresql/ && sudo rm -rf /etc/postgresql/ && rsudo m -rf /etc/postgresql-common/
 
 
@@ -17,7 +23,7 @@ sudo apt --purge remove postgresql* -y && sudo apt purge postgresql* -y
 sudo apt --purge remove postgresql -y postgresql-doc -y postgresql-common -y
 sudo apt autoremove -y
 
-sudo rm -rf /usr/lib/postgresql/ && sudo rm -rf /var/lib/postgresql/ && sudo rm -rf /var/log/postgresql/ && sudo rm -rf /etc/postgresql/ && rsudo m -rf /etc/postgresql-common/
+sudo rm -rf /usr/lib/postgresql/ && sudo rm -rf /var/lib/postgresql/ && sudo rm -rf /var/log/postgresql/ && sudo rm -rf /etc/postgresql/ && sudo rm -rf /etc/postgresql-common/
 
 sudo userdel -r postgres && sudo groupdel postgres
 

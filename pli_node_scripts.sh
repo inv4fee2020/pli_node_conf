@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# Authenticate sudo perms before script execution to avoid timeouts or errors
+sudo -l > /dev/null 2>&1
+
+# Set Colour Vars
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
@@ -9,42 +14,29 @@ FUNC_VARS(){
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # Get current user id and store as var
     USER_ID=$(getent passwd $EUID | cut -d: -f1)
-    
-    PLI_BASE_DIR="pli_node"
-    PLI_DEPLOY_DIR="plugin-deployment"
-    PLI_DEPLOY_PATH="/$PLI_BASE_DIR/$PLI_DEPLOY_DIR/"
 
-    PLI_INITOR_DIR="external-Initiator"
-    PLI_L_INIT_NAME="xdc"
-    PLI_E_INIT_NAME="xinfin-mainnet"
 
-    PLI_INIT_RAWFILE="pli_init.raw"
-    PLI_INIT_DATFILE="pli_init.dat"
+    PLI_VARS_FILE="plinode_$(hostname -f)".vars
+    if [ ! -e ~/$PLI_VARS_FILE ]; then
+        clear
+        echo
+        echo
+        echo -e "${RED} #### ERROR: No VARIABLES file found. ####${NC}"
+        echo
+        echo -e "${RED} ..creating local vars file '$HOME/$PLI_VARS_FILE' ${NC}"
+        cp sample.vars ~/$PLI_VARS_FILE
+        echo
+        echo -e "${GREEN} please update the vars file with your specific values.. ${NC}"
+        echo -e "${GREEN} copy command to edit: ${NC}"
+        echo
+        echo -e "${GREEN}nano ~/$PLI_VARS_FILE ${NC}"
+        echo
+        echo
+        #sleep 2s
+        exit 1
+    fi
+    source ~/$PLI_VARS_FILE
 
-    TLS_CERT_PATH="/$PLI_DEPLOY_PATH/Plugin/tls"
-    PLI_HTTP_PORT="6688"
-    PLI_HTTPS_PORT="6689"
-
-    ## .env.password OR password.txt == keystore (STRONG PASSWORD !!)
-    ## .env.apicred OR apicredentials.txt == Local Jobs Web Server credentials 
-    ## Default Postgresql DB NAME == plugin_mainnet_db
-
-    FILE_API=".env.apicred"
-    FILE_KEYSTORE=".env.password"
-    API_EMAIL="user123@gmail.com"
-    API_PASS="passW0rd123"
-    # NOTE: error creating api initializer: must enter a password with 8 - 50 characters
-
-    PASS_KEYSTORE="Som3$tr*nGp4$$w0Rd"
-
-    ## Maintain teh single quotes as these are needed inorder to pass the var correctly as the 
-    ## system expects it..
-    DB_PWD_FIND="'postgres'"
-    DB_PWD_REPLACE="testdbpwd1234"
-
-    BASH_FILE1="1_prerequisite.bash"
-    BASH_FILE2="2_nodeStartPM2.sh"
-    BASH_FILE3="3_InitiatorStartPM2.sh"
 }
 
 
@@ -62,12 +54,12 @@ FUNC_VALUE_CHECK(){
 
     echo -e "${GREEN}#########################################################################"
     echo
-    echo -e "${GREEN}## CONFIRM SCRIPTS EXPORT VALUES HAVE BEEN UPDATED...${NC}"
+    echo -e "${GREEN}## CONFIRM SCRIPTS VARIABLES FILE HAS BEEN UPDATED...${NC}"
     echo 
     # Ask the user acc for login details (comment out to disable)
     
         while true; do
-            read -t10 -r -p "please confirm that you have updated this script with your values ? (Y/n) " _input
+            read -t7 -r -p "please confirm that you have updated the vars file with your values ? (Y/n) " _input
             if [ $? -gt 128 ]; then
                 clear
                 echo
@@ -112,7 +104,7 @@ FUNC_NODE_DEPLOY(){
         #USER_ID=$(getent passwd $EUID | cut -d: -f1)
         sudo chown $USER_ID\:$USER_ID -R "/$PLI_BASE_DIR"
     fi
-    cd $PLI_BASE_DIR
+    cd /$PLI_BASE_DIR
     git clone https://github.com/GoPlugin/plugin-deployment.git && cd plugin-deployment
     rm -f {apicredentials.txt,password.txt}
     sleep 2s
@@ -138,8 +130,8 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}## Install: UPDATE bash file $BASH_FILE1 with user values...${NC}"
     echo 
 
-    sed -i.bak "s/$DB_PWD_FIND/'$DB_PWD_REPLACE'/g" $BASH_FILE1
-    cat $BASH_FILE1 | grep PASSWORD
+    sed -i.bak "s/$DB_PWD_FIND/'$DB_PWD_NEW'/g" $BASH_FILE1
+    cat $BASH_FILE1 | grep 'postgres PASSWORD'
     sleep 1s
 
 
@@ -175,7 +167,7 @@ FUNC_NODE_DEPLOY(){
 
     sed -i.bak "s/password.txt/$FILE_KEYSTORE/g" $BASH_FILE2
     sed -i.bak "s/apicredentials.txt/$FILE_API/g" $BASH_FILE2
-    sed -i.bak "s/:postgres/:$DB_PWD_REPLACE/g" $BASH_FILE2
+    sed -i.bak "s/:postgres/:$DB_PWD_NEW/g" $BASH_FILE2
     sed -i.bak '/SECURE_COOKIES=false/d' $BASH_FILE2
     cat $BASH_FILE2 | grep node
     sleep 1s
@@ -251,7 +243,7 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
 
     echo -e "${GREEN}## Install: Start PM2 $BASH_FILE2 & set auto start on reboot...${NC}"
     echo 
-    cd $PLI_DEPLOY_PATH
+    cd /$PLI_DEPLOY_PATH
     pm2 start $BASH_FILE2
     sleep 1s
     pm2 list 
@@ -291,7 +283,7 @@ FUNC_INITIATOR(){
     # Added to resolve error running 'plugin help'
     source ~/.profile
     
-    cd $PLI_DEPLOY_PATH
+    cd /$PLI_DEPLOY_PATH
     git clone https://github.com/GoPlugin/external-Initiator
     cd $PLI_INITOR_DIR
     git checkout main
@@ -351,10 +343,10 @@ FUNC_INITIATOR(){
     echo
     echo -e "${GREEN}## CREATE INITIATOR PM2 SERVICE FILE: $BASH_FILE3 & file perms ${NC}"
     echo
-    cd $PLI_DEPLOY_PATH
+    cd /$PLI_DEPLOY_PATH
     cat <<EOF > $BASH_FILE3
 #!/bin/bash
-export EI_DATABASEURL=postgresql://postgres:${DB_PWD_REPLACE}@127.0.0.1:5432/plugin_mainnet_db?sslmode=disable
+export EI_DATABASEURL=postgresql://postgres:${DB_PWD_NEW}@127.0.0.1:5432/plugin_mainnet_db?sslmode=disable
 export EI_CHAINLINKURL=http://localhost:6688
 export EI_IC_ACCESSKEY=${EXT_ACCESSKEY}
 export EI_IC_SECRET=${EXT_SECRET}

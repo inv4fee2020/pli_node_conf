@@ -1,20 +1,21 @@
 #!/bin/bash
 
+# Authenticate sudo perms before script execution to avoid timeouts or errors
+sudo -l > /dev/null 2>&1
+
+# Set Colour Vars
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 
+FUNC_VARS(){
 ## VARIABLE / PARAMETER DEFINITIONS
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #VAR_USERNAME=""
-    #VAR_PASSWORD=""
 
-    PLI_HTTP_PORT="6688"
-    PLI_HTTPS_PORT="6689"
-    PLI_SSH_DEF_PORT="22"
-    PLI_SSH_NEW_PORT="6222"
-    SSH_CONFIG_PATH="/etc/ssh/sshd_config"
+    #source sample.vars
+    source ~/"pli_$(hostname -f)".vars
+}
 
 FUNC_VALUE_CHECK(){
     
@@ -51,6 +52,7 @@ FUNC_VALUE_CHECK(){
 
 
 FUNC_BASE_SETUP(){
+    FUNC_VARS;
     
     echo -e "${GREEN}#########################################################################"
     echo -e "${GREEN}#########################################################################"
@@ -105,6 +107,9 @@ FUNC_BASE_SETUP(){
     echo -e "${GREEN}## Verify user account...${NC}"
     echo 
     sudo cat /etc/passwd | grep $VAR_USERNAME
+    
+    echo 
+    echo 
     echo -e "${GREEN}## Verify user group...${NC}"
     echo 
     sudo cat /etc/group | grep $VAR_USERNAME
