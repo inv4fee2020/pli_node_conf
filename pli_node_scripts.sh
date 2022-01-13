@@ -54,7 +54,7 @@ FUNC_VALUE_CHECK(){
     # Ask the user acc for login details (comment out to disable)
     
         while true; do
-            read -t10 -r -p "please confirm that you have updated this script with your values ? (Y/n) " _input
+            read -t7 -r -p "please confirm that you have updated the vars file with your values ? (Y/n) " _input
             if [ $? -gt 128 ]; then
                 clear
                 echo
