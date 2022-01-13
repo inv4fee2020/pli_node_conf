@@ -7,6 +7,21 @@ Misc. scripts for GoPlugin $PLI node setup using the SCRIPT METHOD.
 
 ---
 
+# TL:DR
+
+clone the repo to your local '$HOME' folder
+
+        cd $HOME
+        git clone https://github.com/inv4fee2020/pli_node_conf.git
+        cd pli_node_conf
+        chmod +x {base_sys_setup.sh,pli_node_scripts.sh,reset_pli.sh}
+        cp sample.vars ~/"plinode_$(hostname -f).vars"
+        nano ~/"plinode_$(hostname -f).vars"
+
+Update the the minimum variables (as per below) and have a working node in approx 15mins ready for you to perform your REMIX contract & jobs config steps.
+
+
+
 ---
 ## VARIABLES file
 
@@ -16,7 +31,7 @@ This should be copied to your user $HOME folder using the following command;
 
 >>>     cp sample.vars ~/"plinode_$(hostname -f).vars"
 
-The scripts check for that the local node variables file exists. If not then the code prompts the user and exists.
+The scripts check that the local node variables file exists. If not then the code prompts the user and exists.
 By using a dedicated variables file, any updates to the main script should not involve any changes to the node specific settings.
 
 ---
