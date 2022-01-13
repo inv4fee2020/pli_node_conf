@@ -8,41 +8,19 @@ Misc. scripts for GoPlugin $PLI node setup using the SCRIPT METHOD.
 ---
 
 ---
-## base_sys_setup.sh
+## VARIABLES file
 
+A sample vars file is included 'sample.vars'.
+
+This should be copied to your user $HOME folder using the following command;
+
+>>>  cp sample.vars ~/"pli_$(hostname -f)".vars
+
+The scripts check for 
+
+---
 
 The following VARIABLES should be updated at a minimum for your individual implementation;
-
-
-| VARIABLE |  NOTE |
-|----------|-------|
-|PLI_SSH_NEW_PORT="6222"| Change to suit your preference - should be a single value in the high range above 1025 & below 65535 e.g. 34022|
-
-You can reveiw the 'base_sys_setup' file for the full list of VARIABLES.
-
----
-
-This script performs os level commands as follows;
-1. Apply ubuntu updates
-2. Install misc. services & apps e.g. UFW, Curl, Git, locate 
-3. New Local Admin user & group (Choice of interactive user input OR hardcode in VARS definition)
-4. SSH keys for the above 
-5. Applies UFW firewall minimum configuration & starts/enables service
-6. Modifies UFW firewall logging to use only the ufw.log file
-7. Modify SSH service to use alternate service port, update UFW & restart SSH
-
----
----
-## pli_node_scripts.sh
-
-This scripts performs file manipulations & executes the various plugin bash scripts in order 
-to successfully deploy the node. 
-
-The script uses a base install folder '/pli_node' which is set as a VARIABLE.
-
----
-The following VARIABLES should be updated at a minimum for your individual implementation;
-
 
 | VARIABLE |  NOTE |
 |----------|-------|
@@ -50,9 +28,24 @@ The following VARIABLES should be updated at a minimum for your individual imple
 |API_EMAIL="user123@gmail.com"||
 |API_PASS="passW0rd123"|Must be 8 - 50 characters. (error creating api initializer)|
 |PASS_KEYSTORE="Som3$tr*nGp4$$w0Rd"| Min. 12 characters, 3 lower, 3 upper, 3 numbers, 3 symbols & no more than 3 identical consecutive characters|
-|DB_PWD_REPLACE="testdbpwd1234"|This is your new secure Postgres DB password|
+|DB_PWD_NEW="testdbpwd1234"|This is your new secure Postgres DB password|
+|PLI_SSH_NEW_PORT="6222"| Change to suit your preference - should be a single value in the high range above 1025 & below 65535 e.g. 34022|
 
-You can reveiw the 'pli_node_scripts' file for the full list of VARIABLES.
+You can reveiw the 'sample.vars' file for the full list of VARIABLES.
+
+
+
+
+---
+---
+## pli_node_scripts.sh
+
+This script performs file manipulations & executes the various plugin bash scripts in order 
+to successfully deploy the node. 
+
+The script uses a base install folder is your linux users $HOME folder - which is now set as a VARIABLE.
+
+---
 
 ---
 
@@ -90,8 +83,31 @@ Basic function is to;
 - remove the postgres user & group
 - delete all plugin installaton folders under the users $HOME folder
 
+
 ---
 ---
+
+
+## base_sys_setup.sh
+
+
+You can reveiw the 'sample.vars' file for the full list of VARIABLES.
+
+---
+
+This script performs os level commands as follows;
+1. Apply ubuntu updates
+2. Install misc. services & apps e.g. UFW, Curl, Git, locate 
+3. New Local Admin user & group (Choice of interactive user input OR hardcode in VARS definition)
+4. SSH keys for the above 
+5. Applies UFW firewall minimum configuration & starts/enables service
+6. Modifies UFW firewall logging to use only the ufw.log file
+7. Modify SSH service to use alternate service port, update UFW & restart SSH
+
+
+---
+---
+
 
 ## Testing
 
