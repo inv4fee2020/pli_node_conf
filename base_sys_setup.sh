@@ -5,16 +5,12 @@ RED='\033[0;31m'
 NC='\033[0m' # No Color
 
 
+FUNC_VARS(){
 ## VARIABLE / PARAMETER DEFINITIONS
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    #VAR_USERNAME=""
-    #VAR_PASSWORD=""
 
-    PLI_HTTP_PORT="6688"
-    PLI_HTTPS_PORT="6689"
-    PLI_SSH_DEF_PORT="22"
-    PLI_SSH_NEW_PORT="6222"
-    SSH_CONFIG_PATH="/etc/ssh/sshd_config"
+    source sample.vars
+}
 
 FUNC_VALUE_CHECK(){
     
