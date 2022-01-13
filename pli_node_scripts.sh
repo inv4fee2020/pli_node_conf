@@ -17,8 +17,15 @@ FUNC_VARS(){
 
     clear
     echo
-    echo " ## ERROR: No VARIABLES file found. ##"
     echo
+    echo "${RED} #### ERROR: No VARIABLES file found. ####${NC}"
+    echo
+    echo "${RED} ..creating local vars file  $HOME/"pli_$(hostname -f).vars" ${NC}"
+    cp sample.vars ~/"pli_$(hostname -f)".vars
+    echo
+    echo "${NC} please update the vars file with your specific values.. ${NC}"
+    echo
+    nano ~/"pli_$(hostname -f)".vars
     FUNC_EXIT_ERROR;
 }
 
