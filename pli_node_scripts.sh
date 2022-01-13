@@ -16,8 +16,9 @@ FUNC_VARS(){
     fi
     clear
     echo
-    echo " ERROR: No VARIABLES file found
+    echo " ## ERROR: No VARIABLES file found. ##"
     echo
+    FUNC_EXIT_ERROR;
 }
 
 
