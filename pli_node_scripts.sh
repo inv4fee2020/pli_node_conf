@@ -9,10 +9,10 @@ FUNC_VARS(){
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # Get current user id and store as var
     USER_ID=$(getent passwd $EUID | cut -d: -f1)
-    
+    PLI_VARS_FILE="pli_$(hostname -f)".vars
     #source sample.vars
-    if [ -e ~/"pli_$(hostname -f)" ]; then
-        source ~/"pli_$(hostname -f)".vars
+    if [ -e ~/$PLI_VARS_FILE ]; then
+        source ~/$PLI_VARS_FILE
     fi
 
     clear
@@ -20,13 +20,13 @@ FUNC_VARS(){
     echo
     echo "${RED} #### ERROR: No VARIABLES file found. ####${NC}"
     echo
-    echo "${RED} ..creating local vars file  $HOME/"pli_$(hostname -f).vars" ${NC}"
+    echo "${RED} ..creating local vars file  $HOME/$PLI_VARS_FILE" ${NC}"
     cp sample.vars ~/"pli_$(hostname -f)".vars
     echo
     echo "${GREEN} please update the vars file with your specific values.. ${NC}"
-    echo "${GREEN} copy command: nano ~/"pli_$(hostname -f)".vars ${NC}"
+    echo "${GREEN} copy command: nano ~/$PLI_VARS_FILE ${NC}"
     #sleep 3s
-    #nano ~/"pli_$(hostname -f)".vars
+    #nano ~/$PLI_VARS_FILE
     FUNC_EXIT_ERROR;
 }
 
