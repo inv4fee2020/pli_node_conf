@@ -18,7 +18,13 @@ clone the repo to your local '$HOME' folder
         cp sample.vars ~/plinode_$(hostname -f).vars
         nano ~/plinode_$(hostname -f).vars
 
-Update the the minimum variables (as per below) and have a working node in approx 15mins ready for you to perform your REMIX contract & jobs config steps.
+Update the the minimum variables (as per VARIABLES section below) 
+
+Run the main script to do a full node deployment
+
+        ./pli_node_scripts.sh fullnode
+
+& have a working node in approx 15mins ready for you to perform your REMIX contract & jobs config steps.
 
 
 
@@ -117,7 +123,7 @@ Basic function is to;
 ---
 
 
-## base_sys_setup.sh
+## base_sys_setup.sh (__Optional__)
 
 You can reveiw the 'sample.vars' file for the full list of VARIABLES.
 
