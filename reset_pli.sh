@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Authenticate sudo perms before script execution to avoid timeouts or errors
+sudo -l > /dev/null 2>&1
+
 PLI_VARS_FILE="plinode_$(hostname -f).vars"
 source ~/$PLI_VARS_FILE
 

@@ -1,4 +1,9 @@
 #!/bin/bash
+
+# Authenticate sudo perms before script execution to avoid timeouts or errors
+sudo -l > /dev/null 2>&1
+
+# Set Colour Vars
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
