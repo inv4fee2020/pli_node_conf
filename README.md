@@ -15,8 +15,8 @@ clone the repo to your local '$HOME' folder
         git clone https://github.com/inv4fee2020/pli_node_conf.git
         cd pli_node_conf
         chmod +x {base_sys_setup.sh,pli_node_scripts.sh,reset_pli.sh}
-        cp sample.vars ~/"plinode_$(hostname -f).vars"
-        nano ~/"plinode_$(hostname -f).vars"
+        cp sample.vars ~/plinode_$(hostname -f).vars
+        nano ~/plinode_$(hostname -f).vars
 
 Update the the minimum variables (as per below) and have a working node in approx 15mins ready for you to perform your REMIX contract & jobs config steps.
 
