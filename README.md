@@ -61,8 +61,7 @@ The key aspect to this function is the file manipulation to extract the access s
 ---
 ---
 
-The script uses a base install folder is your linux users $HOME folder - which is now set as a VARIABLE.
----
+#### The script uses a base install folder is your linux users $HOME folder - which is now set as a VARIABLE.
 
 The script performs the following actions;
 
