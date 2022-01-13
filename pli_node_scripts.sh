@@ -23,9 +23,10 @@ FUNC_VARS(){
     echo "${RED} ..creating local vars file  $HOME/"pli_$(hostname -f).vars" ${NC}"
     cp sample.vars ~/"pli_$(hostname -f)".vars
     echo
-    echo "${NC} please update the vars file with your specific values.. ${NC}"
-    echo
-    nano ~/"pli_$(hostname -f)".vars
+    echo "${GREEN} please update the vars file with your specific values.. ${NC}"
+    echo "${GREEN} copy command: nano ~/"pli_$(hostname -f)".vars ${NC}"
+    #sleep 3s
+    #nano ~/"pli_$(hostname -f)".vars
     FUNC_EXIT_ERROR;
 }
 
