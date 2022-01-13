@@ -11,9 +11,10 @@ FUNC_VARS(){
     USER_ID=$(getent passwd $EUID | cut -d: -f1)
     
     #source sample.vars
-    if [ -e ~/"pli_$(hostname ]; then
+    if [ -e ~/"pli_$(hostname -f)" ]; then
         source ~/"pli_$(hostname -f)".vars
     fi
+
     clear
     echo
     echo " ## ERROR: No VARIABLES file found. ##"
