@@ -9,7 +9,7 @@ FUNC_VARS(){
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     # Get current user id and store as var
     USER_ID=$(getent passwd $EUID | cut -d: -f1)
-    PLI_VARS_FILE="pli_$(hostname -f)".vars
+    PLI_VARS_FILE="plinode_$(hostname -f)".vars
     #source sample.vars
     if [ -e ~/$PLI_VARS_FILE ]; then
         source ~/$PLI_VARS_FILE
@@ -21,10 +21,14 @@ FUNC_VARS(){
     echo -e "${RED} #### ERROR: No VARIABLES file found. ####${NC}"
     echo
     echo -e "${RED} ..creating local vars file '$HOME/$PLI_VARS_FILE' ${NC}"
-    cp sample.vars ~/"pli_$(hostname -f)".vars
+    cp sample.vars ~/$PLI_VARS_FILE
     echo
     echo -e "${GREEN} please update the vars file with your specific values.. ${NC}"
     echo -e "${GREEN} copy command to edit: nano ~/$PLI_VARS_FILE ${NC}"
+    echo
+    echo -e "${GREEN}nano ~/$PLI_VARS_FILE ${NC}"
+    echo
+    echo
     sleep 3s
     #nano ~/$PLI_VARS_FILE
     exit 1
