@@ -65,20 +65,19 @@ The key aspect to this function is the file manipulation to extract the access s
 
 The script performs the following actions;
 
-1. Updates Postgres DB password 'sed' find/replace on BASH_FILE1
-2. Removes existing Golang install as part of pre-requisite for BASH_FILE1
-3. Updates BASH_FILE2 to use new '.env' files & Postgres password
-4. Updates BASH_FILE2 with TLS certificate files & TLS Port
-5. Creates local certificate authority & TLS certificate for use with local job server
-6. Updates BASH_FILE2 with EXTERNAL_INITIATORS parameter
-7. Checks for the Golang path & updates bash profile as necessary
-8. Initialises the BASH_FILE2 PM2 service & sets PM2 to auto start on boot
-
-9. External Initiators install & setup
-10. Performs authentication the plugin module & generates the initiator keys & output to file
-11. Manipulates the stored keys file & transfers to VARIABLES
-12. Auto generates the BASH_FILE3 file required to run the Initiator process
-13. Initialises the BASH_FILE3 PM2 service & updates PM2 to auto start on boot
+- Updates Postgres DB password 'sed' find/replace on BASH_FILE1
+- Removes existing Golang install as part of pre-requisite for BASH_FILE1
+- Updates BASH_FILE2 to use new '.env' files & Postgres password
+- Updates BASH_FILE2 with TLS certificate files & TLS Port
+- Creates local certificate authority & TLS certificate for use with local job server
+- Updates BASH_FILE2 with EXTERNAL_INITIATORS parameter
+- Checks for the Golang path & updates bash profile as necessary
+- Initialises the BASH_FILE2 PM2 service & sets PM2 to auto start on boot
+- External Initiators install & setup
+- Performs authentication the plugin module & generates the initiator keys & output to file
+- Manipulates the stored keys file & transfers to VARIABLES
+- Auto generates the BASH_FILE3 file required to run the Initiator process
+- Initialises the BASH_FILE3 PM2 service & updates PM2 to auto start on boot
 
 ---
 ---
@@ -110,13 +109,13 @@ You can reveiw the 'sample.vars' file for the full list of VARIABLES.
 
 This script performs os level commands as follows;
 
-1. Apply ubuntu updates
-2. Install misc. services & apps e.g. UFW, Curl, Git, locate 
-3. New Local Admin user & group (Choice of interactive user input OR hardcode in VARS definition)
-4. SSH keys for the above 
-5. Applies UFW firewall minimum configuration & starts/enables service
-6. Modifies UFW firewall logging to use only the ufw.log file
-7. Modify SSH service to use alternate service port, update UFW & restart SSH
+- Apply ubuntu updates
+- Install misc. services & apps e.g. UFW, Curl, Git, locate 
+- New Local Admin user & group (Choice of interactive user input OR hardcode in VARS definition)
+- SSH keys for the above 
+- Applies UFW firewall minimum configuration & starts/enables service
+- Modifies UFW firewall logging to use only the ufw.log file
+- Modify SSH service to use alternate service port, update UFW & restart SSH
 
 
 ---
