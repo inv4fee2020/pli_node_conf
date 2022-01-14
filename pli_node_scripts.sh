@@ -439,9 +439,10 @@ case "$1" in
                 
                 echo 
                 echo 
-                echo "Usage: $0 {fullnode|initiator}"
+                echo "Usage: $0 { fullnode | initiator }"
                 echo 
-                echo "Use this shell script to deply plugin node."
+                echo "please provide one of the above values to run the scripts"
+                echo "    example: " $0 fullnode""
                 echo 
                 echo 
 esac
