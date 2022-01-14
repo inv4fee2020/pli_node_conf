@@ -107,7 +107,7 @@ The script performs the following actions;
 
 As the name suggests this script does a full reset of you local Plugin installation.
 
-There are no variables passed to this script.
+User account deletion: The script does _NOT_ delete any other user or system accounts beyond that of _'postgres'_.
 
 Basic function is to;
 
