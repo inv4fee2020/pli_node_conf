@@ -39,6 +39,8 @@ FUNC_VARS(){
 
 }
 
+
+
 FUNC_PKG_CHECK(){
 
     echo -e "${GREEN}#########################################################################"
@@ -54,9 +56,11 @@ FUNC_PKG_CHECK(){
            sudo apt install -y "$i"
         fi
         echo "packages "$i" exist. proceeding...."
-done
+    done
 
 }
+
+
 
 FUNC_VALUE_CHECK(){
     echo -e "${GREEN}#########################################################################"
