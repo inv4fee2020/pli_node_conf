@@ -9,7 +9,7 @@ Misc. scripts for GoPlugin $PLI node setup using the SCRIPT METHOD.
 
 # TL:DR
 
-clone the repo to your local '$HOME' folder
+clone the repo to your local '$HOME' folder **Preferably as a normal user & _not as root_**
 
         cd $HOME
         git clone https://github.com/inv4fee2020/pli_node_conf.git
