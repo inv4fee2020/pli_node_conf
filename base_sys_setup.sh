@@ -51,7 +51,28 @@ FUNC_VALUE_CHECK(){
 }    
 
 
-FUNC_BASE_SETUP(){
+
+FUNC_PKG_CHECK(){
+
+    echo -e "${GREEN}#########################################################################"
+    echo
+    echo -e "${GREEN}## CHECK NECESSARY PACKAGES HAVE BEEN INSTALLED...${NC}"
+    echo     
+
+    for i in "${BASE_SYS_PACKAGES[@]}"
+    do
+        hash $i &> /dev/null
+        if [ $? -eq 1 ]; then
+           echo >&2 "package "$i" not found. installing...."
+           sudo apt install -y "$i"
+        fi
+        echo "packages "$i" exist. proceeding...."
+    done
+}
+
+
+
+FUNC_SETUP_OS(){
     FUNC_VARS;
     
     echo -e "${GREEN}#########################################################################"
@@ -69,12 +90,19 @@ FUNC_BASE_SETUP(){
     echo 
     sudo apt update -y && sudo apt upgrade -y
 
-    echo -e "${GREEN}#########################################################################"
-    echo
-    echo -e "${GREEN}## Setup: Install necessary apps...${NC}"
-    echo 
-    sudo apt install net-tools git curl locate ufw whois -y 
-    #sudo updatedb
+    #echo -e "${GREEN}#########################################################################"
+    #echo
+    #echo -e "${GREEN}## Setup: Install necessary apps...${NC}"
+    #echo 
+    #sudo apt install net-tools git curl locate ufw whois -y 
+    FUNC_PKG_CHECK;
+    sudo updatedb
+    sleep 1s
+}
+
+
+
+FUNC_SETUP_USER(){
 
     echo -e "${GREEN}#########################################################################"
     echo
@@ -116,14 +144,13 @@ FUNC_BASE_SETUP(){
 
     sleep 1s
 
-
     echo 
     echo 
     echo -e "${GREEN}#########################################################################"
     echo
     echo -e "${GREEN}## Setup: Creating SSH keys for new acc user ${NC}"
     echo 
-    #su $VAR_USERNAME
+
     cd /home/$VAR_USERNAME
     sudo mkdir -p .ssh 
     sudo touch .ssh/authorized_keys && sudo chmod 777 .ssh/authorized_keys
@@ -157,7 +184,11 @@ FUNC_BASE_SETUP(){
     ###
 
     sleep 3s
+}
 
+
+
+FUNC_SETUP_UFW_PORTS(){
     echo 
     echo 
     echo -e "${GREEN}#########################################################################" 
@@ -169,20 +200,11 @@ FUNC_BASE_SETUP(){
 
     ## node local job server http/https ports
     sudo ufw allow $PLI_HTTP_PORT/tcp && sudo ufw allow $PLI_HTTPS_PORT/tcp
+}
 
 
-    echo 
-    echo 
-    echo -e "${GREEN}#########################################################################" 
-    echo 
-    echo -e "${GREEN}## Setup: Enable Firewall...${NC}"
-    echo 
-    sudo systemctl start ufw && sudo systemctl status ufw
-    sleep 2s
-    sudo ufw enable
-    sudo ufw status verbose
 
-
+FUNC_ENABLE_UFW(){
 
     echo 
     echo 
@@ -194,8 +216,21 @@ FUNC_BASE_SETUP(){
     sudo sed -i -e 's/\#& stop/\& stop/g' /etc/rsyslog.d/20-ufw.conf
     sudo cat /etc/rsyslog.d/20-ufw.conf | grep '& stop'
 
+    echo 
+    echo 
+    echo -e "${GREEN}#########################################################################" 
+    echo 
+    echo -e "${GREEN}## Setup: Enable Firewall...${NC}"
+    echo 
+    sudo systemctl start ufw && sudo systemctl status ufw
+    sleep 2s
+    sudo ufw enable
+    sudo ufw status verbose
+}
 
 
+
+FUNC_SETUP_SECURE_SSH(){
     echo 
     echo 
     echo -e "${GREEN}#########################################################################"
@@ -236,8 +271,72 @@ FUNC_BASE_SETUP(){
 }
 
 
+
 FUNC_EXIT(){
 	exit 0
 	}
+
+
+
+FUNC_BASE_SETUP(){
+    FUNC_VARS;
+    FUNC_VALUE_CHECK;
+    FUNC_SETUP_OS;
+    FUNC_SETUP_USER;
+    FUNC_SETUP_SSH_KEYS;
+    FUNC_SETUP_UFW_PORTS;
+    FUNC_ENABLE_UFW;
+    FUNC_EXIT;
+}  
+
+
   
-FUNC_VALUE_CHECK;
+#FUNC_VALUE_CHECK;
+
+
+
+#clear
+case "$1" in
+        -D)
+                FUNC_BASE_SETUP
+                ;
+        -os)
+                FUNC_VARS
+                FUNC_SETUP_OS
+                ;
+        -user)
+                FUNC_VARS
+                FUNC_SETUP_USER
+                ;
+        -ports)
+                FUNC_VARS
+                FUNC_SETUP_UFW_PORTS
+                ;
+        -ufw)
+                FUNC_VARS
+                FUNC_SETUP_USER
+                ;
+        -S)
+                FUNC_VARS
+                FUNC_SETUP_SECURE_SSH
+                ;;
+        *)
+
+echo 
+echo "Usage: $0 {function}"
+echo 
+echo "where {function} is one of the following;"
+echo 
+echo "      -D      ==  performs a normal base setup (excludes Securing SSH)"
+echo
+echo "      -os     ==  perform OS updates & installs required packages (see sample.vars 'BASE_SYS_PACKAGES')"
+echo "      -user   ==  Adds a new admin account (to install the plugin node under) & SSH keys"
+echo "      -ports  ==  Adds required ports to UFW config (see sample.vars for 'PORT' variables )"
+echo "      -ufw    ==  Starts the UFW process, sets the logging to 'ufw.log' only & enables UFW service"
+echo 
+echo "      -S      ==  Secures the SSH service: "
+echo "                  -- sets SSH to use port number $PLI_SSH_NEW_PORT "
+echo "                  -- sets authentication method to SSH keys ONLY (Password Auth is disabled)"
+echo "                  -- adds port number $PLI_SSH_NEW_PORT to UFW ruleset"
+echo "                  -- restarts the SSH service to activate new settings (NOTE: Current session is unaffected)"
+esac
