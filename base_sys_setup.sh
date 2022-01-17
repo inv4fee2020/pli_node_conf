@@ -299,23 +299,23 @@ FUNC_BASE_SETUP(){
 case "$1" in
         -D)
                 FUNC_BASE_SETUP
-                ;
+                ;;
         -os)
                 FUNC_VARS
                 FUNC_SETUP_OS
-                ;
+                ;;
         -user)
                 FUNC_VARS
                 FUNC_SETUP_USER
-                ;
+                ;;
         -ports)
                 FUNC_VARS
                 FUNC_SETUP_UFW_PORTS
-                ;
+                ;;
         -ufw)
                 FUNC_VARS
                 FUNC_SETUP_USER
-                ;
+                ;;
         -S)
                 FUNC_VARS
                 FUNC_SETUP_SECURE_SSH
