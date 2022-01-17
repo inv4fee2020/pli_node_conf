@@ -14,7 +14,7 @@ FUNC_VARS(){
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     #source sample.vars
-    source ~/"pli_$(hostname -f)".vars
+    source ~/"plinode_$(hostname -f)".vars
 }
 
 FUNC_VALUE_CHECK(){
@@ -73,7 +73,7 @@ FUNC_PKG_CHECK(){
 
 
 FUNC_SETUP_OS(){
-    FUNC_VARS;
+    #FUNC_VARS;
     
     echo -e "${GREEN}#########################################################################"
     echo -e "${GREEN}#########################################################################"
@@ -95,8 +95,8 @@ FUNC_SETUP_OS(){
     #echo -e "${GREEN}## Setup: Install necessary apps...${NC}"
     #echo 
     #sudo apt install net-tools git curl locate ufw whois -y 
-    FUNC_PKG_CHECK;
-    sudo updatedb
+    #FUNC_PKG_CHECK;
+    #sudo updatedb
     sleep 1s
 }
 
@@ -314,7 +314,7 @@ case "$1" in
                 ;;
         -ufw)
                 FUNC_VARS
-                FUNC_SETUP_USER
+                FUNC_ENABLE_UFW
                 ;;
         -S)
                 FUNC_VARS
@@ -339,4 +339,7 @@ echo "                  -- sets SSH to use port number $PLI_SSH_NEW_PORT "
 echo "                  -- sets authentication method to SSH keys ONLY (Password Auth is disabled)"
 echo "                  -- adds port number $PLI_SSH_NEW_PORT to UFW ruleset"
 echo "                  -- restarts the SSH service to activate new settings (NOTE: Current session is unaffected)"
+echo 
+echo 
+echo 
 esac
