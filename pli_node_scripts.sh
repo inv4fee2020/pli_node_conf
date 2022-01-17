@@ -25,6 +25,7 @@ FUNC_VARS(){
         echo
         echo -e "${RED} ..creating local vars file '$HOME/$PLI_VARS_FILE' ${NC}"
         cp sample.vars ~/$PLI_VARS_FILE
+        chmod 600 ~/$PLI_VARS_FILE
         echo
         echo -e "${GREEN} please update the vars file with your specific values.. ${NC}"
         echo -e "${GREEN} copy command to edit: ${NC}"
