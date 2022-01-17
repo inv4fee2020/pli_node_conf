@@ -39,7 +39,7 @@ FUNC_VALUE_CHECK(){
             read -r -p "please confirm that you have updated this script with your values ? (y/n) " _input
             case $_input in
                 [Yy][Ee][Ss]|[Yy]* ) 
-                    FUNC_BASE_SETUP
+                    #FUNC_BASE_SETUP
                     break
                     ;;
                 [Nn][Oo]|[Nn]* ) 
@@ -238,7 +238,7 @@ FUNC_SETUP_SECURE_SSH(){
     echo -e "${GREEN}## Setup: Change SSH port & Secure Authentication methods...${NC}"
     echo 
     echo -e "${RED}# !! IMPORTANT: DO NOT close your existing ssh session..."
-    echo -e "${RED}# !! Open a second connection to the new port with you existing ADMIN "
+    echo -e "${RED}# !! Open a second connection to the new port with your existing ADMIN "
     echo -e "${RED}# !! or ROOT account - PASSWORD AUTH will be disabled from this point. ${NC}"
     
     sleep 3
@@ -257,14 +257,14 @@ FUNC_SETUP_SECURE_SSH(){
     echo -e "${GREEN}## Setup: Add new SSH port to firewall...${NC}"
     echo
     sudo ufw allow $PLI_SSH_NEW_PORT/tcp
-    
+    sudo netstat -tpln | grep $PLI_SSH_NEW_PORT
+
     echo
     echo -e "${GREEN}#########################################################################"
     echo
     echo -e "${GREEN}## Setup: Restart SSH service for port change to take effect...${NC}"
     echo 
     sudo systemctl restart sshd && sudo systemctl status sshd
-    sudo netstat -tpln | grep $PLI_SSH_NEW_PORT
     
     echo
     echo -e "${GREEN}#### Base System Setup Finished ####${NC}"
@@ -279,9 +279,9 @@ FUNC_EXIT(){
 
 
 FUNC_BASE_SETUP(){
-    FUNC_VARS;
     FUNC_VALUE_CHECK;
     FUNC_SETUP_OS;
+    FUNC_PKG_CHECK;
     FUNC_SETUP_USER;
     FUNC_SETUP_SSH_KEYS;
     FUNC_SETUP_UFW_PORTS;
@@ -290,56 +290,46 @@ FUNC_BASE_SETUP(){
 }  
 
 
-  
-#FUNC_VALUE_CHECK;
-
-
-
-#clear
+FUNC_VARS;
 case "$1" in
         -D)
                 FUNC_BASE_SETUP
                 ;;
         -os)
-                FUNC_VARS
                 FUNC_SETUP_OS
                 ;;
         -user)
-                FUNC_VARS
                 FUNC_SETUP_USER
                 ;;
         -ports)
-                FUNC_VARS
                 FUNC_SETUP_UFW_PORTS
                 ;;
         -ufw)
-                FUNC_VARS
                 FUNC_ENABLE_UFW
                 ;;
         -S)
-                FUNC_VARS
                 FUNC_SETUP_SECURE_SSH
                 ;;
         *)
 
-echo 
-echo "Usage: $0 {function}"
-echo 
-echo "where {function} is one of the following;"
-echo 
-echo "      -D      ==  performs a normal base setup (excludes Securing SSH)"
-echo
-echo "      -os     ==  perform OS updates & installs required packages (see sample.vars 'BASE_SYS_PACKAGES')"
-echo "      -user   ==  Adds a new admin account (to install the plugin node under) & SSH keys"
-echo "      -ports  ==  Adds required ports to UFW config (see sample.vars for 'PORT' variables )"
-echo "      -ufw    ==  Starts the UFW process, sets the logging to 'ufw.log' only & enables UFW service"
-echo 
-echo "      -S      ==  Secures the SSH service: "
-echo "                  -- sets SSH to use port number $PLI_SSH_NEW_PORT "
-echo "                  -- sets authentication method to SSH keys ONLY (Password Auth is disabled)"
-echo "                  -- adds port number $PLI_SSH_NEW_PORT to UFW ruleset"
-echo "                  -- restarts the SSH service to activate new settings (NOTE: Current session is unaffected)"
-echo 
-echo 
-echo 
+                echo 
+                echo "Usage: $0 {function}"
+                echo 
+                echo "where {function} is one of the following;"
+                echo 
+                echo "      -D      ==  performs a normal base setup (excludes Securing SSH)"
+                echo
+                echo "      -os     ==  perform OS updates & installs required packages (see sample.vars 'BASE_SYS_PACKAGES')"
+                echo "      -user   ==  Adds a new admin account (to install the plugin node under) & SSH keys"
+                echo "      -ports  ==  Adds required ports to UFW config (see sample.vars for 'PORT' variables )"
+                echo "      -ufw    ==  Starts the UFW process, sets the logging to 'ufw.log' only & enables UFW service"
+                echo 
+                echo "      -S      ==  Secures the SSH service: "
+                echo "                  -- sets SSH to use port number '$PLI_SSH_NEW_PORT' "
+                echo "                  -- sets authentication method to SSH keys ONLY (Password Auth is disabled)"
+                echo "                  -- adds port number '$PLI_SSH_NEW_PORT' to UFW ruleset"
+                echo "                  -- restarts the SSH service to activate new settings (NOTE: Current session is unaffected)"
+                echo 
+                echo 
+                echo 
 esac
