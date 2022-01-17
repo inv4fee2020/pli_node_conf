@@ -50,7 +50,6 @@ The following VARIABLES should be updated at a minimum for your individual imple
 |API_PASS="passW0rd123"|Must be 8 - 50 characters & NO special characters. (error creating api initializer)|
 |PASS_KEYSTORE="Som3$tr*nGp4$$w0Rd"| Min. 12 characters, 3 lower, 3 upper, 3 numbers, 3 symbols & no more than 3 identical consecutive characters|
 |DB_PWD_NEW="testdbpwd1234"|This is your new secure Postgres DB password & NO special characters|
-|PLI_SSH_NEW_PORT="6222"| Change to suit your preference - should be a single value in the high range above 1025 & below 65535 e.g. 34022|
 
 You can reveiw the 'sample.vars' file for the full list of VARIABLES.
 
