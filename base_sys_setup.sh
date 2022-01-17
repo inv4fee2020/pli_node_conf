@@ -200,6 +200,8 @@ FUNC_SETUP_UFW_PORTS(){
 
     ## node local job server http/https ports
     sudo ufw allow $PLI_HTTP_PORT/tcp && sudo ufw allow $PLI_HTTPS_PORT/tcp
+    sudo ufw status verbose
+    sleep 2s
 }
 
 
@@ -257,7 +259,6 @@ FUNC_SETUP_SECURE_SSH(){
     echo -e "${GREEN}## Setup: Add new SSH port to firewall...${NC}"
     echo
     sudo ufw allow $PLI_SSH_NEW_PORT/tcp
-    sudo netstat -tpln | grep $PLI_SSH_NEW_PORT
 
     echo
     echo -e "${GREEN}#########################################################################"
@@ -265,6 +266,7 @@ FUNC_SETUP_SECURE_SSH(){
     echo -e "${GREEN}## Setup: Restart SSH service for port change to take effect...${NC}"
     echo 
     sudo systemctl restart sshd && sudo systemctl status sshd
+    sudo netstat -tpln | grep $PLI_SSH_NEW_PORT
     
     echo
     echo -e "${GREEN}#### Base System Setup Finished ####${NC}"
