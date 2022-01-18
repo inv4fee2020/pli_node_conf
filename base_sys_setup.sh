@@ -284,8 +284,6 @@ FUNC_BASE_SETUP(){
     FUNC_VALUE_CHECK;
     FUNC_SETUP_OS;
     FUNC_PKG_CHECK;
-    FUNC_SETUP_USER;
-    FUNC_SETUP_SSH_KEYS;
     FUNC_SETUP_UFW_PORTS;
     FUNC_ENABLE_UFW;
     FUNC_EXIT;
@@ -319,7 +317,8 @@ case "$1" in
                 echo 
                 echo "where {function} is one of the following;"
                 echo 
-                echo "      -D      ==  performs a normal base setup (excludes Securing SSH)"
+                echo "      -D      ==  performs a normal base setup (excludes User acc & Securing SSH)"
+                echo "                  -- this assumes you are installing under your current admin session (preferable not root)"
                 echo
                 echo "      -os     ==  perform OS updates & installs required packages (see sample.vars 'BASE_SYS_PACKAGES')"
                 echo "      -user   ==  Adds a new admin account (to install the plugin node under) & SSH keys"
