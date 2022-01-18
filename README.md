@@ -71,8 +71,8 @@ to successfully deploy the node.
 
 The scripts has 2 main functions, one of which must be passed to run the scripts
 
->>>     fullnode
->>>     initiators
+>     fullnode
+>     initiators
 
 ### Usage
 
