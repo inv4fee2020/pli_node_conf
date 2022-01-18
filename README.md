@@ -14,7 +14,7 @@ clone the repo to your local '$HOME' folder **Preferably as a normal user & _not
         cd $HOME
         git clone https://github.com/inv4fee2020/pli_node_conf.git
         cd pli_node_conf
-        chmod +x {base_sys_setup.sh,pli_node_scripts.sh,reset_pli.sh}
+        chmod +x {base_sys_setup.sh,pli_node_scripts.sh,reset_pli.sh,gen_node_testjob.sh}
         cp -n sample.vars ~/plinode_$(hostname -f).vars && chmod 600 ~/plinode_$(hostname -f).vars
         nano ~/plinode_$(hostname -f).vars
 
