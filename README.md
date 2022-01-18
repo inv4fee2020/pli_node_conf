@@ -1,6 +1,12 @@
 # pli_node_conf
 Misc. scripts for GoPlugin $PLI node setup using the SCRIPT METHOD.
 
+### contributers: 
+Thanks to all the Plugin discord community for their input / feedback with special mention for;
+- @samsam
+- @go140point6
+
+
 > **NOTE: All values used in this code are for test purposes only & deployed to a test environment that is regularly deleted.**
 
 >> **NOTE: Please ensure that you clone/fork and update with your own values as necessary.**
@@ -67,6 +73,13 @@ The scripts has 2 main functions, one of which must be passed to run the scripts
 
 >>>     fullnode
 >>>     initiators
+
+### Usage
+
+        Usage: ./pli_node_scripts.sh { fullnode | initiator }
+
+        please provide one of the above values to run the scripts
+           example:  ./pli_node_scripts.sh fullnode
 
 ### Function: fullnode
 
@@ -144,7 +157,8 @@ _You can reveiw the 'sample.vars' file for the full list of VARIABLES._
 
         where {function} is one of the following;
 
-              -D      ==  performs a normal base setup (excludes Securing SSH)
+              -D      ==  performs a normal base setup (excludes User acc & Securing SSH)"
+                          -- this assumes you are installing under your current admin session (preferable not root)"
 
               -os     ==  perform OS updates & installs required packages (see sample.vars 'BASE_SYS_PACKAGES')
               -user   ==  Adds a new admin account (to install the plugin node under) & SSH keys
@@ -152,11 +166,12 @@ _You can reveiw the 'sample.vars' file for the full list of VARIABLES._
               -ufw    ==  Starts the UFW process, sets the logging to 'ufw.log' only & enables UFW service
 
               -S      ==  Secures the SSH service:
-                          -- sets SSH to use port number '6222'
+                          -- sets SSH to use port number 'your_defined_new_port'
                           -- sets authentication method to SSH keys ONLY (Password Auth is disabled)
-                          -- adds port number '6222' to UFW ruleset
+                          -- adds port number 'your_defined_new_port' to UFW ruleset
                           -- restarts the SSH service to activate new settings (NOTE: Current session is unaffected)
 
+*_NOTE: The script does read the local node specific vars file._*
 
 ---
 ---
