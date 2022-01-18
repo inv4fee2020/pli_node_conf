@@ -5,11 +5,11 @@ Misc. scripts for GoPlugin $PLI node setup using the SCRIPT METHOD.
 Thanks to all the Plugin discord community for their input / feedback with special mention for;
 - @samsam
 - @go140point6
-
+---
 
 > **NOTE: All values used in this code are for test purposes only & deployed to a test environment that is regularly deleted.**
 
->> **NOTE: Please ensure that you clone/fork and update with your own values as necessary.**
+> **NOTE: Please ensure that you clone/fork and update with your own values as necessary.**
 
 ---
 
