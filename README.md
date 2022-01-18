@@ -122,11 +122,12 @@ Basic function is to;
 ---
 
 
-## base_sys_setup.sh (__Optional__)
+## base_sys_setup.sh (_Optional - Recommended_)
 
+Updated to use modular functions allowing for individial functions to be run or 
 You can reveiw the 'sample.vars' file for the full list of VARIABLES.
 
-This script performs os level commands as follows;
+This script performs OS level commands as follows;
 
 - Apply ubuntu updates
 - Install misc. services & apps e.g. UFW, Curl, Git, locate 
@@ -135,6 +136,26 @@ This script performs os level commands as follows;
 - Applies UFW firewall minimum configuration & starts/enables service
 - Modifies UFW firewall logging to use only the ufw.log file
 - Modify SSH service to use alternate service port, update UFW & restart SSH
+
+_You can reveiw the 'sample.vars' file for the full list of VARIABLES._
+### Usage
+
+        Usage: ./base_sys_setup.sh {function}
+
+        where {function} is one of the following;
+
+              -D      ==  performs a normal base setup (excludes Securing SSH)
+
+              -os     ==  perform OS updates & installs required packages (see sample.vars 'BASE_SYS_PACKAGES')
+              -user   ==  Adds a new admin account (to install the plugin node under) & SSH keys
+              -ports  ==  Adds required ports to UFW config (see sample.vars for 'PORT' variables )
+              -ufw    ==  Starts the UFW process, sets the logging to 'ufw.log' only & enables UFW service
+
+              -S      ==  Secures the SSH service:
+                          -- sets SSH to use port number '6222'
+                          -- sets authentication method to SSH keys ONLY (Password Auth is disabled)
+                          -- adds port number '6222' to UFW ruleset
+                          -- restarts the SSH service to activate new settings (NOTE: Current session is unaffected)
 
 
 ---
