@@ -2,7 +2,7 @@
 Misc. scripts for GoPlugin $PLI node setup using the SCRIPT METHOD.
 
 ### contributers: 
-Thanks to all the Plugin discord community for their input / feedback with special mention for;
+Thanks to all the Plugin discord community for their input / feedback with special mention to;
 - @samsam
 - @go140point6
 ---
