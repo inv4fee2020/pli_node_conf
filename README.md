@@ -182,6 +182,7 @@ As the code is updated based it will be necessary to update your local repo from
 1. Manually delete the folder and re-run the clone & permissions commands
         
         cd $HOME
+        rm -rf pli_node_conf
         git clone https://github.com/inv4fee2020/pli_node_conf.git
         cd pli_node_conf
         chmod +x {base_sys_setup.sh,pli_node_scripts.sh,reset_pli.sh,gen_node_testjob.sh}
