@@ -39,13 +39,10 @@ Run the main script to do a full node deployment
 ---
 ## VARIABLES file
 
-A sample vars file is included 'sample.vars'.
+A sample vars file is included 'sample.vars'. This file will be copied to your user $HOME folder as part of the main script and the permissions to the file updated to restrict access to the owner of the $HOME folder.
 
-This should be copied to your user $HOME folder using the following command;
+The scripts check that the local node variables file exists. The code prompts you to confirm that the file has been updated.
 
->     cp -n sample.vars ~/"plinode_$(hostname -f).vars"
-
-The scripts check that the local node variables file exists. If not then the code prompts the user and exists.
 By using a dedicated variables file, any updates to the main script should not involve any changes to the node specific settings.
 
 ---
