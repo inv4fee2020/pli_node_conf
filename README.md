@@ -179,7 +179,7 @@ _You can reveiw the 'sample.vars' file for the full list of VARIABLES._
 
 As the code is updated it will be necessary to update your local repo from time to time. To do this you have two options;
 
-1. Force git to update the local repo by overwriting the local changes, which in this case are the file permission changes
+1. Force git to update the local repo by overwriting the local changes, which in this case are the file permission changes. Copy and paste the following code;
         
         git fetch
         git reset --hard HEAD
@@ -189,7 +189,7 @@ As the code is updated it will be necessary to update your local repo from time 
    _source: https://www.freecodecamp.org/news/git-pull-force-how-to-overwrite-local-changes-with-git/_
 
 
-2. Manually delete the folder and re-run the clone & permissions commands
+2. Manually delete the folder and re-run the clone & permissions commands. Copy and paste the following code;
         
         cd $HOME
         rm -rf pli_node_conf
