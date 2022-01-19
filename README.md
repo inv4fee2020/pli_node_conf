@@ -176,7 +176,30 @@ _You can reveiw the 'sample.vars' file for the full list of VARIABLES._
 ---
 ---
 
+## Refreshing your local repo
 
+As the code is updated based it will be necessary to update your local repo from time to time. To do this you have two options;
+1. Manually delete the folder and re-run the clone & permissions commands
+        
+        cd $HOME
+        git clone https://github.com/inv4fee2020/pli_node_conf.git
+        cd pli_node_conf
+        chmod +x {base_sys_setup.sh,pli_node_scripts.sh,reset_pli.sh,gen_node_testjob.sh}
+
+
+2. Force git to update the local repo by overwriting the local changes, which in this case are the file permission changes
+        
+        git fetch
+        git reset --hard HEAD
+        git merge '@{u}'
+
+
+   _source: https://www.freecodecamp.org/news/git-pull-force-how-to-overwrite-local-changes-with-git/_
+
+
+*_NOTE: None of the above steps will overwrite your local nodes variables file as it is stored in your $HOME folder._*
+
+---
 ## Testing
 
 The scripts have been developed on ubuntu 20.x linux distros deployed within both a vmware esxi environment & racknerd VPS.
