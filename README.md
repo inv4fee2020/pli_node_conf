@@ -7,21 +7,6 @@ Thanks to all the Plugin discord community for their input / feedback with speci
 - @go140point6
 ---
 
-  * [TL:DR](#tl-dr)
-  * [VARIABLES file](#variables-file)
-  * [pli_node_scripts.sh](#pli-node-scriptssh)
-    + [Usage](#usage)
-    + [Function: fullnode](#function--fullnode)
-    + [Function: initiator](#function--initiator)
-  * [reset_pli.sh](#reset-plish)
-  * [base_sys_setup.sh (_Optional - Recommended_)](#base-sys-setupsh---optional---recommended--)
-    + [Usage](#usage-1)
-  * [Refreshing your local repo](#refreshing-your-local-repo)
-  * [Testing](#testing)
-
-
-
-
 > **NOTE: All values used in this code are for test purposes only & deployed to a test environment that is regularly deleted.**
 
 > **NOTE: Please ensure that you clone/fork and update with your own values as necessary.**
