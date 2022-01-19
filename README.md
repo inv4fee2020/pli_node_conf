@@ -15,7 +15,9 @@ Thanks to all the Plugin discord community for their input / feedback with speci
 
 # TL:DR
 
-clone the repo to your local '$HOME' folder **Preferably as a normal user & _not as root_**
+Clone this repo to your local '$HOME' folder **Preferably as a normal user & _not as root_**
+
+Copy and paste the below direct to your terminal session to your node;
 
         cd $HOME
         git clone https://github.com/inv4fee2020/pli_node_conf.git
