@@ -83,7 +83,7 @@ FUNC_VALUE_CHECK(){
         while true; do
             read -t7 -r -p "please confirm that you have updated the vars file with your values ? (Y/n) " _input
             if [ $? -gt 128 ]; then
-                clear
+                #clear
                 echo
                 echo "timed out waiting for user response - proceeding as normal..."
                 FUNC_NODE_DEPLOY;
