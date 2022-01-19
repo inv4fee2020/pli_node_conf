@@ -54,7 +54,7 @@ The following VARIABLES should be updated at a minimum for your individual imple
 |----------|-------|
 |API_EMAIL="user123@gmail.com"||
 |API_PASS="passW0rd123"|Must be 8 - 50 characters & NO special characters. (error creating api initializer)|
-|PASS_KEYSTORE="Som3$tr*nGp4$$w0Rd"| Min. 12 characters, 3 lower, 3 upper, 3 numbers, 3 symbols & no more than 3 identical consecutive characters|
+|PASS_KEYSTORE="$oM3$tr*nGp4$$w0Rd$"| Min. 12 characters, 3 lower, 3 upper, 3 numbers, 3 symbols & no more than 3 identical consecutive characters|
 |DB_PWD_NEW="testdbpwd1234"|This is your new secure Postgres DB password & NO special characters|
 
 You can reveiw the 'sample.vars' file for the full list of VARIABLES.
