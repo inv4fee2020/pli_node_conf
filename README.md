@@ -177,7 +177,7 @@ _You can reveiw the 'sample.vars' file for the full list of VARIABLES._
 
 ## Refreshing your local repo
 
-As the code is updated based it will be necessary to update your local repo from time to time. To do this you have two options;
+As the code is updated it will be necessary to update your local repo from time to time. To do this you have two options;
 1. Manually delete the folder and re-run the clone & permissions commands
         
         cd $HOME
