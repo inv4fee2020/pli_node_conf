@@ -22,8 +22,10 @@ Copy and paste the below direct to your terminal session to your node;
         cd $HOME
         git clone https://github.com/inv4fee2020/pli_node_conf.git
         cd pli_node_conf
-        chmod +x {base_sys_setup.sh,pli_node_scripts.sh,reset_pli.sh,gen_node_testjob.sh}
+        chmod +x {base_sys_setup.sh,pli_node_scripts.sh,reset_pli.sh,gen_node_testjob.sh,backup_db.sh}
         cp -n sample.vars ~/plinode_$(hostname -f).vars && chmod 600 ~/plinode_$(hostname -f).vars
+        cp -n sample_sql.vars ~/plinode_$(hostname -f)_sql.vars && chmod 600 ~/plinode_$(hostname -f)_sql.vars
+
         nano ~/plinode_$(hostname -f).vars
 
 Update the the minimum variables (as per VARIABLES section below) 
@@ -195,7 +197,7 @@ As the code is updated it will be necessary to update your local repo from time 
         rm -rf pli_node_conf
         git clone https://github.com/inv4fee2020/pli_node_conf.git
         cd pli_node_conf
-        chmod +x {base_sys_setup.sh,pli_node_scripts.sh,reset_pli.sh,gen_node_testjob.sh}
+        chmod +x {base_sys_setup.sh,pli_node_scripts.sh,reset_pli.sh,gen_node_testjob.sh,backup_db.sh}
 
 
 
