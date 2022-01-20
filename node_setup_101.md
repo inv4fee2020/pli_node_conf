@@ -20,7 +20,6 @@
         chmod +x {base_sys_setup.sh,pli_node_scripts.sh,reset_pli.sh,gen_node_testjob.sh}
         cp -n sample.vars ~/plinode_$(hostname -f).vars && chmod 600 ~/plinode_$(hostname -f).vars
         nano ~/plinode_$(hostname -f).vars
-        ./base_sys_setup.sh --user
 
 
 5. Update the VARs file as necessary... Pay special attention to the notes on the password structure;
