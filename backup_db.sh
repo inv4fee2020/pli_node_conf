@@ -39,18 +39,10 @@ FUNC_DB_VARS(){
 FUNC_DB_VARS;
 sleep 1s
 
-#echo $PLI_DB_VARS_FILE
-#echo $DB_BACKUP_PATH
-#echo $DB_BACKUP_ROOT
-#echo $DB_BACKUP_FNAME
-#echo $DB_BACKUP_OBJ
-#echo $ENC_PATH
-#echo $ENC_FNAME
-#echo $PASS_KEYSTORE
-
-
 sudo su postgres -c "export PGPASSFILE="/$DB_BACKUP_PATH/.pgpass"; pg_dump -c -w -U postgres plugin_mainnet_db | gzip > /$DB_BACKUP_OBJ"
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$DB_BACKUP_OBJ
 sleep 0.5s
+
 gpg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_FNAME -c /$DB_BACKUP_OBJ
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$ENC_PATH/$ENC_FNAME
+#rm -f /$DB_BACKUP_OBJ
