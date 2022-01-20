@@ -1,10 +1,11 @@
-#101 on setting up a Plugin $PLI node;
+# 101 on setting up a Plugin $PLI node;
 
 1. Logon as root to your new VPS
 
 
 2. Create a new admin user account
-> -- Change 'my_new_user' & 'my_new_password' for your values and paste the code to the terminal
+-- Change 'my_new_user' & 'my_new_password' for your values and paste the code to the terminal
+        
         sudo groupadd my_new_user
         sudo useradd -p $(openssl passwd -6 my_new_password) my_new_user -m -s /bin/bash -g my_new_user -G sudo
 
