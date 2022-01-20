@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# Authenticate sudo perms before script execution to avoid timeouts or errors
+sudo -l > /dev/null 2>&1
+
 source ~/"plinode_$(hostname -f)".vars
 
 FUNC_DB_VARS(){
@@ -8,7 +12,7 @@ FUNC_DB_VARS(){
     USER_ID=$(getent passwd $EUID | cut -d: -f1)
 
 
-    PLI_DB_VARS_FILE=~/"plinode_$(hostname -f)"_sql.vars
+    PLI_DB_VARS_FILE="plinode_$(hostname -f)"_sql.vars
     if [ ! -e ~/$PLI_DB_VARS_FILE ]; then
         clear
         echo
