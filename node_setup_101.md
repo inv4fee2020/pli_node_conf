@@ -14,6 +14,7 @@
 
 4. Once logged on as your new admin user - run the following commands;
 
+        sudo apt install -y git
         cd $HOME
         git clone https://github.com/inv4fee2020/pli_node_conf.git
         cd pli_node_conf
