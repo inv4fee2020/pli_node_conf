@@ -32,7 +32,7 @@
         y
 
 
-7. Lets update the OS and install necessary packages - run the following commands;
+7. Lets update the OS and install necessary packages & update the UFW firewall - run the following commands;
 
         ./base_sys_setup.sh -D
 
