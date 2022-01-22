@@ -20,7 +20,7 @@ FUNC_DB_VARS(){
         echo -e "${RED} #### ERROR: No VARIABLES file found. ####${NC}"
         echo
         echo -e "${RED} ..creating local vars file '$HOME/$PLI_DB_VARS_FILE' ${NC}"
-        cp sample_sql.vars ~/$PLI_DB_VARS_FILE
+        cp -n sample_sql.vars ~/$PLI_DB_VARS_FILE
         chmod 600 ~/$PLI_DB_VARS_FILE
         echo
         echo -e "${GREEN} please update the vars file with your specific values.. ${NC}"
@@ -46,3 +46,5 @@ sleep 0.5s
 gpg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_FNAME -c /$DB_BACKUP_OBJ
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$ENC_PATH/$ENC_FNAME
 #rm -f /$DB_BACKUP_OBJ
+sudo su gdbackup -c "cd ~/; .google-drive-upload/bin/gupload -q -d /$DB_BACKUP_PATH/*.gpg -C $(hostname -f) --hide"
+
