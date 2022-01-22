@@ -18,6 +18,7 @@ Thanks to all the Plugin discord community for their input / feedback with speci
 
 [Follow the node setup 101 steps](node_setup_101.md)
 
+>>> When connecting to your nodes plugin GUI as outlined in ['fund your node'](https://docs.goplugin.co/plugin-installations/fund-your-node), you must use 'https://your_node_ip:6689' instead due to the configuration applied by the [main script](####main-script-actions)
 
 
 ---
@@ -47,7 +48,7 @@ You can reveiw the 'sample.vars' file for the full list of VARIABLES.
 
 ---
 ---
-## pli_node_scripts.sh
+## pli_node_scripts.sh (main script)
 
 This script performs file manipulations & executes the various plugin bash scripts in order 
 to successfully deploy the node. 
@@ -77,14 +78,14 @@ The key aspect to this function is the file manipulation to extract the access s
 
 
 **_NOTE: The script uses a base install folder is your linux users $HOME folder - which is now set as a VARIABLE._**
-
+#### Main script actions
 The script performs the following actions;
 
 - Updates Postgres DB password 'sed' find/replace on BASH_FILE1
 - Removes existing Golang install as part of pre-requisite for BASH_FILE1
 - Updates BASH_FILE2 to use new '.env' files & Postgres password
 - Updates BASH_FILE2 with TLS certificate files & TLS Port
-- Creates local certificate authority & TLS certificate for use with local job server
+- Creates local certificate authority & TLS certificate for use with local job server (enabling HTTPS)
 - Updates BASH_FILE2 with EXTERNAL_INITIATORS parameter
 - Checks for the Golang path & updates bash profile as necessary
 - Initialises the BASH_FILE2 PM2 service & sets PM2 to auto start on boot
