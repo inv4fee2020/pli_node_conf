@@ -18,7 +18,7 @@ Thanks to all the Plugin discord community for their input / feedback with speci
 
 [Follow the node setup 101 steps](node_setup_101.md)
 
->>> When connecting to your nodes plugin GUI as outlined in ['fund your node'](https://docs.goplugin.co/plugin-installations/fund-your-node), you must use 'https://your_node_ip:6689' instead due to the configuration applied by the [main script](####main-script-actions)
+>>> When connecting to your nodes plugin GUI as outlined in ['fund your node'](https://docs.goplugin.co/plugin-installations/fund-your-node), you must use 'https://your_node_ip:6689' instead due to the configuration applied by the [main script](#main-script-actions)
 
 
 ---
