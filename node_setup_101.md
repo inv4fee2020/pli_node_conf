@@ -44,3 +44,5 @@
 
 
 9. in about 12-15mins you should have a node running and ready to progress with the Remix steps
+
+> When connecting to your nodes plugin GUI as outlined in ['fund your node'](https://docs.goplugin.co/plugin-installations/fund-your-node), you must use 'https://your_node_ip:6689' instead due to the configuration applied by the [main script](#main-script-actions)
