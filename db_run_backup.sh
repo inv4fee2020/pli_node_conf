@@ -117,57 +117,13 @@ FUNC_DB_PRE_CHECKS(){
 
 USER_ID=$(getent passwd $EUID | cut -d: -f1)
 
-# check shared group '$DB_BACKUP_GUSER' exists & set permissions
-if [ -z "$DB_BACKUP_GUSER" ] && [ ! $(getent group nodebackup) ]; then
-    echo "variable 'DB_BACKUP_GUSER is: NULL && does not exist"
-    echo "creating group "
-    sudo groupadd $DB_BACKUP_GUSER
-    sed -i.bak 's/DB_BACKUP_GUSER=\"\"/DB_BACKUP_GUSER=\"nodebackup\"/g' ~/$PLI_DB_VARS_FILE
-    export DB_BACKUP_GUSER="nodebackup"
-
-elif [ ! -z "$DB_BACKUP_GUSER" ] && [ ! $(getent group $DB_BACKUP_GUSER) ]; then
-    echo "variable 'DB_BACKUP_GUSER is: NOT NULL && does not exist"
-    echo "creating group "
-fi
-
-# add users to the group
-    DB_GUSER_MEMBER=(postgres $USER_ID)
-    echo "${DB_GUSER_MEMBER[@]}"
-    for _user in "${DB_GUSER_MEMBER[@]}"
-        hash $_user &> /dev/null
-        echo "...adding user "$_user" to group "
-        sudo usermod -aG DB_BACKUP_GUSER "$_user"
-    done 
-
-
-
-if [ $(getent group nodebackups) ]; then
-  echo "group exists."
-else
-  echo "group does not exist."
-fi
-
-
-if [ ! $(getent group nodebackups) ]; then
-  echo "group does NOT exist."
-fi
-
-
-}
-
-
-FUNC_DB_BACKUP_LOCAL(){
-
-FUNC_DB_PRE_CHECKS;
-FUNC_CHECK_DIRS;
-
 
 #USER_ID=$(getent passwd $EUID | cut -d: -f1)
 #GROUP_ID=$(getent group $EUID | cut -d: -f1)
 
 
-#check DB_BACKUP_FUSER & DB_BACKUP_GUSER values
-if [ -z "$DB_BACKUP_FUSER" ] ; then
+#check DB_BACKUP_FUSER  values
+if [ -z "$DB_BACKUP_FUSER" ]; then
     DB_BACKUP_FUSER="$USER_ID"
     echo "..Detected NULL we set the variable to: "$USER_ID""
 
@@ -177,18 +133,40 @@ if [ -z "$DB_BACKUP_FUSER" ] ; then
 fi
 
 
-if [ -z "$DB_BACKUP_GUSER" ] ; then
-    DB_BACKUP_GUSER="$GROUP_ID"
-    echo "..Detected NULL we set the variable to: "$GROUP_ID""
+
+# check shared group '$DB_BACKUP_GUSER' exists & set permissions
+if [ -z "$DB_BACKUP_GUSER" ] && [ ! $(getent group nodebackup) ]; then
+    echo "variable 'DB_BACKUP_GUSER is: NULL && 'default' does not exist"
+    echo "creating group 'nodebackup'"
+    sudo groupadd nodebackup
 
     # adds the variable value to the VARS file
-    echo "..updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_GUSER to: $GROUP_ID"
-    sed -i.bak 's/DB_BACKUP_GUSER=\"\"/DB_BACKUP_GUSER=\"\$GROUP_ID\"/g' ~/$PLI_DB_VARS_FILE
+    echo "..updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_GUSER to: nodebackup"
+    sed -i.bak 's/DB_BACKUP_GUSER=\"\"/DB_BACKUP_GUSER=\"nodebackup\"/g' ~/$PLI_DB_VARS_FILE
+    export DB_BACKUP_GUSER="nodebackup"
+
+elif [ ! -z "$DB_BACKUP_GUSER" ] && [ ! $(getent group $DB_BACKUP_GUSER) ]; then
+    echo "variable 'DB_BACKUP_GUSER is: NOT NULL && does not exist"
+    echo "creating group "
+    sudo groupadd $DB_BACKUP_GUSER
 fi
 
 
 
+# add users to the group
+if [ ! -z "$GD_FUSER" ]; then
+    DB_GUSER_MEMBER=(postgres $USER_ID $GD_FUSER)
+    echo "${DB_GUSER_MEMBER[@]}"
+else
+    DB_GUSER_MEMBER=(postgres $USER_ID)
+    echo "${DB_GUSER_MEMBER[@]}"
+fi
 
+for _user in "${DB_GUSER_MEMBER[@]}"
+    hash $_user &> /dev/null
+    echo "...adding user "$_user" to group "$DB_BACKUP_GUSER""
+    sudo usermod -aG "$DB_BACKUP_GUSER" "$_user"
+done 
 
 
 # ensure that current user is member of postgres group
@@ -204,9 +182,16 @@ if ! id -nG postgres | grep -qw "$DB_BACKUP_GUSER"; then
     sudo usermod -aG $DB_BACKUP_GUSER postgres
 fi
 
+}
 
-echo "backup path used is: $DB_BACKUP_PATH"
-sleep 2s
+
+
+
+
+FUNC_DB_BACKUP_LOCAL(){
+
+FUNC_DB_PRE_CHECKS;
+FUNC_CHECK_DIRS;
 
 # checks if the '.pgpass' credentials file exists - if not creates in home folder & copies to dest folder
 # & sets perms
@@ -225,12 +210,16 @@ sudo su postgres -c "export PGPASSFILE="/$DB_BACKUP_PATH/.pgpass"; pg_dump -c -w
 error_exit;
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$DB_BACKUP_OBJ
 sleep 2s
+FUNC_DB_BACKUP_ENC;
 }
+
+
 
 FUNC_DB_BACKUP_ENC(){
 # runs GnuPG or gpg to encrypt the sql dump file - uses main keystore password as secret
 # outputs file to new folder ready for upload
 sudo gpg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_FNAME -c /$DB_BACKUP_OBJ
+error_exit;
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$ENC_PATH/$ENC_FNAME
 #rm -f /$DB_BACKUP_OBJ
 }
@@ -254,8 +243,9 @@ error_exit()
     if [ $? != 0 ]; then
         echo "ERROR"
         exit 1
+    else
+        return
     fi
-    return
 }
 
 
