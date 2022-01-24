@@ -29,7 +29,7 @@ FUNC_DB_VARS(){
         echo -e "${GREEN} please update the vars file with your specific values.. ${NC}"
         echo -e "${GREEN} copy command to edit: ${NC}"
         echo
-        echo -e "${GREEN}nano ~/$PLI_VARS_FILE ${NC}"
+        echo -e "${GREEN}       nano ~/$PLI_VARS_FILE ${NC}"
         echo
         echo
         #sleep 2s
@@ -41,12 +41,7 @@ FUNC_DB_VARS(){
 sleep 1s
 
 FUNC_CHECK_DIRS(){
-    # check that the vars defined folders exist
 
-    # While dir value is not $HOME then do    
-
-
-#if [ ! -z "$DB_BACKUP_ROOT" ] || [ != "root" ]; then
 if ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "root" ]) || ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "$HOME" ]); then
     echo "the variable DB_BACKUP_ROOT value is: $DB_BACKUP_ROOT"
     echo "var is not NULL"
@@ -78,17 +73,27 @@ if [ ! -z "$DB_BACKUP_DIR" ] ; then
     fi
 else
     echo "the variable DB_BACKUP_DIR value is: $DB_BACKUP_DIR"
-    echo "var is NULL"
+    echo "Detected NULL - we set the value"
+    DB_BACKUP_DIR="node_backups"
+    echo "..updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_DIR to: "$DB_BACKUP_DIR""
+    sed -i.bak 's/DB_BACKUP_DIR=\"\"/DB_BACKUP_DIR=\"'$DB_BACKUP_DIR'\"/g' ~/$PLI_DB_VARS_FILE
+
+    sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+    sudo chown $USER_ID\:$USER_ID -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+
+    cat ~/$PLI_DB_VARS_FILE | grep $DB_BACKUP_DIR
+    sleep 3s
     echo "exiting directory check & continuing...";
 fi
 
-echo "your configured node backup PATH is: "$DB_BACKUP_PATH" "
+DB_BACKUP_PATH="/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+echo "your configured node backup PATH is: $DB_BACKUP_PATH"
 sleep 2s
 }
 
 
 FUNC_DB_BACKUP_LOCAL(){
-sudo usermod -aG postgres $(getent passwd $EUID | cut -d: -f1)
+#sudo usermod -aG postgres $(getent passwd $EUID | cut -d: -f1)
 
 cat <<EOF >> .pgpass
 Localhost:5432:$DB_NAME:postgres:$DB_PWD_NEW
@@ -122,5 +127,26 @@ FUNC_CLEAN_UP_REMOTE(){
 
 
 FUNC_DB_VARS;
-FUNC_DB_BACKUP_LOCAL;
-FUNC_DB_BACKUP_REMOTE;
+#FUNC_DB_BACKUP_LOCAL;
+#FUNC_DB_BACKUP_REMOTE;
+
+
+clear
+case "$1" in
+        local)
+                FUNC_DB_BACKUP_LOCAL
+                ;;
+        remote)
+                FUNC_DB_BACKUP_REMOTE
+                ;;
+        *)
+                
+                echo 
+                echo 
+                echo "Usage: $0 { local | remote }"
+                echo 
+                echo "please provide one of the above values to run the scripts"
+                echo "    example: " $0 local""
+                echo 
+                echo 
+esac
