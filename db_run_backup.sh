@@ -80,13 +80,14 @@ else
 
     sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
     sudo chown $USER_ID\:$USER_ID -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+    
+    DB_BACKUP_PATH="$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
 
     cat ~/$PLI_DB_VARS_FILE | grep $DB_BACKUP_DIR
     sleep 3s
     echo "exiting directory check & continuing...";
 fi
 
-DB_BACKUP_PATH="/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
 echo "your configured node backup PATH is: $DB_BACKUP_PATH"
 sleep 2s
 
@@ -94,7 +95,29 @@ sleep 2s
 
 
 FUNC_DB_BACKUP_LOCAL(){
-sudo usermod -aG postgres $(getent passwd $EUID | cut -d: -f1)
+
+#USER_ID=$(getent passwd $EUID | cut -d: -f1)
+if id -nG "$USER_ID" | grep -qw postgres; then
+    echo $USER_ID belongs to group: postgres
+else
+    echo $USER_ID does not belong to group: postgres
+    sudo usermod -aG postgres $USER_ID
+fi
+
+
+# also ensure that postgres is added to the $DB_BACKUP_GUSER group
+
+DB_BACKUP_GUSER="nodebackup"
+if id -nG postgres | grep -qw "$DB_BACKUP_GUSER"; then
+    echo postgres belongs to $DB_BACKUP_GUSER
+else
+    echo postgres does not belong to $DB_BACKUP_GUSER
+    sudo usermod -aG $DB_BACKUP_GUSER postgres
+fi
+
+
+
+
 
 echo "backup path used is: $DB_BACKUP_PATH"
 sleep 2s
