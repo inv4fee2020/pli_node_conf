@@ -111,7 +111,56 @@ sleep 2s
 }
 
 
+
+FUNC_DB_PRE_CHECKS(){
+# check that necessary user / groups are in place 
+
+USER_ID=$(getent passwd $EUID | cut -d: -f1)
+
+# check shared group '$DB_BACKUP_GUSER' exists & set permissions
+if [ -z "$DB_BACKUP_GUSER" ] && [ ! $(getent group nodebackup) ]; then
+    echo "variable 'DB_BACKUP_GUSER is: NULL && does not exist"
+    echo "creating group "
+    sudo groupadd $DB_BACKUP_GUSER
+    sed -i.bak 's/DB_BACKUP_GUSER=\"\"/DB_BACKUP_GUSER=\"nodebackup\"/g' ~/$PLI_DB_VARS_FILE
+    export DB_BACKUP_GUSER="nodebackup"
+
+elif [ ! -z "$DB_BACKUP_GUSER" ] && [ ! $(getent group $DB_BACKUP_GUSER) ]; then
+    echo "variable 'DB_BACKUP_GUSER is: NOT NULL && does not exist"
+    echo "creating group "
+fi
+
+# add users to the group
+    DB_GUSER_MEMBER=(postgres $USER_ID)
+    echo "${DB_GUSER_MEMBER[@]}"
+    for _user in "${DB_GUSER_MEMBER[@]}"
+        hash $_user &> /dev/null
+        echo "...adding user "$_user" to group "
+        sudo usermod -aG DB_BACKUP_GUSER "$_user"
+    done 
+
+
+
+if [ $(getent group nodebackups) ]; then
+  echo "group exists."
+else
+  echo "group does not exist."
+fi
+
+
+if [ ! $(getent group nodebackups) ]; then
+  echo "group does NOT exist."
+fi
+
+
+}
+
+
 FUNC_DB_BACKUP_LOCAL(){
+
+FUNC_DB_PRE_CHECKS;
+FUNC_CHECK_DIRS;
+
 
 #USER_ID=$(getent passwd $EUID | cut -d: -f1)
 #GROUP_ID=$(getent group $EUID | cut -d: -f1)
@@ -173,9 +222,12 @@ fi
 
 # switch to 'postgres' user and run command to create inital sql dump file
 sudo su postgres -c "export PGPASSFILE="/$DB_BACKUP_PATH/.pgpass"; pg_dump -c -w -U postgres $DB_NAME | gzip > /$DB_BACKUP_OBJ"
+error_exit;
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$DB_BACKUP_OBJ
 sleep 2s
+}
 
+FUNC_DB_BACKUP_ENC(){
 # runs GnuPG or gpg to encrypt the sql dump file - uses main keystore password as secret
 # outputs file to new folder ready for upload
 sudo gpg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_FNAME -c /$DB_BACKUP_OBJ
@@ -197,6 +249,16 @@ sudo su gdbackup -c "cd ~/; .google-drive-upload/bin/gupload -q -d /$DB_BACKUP_P
 
 
 
+error_exit()
+{
+    if [ $? != 0 ]; then
+        echo "ERROR"
+        exit 1
+    fi
+    return
+}
+
+
 
 FUNC_DB_VARS;
 #FUNC_DB_BACKUP_LOCAL;
@@ -206,21 +268,30 @@ FUNC_DB_VARS;
 clear
 case "$1" in
         local)
-                
-                FUNC_CHECK_DIRS
                 FUNC_DB_BACKUP_LOCAL
                 ;;
         remote)
                 FUNC_DB_BACKUP_REMOTE
                 ;;
+        -p)
+                FUNC_DB_PRE_CHECKS
+                ;;
+        -f)
+                FUNC_CHECK_DIRS
+                ;;
         *)
                 
+
                 echo 
                 echo 
-                echo "Usage: $0 { local | remote }"
+                echo "Usage: $0 {function}"
                 echo 
-                echo "please provide one of the above values to run the scripts"
-                echo "    example: " $0 local""
+                echo "where {function} is one of the following;"
                 echo 
-                echo 
+                echo "      local      ==  performs a local DB backup only "
+                echo "      remote     ==  copies local DB backup to google drive (if enabled)"
+                echo
+                echo "      -p         ==  carries out pre-checks on user / group variables defined in file: $PLI_DB_VARS_FILE "
+                echo
+                echo "      -f         ==  carries out pre-checks on directory / path variables defined in file: $PLI_DB_VARS_FILE "
 esac
