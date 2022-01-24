@@ -45,8 +45,9 @@ FUNC_CHECK_DIRS(){
 
     # While dir value is not $HOME then do    
 
+
 #if [ ! -z "$DB_BACKUP_ROOT" ] || [ != "root" ]; then
-if ([ ! -z "$DB_BACKUP_ROOT" ] && [ != "root" ]) || ([ ! -z "$DB_BACKUP_ROOT" ] && [ != "$HOME" ]); then
+if ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "root" ]) || ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "$HOME" ]); then
     echo "the variable DB_BACKUP_ROOT value is: $DB_BACKUP_ROOT"
     echo "var is not NULL"
     echo "lets make the directory"
@@ -55,10 +56,16 @@ if ([ ! -z "$DB_BACKUP_ROOT" ] && [ != "root" ]) || ([ ! -z "$DB_BACKUP_ROOT" ] 
         sudo chown $USER_ID\:$USER_ID -R "/$DB_BACKUP_ROOT";
     fi
 else
-    echo "the variable DB_BACKUP_ROOT value is: $DB_BACKUP_ROOT"
-    echo "var is NULL"
-    echo "continuing to next variable"
-    exit 1;
+    if [ -z "$DB_BACKUP_ROOT" ]; then
+        DB_BACKUP_ROOT="$HOME"
+        echo "..Detected NULL we set the variable to: "$HOME""
+        echo "..updating the 'DB_BACKUP_PATH' variable.."
+        DB_BACKUP_PATH="$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+        echo "..updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_ROOT to: \$HOME"
+        sed -i.bak 's/DB_BACKUP_ROOT=\"\"/DB_BACKUP_ROOT=\"\$HOME\"/g' ~/$PLI_DB_VARS_FILE
+    fi
+    echo "var is set to "$DB_BACKUP_ROOT""
+    echo ".... nothing else to do.. continuing to next variable";
 fi
 
 if [ ! -z "$DB_BACKUP_DIR" ] ; then
@@ -72,9 +79,11 @@ if [ ! -z "$DB_BACKUP_DIR" ] ; then
 else
     echo "the variable DB_BACKUP_DIR value is: $DB_BACKUP_DIR"
     echo "var is NULL"
-    echo "exiting directory check & continuing..."
-    exit 1;
+    echo "exiting directory check & continuing...";
 fi
+
+echo "your configured node backup PATH is: "$DB_BACKUP_PATH" "
+sleep 2s
 }
 
 
