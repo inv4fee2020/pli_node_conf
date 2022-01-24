@@ -94,14 +94,18 @@ sleep 2s
 
 
 FUNC_DB_BACKUP_LOCAL(){
-#sudo usermod -aG postgres $(getent passwd $EUID | cut -d: -f1)
+sudo usermod -aG postgres $(getent passwd $EUID | cut -d: -f1)
 
-cat <<EOF >> .pgpass
+
+if [ ! -e /$DB_BACKUP_PATH/.pgpass ]; then
+    #clear
+cat <<EOF >> ~/.pgpass
 Localhost:5432:$DB_NAME:postgres:$DB_PWD_NEW
 EOF
-chmod 600 ~/.pgpass
-cp ~/.pgpass /$DB_BACKUP_PATH/.pgpass
-sudo chown postgres:postgres /$DB_BACKUP_PATH/.pgpass
+    chmod 600 ~/.pgpass
+    cp -n ~/.pgpass /$DB_BACKUP_PATH/.pgpass
+    sudo chown postgres:postgres /$DB_BACKUP_PATH/.pgpass
+fi
 
 
 sudo su postgres -c "export PGPASSFILE="/$DB_BACKUP_PATH/.pgpass"; pg_dump -c -w -U postgres $DB_NAME | gzip > /$DB_BACKUP_OBJ"
@@ -128,6 +132,7 @@ sudo su gdbackup -c "cd ~/; .google-drive-upload/bin/gupload -q -d /$DB_BACKUP_P
 
 
 FUNC_DB_VARS;
+FUNC_CHECK_DIRS;
 #FUNC_DB_BACKUP_LOCAL;
 #FUNC_DB_BACKUP_REMOTE;
 
