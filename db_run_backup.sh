@@ -3,6 +3,10 @@
 # Authenticate sudo perms before script execution to avoid timeouts or errors
 sudo -l > /dev/null 2>&1
 
+# Set Colour Vars
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
 
 # Get current user id and store as var
 USER_ID=$(getent passwd $EUID | cut -d: -f1)
@@ -42,20 +46,24 @@ FUNC_DB_VARS(){
 
 FUNC_CHECK_DIRS(){
 
+# checks that the DB_BACKUP_ROOT var is not NULL & not 'root' or is not NULL & not $HOME so as not to create these folder & change perms
 if ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "root" ]) || ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "$HOME" ]); then
-    echo "the variable DB_BACKUP_ROOT value is: $DB_BACKUP_ROOT"
-    echo "var is not NULL"
-    echo "lets make the directory"
+    echo "variable 'DB_BACKUP_ROOT' value is: $DB_BACKUP_ROOT"
+    echo "variable 'DB_BACKUP_ROOT' is not NULL"
+    echo "making the directory..."
     if [ ! -d "/$DB_BACKUP_ROOT" ]; then
         sudo mkdir "/$DB_BACKUP_ROOT"
         sudo chown $USER_ID\:$USER_ID -R "/$DB_BACKUP_ROOT";
     fi
 else
+    # if NULL then defaults to using $HOME & updates the 'DB_BACKUP_PATH'variable
     if [ -z "$DB_BACKUP_ROOT" ]; then
         DB_BACKUP_ROOT="$HOME"
         echo "..Detected NULL we set the variable to: "$HOME""
         echo "..updating the 'DB_BACKUP_PATH' variable.."
         DB_BACKUP_PATH="$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+
+        # adds the variable value to the VARS file
         echo "..updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_ROOT to: \$HOME"
         sed -i.bak 's/DB_BACKUP_ROOT=\"\"/DB_BACKUP_ROOT=\"\$HOME\"/g' ~/$PLI_DB_VARS_FILE
     fi
@@ -63,29 +71,37 @@ else
     echo ".... nothing else to do.. continuing to next variable";
 fi
 
+
+# Checks if NOT NULL for the 'DB_BACKUP_DIR'variable
 if [ ! -z "$DB_BACKUP_DIR" ] ; then
     echo "the variable DB_BACKUP_DIR value is: $DB_BACKUP_DIR"
     echo "var is not NULL"
     echo "lets make the directory"
+    # Checks if directory exists & creates if not + sets perms
     if [ ! -d "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR" ]; then
         sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
         sudo chown $USER_ID\:$USER_ID -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR";
     fi
 else
+    # If NULL then defaults to using 'node_backups' for 'DB_BACKUP_DIR'variable
     echo "the variable DB_BACKUP_DIR value is: $DB_BACKUP_DIR"
     echo "Detected NULL - we set the value"
     DB_BACKUP_DIR="node_backups"
+
+    # adds the variable value to the VARS file
     echo "..updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_DIR to: "$DB_BACKUP_DIR""
     sed -i.bak 's/DB_BACKUP_DIR=\"\"/DB_BACKUP_DIR=\"'$DB_BACKUP_DIR'\"/g' ~/$PLI_DB_VARS_FILE
 
+    # Checks if directory exists & creates if not + sets perms
     sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
     sudo chown $USER_ID\:$USER_ID -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
     
+    # Updates the 'DB_BACKUP_PATH'variable
     DB_BACKUP_PATH="$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
 
-    cat ~/$PLI_DB_VARS_FILE | grep $DB_BACKUP_DIR
-    sleep 3s
+    #cat ~/$PLI_DB_VARS_FILE | grep $DB_BACKUP_DIR
     echo "exiting directory check & continuing...";
+    sleep 2s
 fi
 
 echo "your configured node backup PATH is: $DB_BACKUP_PATH"
@@ -97,31 +113,26 @@ sleep 2s
 FUNC_DB_BACKUP_LOCAL(){
 
 #USER_ID=$(getent passwd $EUID | cut -d: -f1)
-if id -nG "$USER_ID" | grep -qw postgres; then
-    echo $USER_ID belongs to group: postgres
-else
+
+# ensure that current user is member of postgres group
+if ! id -nG $USER_ID | grep -qw postgres; then
     echo $USER_ID does not belong to group: postgres
     sudo usermod -aG postgres $USER_ID
 fi
 
 
-# also ensure that postgres is added to the $DB_BACKUP_GUSER group
-
-DB_BACKUP_GUSER="nodebackup"
-if id -nG postgres | grep -qw "$DB_BACKUP_GUSER"; then
-    echo postgres belongs to $DB_BACKUP_GUSER
-else
+# ensure that user 'postgres' is member of $DB_BACKUP_GUSER group
+if ! id -nG postgres | grep -qw "$DB_BACKUP_GUSER"; then
     echo postgres does not belong to $DB_BACKUP_GUSER
     sudo usermod -aG $DB_BACKUP_GUSER postgres
 fi
 
 
-
-
-
 echo "backup path used is: $DB_BACKUP_PATH"
 sleep 2s
 
+# checks if the '.pgpass' credentials file exists - if not creates in home folder & copies to dest folder
+# & sets perms
 if [ ! -e /$DB_BACKUP_PATH/.pgpass ]; then
     #clear
 cat <<EOF >> ~/.pgpass
@@ -132,19 +143,13 @@ EOF
     sudo chown postgres:postgres /$DB_BACKUP_PATH/.pgpass
 fi
 
-echo "vars in use here;"
-echo "$PGPASSFILE"
-echo "$DB_BACKUP_PATH"
-echo "$DB_NAME"
-echo "$DB_BACKUP_OBJ"
-echo "$DB_BACKUP_FUSER:"
-echo "$DB_BACKUP_GUSER"
-echo ""
-
+# switch to 'postgres' user and run command to create inital sql dump file
 sudo su postgres -c "export PGPASSFILE="/$DB_BACKUP_PATH/.pgpass"; pg_dump -c -w -U postgres $DB_NAME | gzip > /$DB_BACKUP_OBJ"
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$DB_BACKUP_OBJ
 sleep 2s
 
+# runs GnuPG or gpg to encrypt the sql dump file - uses main keystore password as secret
+# outputs file to new folder ready for upload
 sudo gpg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_FNAME -c /$DB_BACKUP_OBJ
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$ENC_PATH/$ENC_FNAME
 #rm -f /$DB_BACKUP_OBJ
@@ -154,6 +159,7 @@ sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$ENC_PATH/$ENC_FNAME
 
 FUNC_DB_BACKUP_REMOTE(){
 # add check that gupload is installed!
+# switches to gupload user to run cmd to upload encrypted file to your google drive - skips existing files
 sudo su gdbackup -c "cd ~/; .google-drive-upload/bin/gupload -q -d /$DB_BACKUP_PATH/*.gpg -C $(hostname -f) --hide"
 }
 
