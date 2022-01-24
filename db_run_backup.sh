@@ -96,6 +96,8 @@ sleep 2s
 FUNC_DB_BACKUP_LOCAL(){
 sudo usermod -aG postgres $(getent passwd $EUID | cut -d: -f1)
 
+echo "backup path used is: $DB_BACKUP_PATH"
+sleep 2s
 
 if [ ! -e /$DB_BACKUP_PATH/.pgpass ]; then
     #clear
@@ -107,12 +109,20 @@ EOF
     sudo chown postgres:postgres /$DB_BACKUP_PATH/.pgpass
 fi
 
+echo "vars in use here;"
+echo "$PGPASSFILE"
+echo "$DB_BACKUP_PATH"
+echo "$DB_NAME"
+echo "$DB_BACKUP_OBJ"
+echo "$DB_BACKUP_FUSER:"
+echo "$DB_BACKUP_GUSER"
+echo ""
 
 sudo su postgres -c "export PGPASSFILE="/$DB_BACKUP_PATH/.pgpass"; pg_dump -c -w -U postgres $DB_NAME | gzip > /$DB_BACKUP_OBJ"
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$DB_BACKUP_OBJ
-sleep 0.5s
+sleep 2s
 
-gpg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_FNAME -c /$DB_BACKUP_OBJ
+sudo gpg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_FNAME -c /$DB_BACKUP_OBJ
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$ENC_PATH/$ENC_FNAME
 #rm -f /$DB_BACKUP_OBJ
 }
