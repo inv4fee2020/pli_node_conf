@@ -40,6 +40,43 @@ FUNC_DB_VARS(){
 
 sleep 1s
 
+FUNC_CHECK_DIRS(){
+    # check that the vars defined folders exist
+
+    # While dir value is not $HOME then do    
+
+#if [ ! -z "$DB_BACKUP_ROOT" ] || [ != "root" ]; then
+if ([ ! -z "$DB_BACKUP_ROOT" ] && [ != "root" ]) || ([ ! -z "$DB_BACKUP_ROOT" ] && [ != "$HOME" ]); then
+    echo "the variable DB_BACKUP_ROOT value is: $DB_BACKUP_ROOT"
+    echo "var is not NULL"
+    echo "lets make the directory"
+    if [ ! -d "/$DB_BACKUP_ROOT" ]; then
+        sudo mkdir "/$DB_BACKUP_ROOT"
+        sudo chown $USER_ID\:$USER_ID -R "/$DB_BACKUP_ROOT";
+    fi
+else
+    echo "the variable DB_BACKUP_ROOT value is: $DB_BACKUP_ROOT"
+    echo "var is NULL"
+    echo "continuing to next variable"
+    exit 1;
+fi
+
+if [ ! -z "$DB_BACKUP_DIR" ] ; then
+    echo "the variable DB_BACKUP_DIR value is: $DB_BACKUP_DIR"
+    echo "var is not NULL"
+    echo "lets make the directory"
+    if [ ! -d "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR" ]; then
+        sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+        sudo chown $USER_ID\:$USER_ID -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR";
+    fi
+else
+    echo "the variable DB_BACKUP_DIR value is: $DB_BACKUP_DIR"
+    echo "var is NULL"
+    echo "exiting directory check & continuing..."
+    exit 1;
+fi
+}
+
 
 FUNC_DB_BACKUP_LOCAL(){
 sudo usermod -aG postgres $(getent passwd $EUID | cut -d: -f1)
@@ -66,8 +103,13 @@ sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$ENC_PATH/$ENC_FNAME
 FUNC_DB_BACKUP_REMOTE(){
 # add check that gupload is installed!
 sudo su gdbackup -c "cd ~/; .google-drive-upload/bin/gupload -q -d /$DB_BACKUP_PATH/*.gpg -C $(hostname -f) --hide"
-
 }
+
+FUNC_CLEAN_UP_REMOTE(){
+# remove files store in the backups folder    
+}
+
+
 
 
 FUNC_DB_VARS;
