@@ -165,6 +165,7 @@ else
 fi
 
 for _user in "${DB_GUSER_MEMBER[@]}"
+do
     hash $_user &> /dev/null
     echo "...adding user "$_user" to group "$DB_BACKUP_GUSER""
     sudo usermod -aG "$DB_BACKUP_GUSER" "$_user"
