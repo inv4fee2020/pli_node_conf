@@ -54,11 +54,10 @@ if ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "root" ]) || ([ ! -z "$
     echo "making the directory..."
     if [ ! -d "/$DB_BACKUP_ROOT" ]; then
         sudo mkdir "/$DB_BACKUP_ROOT"
-        sudo chown $USER_ID\:$USER_ID -R "/$DB_BACKUP_ROOT";
+        sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT";
     fi
-else
+elif [ -z "$DB_BACKUP_ROOT" ]; then
     # if NULL then defaults to using $HOME & updates the 'DB_BACKUP_PATH'variable
-    if [ -z "$DB_BACKUP_ROOT" ]; then
         DB_BACKUP_ROOT="$HOME"
         echo "..Detected NULL we set the variable to: "$HOME""
         echo "..updating the 'DB_BACKUP_PATH' variable.."
@@ -81,7 +80,8 @@ if [ ! -z "$DB_BACKUP_DIR" ] ; then
     # Checks if directory exists & creates if not + sets perms
     if [ ! -d "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR" ]; then
         sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-        sudo chown $USER_ID\:$USER_ID -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR";
+        sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+        sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR";
     fi
 else
     # If NULL then defaults to using 'node_backups' for 'DB_BACKUP_DIR'variable
@@ -95,7 +95,8 @@ else
 
     # Checks if directory exists & creates if not + sets perms
     sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-    sudo chown $USER_ID\:$USER_ID -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+    sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+    sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR";
     
     # Updates the 'DB_BACKUP_PATH'variable
     DB_BACKUP_PATH="$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
