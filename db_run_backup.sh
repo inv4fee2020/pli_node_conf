@@ -38,7 +38,7 @@ FUNC_DB_VARS(){
     source ~/$PLI_DB_VARS_FILE
 }
 
-sleep 1s
+
 
 FUNC_CHECK_DIRS(){
 
@@ -89,6 +89,7 @@ fi
 DB_BACKUP_PATH="/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
 echo "your configured node backup PATH is: $DB_BACKUP_PATH"
 sleep 2s
+
 }
 
 
@@ -119,9 +120,9 @@ FUNC_DB_BACKUP_REMOTE(){
 sudo su gdbackup -c "cd ~/; .google-drive-upload/bin/gupload -q -d /$DB_BACKUP_PATH/*.gpg -C $(hostname -f) --hide"
 }
 
-FUNC_CLEAN_UP_REMOTE(){
+#FUNC_CLEAN_UP_REMOTE(){
 # remove files store in the backups folder    
-}
+#}
 
 
 
