@@ -132,7 +132,6 @@ sudo su gdbackup -c "cd ~/; .google-drive-upload/bin/gupload -q -d /$DB_BACKUP_P
 
 
 FUNC_DB_VARS;
-FUNC_CHECK_DIRS;
 #FUNC_DB_BACKUP_LOCAL;
 #FUNC_DB_BACKUP_REMOTE;
 
@@ -140,6 +139,8 @@ FUNC_CHECK_DIRS;
 clear
 case "$1" in
         local)
+                
+                FUNC_CHECK_DIRS
                 FUNC_DB_BACKUP_LOCAL
                 ;;
         remote)
