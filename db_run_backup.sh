@@ -56,8 +56,9 @@ if ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "root" ]) || ([ ! -z "$
         sudo mkdir "/$DB_BACKUP_ROOT"
         sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT";
     fi
-elif [ -z "$DB_BACKUP_ROOT" ]; then
+else
     # if NULL then defaults to using $HOME & updates the 'DB_BACKUP_PATH'variable
+    if [ -z "$DB_BACKUP_ROOT" ]; then
         DB_BACKUP_ROOT="$HOME"
         echo "..Detected NULL we set the variable to: "$HOME""
         echo "..updating the 'DB_BACKUP_PATH' variable.."
