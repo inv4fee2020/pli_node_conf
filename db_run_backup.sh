@@ -10,6 +10,7 @@ NC='\033[0m' # No Color
 
 # Get current user id and store as var
 USER_ID=$(getent passwd $EUID | cut -d: -f1)
+GROUP_ID=$(getent group $EUID | cut -d: -f1)
 
 source ~/"plinode_$(hostname -f)".vars
 
@@ -113,6 +114,33 @@ sleep 2s
 FUNC_DB_BACKUP_LOCAL(){
 
 #USER_ID=$(getent passwd $EUID | cut -d: -f1)
+#GROUP_ID=$(getent group $EUID | cut -d: -f1)
+
+
+#check DB_BACKUP_FUSER & DB_BACKUP_GUSER values
+if [ -z "$DB_BACKUP_FUSER" ] ; then
+    DB_BACKUP_FUSER="$USER_ID"
+    echo "..Detected NULL we set the variable to: "$USER_ID""
+
+    # adds the variable value to the VARS file
+    echo "..updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_FUSER to: $USER_ID"
+    sed -i.bak 's/DB_BACKUP_FUSER=\"\"/DB_BACKUP_FUSER=\"\$USER_ID\"/g' ~/$PLI_DB_VARS_FILE
+fi
+
+
+if [ -z "$DB_BACKUP_GUSER" ] ; then
+    DB_BACKUP_GUSER="$GROUP_ID"
+    echo "..Detected NULL we set the variable to: "$GROUP_ID""
+
+    # adds the variable value to the VARS file
+    echo "..updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_GUSER to: $GROUP_ID"
+    sed -i.bak 's/DB_BACKUP_GUSER=\"\"/DB_BACKUP_GUSER=\"\$GROUP_ID\"/g' ~/$PLI_DB_VARS_FILE
+fi
+
+
+
+
+
 
 # ensure that current user is member of postgres group
 if ! id -nG $USER_ID | grep -qw postgres; then
