@@ -222,7 +222,7 @@ FUNC_DB_BACKUP_ENC(){
 sudo gpg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_FNAME -c /$DB_BACKUP_OBJ
 error_exit;
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$ENC_PATH/$ENC_FNAME
-#rm -f /$DB_BACKUP_OBJ
+rm -f /$DB_BACKUP_OBJ
 }
 
 
@@ -231,6 +231,7 @@ FUNC_DB_BACKUP_REMOTE(){
 # add check that gupload is installed!
 # switches to gupload user to run cmd to upload encrypted file to your google drive - skips existing files
 sudo su gdbackup -c "cd ~/; .google-drive-upload/bin/gupload -q -d /$DB_BACKUP_PATH/*.gpg -C $(hostname -f) --hide"
+error_exit;
 }
 
 #FUNC_CLEAN_UP_REMOTE(){
