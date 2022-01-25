@@ -144,7 +144,7 @@ if [ -z "$DB_BACKUP_FUSER" ]; then
     # adds the variable value to the VARS file
     echo
     echo "..updating file "$PLI_DB_VARS_FILE" variable 'DB_BACKUP_FUSER' to: $USER_ID"
-    sed -i.bak 's/DB_BACKUP_FUSER=\"\"/DB_BACKUP_FUSER=\"$USER_ID\"/g' ~/$PLI_DB_VARS_FILE
+    sed -i.bak 's/DB_BACKUP_FUSER=\"\"/DB_BACKUP_FUSER=\"'$USER_ID'\"/g' ~/$PLI_DB_VARS_FILE
 fi
 
 # check shared group '$DB_BACKUP_GUSER' exists & set permissions
