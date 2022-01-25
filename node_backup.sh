@@ -49,7 +49,7 @@ FUNC_CHECK_DIRS(){
 
 # checks that the DB_BACKUP_ROOT var is not NULL & not 'root' or is not NULL & not $HOME so as not to create these folder & change perms
 if ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "root" ]) || ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "$HOME" ]); then
-    
+    SET_ROOT_DIR=true
     echo
     echo "checking vars - variable 'DB_BACKUP_ROOT' value is: $DB_BACKUP_ROOT"
     echo "checking vars - variable 'DB_BACKUP_ROOT' is not NULL"
@@ -57,17 +57,16 @@ if ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "root" ]) || ([ ! -z "$
     if [ ! -d "/$DB_BACKUP_ROOT" ]; then
         sudo mkdir "/$DB_BACKUP_ROOT"
         sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT"
-        SET_ROOT_DIR=true
     fi
 else
     # if NULL then defaults to using $HOME & updates the 'DB_BACKUP_PATH'variable
     if [ -z "$DB_BACKUP_ROOT" ]; then
         DB_BACKUP_ROOT="$HOME"
+        SET_ROOT_DIR=false
         echo
         echo "checking vars - Detected NULL value & set variable to: "$HOME""
         echo "checking vars - updating the value of 'DB_BACKUP_PATH' variable.."
         DB_BACKUP_PATH="$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-        SET_ROOT_DIR=false
 
         # adds the variable value to the VARS file
         echo 
