@@ -248,8 +248,13 @@ EOF
 echo
 echo "local backup - setting pgpass file perms"
     chmod 600 ~/.pgpass
+    if [ "$SET_ROOT_DIR" == "true" ]; then
     cp -n ~/.pgpass /$DB_BACKUP_PATH/.pgpass
     sudo chown postgres:postgres /$DB_BACKUP_PATH/.pgpass
+    else
+    cp -n ~/.pgpass $DB_BACKUP_PATH/.pgpass
+    sudo chown postgres:postgres $DB_BACKUP_PATH/.pgpass
+    fi
 fi
 sleep 1s
 echo
