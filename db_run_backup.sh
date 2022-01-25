@@ -49,6 +49,8 @@ FUNC_CHECK_DIRS(){
 
 # checks that the DB_BACKUP_ROOT var is not NULL & not 'root' or is not NULL & not $HOME so as not to create these folder & change perms
 if ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "root" ]) || ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "$HOME" ]); then
+    
+    echo
     echo "variable 'DB_BACKUP_ROOT' value is: $DB_BACKUP_ROOT"
     echo "variable 'DB_BACKUP_ROOT' is not NULL"
     echo "making the directory..."
@@ -60,14 +62,17 @@ else
     # if NULL then defaults to using $HOME & updates the 'DB_BACKUP_PATH'variable
     if [ -z "$DB_BACKUP_ROOT" ]; then
         DB_BACKUP_ROOT="$HOME"
+        echo
         echo "..Detected NULL we set the variable to: "$HOME""
         echo "..updating the 'DB_BACKUP_PATH' variable.."
         DB_BACKUP_PATH="$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
 
         # adds the variable value to the VARS file
+        echo 
         echo "..updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_ROOT to: \$HOME"
         sed -i.bak 's/DB_BACKUP_ROOT=\"\"/DB_BACKUP_ROOT=\"\$HOME\"/g' ~/$PLI_DB_VARS_FILE
     fi
+    echo
     echo "var is set to "$DB_BACKUP_ROOT""
     echo ".... nothing else to do.. continuing to next variable";
 fi
@@ -75,6 +80,7 @@ fi
 
 # Checks if NOT NULL for the 'DB_BACKUP_DIR'variable
 if [ ! -z "$DB_BACKUP_DIR" ] ; then
+    echo
     echo "the variable DB_BACKUP_DIR value is: $DB_BACKUP_DIR"
     echo "var is not NULL"
     echo "lets make the directory"
@@ -86,11 +92,13 @@ if [ ! -z "$DB_BACKUP_DIR" ] ; then
     fi
 else
     # If NULL then defaults to using 'node_backups' for 'DB_BACKUP_DIR'variable
+    echo
     echo "the variable DB_BACKUP_DIR value is: $DB_BACKUP_DIR"
     echo "Detected NULL - we set the value"
     DB_BACKUP_DIR="node_backups"
 
     # adds the variable value to the VARS file
+    echo
     echo "..updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_DIR to: "$DB_BACKUP_DIR""
     sed -i.bak 's/DB_BACKUP_DIR=\"\"/DB_BACKUP_DIR=\"'$DB_BACKUP_DIR'\"/g' ~/$PLI_DB_VARS_FILE
 
@@ -103,10 +111,12 @@ else
     DB_BACKUP_PATH="$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
 
     #cat ~/$PLI_DB_VARS_FILE | grep $DB_BACKUP_DIR
+    echo
     echo "exiting directory check & continuing...";
     sleep 2s
 fi
 
+echo
 echo "your configured node backup PATH is: $DB_BACKUP_PATH"
 sleep 2s
 
@@ -121,25 +131,30 @@ FUNC_DB_PRE_CHECKS(){
 #check DB_BACKUP_FUSER values
 if [ -z "$DB_BACKUP_FUSER" ]; then
     export DB_BACKUP_FUSER="$USER_ID"
+    echo
     echo "..Detected NULL for 'DB_BACKUP_FUSER' - we set the variable to: "$USER_ID""
 
     # adds the variable value to the VARS file
+    echo
     echo "..updating file "$PLI_DB_VARS_FILE" variable 'DB_BACKUP_FUSER' to: $USER_ID"
-    sed -i.bak 's/DB_BACKUP_FUSER=\"\"/DB_BACKUP_FUSER=\"\$USER_ID\"/g' ~/$PLI_DB_VARS_FILE
+    sed -i.bak 's/DB_BACKUP_FUSER=\"\"/DB_BACKUP_FUSER=\"$USER_ID\"/g' ~/$PLI_DB_VARS_FILE
 fi
 
 # check shared group '$DB_BACKUP_GUSER' exists & set permissions
 if [ -z "$DB_BACKUP_GUSER" ] && [ ! $(getent group nodebackup) ]; then
+    echo
     echo "variable 'DB_BACKUP_GUSER is: NULL && 'default' does not exist"
     echo "creating group 'nodebackup'"
     sudo groupadd nodebackup
 
     # adds the variable value to the VARS file
+    echo
     echo "..updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_GUSER to: nodebackup"
     sed -i.bak 's/DB_BACKUP_GUSER=\"\"/DB_BACKUP_GUSER=\"nodebackup\"/g' ~/$PLI_DB_VARS_FILE
     export DB_BACKUP_GUSER="nodebackup"
 
 elif [ ! -z "$DB_BACKUP_GUSER" ] && [ ! $(getent group $DB_BACKUP_GUSER) ]; then
+    echo
     echo "variable 'DB_BACKUP_GUSER is: NOT NULL && does not exist"
     echo "creating group "
     sudo groupadd $DB_BACKUP_GUSER
@@ -148,14 +163,24 @@ fi
 
 
 # add users to the group
+
+echo
+echo "local backup - checking if gdrive user exits"
 if [ ! -z "$GD_FUSER" ]; then
+    echo
+    echo "local backup - user for gdrive does exist"
     DB_GUSER_MEMBER=(postgres $USER_ID $GD_FUSER)
     echo "${DB_GUSER_MEMBER[@]}"
 else
+    echo
+    echo "local backup - user for gdrive does NOT exist"
     DB_GUSER_MEMBER=(postgres $USER_ID)
     echo "${DB_GUSER_MEMBER[@]}"
 fi
 
+echo
+echo
+echo "local backup - assiging user-group permissions.."
 for _user in "${DB_GUSER_MEMBER[@]}"
 do
     hash $_user &> /dev/null
@@ -190,20 +215,27 @@ FUNC_CHECK_DIRS;
 
 # checks if the '.pgpass' credentials file exists - if not creates in home folder & copies to dest folder
 # & sets perms
+echo
+echo "local backup - checking pgpass file exists"
 if [ ! -e /$DB_BACKUP_PATH/.pgpass ]; then
     #clear
 cat <<EOF >> ~/.pgpass
 Localhost:5432:$DB_NAME:postgres:$DB_PWD_NEW
 EOF
+echo
+echo "local backup - setting pgpass file perms"
     chmod 600 ~/.pgpass
     cp -n ~/.pgpass /$DB_BACKUP_PATH/.pgpass
     sudo chown postgres:postgres /$DB_BACKUP_PATH/.pgpass
 fi
 
+echo
+echo "local backup - running pgdump backup process"
 # switch to 'postgres' user and run command to create inital sql dump file
 sudo su postgres -c "export PGPASSFILE="/$DB_BACKUP_PATH/.pgpass"; pg_dump -c -w -U postgres $DB_NAME | gzip > /$DB_BACKUP_OBJ"
 error_exit;
 
+echo
 echo "local backup - successfully created file:  "$DB_BACKUP_OBJ""
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$DB_BACKUP_OBJ
 sleep 2s
@@ -218,11 +250,13 @@ FUNC_DB_BACKUP_ENC(){
 
 sudo gpg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_FNAME -c /$DB_BACKUP_OBJ
 error_exit;
+echo
 echo "local backup - successfully created file:  "$ENC_FNAME""
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$ENC_PATH/$ENC_FNAME
 
+echo
 echo "local backup - securely erase unencrypted file:  "$DB_BACKUP_OBJ""
-shred -uvz -n 1 /$DB_BACKUP_OBJ
+shred -uz -n 1 /$DB_BACKUP_OBJ
 sleep 2s
 }
 
@@ -247,6 +281,7 @@ error_exit;
 error_exit()
 {
     if [ $? != 0 ]; then
+        echo
         echo "ERROR"
         exit 1
     else
