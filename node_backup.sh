@@ -20,7 +20,7 @@ FUNC_DB_VARS(){
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
-    PLI_DB_VARS_FILE="plinode_$(hostname -f)"_sql.vars
+    PLI_DB_VARS_FILE="plinode_$(hostname -f)"_bkup.vars
     if [ ! -e ~/$PLI_DB_VARS_FILE ]; then
         clear
         echo
@@ -28,7 +28,7 @@ FUNC_DB_VARS(){
         echo -e "${RED} #### ERROR: No VARIABLES file found. ####${NC}"
         echo
         echo -e "${RED} ..creating local vars file '$HOME/$PLI_DB_VARS_FILE' ${NC}"
-        cp -n sample_sql.vars ~/$PLI_DB_VARS_FILE
+        cp -n sample_bkup.vars ~/$PLI_DB_VARS_FILE
         chmod 600 ~/$PLI_DB_VARS_FILE
         echo
         echo -e "${GREEN} please update the vars file with your specific values.. ${NC}"
@@ -132,7 +132,9 @@ fi
     fi
 
     DB_BACKUP_OBJ="$DB_BACKUP_PATH/$DB_BACKUP_FNAME"
+    CONF_BACKUP_OBJ="$DB_BACKUP_PATH/$NODE_BACKUP_FNAME"
     echo "checking vars - assigning 'DB_BACKUP_OBJ' variable: "$DB_BACKUP_OBJ""
+    echo "checking vars - assigning 'CONF_BACKUP_OBJ' variable: "$CONF_BACKUP_OBJ""
     
     echo
     echo "checking vars - exiting directory check & continuing..."
@@ -265,6 +267,21 @@ FUNC_DB_BACKUP_ENC;
 }
 
 
+FUNC_CONF_BACKUP_LOCAL(){
+
+FUNC_DB_PRE_CHECKS;
+FUNC_CHECK_DIRS;
+
+echo
+echo "local backup - running tar backup process"
+tar -cvpzf $CONF_BACKUP_OBJ ~/plinode* ~/pli_init* ~/plugin-deployment/.env*
+error_exit;
+
+
+sleep 2s
+FUNC_DB_BACKUP_ENC;
+}
+
 
 FUNC_DB_BACKUP_ENC(){
 # runs GnuPG or gpg to encrypt the sql dump file - uses main keystore password as secret
@@ -272,15 +289,23 @@ FUNC_DB_BACKUP_ENC(){
 
 sudo gpg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_FNAME -c /$DB_BACKUP_OBJ
 error_exit;
+sudo gpg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_CONFNAME -c /$CONF_BACKUP_OBJ
+error_exit;
 echo
 echo "local backup - successfully created file:  "$ENC_FNAME""
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$ENC_PATH/$ENC_FNAME
+echo "local backup - successfully created file:  "$ENC_CONFNAME""
+sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$ENC_PATH/$ENC_CONFNAME
 
 echo
 echo "local backup - securely erase unencrypted file:  "$DB_BACKUP_OBJ""
 shred -uz -n 1 /$DB_BACKUP_OBJ
+echo "local backup - securely erase unencrypted file:  "$CONF_BACKUP_OBJ""
+shred -uz -n 1 /$CONF_BACKUP_OBJ
 sleep 2s
 }
+
+
 
 
 
@@ -320,7 +345,14 @@ FUNC_DB_VARS;
 
 clear
 case "$1" in
-        local)
+        -full)
+                FUNC_DB_BACKUP_LOCAL
+                
+                ;;
+        -conf)
+                FUNC_CONF_BACKUP_LOCAL
+                ;;
+        -db)
                 FUNC_DB_BACKUP_LOCAL
                 ;;
         remote)
@@ -341,10 +373,12 @@ case "$1" in
                 echo 
                 echo "where {function} is one of the following;"
                 echo 
-                echo "      local      ==  performs a local DB backup only "
-                echo "      remote     ==  copies local DB backup to google drive (if enabled)"
+                echo "      -full      ==  performs a local backup of both config & DB files only"
+                echo "      -conf      ==  performs a local backup of config files only"
+                echo "      -db        ==  performs a local backup of DB files only"
+                echo 
+                echo "      -remote    ==  copies local backup files to your google drive (if configured)"
                 echo
                 echo "      -p         ==  carries out pre-checks on user / group variables defined in file: $PLI_DB_VARS_FILE "
-                echo
                 echo "      -f         ==  carries out pre-checks on directory / path variables defined in file: $PLI_DB_VARS_FILE "
 esac
