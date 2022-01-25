@@ -117,14 +117,8 @@ sleep 2s
 FUNC_DB_PRE_CHECKS(){
 # check that necessary user / groups are in place 
 
-USER_ID=$(getent passwd $EUID | cut -d: -f1)
 
-
-#USER_ID=$(getent passwd $EUID | cut -d: -f1)
-#GROUP_ID=$(getent group $EUID | cut -d: -f1)
-
-
-#check DB_BACKUP_FUSER  values
+#check DB_BACKUP_FUSER values
 if [ -z "$DB_BACKUP_FUSER" ]; then
     export DB_BACKUP_FUSER="$USER_ID"
     echo "..Detected NULL for 'DB_BACKUP_FUSER' - we set the variable to: "$USER_ID""
@@ -209,6 +203,8 @@ fi
 # switch to 'postgres' user and run command to create inital sql dump file
 sudo su postgres -c "export PGPASSFILE="/$DB_BACKUP_PATH/.pgpass"; pg_dump -c -w -U postgres $DB_NAME | gzip > /$DB_BACKUP_OBJ"
 error_exit;
+
+echo "local backup - successfully created file:  "$DB_BACKUP_OBJ""
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$DB_BACKUP_OBJ
 sleep 2s
 FUNC_DB_BACKUP_ENC;
@@ -219,10 +215,15 @@ FUNC_DB_BACKUP_ENC;
 FUNC_DB_BACKUP_ENC(){
 # runs GnuPG or gpg to encrypt the sql dump file - uses main keystore password as secret
 # outputs file to new folder ready for upload
+
 sudo gpg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_FNAME -c /$DB_BACKUP_OBJ
 error_exit;
+echo "local backup - successfully created file:  "$ENC_FNAME""
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$ENC_PATH/$ENC_FNAME
-rm -f /$DB_BACKUP_OBJ
+
+echo "local backup - securely erase unencrypted file:  "$DB_BACKUP_OBJ""
+shred -uvz -n 1 /$DB_BACKUP_OBJ
+sleep 2s
 }
 
 
@@ -230,6 +231,9 @@ rm -f /$DB_BACKUP_OBJ
 FUNC_DB_BACKUP_REMOTE(){
 # add check that gupload is installed!
 # switches to gupload user to run cmd to upload encrypted file to your google drive - skips existing files
+
+# add check for user account & installation
+
 sudo su gdbackup -c "cd ~/; .google-drive-upload/bin/gupload -q -d /$DB_BACKUP_PATH/*.gpg -C $(hostname -f) --hide"
 error_exit;
 }
