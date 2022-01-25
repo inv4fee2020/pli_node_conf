@@ -51,9 +51,9 @@ FUNC_CHECK_DIRS(){
 if ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "root" ]) || ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "$HOME" ]); then
     
     echo
-    echo "variable 'DB_BACKUP_ROOT' value is: $DB_BACKUP_ROOT"
-    echo "variable 'DB_BACKUP_ROOT' is not NULL"
-    echo "making the directory..."
+    echo "checking vars - variable 'DB_BACKUP_ROOT' value is: $DB_BACKUP_ROOT"
+    echo "checking vars - variable 'DB_BACKUP_ROOT' is not NULL"
+    echo "checking vars - check directory exists & create if NOT..."
     if [ ! -d "/$DB_BACKUP_ROOT" ]; then
         sudo mkdir "/$DB_BACKUP_ROOT"
         sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT";
@@ -63,27 +63,27 @@ else
     if [ -z "$DB_BACKUP_ROOT" ]; then
         DB_BACKUP_ROOT="$HOME"
         echo
-        echo "..Detected NULL we set the variable to: "$HOME""
-        echo "..updating the 'DB_BACKUP_PATH' variable.."
+        echo "checking vars - Detected NULL value & set variable to: "$HOME""
+        echo "checking vars - updating the value of 'DB_BACKUP_PATH' variable.."
         DB_BACKUP_PATH="$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
 
         # adds the variable value to the VARS file
         echo 
-        echo "..updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_ROOT to: \$HOME"
+        echo "checking vars - updating file "$PLI_DB_VARS_FILE" variable 'DB_BACKUP_ROOT' value to: \$HOME"
         sed -i.bak 's/DB_BACKUP_ROOT=\"\"/DB_BACKUP_ROOT=\"\$HOME\"/g' ~/$PLI_DB_VARS_FILE
     fi
     echo
-    echo "var is set to "$DB_BACKUP_ROOT""
-    echo ".... nothing else to do.. continuing to next variable";
+    echo "checking vars - var is set to "$DB_BACKUP_ROOT""
+    echo "checking vars - ....nothing else to do.. continuing to next variable";
 fi
 
 
 # Checks if NOT NULL for the 'DB_BACKUP_DIR'variable
 if [ ! -z "$DB_BACKUP_DIR" ] ; then
     echo
-    echo "the variable DB_BACKUP_DIR value is: $DB_BACKUP_DIR"
-    echo "var is not NULL"
-    echo "lets make the directory"
+    echo "checking vars - var is not NULL"
+    echo "checking vars - var 'DB_BACKUP_DIR' value is: $DB_BACKUP_DIR"
+    echo "checking vars - check directory exists & create if NOT..."
     # Checks if directory exists & creates if not + sets perms
     if [ ! -d "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR" ]; then
         sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
@@ -93,22 +93,29 @@ if [ ! -z "$DB_BACKUP_DIR" ] ; then
 else
     # If NULL then defaults to using 'node_backups' for 'DB_BACKUP_DIR'variable
     echo
-    echo "the variable DB_BACKUP_DIR value is: $DB_BACKUP_DIR"
-    echo "Detected NULL - we set the value"
-    DB_BACKUP_DIR="node_backups"
+    echo "checking vars - Detected NULL - setting 'default'value.."
+    export DB_BACKUP_DIR="node_backups"
+    echo "checking vars - var 'DB_BACKUP_DIR' value is now: $DB_BACKUP_DIR"
 
     # adds the variable value to the VARS file
     echo
-    echo "..updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_DIR to: "$DB_BACKUP_DIR""
+    echo "checking vars - updating file "$PLI_DB_VARS_FILE" variable 'DB_BACKUP_DIR' to: "$DB_BACKUP_DIR""
     sed -i.bak 's/DB_BACKUP_DIR=\"\"/DB_BACKUP_DIR=\"'$DB_BACKUP_DIR'\"/g' ~/$PLI_DB_VARS_FILE
 
     # Checks if directory exists & creates if not + sets perms
+    
+    echo
+    echo "checking vars - creating directory: "$DB_BACKUP_DIR""
     sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+    echo
+    echo "checking vars - assigning permissions for directory: "$DB_BACKUP_DIR""
     sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
     sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR";
     
     # Updates the 'DB_BACKUP_PATH'variable
+    echo
     DB_BACKUP_PATH="$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+    echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
 
     #cat ~/$PLI_DB_VARS_FILE | grep $DB_BACKUP_DIR
     echo
