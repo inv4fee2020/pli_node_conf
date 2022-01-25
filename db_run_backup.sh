@@ -119,12 +119,12 @@ else
 
     #cat ~/$PLI_DB_VARS_FILE | grep $DB_BACKUP_DIR
     echo
-    echo "exiting directory check & continuing...";
+    echo "checking vars - exiting directory check & continuing...";
     sleep 2s
 fi
 
 echo
-echo "your configured node backup PATH is: $DB_BACKUP_PATH"
+echo "checking vars - your configured node backup PATH is: $DB_BACKUP_PATH"
 sleep 2s
 
 }
@@ -139,31 +139,31 @@ FUNC_DB_PRE_CHECKS(){
 if [ -z "$DB_BACKUP_FUSER" ]; then
     export DB_BACKUP_FUSER="$USER_ID"
     echo
-    echo "..Detected NULL for 'DB_BACKUP_FUSER' - we set the variable to: "$USER_ID""
+    echo "pre-check vars - Detected NULL for 'DB_BACKUP_FUSER' - we set the variable to: "$USER_ID""
 
     # adds the variable value to the VARS file
     echo
-    echo "..updating file "$PLI_DB_VARS_FILE" variable 'DB_BACKUP_FUSER' to: $USER_ID"
+    echo ".pre-check vars - updating file "$PLI_DB_VARS_FILE" variable 'DB_BACKUP_FUSER' to: $USER_ID"
     sed -i.bak 's/DB_BACKUP_FUSER=\"\"/DB_BACKUP_FUSER=\"'$USER_ID'\"/g' ~/$PLI_DB_VARS_FILE
 fi
 
 # check shared group '$DB_BACKUP_GUSER' exists & set permissions
 if [ -z "$DB_BACKUP_GUSER" ] && [ ! $(getent group nodebackup) ]; then
     echo
-    echo "variable 'DB_BACKUP_GUSER is: NULL && 'default' does not exist"
-    echo "creating group 'nodebackup'"
+    echo "pre-check vars - variable 'DB_BACKUP_GUSER is: NULL && 'default' does not exist"
+    echo "pre-check vars - creating group 'nodebackup'"
     sudo groupadd nodebackup
 
     # adds the variable value to the VARS file
     echo
-    echo "..updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_GUSER to: nodebackup"
+    echo "pre-check vars - updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_GUSER to: nodebackup"
     sed -i.bak 's/DB_BACKUP_GUSER=\"\"/DB_BACKUP_GUSER=\"nodebackup\"/g' ~/$PLI_DB_VARS_FILE
     export DB_BACKUP_GUSER="nodebackup"
 
 elif [ ! -z "$DB_BACKUP_GUSER" ] && [ ! $(getent group $DB_BACKUP_GUSER) ]; then
     echo
-    echo "variable 'DB_BACKUP_GUSER is: NOT NULL && does not exist"
-    echo "creating group "
+    echo "pre-check vars - variable 'DB_BACKUP_GUSER is: NOT NULL && does not exist"
+    echo "pre-check vars - creating group "$DB_BACKUP_GUSER""
     sudo groupadd $DB_BACKUP_GUSER
 fi
 
@@ -172,22 +172,22 @@ fi
 # add users to the group
 
 echo
-echo "local backup - checking if gdrive user exits"
+echo "pre-check vars - checking if gdrive user exits"
 if [ ! -z "$GD_FUSER" ]; then
     echo
-    echo "local backup - user for gdrive does exist"
+    echo "pre-check vars - user for gdrive does exist"
     DB_GUSER_MEMBER=(postgres $USER_ID $GD_FUSER)
     echo "${DB_GUSER_MEMBER[@]}"
 else
     echo
-    echo "local backup - user for gdrive does NOT exist"
+    echo "pre-check vars - user for gdrive does NOT exist"
     DB_GUSER_MEMBER=(postgres $USER_ID)
     echo "${DB_GUSER_MEMBER[@]}"
 fi
 
 echo
 echo
-echo "local backup - assiging user-group permissions.."
+echo "pre-check vars - assiging user-group permissions.."
 for _user in "${DB_GUSER_MEMBER[@]}"
 do
     hash $_user &> /dev/null
