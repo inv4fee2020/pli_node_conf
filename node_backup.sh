@@ -242,17 +242,17 @@ echo
 echo "local backup - checking pgpass file exists"
 if [ ! -e /$DB_BACKUP_PATH/.pgpass ]; then
     #clear
-cat <<EOF >> ~/.pgpass
+cat <<EOF > ~/.pgpass
 Localhost:5432:$DB_NAME:postgres:$DB_PWD_NEW
 EOF
 echo
 echo "local backup - setting pgpass file perms"
     chmod 600 ~/.pgpass
     if [ "$SET_ROOT_DIR" == "true" ]; then
-    cp -n ~/.pgpass /$DB_BACKUP_PATH/.pgpass
+    cp ~/.pgpass /$DB_BACKUP_PATH/.pgpass
     sudo chown postgres:postgres /$DB_BACKUP_PATH/.pgpass
     else
-    cp -n ~/.pgpass $DB_BACKUP_PATH/.pgpass
+    cp ~/.pgpass $DB_BACKUP_PATH/.pgpass
     sudo chown postgres:postgres $DB_BACKUP_PATH/.pgpass
     fi
 fi
