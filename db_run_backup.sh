@@ -126,15 +126,13 @@ USER_ID=$(getent passwd $EUID | cut -d: -f1)
 
 #check DB_BACKUP_FUSER  values
 if [ -z "$DB_BACKUP_FUSER" ]; then
-    DB_BACKUP_FUSER="$USER_ID"
-    echo "..Detected NULL we set the variable to: "$USER_ID""
+    export DB_BACKUP_FUSER="$USER_ID"
+    echo "..Detected NULL for 'DB_BACKUP_FUSER' - we set the variable to: "$USER_ID""
 
     # adds the variable value to the VARS file
-    echo "..updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_FUSER to: $USER_ID"
+    echo "..updating file "$PLI_DB_VARS_FILE" variable 'DB_BACKUP_FUSER' to: $USER_ID"
     sed -i.bak 's/DB_BACKUP_FUSER=\"\"/DB_BACKUP_FUSER=\"\$USER_ID\"/g' ~/$PLI_DB_VARS_FILE
 fi
-
-
 
 # check shared group '$DB_BACKUP_GUSER' exists & set permissions
 if [ -z "$DB_BACKUP_GUSER" ] && [ ! $(getent group nodebackup) ]; then
@@ -173,17 +171,17 @@ done
 
 
 # ensure that current user is member of postgres group
-if ! id -nG $USER_ID | grep -qw postgres; then
-    echo $USER_ID does not belong to group: postgres
-    sudo usermod -aG postgres $USER_ID
-fi
+#if ! id -nG $USER_ID | grep -qw postgres; then
+#    echo $USER_ID does not belong to group: postgres
+#    sudo usermod -aG postgres $USER_ID
+#fi
 
 
 # ensure that user 'postgres' is member of $DB_BACKUP_GUSER group
-if ! id -nG postgres | grep -qw "$DB_BACKUP_GUSER"; then
-    echo postgres does not belong to $DB_BACKUP_GUSER
-    sudo usermod -aG $DB_BACKUP_GUSER postgres
-fi
+#if ! id -nG postgres | grep -qw "$DB_BACKUP_GUSER"; then
+#    echo postgres does not belong to $DB_BACKUP_GUSER
+#    sudo usermod -aG $DB_BACKUP_GUSER postgres
+#fi
 
 }
 
