@@ -114,7 +114,11 @@ else
     echo "sudo chmod g+w -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
     sudo chmod g+w -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
     
-    # Updates the 'DB_BACKUP_PATH'variable
+    # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
+    echo
+    DB_BACKUP_OBJ="$DB_BACKUP_PATH/$DB_BACKUP_FNAME"
+    echo "checking vars - assigning 'DB_BACKUP_OBJ' variable: "$DB_BACKUP_OBJ""
+
     echo
     DB_BACKUP_PATH="$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
     echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
@@ -210,7 +214,7 @@ done
 #    echo postgres does not belong to $DB_BACKUP_GUSER
 #    sudo usermod -aG $DB_BACKUP_GUSER postgres
 #fi
-
+sleep 2s
 }
 
 
@@ -237,7 +241,7 @@ echo "local backup - setting pgpass file perms"
     cp -n ~/.pgpass /$DB_BACKUP_PATH/.pgpass
     sudo chown postgres:postgres /$DB_BACKUP_PATH/.pgpass
 fi
-
+sleep 1s
 echo
 echo "local backup - running pgdump backup process"
 # switch to 'postgres' user and run command to create inital sql dump file
