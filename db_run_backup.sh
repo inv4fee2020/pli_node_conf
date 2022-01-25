@@ -109,8 +109,8 @@ else
     sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
     echo
     echo "checking vars - assigning permissions for directory: "$DB_BACKUP_DIR""
-    echo "sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
-    sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+    echo "sudo chown $USER_ID:$DB_BACKUP_GUSER -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
+    sudo chown $USER_ID:$DB_BACKUP_GUSER -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
     echo "sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
     sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
     
