@@ -117,8 +117,6 @@ fi
         # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
         DB_BACKUP_PATH="/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
         echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
-        DB_BACKUP_OBJ="/$DB_BACKUP_PATH/$DB_BACKUP_FNAME"
-        echo "checking vars - assigning 'DB_BACKUP_OBJ' variable: "$DB_BACKUP_OBJ""
     else
     echo "checking vars - creating directory: "$DB_BACKUP_DIR""
         sudo mkdir "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
@@ -131,9 +129,10 @@ fi
         # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
         DB_BACKUP_PATH="$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
         echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
-        DB_BACKUP_OBJ="$DB_BACKUP_PATH/$DB_BACKUP_FNAME"
-        echo "checking vars - assigning 'DB_BACKUP_OBJ' variable: "$DB_BACKUP_OBJ""
     fi
+
+    DB_BACKUP_OBJ="$DB_BACKUP_PATH/$DB_BACKUP_FNAME"
+    echo "checking vars - assigning 'DB_BACKUP_OBJ' variable: "$DB_BACKUP_OBJ""
     
     echo
     echo "checking vars - exiting directory check & continuing..."
