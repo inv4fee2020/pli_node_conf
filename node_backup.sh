@@ -286,22 +286,28 @@ FUNC_DB_BACKUP_ENC;
 FUNC_DB_BACKUP_ENC(){
 # runs GnuPG or gpg to encrypt the sql dump file - uses main keystore password as secret
 # outputs file to new folder ready for upload
-
+if [ -e $DB_BACKUP_OBJ ]; then
 sudo gpg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_FNAME -c /$DB_BACKUP_OBJ
-error_exit;
-sudo gpg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_CONFNAME -c /$CONF_BACKUP_OBJ
 error_exit;
 echo
 echo "local backup - successfully created file:  "$ENC_FNAME""
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$ENC_PATH/$ENC_FNAME
-echo "local backup - successfully created file:  "$ENC_CONFNAME""
-sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$ENC_PATH/$ENC_CONFNAME
-
 echo
 echo "local backup - securely erase unencrypted file:  "$DB_BACKUP_OBJ""
 shred -uz -n 1 /$DB_BACKUP_OBJ
+fi
+
+if [ -e $CONF_BACKUP_OBJ ]; then
+sudo gpg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_CONFNAME -c $CONF_BACKUP_OBJ
+error_exit;
+echo
+echo "local backup - successfully created file:  "$ENC_CONFNAME""
+sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$ENC_PATH/$ENC_CONFNAME
+echo
 echo "local backup - securely erase unencrypted file:  "$CONF_BACKUP_OBJ""
 shred -uz -n 1 /$CONF_BACKUP_OBJ
+fi
+
 sleep 2s
 }
 
