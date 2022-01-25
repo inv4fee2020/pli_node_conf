@@ -115,13 +115,14 @@ else
     sudo chmod g+w -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
     
     # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
-    echo
-    DB_BACKUP_OBJ="$DB_BACKUP_PATH/$DB_BACKUP_FNAME"
-    echo "checking vars - assigning 'DB_BACKUP_OBJ' variable: "$DB_BACKUP_OBJ""
 
     echo
     DB_BACKUP_PATH="$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
     echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
+    
+    echo
+    DB_BACKUP_OBJ="$DB_BACKUP_PATH/$DB_BACKUP_FNAME"
+    echo "checking vars - assigning 'DB_BACKUP_OBJ' variable: "$DB_BACKUP_OBJ""
 
     #cat ~/$PLI_DB_VARS_FILE | grep $DB_BACKUP_DIR
     echo
