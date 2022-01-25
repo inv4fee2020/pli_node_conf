@@ -103,7 +103,7 @@ else
     echo
     echo "checking vars - updating file "$PLI_DB_VARS_FILE" variable 'DB_BACKUP_DIR' to: "$DB_BACKUP_DIR""
     sed -i.bak 's/DB_BACKUP_DIR=\"\"/DB_BACKUP_DIR=\"'$DB_BACKUP_DIR'\"/g' ~/$PLI_DB_VARS_FILE
-
+fi
     # Checks if directory exists & creates if not + sets perms
     
     echo
@@ -138,7 +138,6 @@ else
     echo
     echo "checking vars - exiting directory check & continuing..."
     sleep 2s
-fi
 
 echo
 echo "checking vars - your configured node backup PATH is: $DB_BACKUP_PATH"
