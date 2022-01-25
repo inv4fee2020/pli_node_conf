@@ -281,10 +281,22 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
     #FUNC_DO_INIT_CHECK;
 
     # NON-INTERACTIVE: Proceed with next stage of setup.
+    FUNC_EXPORT_NODE_KEYS;
     FUNC_INITIATOR;
     }
 
 
+FUNC_EXPORT_NODE_KEYS(){
+
+echo "export node keys - add current user to 'postgres' group"
+sudo usermod -aG postgres $(getent passwd $EUID | cut -d: -f1)
+
+echo "export node keys - exporting keys to file: ~/"plinode_$(hostname -f)_keys".json"
+echo $(sudo -u postgres -i psql -d plugin_mainnet_db -t -c"select json from keys where id=1;")  > ~/"plinode_$(hostname -f)_keys".json
+
+echo "export node keys - securing file permissions"
+chmod 600 ~/"plinode_$(hostname -f)_keys".json
+}
 
 
 
@@ -458,14 +470,24 @@ case "$1" in
         initiator)
                 FUNC_INITIATOR
                 ;;
+        keys)
+                FUNC_EXPORT_NODE_KEYS
+                ;;
         *)
                 
                 echo 
                 echo 
-                echo "Usage: $0 { fullnode | initiator }"
+                echo "Usage: $0 {function}"
                 echo 
-                echo "please provide one of the above values to run the scripts"
                 echo "    example: " $0 fullnode""
                 echo 
                 echo 
+                echo "where {function} is one of the following;"
+                echo 
+                echo "      fullnode      ==  deploys the full node incl. external initiator & exports the node keys"
+                echo 
+                echo "      initiator     ==  deploys the external initiator only"
+                echo
+                echo "      keys          ==  extracts the node keys from DB and exports to json file "
+                echo
 esac
