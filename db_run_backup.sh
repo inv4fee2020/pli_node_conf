@@ -91,7 +91,7 @@ if [ ! -z "$DB_BACKUP_DIR" ] ; then
         sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR";
     fi
 else
-    # If NULL then defaults to using 'node_backups' for 'DB_BACKUP_DIR'variable
+    # If NULL then defaults to using 'node_backups' for 'DB_BACKUP_DIR' variable
     echo
     echo "checking vars - Detected NULL - setting 'default'value.."
     export DB_BACKUP_DIR="node_backups"
@@ -109,8 +109,10 @@ else
     sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
     echo
     echo "checking vars - assigning permissions for directory: "$DB_BACKUP_DIR""
+    echo "sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
     sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-    sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR";
+    echo "sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
+    sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
     
     # Updates the 'DB_BACKUP_PATH'variable
     echo
@@ -119,7 +121,7 @@ else
 
     #cat ~/$PLI_DB_VARS_FILE | grep $DB_BACKUP_DIR
     echo
-    echo "checking vars - exiting directory check & continuing...";
+    echo "checking vars - exiting directory check & continuing..."
     sleep 2s
 fi
 
