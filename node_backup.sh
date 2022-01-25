@@ -107,7 +107,7 @@ fi
     # Checks if directory exists & creates if not + sets perms
     
     echo
-    if [ "$SET_ROOT_DIR" == true ]; then
+    if [ "$SET_ROOT_DIR" == "true" ]; then
     echo "checking vars - creating directory: "/$DB_BACKUP_DIR""
         sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
         echo "sudo chown $USER_ID:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
