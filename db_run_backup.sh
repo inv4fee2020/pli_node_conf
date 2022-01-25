@@ -34,7 +34,7 @@ FUNC_DB_VARS(){
         echo -e "${GREEN} please update the vars file with your specific values.. ${NC}"
         echo -e "${GREEN} copy command to edit: ${NC}"
         echo
-        echo -e "${GREEN}       nano ~/$PLI_VARS_FILE ${NC}"
+        echo -e "${GREEN}       nano ~/"$PLI_VARS_FILE" ${NC}"
         echo
         echo
         #sleep 2s
