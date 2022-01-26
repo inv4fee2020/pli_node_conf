@@ -238,26 +238,28 @@ FUNC_CHECK_DIRS;
 
 # checks if the '.pgpass' credentials file exists - if not creates in home folder & copies to dest folder
 # & sets perms
-echo
+echo "$DB_BACKUP_PATH"
+sleep 2s
 echo "local backup - checking pgpass file exists"
 if [ ! -e /$DB_BACKUP_PATH/.pgpass ]; then
     #clear
 cat <<EOF > ~/.pgpass
 Localhost:5432:$DB_NAME:postgres:$DB_PWD_NEW
 EOF
+fi
+
 echo
 echo "local backup - setting pgpass file perms"
-    chmod 600 ~/.pgpass
-    if [ "$SET_ROOT_DIR" == "true" ]; then
+if [ "$SET_ROOT_DIR" == "true" ]; then
     cp -p ~/.pgpass /$DB_BACKUP_PATH/.pgpass
     chmod 600 /$DB_BACKUP_PATH/.pgpass
     sudo chown postgres:postgres /$DB_BACKUP_PATH/.pgpass
-    else
+else
     cp -p ~/.pgpass $DB_BACKUP_PATH/.pgpass
     sudo chown postgres:postgres $DB_BACKUP_PATH/.pgpass
     chmod 600 $DB_BACKUP_PATH/.pgpass
-    fi
 fi
+
 sleep 1s
 echo
 echo "local backup - running pgdump backup process"
