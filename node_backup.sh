@@ -391,4 +391,6 @@ case "$1" in
                 echo
                 echo "      -p         ==  carries out pre-checks on user / group variables defined in file: $PLI_DB_VARS_FILE "
                 echo "      -f         ==  carries out pre-checks on directory / path variables defined in file: $PLI_DB_VARS_FILE "
+                echo 
+                echo 
 esac
