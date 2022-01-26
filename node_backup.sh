@@ -56,10 +56,21 @@ if ([ ! -z "$DB_BACKUP_ROOT" ] && ([ ! -z "$DB_BACKUP_ROOT" ] || [ "$DB_BACKUP_R
     echo "checking vars - variable 'DB_BACKUP_ROOT' value is: $DB_BACKUP_ROOT"
     echo "checking vars - variable 'DB_BACKUP_ROOT' is not NULL"
     echo "checking vars - check directory exists & create if NOT..."
-    if [ ! -d "/$DB_BACKUP_ROOT" ]; then
-        sudo mkdir "/$DB_BACKUP_ROOT"
-        sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT"
-    fi
+    if [ "$SET_ROOT_DIR" == "true" ]; then
+        echo "DEBUG :: ROOT_DIR true check - IF STEP"
+        echo " root dir flag is true"
+        if [ ! -d "/$DB_BACKUP_ROOT" ]; then
+            sudo mkdir "/$DB_BACKUP_ROOT"
+            sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT"
+        fi
+    else
+        echo "DEBUG :: ROOT_DIR true check - IF ELSESTEP"
+        echo " root dir flag is true"
+        if [ ! -d "$DB_BACKUP_ROOT" ]; then
+            sudo mkdir "$DB_BACKUP_ROOT"
+            sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "$DB_BACKUP_ROOT"
+        fi
+    fi    
 else
     # if NULL then defaults to using $HOME & updates the 'DB_BACKUP_PATH' variable
     if ([ -z "$DB_BACKUP_ROOT" ] || [ "$DB_BACKUP_ROOT" == "$HOME" ] || [ "$DB_BACKUP_ROOT" == "/home/$USER_ID" ]); then
