@@ -60,7 +60,7 @@ if ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "root" ]) || ([ ! -z "$
     fi
 else
     # if NULL then defaults to using $HOME & updates the 'DB_BACKUP_PATH' variable
-    if [ -z "$DB_BACKUP_ROOT" ]; then
+    if ([ -z "$DB_BACKUP_ROOT" ] || [ "$DB_BACKUP_ROOT" = "$HOME" ]); then
         DB_BACKUP_ROOT="$HOME"
         SET_ROOT_DIR=false
         echo
