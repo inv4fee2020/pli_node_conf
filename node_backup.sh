@@ -137,11 +137,11 @@ fi
     
     echo
     echo "checking vars - exiting directory check & continuing..."
-    sleep 2s
+    #sleep 2s
 
 echo
 echo "checking vars - your configured node backup PATH is: $DB_BACKUP_PATH"
-sleep 2s
+#sleep 2s
 
 }
 
@@ -224,7 +224,7 @@ done
 #    echo postgres does not belong to $DB_BACKUP_GUSER
 #    sudo usermod -aG $DB_BACKUP_GUSER postgres
 #fi
-sleep 2s
+#sleep 2s
 }
 
 
@@ -235,7 +235,7 @@ FUNC_DB_BACKUP_LOCAL(){
 # checks if the '.pgpass' credentials file exists - if not creates in home folder & copies to dest folder
 # & sets perms
 echo "$DB_BACKUP_PATH"
-sleep 2s
+#sleep 2s
 echo "local backup - checking pgpass file exists"
 if [ ! -e /$DB_BACKUP_PATH/.pgpass ]; then
     #clear
@@ -256,7 +256,7 @@ else
     chmod 600 $DB_BACKUP_PATH/.pgpass
 fi
 
-sleep 1s
+#sleep 1s
 echo
 echo "local backup - running pgdump backup process"
 # switch to 'postgres' user and run command to create inital sql dump file
@@ -266,7 +266,7 @@ error_exit;
 echo
 echo "local backup - successfully created file:  "$DB_BACKUP_OBJ""
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$DB_BACKUP_OBJ
-sleep 2s
+#sleep 2s
 FUNC_DB_BACKUP_ENC;
 }
 
@@ -280,7 +280,7 @@ echo "local backup - running tar backup process"
 tar -cvpzf $CONF_BACKUP_OBJ ~/plinode* ~/pli_init* ~/plugin-deployment/.env*
 error_exit;
 
-sleep 2s
+#sleep 2s
 FUNC_DB_BACKUP_ENC;
 }
 
@@ -312,7 +312,7 @@ echo "local backup - securely erase unencrypted file:  "$CONF_BACKUP_OBJ""
 shred -uz -n 1 /$CONF_BACKUP_OBJ
 fi
 
-sleep 2s
+#sleep 2s
 }
 
 
