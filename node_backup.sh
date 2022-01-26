@@ -361,7 +361,7 @@ clear
 case "$1" in
         -full)
                 FUNC_DB_BACKUP_LOCAL
-                
+                FUNC_CONF_BACKUP_LOCAL
                 ;;
         -conf)
                 FUNC_CONF_BACKUP_LOCAL
