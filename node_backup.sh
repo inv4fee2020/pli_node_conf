@@ -352,8 +352,6 @@ FUNC_DB_VARS;
 FUNC_DB_PRE_CHECKS;
 FUNC_CHECK_DIRS;
 
-
-clear
 case "$1" in
         -full)
                 FUNC_DB_BACKUP_LOCAL
