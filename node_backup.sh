@@ -48,9 +48,11 @@ FUNC_DB_VARS(){
 FUNC_CHECK_DIRS(){
 
 # checks that the DB_BACKUP_ROOT var is not NULL & not 'root' or is not NULL & not $HOME so as not to create these folder & change perms
-if ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "root" ]) || ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "$HOME" ]); then
+#if ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "root" ]) || ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "$HOME" ]); then
+if ([ ! -z "$DB_BACKUP_ROOT" ] && ([ ! -z "$DB_BACKUP_ROOT" ] || [ "$DB_BACKUP_ROOT" != "$HOME" ] || [ "$DB_BACKUP_ROOT" =~ /home ])); then
+
     SET_ROOT_DIR=true
-    echo
+    echo "DEBUG :: ROOT_DIR - IF STEP"
     echo "checking vars - variable 'DB_BACKUP_ROOT' value is: $DB_BACKUP_ROOT"
     echo "checking vars - variable 'DB_BACKUP_ROOT' is not NULL"
     echo "checking vars - check directory exists & create if NOT..."
@@ -61,6 +63,8 @@ if ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "root" ]) || ([ ! -z "$
 else
     # if NULL then defaults to using $HOME & updates the 'DB_BACKUP_PATH' variable
     if ([ -z "$DB_BACKUP_ROOT" ] || [ "$DB_BACKUP_ROOT" == "$HOME" ] || [ "$DB_BACKUP_ROOT" == "/home/$USER_ID" ]); then
+        
+        echo "DEBUG :: ROOT DIR - IF ELSE STEP"
         DB_BACKUP_ROOT="$HOME"
         SET_ROOT_DIR=false
         echo
@@ -88,6 +92,7 @@ if [ ! -z "$DB_BACKUP_DIR" ] ; then
     echo "checking vars - check directory exists & create if NOT..."
     # Checks if directory exists & creates if not + sets perms
     if [ "$SET_ROOT_DIR" == "true" ]; then
+        echo "DEBUG :: BACKUP DIR - IF STEP"
         echo " root dir flag is true"
         if [ ! -d "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR" ]; then
             sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
@@ -95,6 +100,7 @@ if [ ! -z "$DB_BACKUP_DIR" ] ; then
             sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR";
         fi
     else
+        echo "DEBUG :: BACKUP DIR - IF ELSE STEP"
         echo " root dir flag is false"
         if [ ! -d "$DB_BACKUP_ROOT/$DB_BACKUP_DIR" ]; then
             sudo mkdir "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
