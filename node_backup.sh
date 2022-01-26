@@ -81,6 +81,7 @@ fi
 
 # Checks if NOT NULL for the 'DB_BACKUP_DIR'variable
 if [ ! -z "$DB_BACKUP_DIR" ] ; then
+    SET_ROOT_DIR=true
     echo
     echo "checking vars - var is not NULL"
     echo "checking vars - var 'DB_BACKUP_DIR' value is: $DB_BACKUP_DIR"
