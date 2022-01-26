@@ -98,7 +98,7 @@ fi
 if [ ! -z "$DB_BACKUP_DIR" ] ; then
     #SET_ROOT_DIR=true
     echo
-    echo "checking vars - var is not NULL"
+    #echo "checking vars - var is not NULL"
     echo "checking vars - var 'DB_BACKUP_DIR' value is: $DB_BACKUP_DIR"
     echo "checking vars - check directory exists & create if NOT..."
     # Checks if directory exists & creates if not + sets perms
