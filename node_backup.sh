@@ -87,13 +87,15 @@ if [ ! -z "$DB_BACKUP_DIR" ] ; then
     echo "checking vars - var 'DB_BACKUP_DIR' value is: $DB_BACKUP_DIR"
     echo "checking vars - check directory exists & create if NOT..."
     # Checks if directory exists & creates if not + sets perms
-    if [ "$SET_ROOT_DIR" == "false" ]; then
+    if [ "$SET_ROOT_DIR" == "true" ]; then
+        echo " root dir flag is true"
         if [ ! -d "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR" ]; then
             sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
             sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
             sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR";
         fi
     else
+        echo " root dir flag is false"
         if [ ! -d "$DB_BACKUP_ROOT/$DB_BACKUP_DIR" ]; then
             sudo mkdir "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
             sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
