@@ -232,10 +232,6 @@ sleep 2s
 
 
 FUNC_DB_BACKUP_LOCAL(){
-
-FUNC_DB_PRE_CHECKS;
-FUNC_CHECK_DIRS;
-
 # checks if the '.pgpass' credentials file exists - if not creates in home folder & copies to dest folder
 # & sets perms
 echo "$DB_BACKUP_PATH"
@@ -275,20 +271,20 @@ FUNC_DB_BACKUP_ENC;
 }
 
 
+
+
+
 FUNC_CONF_BACKUP_LOCAL(){
-
-FUNC_DB_PRE_CHECKS;
-FUNC_CHECK_DIRS;
-
 echo
 echo "local backup - running tar backup process"
 tar -cvpzf $CONF_BACKUP_OBJ ~/plinode* ~/pli_init* ~/plugin-deployment/.env*
 error_exit;
 
-
 sleep 2s
 FUNC_DB_BACKUP_ENC;
 }
+
+
 
 
 FUNC_DB_BACKUP_ENC(){
@@ -353,8 +349,8 @@ error_exit()
 
 
 FUNC_DB_VARS;
-#FUNC_DB_BACKUP_LOCAL;
-#FUNC_DB_BACKUP_REMOTE;
+FUNC_DB_PRE_CHECKS;
+FUNC_CHECK_DIRS;
 
 
 clear
