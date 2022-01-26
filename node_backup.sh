@@ -49,7 +49,7 @@ FUNC_CHECK_DIRS(){
 
 # checks that the DB_BACKUP_ROOT var is not NULL & not 'root' or is not NULL & not $HOME so as not to create these folder & change perms
 #if ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "root" ]) || ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "$HOME" ]); then
-if ([ ! -z "$DB_BACKUP_ROOT" ] && ([ ! -z "$DB_BACKUP_ROOT" ] || [ "$DB_BACKUP_ROOT" != "$HOME" ] || [ "$DB_BACKUP_ROOT" =~ ^\/home ])); then
+if ([ ! -z "$DB_BACKUP_ROOT" ] && ([ ! -z "$DB_BACKUP_ROOT" ] || [ "$DB_BACKUP_ROOT" != "$HOME" ] || [ ! "$DB_BACKUP_ROOT" =~ ^\/home ])); then
 
     SET_ROOT_DIR=true
     echo "DEBUG :: ROOT_DIR - IF STEP"
