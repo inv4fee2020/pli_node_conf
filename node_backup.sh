@@ -49,28 +49,28 @@ FUNC_CHECK_DIRS(){
 
 # checks that the DB_BACKUP_ROOT var is not NULL & not 'root' or is not NULL & not $HOME so as not to create these folder & change perms
 #if ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "root" ]) || ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "$HOME" ]); then
-if ([ ! -z "$DB_BACKUP_ROOT" ] && ([ ! -z "$DB_BACKUP_ROOT" ] || [ "$DB_BACKUP_ROOT" != "$HOME" ] || [ ! "$DB_BACKUP_ROOT" =~ ^\/home ])); then
+if ([ ! -z "$DB_BACKUP_ROOT" ] && ([ ! "$DB_BACKUP_ROOT" =~ ^/root ] || [ "$DB_BACKUP_ROOT" != "$HOME" ] || [ ! "$DB_BACKUP_ROOT" =~ ^/home ])); then
 
     SET_ROOT_DIR=true
     echo "DEBUG :: ROOT_DIR - IF STEP"
     echo "checking vars - variable 'DB_BACKUP_ROOT' value is: $DB_BACKUP_ROOT"
     echo "checking vars - variable 'DB_BACKUP_ROOT' is not NULL"
     echo "checking vars - check directory exists & create if NOT..."
-    if [ "$SET_ROOT_DIR" == "true" ]; then
-        echo "DEBUG :: ROOT_DIR true check - IF STEP"
-        echo " root dir flag is true"
+    #if [ "$SET_ROOT_DIR" == "true" ]; then
+    #    echo "DEBUG :: ROOT_DIR true check - IF STEP"
+    #    echo " root dir flag is true"
         if [ ! -d "/$DB_BACKUP_ROOT" ]; then
             sudo mkdir "/$DB_BACKUP_ROOT"
             sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT"
         fi
-    else
-        echo "DEBUG :: ROOT_DIR true check - IF ELSESTEP"
-        echo " root dir flag is true"
-        if [ ! -d "$DB_BACKUP_ROOT" ]; then
-            sudo mkdir "$DB_BACKUP_ROOT"
-            sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "$DB_BACKUP_ROOT"
-        fi
-    fi    
+    #else
+    #    echo "DEBUG :: ROOT_DIR true check - IF ELSESTEP"
+    #    echo " root dir flag is true"
+    #    if [ ! -d "$DB_BACKUP_ROOT" ]; then
+    #        sudo mkdir "$DB_BACKUP_ROOT"
+    #        sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "$DB_BACKUP_ROOT"
+    #    fi
+    #fi    
 else
     # if NULL then defaults to using $HOME & updates the 'DB_BACKUP_PATH' variable
     if ([ -z "$DB_BACKUP_ROOT" ] || [ "$DB_BACKUP_ROOT" == "$HOME" ] || [ "$DB_BACKUP_ROOT" == "/home/$USER_ID" ]); then
