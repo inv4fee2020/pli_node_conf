@@ -38,9 +38,9 @@ FUNC_VARS(){
     fi
     source ~/$PLI_VARS_FILE
 
-    #if [[ "$CHECK_PASSWD" == "true" ]]; then
-    #    FUNC_PASSWD_CHECKS
-    #fi
+    if [[ "$CHECK_PASSWD" == "true" ]]; then
+        FUNC_PASSWD_CHECKS
+    fi
 
 }
 
@@ -83,19 +83,19 @@ FUNC_VALUE_CHECK(){
     echo -e "${GREEN}## CONFIRM SCRIPTS VARIABLES FILE HAS BEEN UPDATED...${NC}"
     echo 
     # Ask the user acc for login details (comment out to disable)
-    #CHECK_PASSWD=false
+    CHECK_PASSWD=false
         while true; do
             read -t7 -r -p "please confirm that you have updated the vars file with your values ? (Y/n) " _input
             if [ $? -gt 128 ]; then
                 #clear
                 echo
                 echo "timed out waiting for user response - proceeding as normal..."
-                #CHECK_PASSWD=true
+                CHECK_PASSWD=true
                 FUNC_NODE_DEPLOY;
             fi
             case $_input in
                 [Yy][Ee][Ss]|[Yy]* ) 
-                    #CHECK_PASSWD=true
+                    CHECK_PASSWD=true
                     FUNC_NODE_DEPLOY
                     break
                     ;;
@@ -111,7 +111,7 @@ FUNC_VALUE_CHECK(){
 
 
 FUNC_PASSWD_CHECKS(){
-source ~/"plinode_$(hostname -f)".vars
+#source ~/"plinode_$(hostname -f)".vars
 # check the keystore password has been updated or if null
 SAMPLE_KEYSTORE='$oM3$tr*nGp4$$w0Rd$'
 # PASS_KEYSTORE
@@ -145,14 +145,14 @@ if ([ -z "$DB_PWD_NEW" ] || [ "$DB_PWD_NEW" == "$SAMPLE_DB_PWD" ]); then
     #echo "$DB_PWD_NEW"
 fi
 
-#source ~/"plinode_$(hostname -f)".vars
+source ~/"plinode_$(hostname -f)".vars
 
 }
 
 
 
 FUNC_NODE_DEPLOY(){
-    FUNC_PASSWD_CHECKS;
+    #FUNC_PASSWD_CHECKS;
     FUNC_VARS;
     FUNC_PKG_CHECK;
     
