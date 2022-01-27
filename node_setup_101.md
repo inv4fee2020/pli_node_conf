@@ -15,7 +15,11 @@
 
 4. Once logged on as your new admin user - run the following commands;
 
-        sudo apt install -y git; sudo apt install nano -y
+        sudo -l > /dev/null 2>&1
+        sudo apt install -y git nano
+
+.
+
         cd $HOME
         git clone https://github.com/inv4fee2020/pli_node_conf.git
         cd pli_node_conf
