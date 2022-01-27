@@ -57,7 +57,12 @@
 
         ./gen_node_testjob.sh
 
-    <img src="https://github.com/inv4fee2020/docs_pli/blob/main/images/pli_node_testjob_jsonblob%202022-01-27%20at%2010.05.42.png" alt="New test Job json blob" width=40% height=40% border="10">
+<br/>
+<p align="center">
+<img src="https://github.com/inv4fee2020/docs_pli/blob/main/images/pli_node_testjob_jsonblob%202022-01-27%20at%2010.05.42.png" alt="New test Job json blob" width=40% height=40% border="10">
+</p>
+<br/>
+    
     
     The script will prompt you to input your Oracle contract address (in any format) e.g with a prefix of 'xdc' or '0x' and convert it as necessary to the correct format. It will then output the necessary json blob to the terminal screen for you to copy and paste to the jobs section of your node. 
 
