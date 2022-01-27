@@ -141,6 +141,8 @@ if ([ -z "$DB_PWD_NEW" ] || [ "$DB_PWD_NEW" == "$SAMPLE_DB_PWD" ]); then
     #echo "$DB_PWD_NEW"
 fi
 
+source ~/"plinode_$(hostname -f)".vars
+
 }
 
 
