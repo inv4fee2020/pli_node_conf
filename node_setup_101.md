@@ -35,12 +35,8 @@
         y
 
 
-7. Lets update the OS and install necessary packages & update the UFW firewall - run the following commands;
-
-        ./base_sys_setup.sh -D
-  
 ---  
-  **_NOTE_**: some VPS hosters may have already changed your ssh port by default and so it is recommended that you run the following command to verify. If ssh is already running on a different port, then please repeat **_step 5_** above.
+  **_NOTE_**: Some VPS hosters may have already changed your ssh port by default and so it is recommended that you run the following command to verify. If ssh is already running on a different port, then please repeat **_step 5_** above.
 
   command to run;
   ```
@@ -51,8 +47,14 @@
 |---| 
 ---
 
-8. During the UFW portion of the above script, you will be prompted to to confirm (y/n) to proceed. Select 'Y' to continue. This will not disrupt your existing ssh session
+7. Lets update the OS and install necessary packages & update the UFW firewall - run the following commands;
 
+        ./base_sys_setup.sh -D
+  
+
+8. During the UFW portion of the above script, you will be prompted to to confirm (y/n) to proceed. Select 'Y' to continue. This will not disrupt your existing ssh session.
+|<img src="https://github.com/inv4fee2020/docs_pli/blob/main/images/pli_node_ufw_enable%202022-01-27%20at%2010.57.08.png" width=70% height=70%>|
+|---|
 
 9. At this point we are ready to go ahead and deploy the Plugin node - run the following commands;
 
