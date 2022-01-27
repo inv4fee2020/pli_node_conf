@@ -4,6 +4,7 @@
 
 
 2. Create a new admin user account
+-- Copy the below text into a local text editor e.g. notepad
 -- Change 'my_new_user' & 'my_new_password' for your values and paste the code to the terminal
         
         sudo groupadd my_new_user
@@ -14,11 +15,11 @@
 
 4. Once logged on as your new admin user - run the following commands;
 
-        sudo apt install -y git
+        sudo apt install -y git; sudo apt install nano -y
         cd $HOME
         git clone https://github.com/inv4fee2020/pli_node_conf.git
         cd pli_node_conf
-        chmod +x {base_sys_setup.sh,pli_node_scripts.sh,reset_pli.sh,gen_node_testjob.sh}
+        chmod +x *.sh
         cp -n sample.vars ~/plinode_$(hostname -f).vars && chmod 600 ~/plinode_$(hostname -f).vars
         nano ~/plinode_$(hostname -f).vars
 
