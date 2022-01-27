@@ -54,7 +54,7 @@
 
 8. During the UFW portion of the above script, you will be prompted to to confirm (y/n) to proceed. Select 'Y' to continue. This will not disrupt your existing ssh session.
 
-|<img src="https://github.com/inv4fee2020/docs_pli/blob/main/images/pli_node_ufw_enable%202022-01-27%20at%2010.57.08.png" width=70% height=70%>|
+|<img src="https://github.com/inv4fee2020/docs_pli/blob/main/images/pli_node_ufw_enable%202022-01-27%20at%2010.57.08.png" width=50% height=50%>|
 |---|
 
 
