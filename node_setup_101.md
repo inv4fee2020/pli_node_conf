@@ -57,6 +57,6 @@
 
         ./gen_node_testjob.sh
 
-The script will input your Oracle contract address in any format e.g with a prefix of 'xdc' or '0x' and convert it as necessary to the correct format. It will then output the necessary json blob to the terminal for you to copy and paste. 
+    The script will input your Oracle contract address in any format e.g with a prefix of 'xdc' or '0x' and convert it as necessary to the correct format. It will then output the necessary json blob to the terminal for you to copy and paste. 
 
-This ensures that all the values from the node deplpoyment are consistent throughout the process and reduces the likelihood of errors.
+    This ensures that all the values from the node deplpoyment are consistent throughout the process and reduces the likelihood of errors.
