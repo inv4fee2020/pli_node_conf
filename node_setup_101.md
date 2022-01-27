@@ -50,7 +50,7 @@
 
 10. in about 12-15mins you should have a node running and ready to progress with the Remix steps
 
-> When connecting to your nodes plugin GUI as outlined in ['fund your node'](https://docs.goplugin.co/plugin-installations/fund-your-node), you must use *_'https://your_node_ip:6689'_* instead due to the configuration applied by the [main script](https://github.com/inv4fee2020/pli_node_conf#main-script-actions)
+>> When connecting to your nodes plugin GUI as outlined in ['fund your node'](https://docs.goplugin.co/plugin-installations/fund-your-node), you must use *_'https://your_node_ip:6689'_* instead due to the configuration applied by the [main script](https://github.com/inv4fee2020/pli_node_conf#main-script-actions)
 
 
 11. When you get to the [Job Setup](https://docs.goplugin.co/oracle/job-setup) on the main docs & have created your Oracle contract address. You can then run the following script to generate the necessary json blob to create the job on your local node;
