@@ -39,10 +39,17 @@
 
         ./base_sys_setup.sh -D
   
-  NOTE: some VPS hosters may have already changed your ssh port by default and so it is recommended that you run the following command to verify. If ssh is already running on a different port, then please repeat __step 5__ above.
+---  
+  **_NOTE_**: some VPS hosters may have already changed your ssh port by default and so it is recommended that you run the following command to verify. If ssh is already running on a different port, then please repeat **_step 5_** above.
+
+  command to run;
+  ```
+  sudo netstat -tpln | egrep '(Proto|ssh)'
+  ```
+
 |<img src="https://github.com/inv4fee2020/docs_pli/blob/main/images/pli_node_get_ssh_ports%202022-01-27%20at%2010.40.30.png" width=70% height=70%>|
 |---| 
-
+---
 
 8. During the UFW portion of the above script, you will be prompted to to confirm (y/n) to proceed. Select 'Y' to continue. This will not disrupt your existing ssh session
 
