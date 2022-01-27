@@ -169,6 +169,7 @@ As the code is updated it will be necessary to update your local repo from time 
         git fetch
         git reset --hard HEAD
         git merge '@{u}'
+        chmod +x *.sh
 
 
    _source: https://www.freecodecamp.org/news/git-pull-force-how-to-overwrite-local-changes-with-git/_
@@ -180,7 +181,7 @@ As the code is updated it will be necessary to update your local repo from time 
         rm -rf pli_node_conf
         git clone https://github.com/inv4fee2020/pli_node_conf.git
         cd pli_node_conf
-        chmod +x {base_sys_setup.sh,pli_node_scripts.sh,reset_pli.sh,gen_node_testjob.sh}
+        chmod +x *.sh
 
 
 
