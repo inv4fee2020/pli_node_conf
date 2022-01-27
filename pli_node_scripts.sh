@@ -38,6 +38,10 @@ FUNC_VARS(){
     fi
     source ~/$PLI_VARS_FILE
 
+    if [[ "$CHECK_PASSWD" == "true" ]]; then
+        FUNC_PASSWD_CHECKS
+    fi
+
 }
 
 
@@ -79,13 +83,14 @@ FUNC_VALUE_CHECK(){
     echo -e "${GREEN}## CONFIRM SCRIPTS VARIABLES FILE HAS BEEN UPDATED...${NC}"
     echo 
     # Ask the user acc for login details (comment out to disable)
-    
+    CHECK_PASSWD=false
         while true; do
             read -t7 -r -p "please confirm that you have updated the vars file with your values ? (Y/n) " _input
             if [ $? -gt 128 ]; then
                 #clear
                 echo
                 echo "timed out waiting for user response - proceeding as normal..."
+                CHECK_PASSWD=true
                 FUNC_NODE_DEPLOY;
             fi
             case $_input in
@@ -99,6 +104,41 @@ FUNC_VALUE_CHECK(){
                 * ) echo "Please answer (y)es or (n)o.";;
             esac
         done
+}
+
+FUNC_PASSWD_CHECKS(){
+source ~/"plinode_$(hostname -f)".vars
+# check the keystore password has been updated or if null
+SAMPLE_KEYSTORE='$oM3$tr*nGp4$$w0Rd$'
+# PASS_KEYSTORE
+SAMPLE_DB_PWD="testdbpwd1234"
+# DB_PWD_NEW
+
+if ([ -z "$PASS_KEYSTORE" ] || [ "$PASS_KEYSTORE" == "$SAMPLE_KEYSTORE" ]); then
+    echo "KEYSTORE VARIABLE 'PASS_KEYSTORE' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
+    #_AUTOGEN_KEYSTORE="PASS_KEYSTORE='$(cat /dev/urandom | tr -dc 'a-zA-Z0-9%:+*!;.?=' | head -c32)'"
+    _AUTOGEN_KEYSTORE="'$(cat /dev/urandom | tr -dc 'a-zA-Z0-9%:+*!;.?=' | head -c32)'"
+    #echo "$_AUTOGEN_KEYSTORE" 
+    #sed 's/^PASS_KEYSTORE.*/'"${_AUTOGEN_KEYSTORE}"'/g' ~/"plinode_$(hostname -f)".vars
+    sed -i 's/^PASS_KEYSTORE.*/PASS_KEYSTORE='"$_AUTOGEN_KEYSTORE"'/g' ~/"plinode_$(hostname -f)".vars
+    #sed -i 's/^PASS_KEYSTORE.*/PASS_KEYSTORE=\'"'$(cat /dev/urandom | tr -dc 'a-zA-Z0-9%:+*!;.?=' | head -c32)'"'/g' ~/"plinode_$(hostname -f)".vars
+    #cat plinode_plidev.vars | egrep '(DB_PWD_NEW|PASS_KEYSTORE)'
+    PASS_KEYSTORE=$_AUTOGEN_KEYSTORE
+    #echo "$PASS_KEYSTORE"
+
+fi
+
+
+if ([ -z "$DB_PWD_NEW" ] || [ "$DB_PWD_NEW" == "$SAMPLE_DB_PWD" ]); then
+    echo "POSTGRES VARIABLE 'DB_PWD_NEW' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
+    _AUTOGEN_DB_PWD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w20 | head -n1)
+    #echo "$_AUTOGEN_DB_PWD"
+    sed -i 's/^DB_PWD_NEW.*/DB_PWD_NEW=\"'"${_AUTOGEN_DB_PWD}"'\"/g' ~/"plinode_$(hostname -f)".vars
+    #cat plinode_plidev.vars | egrep '(DB_PWD_NEW|PASS_KEYSTORE)'
+    DB_PWD_NEW=$_AUTOGEN_DB_PWD
+    #echo "$DB_PWD_NEW"
+fi
+
 }
 
 

@@ -19,7 +19,7 @@ do
     #$AGAIN && echo "###  Warning: Does not meet complexity - rehashing!" || AGAIN=true
     $AGAIN || AGAIN=true
     BEGIN=false
-    PASS_KEYSTORE=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9&%:+*$!;.?=' | head -c32)
+    PASS_KEYSTORE=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9%:+*$!;.?=' | head -c32)
     if [[ ! -z $PASS_KEYSTORE ]]
     then
         len_pass=${#PASS_KEYSTORE}
