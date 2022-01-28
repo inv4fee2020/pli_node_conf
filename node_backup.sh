@@ -282,7 +282,7 @@ if [ "$_OPTION" == "-db" ]; then
     FUNC_CHECK_DIRS
 fi
 
-
+echo "$SET_ROOT_DIR"
 # checks if the '.pgpass' credentials file exists - if not creates in home folder & copies to dest folder
 # & sets perms
 echo "$DB_BACKUP_PATH"
@@ -311,12 +311,12 @@ fi
 echo
 echo "local backup - running pgdump backup process"
 # switch to 'postgres' user and run command to create inital sql dump file
-sudo su postgres -c "export PGPASSFILE="/$DB_BACKUP_PATH/.pgpass"; pg_dump -c -w -U postgres $DB_NAME | gzip > /$DB_BACKUP_OBJ"
+sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; pg_dump -c -w -U postgres $DB_NAME | gzip > /$DB_BACKUP_OBJ"
 error_exit;
 
 echo
 echo "local backup - successfully created file:  "$DB_BACKUP_OBJ""
-sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$DB_BACKUP_OBJ
+sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER $DB_BACKUP_OBJ
 
 #sleep 2s
 FUNC_DB_BACKUP_ENC;
