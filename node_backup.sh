@@ -406,8 +406,6 @@ error_exit()
 case "$1" in
         -full)
                 FUNC_CONF_BACKUP_LOCAL
-                FUNC_DB_BACKUP_LOCAL
-                FUNC_DB_BACKUP_REMOTE
                 ;;
         -conf)
                 FUNC_CONF_BACKUP_LOCAL
