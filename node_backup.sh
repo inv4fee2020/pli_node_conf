@@ -52,7 +52,7 @@ FUNC_CHECK_DIRS(){
 if ([ ! -z "$DB_BACKUP_ROOT" ] && ([ ! "$DB_BACKUP_ROOT" =~ ^/root ] || [ "$DB_BACKUP_ROOT" != "$HOME" ] || [ ! "$DB_BACKUP_ROOT" =~ ^/home ])); then
 
     SET_ROOT_DIR=true
-    echo "DEBUG :: ROOT_DIR - IF STEP"
+    #echo "DEBUG :: ROOT_DIR - IF STEP"
     echo "checking vars - variable 'DB_BACKUP_ROOT' value is: $DB_BACKUP_ROOT"
     echo "checking vars - variable 'DB_BACKUP_ROOT' is not NULL"
     echo "checking vars - check directory exists & create if NOT..."
@@ -75,7 +75,7 @@ else
     # if NULL then defaults to using $HOME & updates the 'DB_BACKUP_PATH' variable
     if ([ -z "$DB_BACKUP_ROOT" ] || [ "$DB_BACKUP_ROOT" == "$HOME" ] || [ "$DB_BACKUP_ROOT" == "/home/$USER_ID" ]); then
         
-        echo "DEBUG :: ROOT DIR - IF ELSE STEP"
+        #echo "DEBUG :: ROOT DIR - IF ELSE STEP"
         DB_BACKUP_ROOT="$HOME"
         SET_ROOT_DIR=false
         echo
@@ -101,18 +101,22 @@ if [ ! -z "$DB_BACKUP_DIR" ] ; then
     #echo "checking vars - var is not NULL"
     echo "checking vars - var 'DB_BACKUP_DIR' value is: $DB_BACKUP_DIR"
     echo "checking vars - check directory exists & create if NOT..."
+
+
     # Checks if directory exists & creates if not + sets perms
+    # following logic attempts to resolve the leading Root '/' path issue
+
     if [ "$SET_ROOT_DIR" == "true" ]; then
-        echo "DEBUG :: BACKUP DIR - IF STEP"
-        echo " root dir flag is true"
+        #echo "DEBUG :: BACKUP DIR - IF STEP"
+        #echo " root dir flag is true"
         if [ ! -d "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR" ]; then
             sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
             sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
             sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR";
         fi
     else
-        echo "DEBUG :: BACKUP DIR - IF ELSE STEP"
-        echo " root dir flag is false"
+        #echo "DEBUG :: BACKUP DIR - IF ELSE STEP"
+        #echo " root dir flag is false"
         if [ ! -d "$DB_BACKUP_ROOT/$DB_BACKUP_DIR" ]; then
             sudo mkdir "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
             sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
@@ -123,7 +127,8 @@ else
     # If NULL then defaults to using 'node_backups' for 'DB_BACKUP_DIR' variable
     echo
     echo "checking vars - Detected NULL - setting 'default'value.."
-    export DB_BACKUP_DIR="node_backups"
+    #export DB_BACKUP_DIR="node_backups"
+    DB_BACKUP_DIR="node_backups"
     echo "checking vars - var 'DB_BACKUP_DIR' value is now: $DB_BACKUP_DIR"
 
     # adds the variable value to the VARS file
@@ -137,9 +142,9 @@ fi
     if [ "$SET_ROOT_DIR" == "true" ]; then
     echo "checking vars - creating directory: "/$DB_BACKUP_DIR""
         sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-        echo "sudo chown $USER_ID:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
+        #echo "sudo chown $USER_ID:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
         sudo chown $USER_ID:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-        echo "sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
+        #echo "sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
         sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
         # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
         DB_BACKUP_PATH="/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
@@ -149,9 +154,9 @@ fi
         sudo mkdir "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
         echo
         echo "checking vars - assigning permissions for directory: "$DB_BACKUP_DIR""
-        echo "sudo chown $USER_ID:$DB_BACKUP_GUSER -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
+        #echo "sudo chown $USER_ID:$DB_BACKUP_GUSER -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
         sudo chown $USER_ID:$DB_BACKUP_GUSER -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-        echo "sudo chmod g+w -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
+        #echo "sudo chmod g+w -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
         sudo chmod g+w -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
         # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
         DB_BACKUP_PATH="$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
@@ -175,9 +180,9 @@ echo "checking vars - your configured node backup PATH is: $DB_BACKUP_PATH"
 
 
 
+
 FUNC_DB_PRE_CHECKS(){
 # check that necessary user / groups are in place 
-
 
 #check DB_BACKUP_FUSER values
 if [ -z "$DB_BACKUP_FUSER" ]; then
@@ -202,11 +207,13 @@ if [ -z "$DB_BACKUP_GUSER" ] && [ ! $(getent group nodebackup) ]; then
     echo
     echo "pre-check vars - updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_GUSER to: nodebackup"
     sed -i.bak 's/DB_BACKUP_GUSER=\"\"/DB_BACKUP_GUSER=\"nodebackup\"/g' ~/$PLI_DB_VARS_FILE
-    export DB_BACKUP_GUSER="nodebackup"
+    #export DB_BACKUP_GUSER="nodebackup"
+    DB_BACKUP_GUSER="nodebackup"
 
 elif [ ! -z "$DB_BACKUP_GUSER" ] && [ ! $(getent group $DB_BACKUP_GUSER) ]; then
     echo
     echo "pre-check vars - variable 'DB_BACKUP_GUSER is: NOT NULL && does not exist"
+    echo
     echo "pre-check vars - creating group "$DB_BACKUP_GUSER""
     sudo groupadd $DB_BACKUP_GUSER
 fi
@@ -219,15 +226,15 @@ echo
 echo "pre-check vars - checking if gdrive user exits"
 if [ ! -z "$GD_FUSER" ]; then
     echo
-    echo "pre-check vars - user for gdrive does exist"
+    echo "pre-check vars - user for gdrive remote backup is defined in VARS"
     DB_GUSER_MEMBER=(postgres $USER_ID $GD_FUSER)
-    echo "${DB_GUSER_MEMBER[@]}"
+    #echo "${DB_GUSER_MEMBER[@]}"
 elif [ -z "$GD_FUSER" ] && [ ! $(getent passwd gdbackup) ]; then
     GD_ENABLED=false
     echo
-    echo "pre-check vars - user for gdrive does NOT exist"
+    echo "pre-check vars - user for gdrive remote backup is NOT defined in VARS"
     DB_GUSER_MEMBER=(postgres $USER_ID)
-    echo "${DB_GUSER_MEMBER[@]}"
+    #echo "${DB_GUSER_MEMBER[@]}"
 fi
 
 echo
@@ -251,13 +258,12 @@ sleep 1s
 
 FUNC_CONF_BACKUP_LOCAL(){
 
-echo "$# or $1 or $_OPTION"
 FUNC_DB_VARS
-FUNC_DB_PRE_CHECKS
+FUNC_DB_PRE_CHECKS  # order is specific as pre checks for user/groups which are assigned to dirs 
 FUNC_CHECK_DIRS
 
 echo
-echo "local backup - running tar backup process"
+echo "local backup - running tar backup process for configuration files"
 tar -cvpzf $CONF_BACKUP_OBJ ~/plinode* ~/pli_init* ~/plugin-deployment/.env*
 error_exit;
 
@@ -283,12 +289,12 @@ if [ "$_OPTION" == "-db" ]; then
     FUNC_CHECK_DIRS
 fi
 
-echo "$SET_ROOT_DIR"
+#echo "$SET_ROOT_DIR"
 # checks if the '.pgpass' credentials file exists - if not creates in home folder & copies to dest folder
 # & sets perms
-echo "$DB_BACKUP_PATH"
+#echo "$DB_BACKUP_PATH"
 #sleep 2s
-echo "local backup - checking pgpass file exists"
+echo "local backup - checking pgpass file exists - create if necessary"
 if [ ! -e /$DB_BACKUP_PATH/.pgpass ]; then
     #clear
 cat <<EOF > ~/.pgpass
@@ -319,11 +325,13 @@ echo
 echo "local backup - successfully created file:  "$DB_BACKUP_OBJ""
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER $DB_BACKUP_OBJ
 
-#sleep 2s
+# Calls the file encryption 
 FUNC_DB_BACKUP_ENC;
 
 
-echo "$GD_ENABLED"
+# check menu selection & that remote backup software configured
+# GD_ENABLED set in FUNC_DB_PRE_CHECKS
+#echo "$GD_ENABLED"
 if [ "$_OPTION" == "-full" ] && [ "$GD_ENABLED" == "true" ]; then
     FUNC_DB_BACKUP_REMOTE
 fi
