@@ -276,7 +276,7 @@ fi
 FUNC_DB_BACKUP_LOCAL(){
 
 
-if [ "$1" == "-db" ]; then
+if [ "$_OPTION" == "-db" ]; then
     FUNC_DB_VARS
     FUNC_DB_PRE_CHECKS
     FUNC_CHECK_DIRS
@@ -322,7 +322,7 @@ sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$DB_BACKUP_OBJ
 FUNC_DB_BACKUP_ENC;
 
 
-if [ "$1" == "-full" ]; then
+if [ "$_OPTION" == "-full" ]; then
     FUNC_DB_BACKUP_REMOTE
 fi
 
@@ -368,7 +368,7 @@ fi
 FUNC_DB_BACKUP_REMOTE(){
 
 
-if [ "$1" == "-remote" ]; then
+if [ "$_OPTION" == "-remote" ]; then
     FUNC_DB_VARS
 fi
 
@@ -406,12 +406,15 @@ case "$1" in
                 FUNC_CONF_BACKUP_LOCAL
                 ;;
         -conf)
+                _OPTION="-conf"
                 FUNC_CONF_BACKUP_LOCAL
                 ;;
         -db)
+                _OPTION="-db"
                 FUNC_DB_BACKUP_LOCAL
                 ;;
         -remote)
+                _OPTION="-remote"
                 FUNC_DB_BACKUP_REMOTE
                 ;;
         -p)
