@@ -347,7 +347,7 @@ FUNC_DB_BACKUP_ENC(){
 # outputs file to new folder ready for upload
 
 if [ -e $DB_BACKUP_OBJ ]; then
-sudo gpggg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_FNAME -c /$DB_BACKUP_OBJ
+sudo gpgggg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_FNAME -c /$DB_BACKUP_OBJ
 error_exit;
 echo
 echo "local backup - successfully created file:  "$ENC_FNAME""
@@ -358,7 +358,7 @@ shred -uz -n 1 /$DB_BACKUP_OBJ
 fi
 
 if [ -e $CONF_BACKUP_OBJ ]; then
-sudo gpggg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_CONFNAME -c $CONF_BACKUP_OBJ
+sudo gpgggg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_CONFNAME -c $CONF_BACKUP_OBJ
 error_exit;
 echo
 echo "local backup - successfully created file:  "$ENC_CONFNAME""
@@ -399,9 +399,9 @@ error_exit;
 error_exit() {
     exit_code=$1
     last_command=${@:2}
-    if [ $exit_code != 0 ]; then
+    if [ "$exit_code" != 0 ]; then
         >&2 echo "\"${last_command}\" command failed with exit code ${exit_code}."
-        exit $exit_code
+        exit "$exit_code"
     else
         return
     fi
