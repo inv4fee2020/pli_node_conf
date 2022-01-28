@@ -222,7 +222,8 @@ if [ ! -z "$GD_FUSER" ]; then
     echo "pre-check vars - user for gdrive does exist"
     DB_GUSER_MEMBER=(postgres $USER_ID $GD_FUSER)
     echo "${DB_GUSER_MEMBER[@]}"
-else
+elif [ -z "$GD_FUSER" ] && [ ! $(getent passwd gdbackup) ]; then
+    GD_ENABLED=false
     echo
     echo "pre-check vars - user for gdrive does NOT exist"
     DB_GUSER_MEMBER=(postgres $USER_ID)
@@ -322,7 +323,8 @@ sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER $DB_BACKUP_OBJ
 FUNC_DB_BACKUP_ENC;
 
 
-if [ "$_OPTION" == "-full" ]; then
+echo "$GD_ENABLED"
+if [ "$_OPTION" == "-full" ] && [ "$GD_ENABLED" != "true" ]; then
     FUNC_DB_BACKUP_REMOTE
 fi
 
