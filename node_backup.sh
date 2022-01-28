@@ -250,7 +250,7 @@ sleep 1s
 
 FUNC_CONF_BACKUP_LOCAL(){
 
-echo "$# or $1 "
+echo "$# or $1 or $_OPTION"
 FUNC_DB_VARS
 FUNC_DB_PRE_CHECKS
 FUNC_CHECK_DIRS
@@ -263,7 +263,7 @@ error_exit;
 #sleep 2s
 FUNC_DB_BACKUP_ENC
 
-if [ "$1" == "-full" ]; then
+if [ "$_OPTION" == "-full" ]; then
     FUNC_DB_BACKUP_LOCAL
 fi
 
@@ -402,6 +402,7 @@ error_exit()
 
 case "$1" in
         -full)
+                _OPTION="-full"
                 FUNC_CONF_BACKUP_LOCAL
                 ;;
         -conf)
