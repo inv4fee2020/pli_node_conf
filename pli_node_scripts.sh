@@ -111,40 +111,50 @@ FUNC_VALUE_CHECK(){
 
 
 FUNC_PASSWD_CHECKS(){
-#source ~/"plinode_$(hostname -f)".vars
 # check the keystore password has been updated or if null
+
+
 SAMPLE_KEYSTORE='$oM3$tr*nGp4$$w0Rd$'
-# PASS_KEYSTORE
+# PASS_KEYSTORE value to compare against
+
 SAMPLE_DB_PWD="testdbpwd1234"
-# DB_PWD_NEW
+# DB_PWD_NEW value to compare against
 
 if ([ -z "$PASS_KEYSTORE" ] || [ "$PASS_KEYSTORE" == "$SAMPLE_KEYSTORE" ]); then
-    echo "KEYSTORE VARIABLE 'PASS_KEYSTORE' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
+    echo 
+    echo 
+    echo -e "${GREEN}########################################################################################${NC}"
+    echo -e "${GREEN}"
+    echo -e "${GREEN}     KEYSTORE VARIABLE 'PASS_KEYSTORE' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
+    echo -e "${GREEN}"
+    echo -e "${GREEN}     YOUR VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS"
+    echo -e "${GREEN}"
+    echo -e "${GREEN}########################################################################################${NC}"
     sleep 2s
-    #_AUTOGEN_KEYSTORE="PASS_KEYSTORE='$(cat /dev/urandom | tr -dc 'a-zA-Z0-9%:+*!;.?=' | head -c32)'"
     _AUTOGEN_KEYSTORE="'$(cat /dev/urandom | tr -dc 'a-zA-Z0-9%:+*!;.?=' | head -c32)'"
-    #echo "$_AUTOGEN_KEYSTORE" 
-    #sed 's/^PASS_KEYSTORE.*/'"${_AUTOGEN_KEYSTORE}"'/g' ~/"plinode_$(hostname -f)".vars
     sed -i 's/^PASS_KEYSTORE.*/PASS_KEYSTORE='"$_AUTOGEN_KEYSTORE"'/g' ~/"plinode_$(hostname -f)".vars
-    #sed -i 's/^PASS_KEYSTORE.*/PASS_KEYSTORE=\'"'$(cat /dev/urandom | tr -dc 'a-zA-Z0-9%:+*!;.?=' | head -c32)'"'/g' ~/"plinode_$(hostname -f)".vars
-    #cat plinode_plidev.vars | egrep '(DB_PWD_NEW|PASS_KEYSTORE)'
     PASS_KEYSTORE=$_AUTOGEN_KEYSTORE
-    #echo "$PASS_KEYSTORE"
 
 fi
 
 
 if ([ -z "$DB_PWD_NEW" ] || [ "$DB_PWD_NEW" == "$SAMPLE_DB_PWD" ]); then
-    echo "POSTGRES VARIABLE 'DB_PWD_NEW' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
+    echo 
+    echo 
+    echo -e "${GREEN}########################################################################################${NC}"
+    echo -e "${GREEN}"
+    echo -e "${GREEN}     POSTGRES VARIABLE 'DB_PWD_NEW' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
+    echo -e "${GREEN}"
+    echo -e "${GREEN}     YOUR VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS"
+    echo -e "${GREEN}"
+    echo -e "${GREEN}########################################################################################${NC}"
     sleep 2s
     _AUTOGEN_DB_PWD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w20 | head -n1)
-    #echo "$_AUTOGEN_DB_PWD"
     sed -i 's/^DB_PWD_NEW.*/DB_PWD_NEW=\"'"${_AUTOGEN_DB_PWD}"'\"/g' ~/"plinode_$(hostname -f)".vars
-    #cat plinode_plidev.vars | egrep '(DB_PWD_NEW|PASS_KEYSTORE)'
     DB_PWD_NEW=$_AUTOGEN_DB_PWD
-    #echo "$DB_PWD_NEW"
 fi
 
+# Update the system memory with the newly updated variables
 source ~/"plinode_$(hostname -f)".vars
 
 }
@@ -152,7 +162,6 @@ source ~/"plinode_$(hostname -f)".vars
 
 
 FUNC_NODE_DEPLOY(){
-    #FUNC_PASSWD_CHECKS;
     FUNC_VARS;
     FUNC_PKG_CHECK;
     
@@ -165,7 +174,6 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}#########################################################################${NC}"
     echo 
     echo 
-
     echo -e "${GREEN}#########################################################################"
     echo
     echo -e "${GREEN}## Install: Clone repo to local install folder...${NC}"
@@ -192,11 +200,8 @@ FUNC_NODE_DEPLOY(){
 
     # Remove the file if necessary; sudo rm -f {.env.apicred,.env.password}
 
-
-
     echo 
     echo 
-
     echo -e "${GREEN}#########################################################################"
     echo
     echo -e "${GREEN}## Install: UPDATE bash file $BASH_FILE1 with user values...${NC}"
@@ -206,10 +211,8 @@ FUNC_NODE_DEPLOY(){
     cat $BASH_FILE1 | grep 'postgres PASSWORD'
     sleep 1s
 
-
     echo 
     echo 
-
     echo -e "${GREEN}#########################################################################"
     echo
     echo -e "${GREEN}## Install: PRE-CHECKS for bash file $BASH_FILE1...${NC}"
@@ -218,10 +221,8 @@ FUNC_NODE_DEPLOY(){
     sudo apt remove --autoremove golang -y
     sudo rm -rf /usr/local/go
 
-
     echo 
     echo 
-
     echo -e "${GREEN}#########################################################################"
     echo
     echo -e "${GREEN}## Install: EXECUTE bash file $BASH_FILE1...${NC}"
@@ -231,7 +232,6 @@ FUNC_NODE_DEPLOY(){
 
     echo 
     echo 
-
     echo -e "${GREEN}#########################################################################"
     echo
     echo -e "${GREEN}## Install: Update bash file $BASH_FILE2 with user CREDENTIALS values...${NC}"
@@ -244,7 +244,6 @@ FUNC_NODE_DEPLOY(){
     cat $BASH_FILE2 | grep node
     sleep 1s
 
-
     echo 
     echo 
     echo -e "${GREEN}## Install: Update bash file $BASH_FILE2 with user TLS values...${NC}"
@@ -255,21 +254,17 @@ FUNC_NODE_DEPLOY(){
     cat $BASH_FILE2 | grep TLS
     sleep 1s
 
-
     echo 
     echo 
     echo -e "${GREEN}## Install: Create TLS CA / Certificate & files / folders...${NC}"
     echo 
 
-    
     mkdir $TLS_CERT_PATH && cd $TLS_CERT_PATH
     openssl req -x509 -out server.crt -keyout server.key -newkey rsa:4096 \
 -sha256 -days 3650 -nodes -extensions EXT -config \
 <(echo "[dn]"; echo CN=localhost; echo "[req]"; echo distinguished_name=dn; echo "[EXT]"; echo subjectAltName=DNS:localhost; echo keyUsage=digitalSignature; echo \
 extendedKeyUsage=serverAuth) -subj "/CN=localhost"
     sleep 1s
-
-
 
     echo 
     echo 
@@ -312,7 +307,6 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
 
     sleep 1s
 
-
     echo -e "${GREEN}## Install: Start PM2 $BASH_FILE2 & set auto start on reboot...${NC}"
     echo 
     cd /$PLI_DEPLOY_PATH
@@ -354,9 +348,6 @@ chmod 600 ~/"plinode_$(hostname -f)_keys".json
 
 FUNC_INITIATOR(){
     FUNC_VARS;
-
-
-    
     echo 
     echo 
     echo -e "${GREEN}#########################################################################${NC}"
@@ -372,8 +363,6 @@ FUNC_INITIATOR(){
     cd $PLI_INITOR_DIR
     git checkout main
     go install
-
-
 
     echo 
     echo 
@@ -415,12 +404,8 @@ FUNC_INITIATOR(){
     echo 
     read -r -d '' EXT_ACCESSKEY EXT_SECRET EXT_OUTGOINGTOKEN EXT_OUTGOINGSECRET <$PLI_INIT_DATFILE
     echo
-    #echo "$EXT_ACCESSKEY"
-    #echo "$EXT_SECRET"
-    #echo "$EXT_OUTGOINGTOKEN"
-    #echo "$EXT_OUTGOINGSECRET"
-    sleep 1s
 
+    sleep 1s
 
     echo
     echo
@@ -444,13 +429,13 @@ EOF
     cat $BASH_FILE3
     chmod u+x $BASH_FILE3
 
-
     echo 
     echo 
     echo -e "${GREEN}#########################################################################${NC}"
     echo
     echo -e "${GREEN}## START INITIATOR PM2 SERVICE $BASH_FILE3 ${NC}"
     echo    
+    
     pm2 start $BASH_FILE3
     sleep 1s
     pm2 status
@@ -461,8 +446,6 @@ EOF
 
     FUNC_EXIT;
 }
-
-
 
 
 
@@ -497,19 +480,15 @@ FUNC_DO_INIT_CHECK(){
 }
 
 
-
-
 FUNC_EXIT(){
 	exit 0
 	}
-
 
 
 FUNC_EXIT_ERROR(){
 	exit 1
 	}
   
-#FUNC_VALUE_CHECK;
 
 clear
 case "$1" in
