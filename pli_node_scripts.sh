@@ -345,7 +345,7 @@ echo -e   "${RED}######    IMPORTANT FILE - NODE ADDRESS EXPORT FOR WALLET ACCES
 echo 
 echo -e   "${RED}######    IMPORTANT FILE - PLEASE SECURE APPOPRIATELY               #####${NC}"
 echo 
-echo -e "${GREEN}   export node keys - exporting keys to file: ~/"plinode_$(hostname -f)_keys".json{NC}"
+echo -e "${GREEN}   export node keys - exporting keys to file: ~/"plinode_$(hostname -f)_keys".json${NC}"
 echo $(sudo -u postgres -i psql -d plugin_mainnet_db -t -c"select json from keys where id=1;")  > ~/"plinode_$(hostname -f)_keys".json
 
 echo 
