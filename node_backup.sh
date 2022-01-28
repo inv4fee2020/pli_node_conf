@@ -399,10 +399,6 @@ error_exit()
 
 
 
-#FUNC_DB_VARS;
-#FUNC_DB_PRE_CHECKS;
-#FUNC_CHECK_DIRS;
-
 case "$1" in
         -full)
                 FUNC_CONF_BACKUP_LOCAL
@@ -423,22 +419,21 @@ case "$1" in
                 FUNC_CHECK_DIRS
                 ;;
         *)
-                
-
+                clear
                 echo 
                 echo 
-                echo "Usage: $0 {function}"
+                echo -e "${GREEN}Usage: $0 {function}${NC}"
                 echo 
-                echo "where {function} is one of the following;"
+                echo -e "${GREEN}where {function} is one of the following;${NC}"
                 echo 
-                echo "      -full      ==  performs a local backup of both config & DB files only"
-                echo "      -conf      ==  performs a local backup of config files only"
-                echo "      -db        ==  performs a local backup of DB files only"
+                echo -e "${GREEN}      -full      ==  performs a local backup of both config & DB files only${NC}"
+                echo -e "${GREEN}      -conf      ==  performs a local backup of config files only${NC}"
+                echo -e "${GREEN}      -db        ==  performs a local backup of DB files only${NC}"
                 echo 
-                echo "      -remote    ==  copies local backup files to your google drive (if configured)"
+                echo -e "${GREEN}      -remote    ==  copies local backup files to your google drive (if configured)${NC}"
                 echo
-                echo "      -p         ==  carries out pre-checks on user / group variables defined in file: $PLI_DB_VARS_FILE "
-                echo "      -f         ==  carries out pre-checks on directory / path variables defined in file: $PLI_DB_VARS_FILE "
+                echo  -e "${GREEN}      -p         ==  carries out pre-checks on user / group variables defined in file: $PLI_DB_VARS_FILE ${NC}"
+                echo  -e "${GREEN}      -f         ==  carries out pre-checks on directory / path variables defined in file: $PLI_DB_VARS_FILE ${NC}"
                 echo 
                 echo 
 esac
