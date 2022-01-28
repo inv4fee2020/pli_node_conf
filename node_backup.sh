@@ -437,12 +437,12 @@ case "$1" in
                 _OPTION="-remote"
                 FUNC_DB_BACKUP_REMOTE
                 ;;
-        -p)
-                FUNC_DB_PRE_CHECKS
-                ;;
-        -f)
-                FUNC_CHECK_DIRS
-                ;;
+#        -p)
+#                FUNC_DB_PRE_CHECKS
+#                ;;
+#        -f)
+#                FUNC_CHECK_DIRS
+#                ;;
         *)
                 clear
                 echo 
@@ -457,8 +457,8 @@ case "$1" in
                 echo 
                 echo -e "${GREEN}      -remote    ==  copies local backup files to your google drive (if configured)${NC}"
                 echo
-                echo  -e "${GREEN}      -p         ==  carries out pre-checks on user / group variables defined in file: $PLI_DB_VARS_FILE ${NC}"
-                echo  -e "${GREEN}      -f         ==  carries out pre-checks on directory / path variables defined in file: $PLI_DB_VARS_FILE ${NC}"
+                #echo  -e "${GREEN}      -p         ==  carries out pre-checks on user / group variables defined in file: $PLI_DB_VARS_FILE ${NC}"
+                #echo  -e "${GREEN}      -f         ==  carries out pre-checks on directory / path variables defined in file: $PLI_DB_VARS_FILE ${NC}"
                 echo 
                 echo 
 esac
