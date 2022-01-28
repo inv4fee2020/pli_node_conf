@@ -358,7 +358,7 @@ shred -uz -n 1 /$DB_BACKUP_OBJ
 fi
 
 if [ -e $CONF_BACKUP_OBJ ]; then
-sudo gpg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_CONFNAME -c $CONF_BACKUP_OBJ
+sudo gpggg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_CONFNAME -c $CONF_BACKUP_OBJ
 error_exit;
 echo
 echo "local backup - successfully created file:  "$ENC_CONFNAME""
