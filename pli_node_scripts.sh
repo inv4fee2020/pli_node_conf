@@ -331,14 +331,27 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
 
 FUNC_EXPORT_NODE_KEYS(){
 
-echo "export node keys - add current user to 'postgres' group"
+echo 
+echo 
+echo -e "${GREEN}#########################################################################${NC}"
+echo 
+echo -e "${GREEN}   export node keys - add current user to 'postgres' group"
 sudo usermod -aG postgres $(getent passwd $EUID | cut -d: -f1)
 
-echo "export node keys - exporting keys to file: ~/"plinode_$(hostname -f)_keys".json"
+echo 
+echo -e "${GREEN}#########################################################################${NC}"
+echo 
+echo -e   "${RED}######    IMPORTANT FILE - NODE ADDRESS EXPORT FOR WALLET ACCESS    #####${NC}"
+echo 
+echo -e   "${RED}######    IMPORTANT FILE - PLEASE SECURE APPOPRIATELY               #####${NC}"
+echo 
+echo -e "${GREEN}   export node keys - exporting keys to file: ~/"plinode_$(hostname -f)_keys".json{NC}"
 echo $(sudo -u postgres -i psql -d plugin_mainnet_db -t -c"select json from keys where id=1;")  > ~/"plinode_$(hostname -f)_keys".json
 
-echo "export node keys - securing file permissions"
-chmod 600 ~/"plinode_$(hostname -f)_keys".json
+echo 
+echo -e "${GREEN}   export node keys - securing file permissions{NC}"
+chmod 400 ~/"plinode_$(hostname -f)_keys".json
+sleep 3s
 }
 
 
