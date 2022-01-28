@@ -34,7 +34,7 @@ FUNC_DB_VARS(){
         echo -e "${GREEN} please update the vars file with your specific values.. ${NC}"
         echo -e "${GREEN} copy command to edit: ${NC}"
         echo
-        echo -e "${GREEN}       nano ~/"$PLI_VARS_FILE" ${NC}"
+        echo -e "${GREEN}       nano ~/"$PLI_DB_VARS_FILE" ${NC}"
         echo
         echo
         #sleep 2s
@@ -239,27 +239,49 @@ do
     sudo usermod -aG "$DB_BACKUP_GUSER" "$_user"
 done 
 
-
-# ensure that current user is member of postgres group
-#if ! id -nG $USER_ID | grep -qw postgres; then
-#    echo $USER_ID does not belong to group: postgres
-#    sudo usermod -aG postgres $USER_ID
-#fi
-
-
-# ensure that user 'postgres' is member of $DB_BACKUP_GUSER group
-#if ! id -nG postgres | grep -qw "$DB_BACKUP_GUSER"; then
-#    echo postgres does not belong to $DB_BACKUP_GUSER
-#    sudo usermod -aG $DB_BACKUP_GUSER postgres
-#fi
-#sleep 2s
+sleep 1s
 }
 
 
 
 
 
+
+
+FUNC_CONF_BACKUP_LOCAL(){
+
+FUNC_DB_VARS
+FUNC_DB_PRE_CHECKS
+FUNC_CHECK_DIRS
+
+echo
+echo "local backup - running tar backup process"
+tar -cvpzf $CONF_BACKUP_OBJ ~/plinode* ~/pli_init* ~/plugin-deployment/.env*
+error_exit;
+
+#sleep 2s
+FUNC_DB_BACKUP_ENC
+
+if [ "$1" == "-full" ]; then
+    FUNC_DB_BACKUP_LOCAL
+fi
+
+
+}
+
+
+
+
 FUNC_DB_BACKUP_LOCAL(){
+
+
+if [ "$1" == "-db" ]; then
+    FUNC_DB_VARS
+    FUNC_DB_PRE_CHECKS
+    FUNC_CHECK_DIRS
+fi
+
+
 # checks if the '.pgpass' credentials file exists - if not creates in home folder & copies to dest folder
 # & sets perms
 echo "$DB_BACKUP_PATH"
@@ -294,30 +316,25 @@ error_exit;
 echo
 echo "local backup - successfully created file:  "$DB_BACKUP_OBJ""
 sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER /$DB_BACKUP_OBJ
-#sleep 2s
-FUNC_DB_BACKUP_ENC;
-}
-
-
-
-
-
-FUNC_CONF_BACKUP_LOCAL(){
-echo
-echo "local backup - running tar backup process"
-tar -cvpzf $CONF_BACKUP_OBJ ~/plinode* ~/pli_init* ~/plugin-deployment/.env*
-error_exit;
 
 #sleep 2s
 FUNC_DB_BACKUP_ENC;
+
+
+if [ "$1" == "-full" ]; then
+    FUNC_DB_BACKUP_REMOTE
+fi
+
 }
 
 
 
 
 FUNC_DB_BACKUP_ENC(){
+
 # runs GnuPG or gpg to encrypt the sql dump file - uses main keystore password as secret
 # outputs file to new folder ready for upload
+
 if [ -e $DB_BACKUP_OBJ ]; then
 sudo gpg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_FNAME -c /$DB_BACKUP_OBJ
 error_exit;
@@ -348,6 +365,12 @@ fi
 
 
 FUNC_DB_BACKUP_REMOTE(){
+
+
+if [ "$1" == "-remote" ]; then
+    FUNC_DB_VARS
+fi
+
 # add check that gupload is installed!
 # switches to gupload user to run cmd to upload encrypted file to your google drive - skips existing files
 
@@ -367,7 +390,7 @@ error_exit()
 {
     if [ $? != 0 ]; then
         echo
-        echo "ERROR"
+        echo "ERROR at $#"
         exit 1
     else
         return
@@ -376,14 +399,15 @@ error_exit()
 
 
 
-FUNC_DB_VARS;
-FUNC_DB_PRE_CHECKS;
-FUNC_CHECK_DIRS;
+#FUNC_DB_VARS;
+#FUNC_DB_PRE_CHECKS;
+#FUNC_CHECK_DIRS;
 
 case "$1" in
         -full)
-                FUNC_DB_BACKUP_LOCAL
                 FUNC_CONF_BACKUP_LOCAL
+                FUNC_DB_BACKUP_LOCAL
+                FUNC_DB_BACKUP_REMOTE
                 ;;
         -conf)
                 FUNC_CONF_BACKUP_LOCAL
@@ -391,7 +415,7 @@ case "$1" in
         -db)
                 FUNC_DB_BACKUP_LOCAL
                 ;;
-        remote)
+        -remote)
                 FUNC_DB_BACKUP_REMOTE
                 ;;
         -p)
