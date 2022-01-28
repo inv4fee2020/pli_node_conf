@@ -47,11 +47,11 @@ FUNC_DB_VARS(){
 
 FUNC_CHECK_DIRS(){
 
-# checks that the DB_BACKUP_ROOT var is not NULL & not 'root' or is not NULL & not $HOME so as not to create these folder & change perms
-#if ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "root" ]) || ([ ! -z "$DB_BACKUP_ROOT" ] && [ "$DB_BACKUP_ROOT" != "$HOME" ]); then
+# checks that the DB_BACKUP_ROOT var is not NULL & not '/root' or is not NULL & not $HOME so as not to create these folder & change perms
 if ([ ! -z "$DB_BACKUP_ROOT" ] && ([ ! "$DB_BACKUP_ROOT" =~ ^/root ] || [ "$DB_BACKUP_ROOT" != "$HOME" ] || [ ! "$DB_BACKUP_ROOT" =~ ^/home ])); then
 
-    SET_ROOT_DIR=true
+    SET_ROOT_DIR=true       # logic to resolve the leading Root '/' path issue - true activates the leading '/' & false removes
+
     #echo "DEBUG :: ROOT_DIR - IF STEP"
     echo "checking vars - variable 'DB_BACKUP_ROOT' value is: $DB_BACKUP_ROOT"
     echo "checking vars - variable 'DB_BACKUP_ROOT' is not NULL"
@@ -77,7 +77,7 @@ else
         
         #echo "DEBUG :: ROOT DIR - IF ELSE STEP"
         DB_BACKUP_ROOT="$HOME"
-        SET_ROOT_DIR=false
+        SET_ROOT_DIR=false      # logic to resolve the leading Root '/' path issue
         echo
         echo "checking vars - Detected NULL value & set variable to: "$HOME""
         echo "checking vars - updating the value of 'DB_BACKUP_PATH' variable.."
@@ -396,17 +396,27 @@ error_exit;
 #}
 
 
-
-error_exit()
-{
-    if [ $? != 0 ]; then
-        echo
-        echo "ERROR at $#"
-        exit 1
+error_exit() {
+    exit_code=$1
+    last_command=${@:2}
+    if [ $exit_code != 0 ]; then
+        >&2 echo "\"${last_command}\" command failed with exit code ${exit_code}."
+        exit $exit_code
     else
         return
     fi
 }
+
+#error_exit()
+# {
+#    if [ $? != 0 ]; then
+#        echo
+#        echo "ERROR"
+#        exit 1
+#    else
+#        return
+#    fi
+#}
 
 
 
