@@ -444,6 +444,27 @@ EOF
     sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u $USER_ID --hp /home/$USER_ID
     pm2 save
 
+
+    if [ "$CHECK_PASSWD" == "true" ]; then
+    echo
+    echo
+    echo -e "${GREEN}#########################################################################${NC}"
+    echo -e "${GREEN}#########################################################################${NC}"
+    echo
+    echo -e "${RED}##  IMPORTANT INFORMATION - PLEASE RECORD TO YOUR PASSWORD SAFE${NC}"
+    echo
+    echo -e "${GREEN}#########################################################################${NC}"
+    echo
+    echo
+    echo -e "${RED}##  KEY STORE SECRET:        $PASS_KEYSTORE${NC}"
+    echo
+    echo -e "${RED}##  POSTGRES DB PASSWORD:    $DB_PWD_NEW${NC}"
+    echo
+    echo
+    echo -e "${GREEN}#########################################################################${NC}"
+    echo -e "${GREEN}#########################################################################${NC}"
+
+    fi
     FUNC_EXIT;
 }
 
