@@ -347,7 +347,7 @@ FUNC_DB_BACKUP_ENC(){
 # outputs file to new folder ready for upload
 
 if [ -e $DB_BACKUP_OBJ ]; then
-sudo gpg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_FNAME -c /$DB_BACKUP_OBJ
+sudo gpggg --yes --batch --passphrase=$PASS_KEYSTORE -o /$ENC_PATH/$ENC_FNAME -c /$DB_BACKUP_OBJ
 error_exit;
 echo
 echo "local backup - successfully created file:  "$ENC_FNAME""
