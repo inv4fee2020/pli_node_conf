@@ -324,7 +324,7 @@ FUNC_DB_BACKUP_ENC;
 
 
 echo "$GD_ENABLED"
-if [ "$_OPTION" == "-full" ] && [ "$GD_ENABLED" != "true" ]; then
+if [ "$_OPTION" == "-full" ] && [ "$GD_ENABLED" == "true" ]; then
     FUNC_DB_BACKUP_REMOTE
 fi
 
