@@ -31,9 +31,9 @@
 
 6. When you have updated all the variables, exit from nano and save your changes using;
 
->>    ctrl + x
->>    y
->>    (press enter/return)
+        ctrl + x
+        y
+        (press enter/return)
 
 ---  
   **_NOTE_**: Some VPS hosters may have already changed your ssh port by default and so it is recommended that you run the following command to verify. If ssh is already running on a different port, then please repeat **_step 5_** above.
