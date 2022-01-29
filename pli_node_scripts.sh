@@ -131,7 +131,8 @@ if ([ -z "$PASS_KEYSTORE" ] || [ "$PASS_KEYSTORE" == "$SAMPLE_KEYSTORE" ]); then
     echo -e "${GREEN}"
     echo -e "${GREEN}########################################################################################${NC}"
     sleep 2s
-    _AUTOGEN_KEYSTORE="'$(cat /dev/urandom | tr -dc 'a-zA-Z0-9%:+*!;.?=' | head -c32)'"
+    #_AUTOGEN_KEYSTORE="'$(cat /dev/urandom | tr -dc 'a-zA-Z0-9%:+*!;.?=' | head -c32)'"
+    _AUTOGEN_KEYSTORE="'$(./gen_passwd.sh -keys)'"
     sed -i 's/^PASS_KEYSTORE.*/PASS_KEYSTORE='"$_AUTOGEN_KEYSTORE"'/g' ~/"plinode_$(hostname -f)".vars
     PASS_KEYSTORE=$_AUTOGEN_KEYSTORE
 
@@ -149,7 +150,8 @@ if ([ -z "$DB_PWD_NEW" ] || [ "$DB_PWD_NEW" == "$SAMPLE_DB_PWD" ]); then
     echo -e "${GREEN}"
     echo -e "${GREEN}########################################################################################${NC}"
     sleep 2s
-    _AUTOGEN_DB_PWD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w20 | head -n1)
+    #_AUTOGEN_DB_PWD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w20 | head -n1)
+    _AUTOGEN_DB_PWD="'$(./gen_passwd.sh -db)'"
     sed -i 's/^DB_PWD_NEW.*/DB_PWD_NEW=\"'"${_AUTOGEN_DB_PWD}"'\"/g' ~/"plinode_$(hostname -f)".vars
     DB_PWD_NEW=$_AUTOGEN_DB_PWD
 fi
