@@ -140,30 +140,30 @@ else
 fi
     # Checks if directory exists & creates if not + sets perms
     
-    echo
-    if [ "$SET_ROOT_DIR" == "true" ]; then
-    echo "checking vars - creating directory: "/$DB_BACKUP_DIR""
-        sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-        #echo "sudo chown $USER_ID:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
-        sudo chown $USER_ID:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-        #echo "sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
-        #sudo chmod g+r -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-        # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
-        DB_BACKUP_PATH="/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-        echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
-    else
-    echo "checking vars - creating directory: "$DB_BACKUP_DIR""
-        sudo mkdir "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-        echo
-        echo "checking vars - assigning permissions for directory: "$DB_BACKUP_DIR""
-        #echo "sudo chown $USER_ID:$DB_BACKUP_GUSER -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
-        sudo chown $USER_ID:$DB_BACKUP_GUSER -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-        #echo "sudo chmod g+w -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
-        #sudo chmod g+r -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-        # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
-        DB_BACKUP_PATH="$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-        echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
-    fi
+    #echo
+    #if [ "$SET_ROOT_DIR" == "true" ]; then
+    #echo "checking vars - creating directory: "/$DB_BACKUP_DIR""
+    #    sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+    #    #echo "sudo chown $USER_ID:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
+    #    sudo chown $USER_ID:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+    #    #echo "sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
+    #    #sudo chmod g+r -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+    #    # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
+    #    DB_BACKUP_PATH="/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+    #    echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
+    #else
+    #echo "checking vars - creating directory: "$DB_BACKUP_DIR""
+    #    sudo mkdir "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+    #    echo
+    #    echo "checking vars - assigning permissions for directory: "$DB_BACKUP_DIR""
+    #    #echo "sudo chown $USER_ID:$DB_BACKUP_GUSER -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
+    #    sudo chown $USER_ID:$DB_BACKUP_GUSER -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+    #    #echo "sudo chmod g+w -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
+    #    #sudo chmod g+r -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+    #    # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
+    #    DB_BACKUP_PATH="$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+    #    echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
+    #fi
 
     DB_BACKUP_OBJ="$DB_BACKUP_PATH/$DB_BACKUP_FNAME"
     CONF_BACKUP_OBJ="$DB_BACKUP_PATH/$NODE_BACKUP_FNAME"
