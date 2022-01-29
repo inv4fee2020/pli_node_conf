@@ -15,19 +15,23 @@
 
 4. Once logged on as your new admin user - run the following commands;
 
-   i.  
+   i.  Lets elevate permissions in order to run all our commands uninterrupted
 
         sudo -l > /dev/null 2>&1
+
+
+   ii. Lets install the basic packages so we can get started;
+
         sudo apt install -y git nano   
 
 
-   ii.
+   iii. Now we clone down the install scripts repository
 
         cd $HOME
         git clone https://github.com/inv4fee2020/pli_node_conf.git
 
 
-   iii.
+   iiii. We now set the scripts so they can execute and edit the main vars file    
 
         cd pli_node_conf
         chmod +x *.sh
