@@ -15,10 +15,20 @@
 
 4. Once logged on as your new admin user - run the following commands;
 
+   i.  
+
         sudo -l > /dev/null 2>&1
-        sudo apt install -y git nano        
+        sudo apt install -y git nano   
+
+
+   ii.
+
         cd $HOME
         git clone https://github.com/inv4fee2020/pli_node_conf.git
+
+
+   iii.
+
         cd pli_node_conf
         chmod +x *.sh
         cp -n sample.vars ~/plinode_$(hostname -f).vars && chmod 600 ~/plinode_$(hostname -f).vars
