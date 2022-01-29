@@ -148,7 +148,7 @@ fi
         sudo chown $USER_ID:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
         #echo "sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
         sudo chmod g+rw -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-        sudo chmod o-rx -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+        #sudo chmod o-rx -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
         # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
         DB_BACKUP_PATH="/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
         echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
@@ -161,7 +161,7 @@ fi
         sudo chown $USER_ID:$DB_BACKUP_GUSER -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
         #echo "sudo chmod g+w -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
         sudo chmod g+rw -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-        sudo chmod o-rx -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+        #sudo chmod o-rx -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
         # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
         DB_BACKUP_PATH="$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
         echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
