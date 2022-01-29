@@ -43,7 +43,7 @@
   sudo ss -tpln | egrep '(Proto|ssh)'
   ```
 
-|<img src="https://github.com/inv4fee2020/docs_pli/blob/main/images/pli_node_get_ssh_ports%202022-01-27%20at%2010.40.30.png" width=70% height=70%>|
+|<img src="https://github.com/inv4fee2020/docs_pli/blob/main/images/pli_node_get_ssh_ports_2022-01-29.png" width=70% height=70%>|
 |---| 
 ---
 
