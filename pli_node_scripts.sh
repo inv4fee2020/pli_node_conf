@@ -151,7 +151,7 @@ if ([ -z "$DB_PWD_NEW" ] || [ "$DB_PWD_NEW" == "$SAMPLE_DB_PWD" ]); then
     echo -e "${GREEN}########################################################################################${NC}"
     sleep 2s
     #_AUTOGEN_DB_PWD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w20 | head -n1)
-    _AUTOGEN_DB_PWD="'$(./gen_passwd.sh -db)'"
+    _AUTOGEN_DB_PWD="$(./gen_passwd.sh -db)"
     sed -i 's/^DB_PWD_NEW.*/DB_PWD_NEW=\"'"${_AUTOGEN_DB_PWD}"'\"/g' ~/"plinode_$(hostname -f)".vars
     DB_PWD_NEW=$_AUTOGEN_DB_PWD
 fi
