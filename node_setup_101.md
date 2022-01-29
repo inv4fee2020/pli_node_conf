@@ -5,12 +5,12 @@
 
 2. Create a new admin user account
 -- Copy the below text into a local text editor e.g. notepad
--- Change 'my_new_user' & 'my_new_password' for your values and paste the code to the terminal
+-- Change '**my_new_user**' & '**my_new_password**' for your values and paste the code to the terminal
         
         sudo groupadd my_new_user
         sudo useradd -p $(openssl passwd -6 my_new_password) my_new_user -m -s /bin/bash -g my_new_user -G sudo
 
-3. Now open a new terminal session to your VPS and logon with your new admin user account and complete the rest of the steps
+3. Now open a new terminal session to your VPS and logon with your new admin user account and complete the rest of the steps.
 
 
 4. Once logged on as your new admin user - run the following commands;
@@ -29,18 +29,18 @@
         https://github.com/inv4fee2020/pli_node_conf#variables-file
 
 
-6. When you have updated all the variables, exit from nano and save your changes using
+6. When you have updated all the variables, exit from nano and save your changes using;
 
-        ctrl+x
-        y
-
+>>    ctrl + x
+>>    y
+>>    (press enter/return)
 
 ---  
   **_NOTE_**: Some VPS hosters may have already changed your ssh port by default and so it is recommended that you run the following command to verify. If ssh is already running on a different port, then please repeat **_step 5_** above.
 
   command to run;
   ```
-  sudo netstat -tpln | egrep '(Proto|ssh)'
+  sudo ss -tpln | egrep '(Proto|ssh)'
   ```
 
 |<img src="https://github.com/inv4fee2020/docs_pli/blob/main/images/pli_node_get_ssh_ports%202022-01-27%20at%2010.40.30.png" width=70% height=70%>|
