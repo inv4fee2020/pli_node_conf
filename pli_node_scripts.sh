@@ -377,7 +377,7 @@ export EI_IC_SECRET=${EXT_SECRET}
 export EI_CI_ACCESSKEY=${EXT_OUTGOINGTOKEN}
 export EI_CI_SECRET=${EXT_OUTGOINGSECRET}
 echo *** Starting EXTERNAL INITIATOR ***
-external-initiator "{\"name\":\"$PLI_L_INIT_NAME\",\"type\":\"xinfin\",\"url\":\"https://pluginrpc.blocksscan.io\"}" --chainlinkurl "http://localhost:6688/"
+external-initiator "{\"name\":\"$PLI_E_INIT_NAME\",\"type\":\"xinfin\",\"url\":\"https://pluginrpc.blocksscan.io\"}" --chainlinkurl "http://localhost:6688/"
 EOF
     sleep 1s
     cat $BASH_FILE3
