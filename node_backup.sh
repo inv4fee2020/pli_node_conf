@@ -323,7 +323,7 @@ echo
 echo "local backup - running pgdump backup process"
 # switch to 'postgres' user and run command to create inital sql dump file
 sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; pg_dump -c -w -U postgres $DB_NAME | gzip > /$DB_BACKUP_OBJ"
-error_exit;
+#error_exit;
 
 echo
 echo "local backup - successfully created file:  "$DB_BACKUP_OBJ""
