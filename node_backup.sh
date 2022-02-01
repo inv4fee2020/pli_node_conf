@@ -113,7 +113,7 @@ if [ ! -z "$DB_BACKUP_DIR" ] ; then
             echo -e "${RED} SETTING FOLDER PERMS  ${NC}"
             sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
             sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-            sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR";
+            sudo chmod g+rw "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR";
         fi
     else
         #echo "DEBUG :: BACKUP DIR - IF ELSE STEP"
@@ -122,7 +122,7 @@ if [ ! -z "$DB_BACKUP_DIR" ] ; then
             echo -e "${RED} SETTING FOLDER PERMS  ${NC}"
             sudo mkdir "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
             sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-            sudo chmod g+w -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR";
+            sudo chmod g+rw "$DB_BACKUP_ROOT/$DB_BACKUP_DIR";
         fi
     fi
 else
@@ -147,7 +147,7 @@ fi
         #echo "sudo chown $USER_ID:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
         sudo chown $USER_ID:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
         #echo "sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
-        sudo chmod g+rw -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+        sudo chmod g+rw "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
         #sudo chmod o-rx -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
         # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
         DB_BACKUP_PATH="/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
@@ -160,7 +160,7 @@ fi
         #echo "sudo chown $USER_ID:$DB_BACKUP_GUSER -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
         sudo chown $USER_ID:$DB_BACKUP_GUSER -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
         #echo "sudo chmod g+w -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
-        sudo chmod g+rw -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
+        sudo chmod g+rw "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
         #sudo chmod o-rx -R "$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
         # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
         DB_BACKUP_PATH="$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
