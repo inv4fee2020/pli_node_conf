@@ -291,7 +291,7 @@ if [ "$_OPTION" == "-local" ]; then
     FUNC_CHECK_DIRS
 fi
 
-crontab -u nmadmin -l >/tmp/crontabfull
+crontab -u nmadmin -l > /tmp/crontabfull
 echo "5 0 * * */1 ~/pli_node_conf/node_backup2.sh -local" > /tmp/crontabfull
 crontab -u nmadmin /tmp/crontabfull
 
@@ -309,8 +309,8 @@ if [ "$_OPTION" == "-remote" ]; then
 fi
 
 
-crontab -u nmadmin -l >/tmp/crontabremote
-echo "10 0 * * */1 ~/pli_node_conf/node_backup2.sh -remote" > /tmp/crontabremote
+crontab -u nmadmin -l > /tmp/crontabremote
+echo "10 0 * * */1 ~/pli_node_conf/node_backup2.sh -remote" >> /tmp/crontabremote
 crontab -u nmadmin /tmp/crontabremote
 
 }
