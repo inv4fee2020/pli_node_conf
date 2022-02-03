@@ -292,7 +292,7 @@ if [ "$_OPTION" == "-local" ]; then
 fi
 
 crontab -u nmadmin -l >/tmp/crontabfull
-echo "5 0 * * */1 ~/pli_node_conf/node_backup.sh -full" > /tmp/crontabfull
+echo "5 0 * * */1 ~/pli_node_conf/node_backup2.sh -full" > /tmp/crontabfull
 crontab -u nmadmin /tmp/crontabfull
 
 }
@@ -310,7 +310,7 @@ fi
 
 
 crontab -u nmadmin -l >/tmp/crontabremote
-echo "10 0 * * */1 ~/pli_node_conf/node_backup.sh -remote" > /tmp/crontabremote
+echo "10 0 * * */1 ~/pli_node_conf/node_backup2.sh -remote" > /tmp/crontabremote
 crontab -u nmadmin /tmp/crontabremote
 
 }
