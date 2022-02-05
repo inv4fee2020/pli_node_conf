@@ -1,6 +1,11 @@
 # 101 on setting up a Plugin $PLI node;
 
 1. Logon as root to your new VPS
+   
+   i. Due to the various experiences across different VPS hosting platforms, lets update the system before proceeding;
+
+        sudo apt update -y && sudp apt upgrade -y
+        sudo apt autoremove -y
 
 
 2. Create a new admin user account
