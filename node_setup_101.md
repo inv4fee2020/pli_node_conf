@@ -27,7 +27,7 @@
 
    ii. Lets install the basic packages so we can get started;
 
-        sudo apt install -y git nano   
+        sudo apt install -y git nano curl  
 
 
    iii. Now we clone down the install scripts repository
