@@ -32,12 +32,14 @@ fi
 }
 
 FUNC_RESTORE_DB(){
-    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -c $RESTORE_FILE | psql -U postgres -d $DB_NAME"
+    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -c $RESTORE_FILE | psql -U postgres -d $DB_NAME" > /dev/null 2>&1
+    shred -uz -n 1 /$RESTORE_FILE
 }
 
 
 FUNC_RESTORE_CONF(){
     echo "   CONFIG FILES RESTORE...."
+    #shred -uz -n 1 /$RESTORE_FILE
 }
 
 
@@ -61,3 +63,5 @@ do
         *) echo invalid option;;
     esac
 done
+
+
