@@ -32,7 +32,7 @@ fi
 }
 
 FUNC_RESTORE_DB(){
-    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -c $RESTORE_FILE | psql -U postgres -d $DB_NAME" > /dev/null 2>&1
+    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -c $RESTORE_FILE | psql -U postgres -d $DB_NAME  > /dev/null 2>&1"
     shred -uz -n 1 /$RESTORE_FILE
 }
 
