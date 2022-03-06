@@ -21,6 +21,12 @@ Thanks to all the Plugin discord community for their input / feedback with speci
 > When connecting to your nodes plugin GUI as outlined in ['fund your node'](https://docs.goplugin.co/plugin-installations/fund-your-node), you must use *_'https://your_node_ip:6689'_* instead due to the configuration applied by the [main script](#main-script-actions)
 
 
+Accompanying youtube of the setup process for specific VPS providers;
+
+ - ['Ethernetservers VPS 1x vCPU + 2.5GBRAM + 70GB SSD - setup using node setup 101'](https://www.youtube.com/watch?v=IubKHAVoNTo)
+
+
+---
 ---
 ## VARIABLES file
 
