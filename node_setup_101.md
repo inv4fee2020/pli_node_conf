@@ -4,7 +4,7 @@
    
    i. Due to the various experiences across different VPS hosting platforms, lets update the system before proceeding;
 
-        sudo apt update -y && sudp apt upgrade -y
+        sudo apt update -y && sudo apt upgrade -y
         sudo apt autoremove -y
 
 
