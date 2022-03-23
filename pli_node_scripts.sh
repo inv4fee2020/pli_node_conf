@@ -333,6 +333,18 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
     sleep 1s
 
 
+    echo 
+    echo -e "${GREEN}## Install: Update '.profile' with string 'FEATURE_EXTERNAL_INITIATORS'...${NC}"
+    echo 
+    isInFile=$(cat ~/.profile | grep -c "FEATURE_EXTERNAL_INITIATORS")
+    if [ $isInFile -eq 0 ]; then
+        echo "export FEATURE_EXTERNAL_INITIATORS=true" >> ~/.profile
+        echo -e "${GREEN}## Success: '.profile' updated with string 'FEATURE_EXTERNAL_INITIATORS'...${NC}"
+    else
+        echo -e "${GREEN}## Skipping: '.profile' contains string 'FEATURE_EXTERNAL_INITIATORS'...${NC}"
+    fi
+
+
     echo -e "${GREEN}## Install: Check Golang version & bash profile path...${NC}"
     echo 
     source ~/.profile
