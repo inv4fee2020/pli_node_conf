@@ -29,22 +29,17 @@ FUNC_VARS(){
     if [ ! -e ~/$PLI_VARS_FILE ]; then
         clear
         echo
-        echo
         echo -e "${RED} #### ERROR: No VARIABLES file found. ####${NC}"
-        echo
         echo -e "${RED} ..creating local vars file '$HOME/$PLI_VARS_FILE' ${NC}"
+
         cp sample.vars ~/$PLI_VARS_FILE
         chmod 600 ~/$PLI_VARS_FILE
-        echo
-        #echo -e "${GREEN} please update the vars file with your specific values.. ${NC}"
-        #echo -e "${GREEN} copy command to edit: ${NC}"
+
         echo
         echo -e "${GREEN}nano ~/$PLI_VARS_FILE ${NC}"
-        echo
-        echo
         #sleep 2s
-        #exit 1
     fi
+
     source ~/$PLI_VARS_FILE
 
     if [[ "$CHECK_PASSWD" == "true" ]]; then
@@ -58,9 +53,7 @@ FUNC_VARS(){
 FUNC_PKG_CHECK(){
 
     echo -e "${GREEN}#########################################################################"
-    echo
     echo -e "${GREEN}## CHECK NECESSARY PACKAGES HAVE BEEN INSTALLED...${NC}"
-    echo     
 
     for i in "${REQ_PACKAGES[@]}"
     do
@@ -130,7 +123,6 @@ FUNC_PASSWD_CHECKS(){
     echo 
     echo -e "${GREEN}     KEYSTORE VARIABLE 'PASS_KEYSTORE' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
     echo -e "${GREEN}     YOUR VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS${NC}"
-    echo 
     sleep 2s
 
     #_AUTOGEN_KEYSTORE="'$(cat /dev/urandom | tr -dc 'a-zA-Z0-9%:+*!;.?=' | head -c32)'"
@@ -144,7 +136,6 @@ FUNC_PASSWD_CHECKS(){
     echo 
     echo -e "${GREEN}     POSTGRES VARIABLE 'DB_PWD_NEW' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
     echo -e "${GREEN}     YOUR VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS${NC}"
-    echo 
     sleep 2s
 
     #_AUTOGEN_DB_PWD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w20 | head -n1)
@@ -159,7 +150,6 @@ FUNC_PASSWD_CHECKS(){
     echo 
     echo -e "${GREEN}     API VARIABLE 'API_EMAIL' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
     echo -e "${GREEN}     YOUR VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS${NC}"
-    echo
     sleep 2s
 
     _AUTOGEN_API_USER=$(tr -cd A-Za-z < /dev/urandom | fold -w10 | head -n1)
@@ -175,7 +165,6 @@ FUNC_PASSWD_CHECKS(){
     echo 
     echo -e "${GREEN}     API VARIABLE 'API_PASS' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
     echo -e "${GREEN}     YOUR VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS${NC}"
-    echo 
     sleep 2s
 
     #_AUTOGEN_API_PWD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w18 | head -n1)
@@ -450,7 +439,7 @@ export EI_IC_SECRET=${EXT_SECRET}
 export EI_CI_ACCESSKEY=${EXT_OUTGOINGTOKEN}
 export EI_CI_SECRET=${EXT_OUTGOINGSECRET}
 echo *** Starting EXTERNAL INITIATOR ***
-external-initiator "{\"name\":\"$PLI_E_INIT_NAME\",\"type\":\"xinfin\",\"url\":\"https://pluginrpc.blocksscan.io\"}" --chainlinkurl "http://localhost:6688/"
+external-initiator "{\"name\":\"$PLI_E_INIT_NAME\",\"type\":\"xinfin\",\"url\":\"https://plirpc.blocksscan.io\"}" --chainlinkurl "http://localhost:6688/"
 EOF
     #sleep 1s
     #cat $BASH_FILE3
