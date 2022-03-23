@@ -214,6 +214,7 @@ source ~/"plinode_$(hostname -f)".vars
 
 FUNC_NODE_DEPLOY(){
     FUNC_VARS;
+    FUNC_PASSWD_CHECKS;
     FUNC_PKG_CHECK;
     
     echo -e "${GREEN}#########################################################################"
