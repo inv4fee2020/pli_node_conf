@@ -188,7 +188,7 @@ fi
 
 
 
-if ([ -z "$API_PASS_NEW" ] || [ "$API_PASS_NEW" == "$API_PASS" ]); then
+if ([ -z "$API_PASS_NEW" ] || [ "$API_PASS_NEW" == "$SAMPLE_API_PASS" ]); then
     echo 
     echo 
     echo -e "${GREEN}########################################################################################${NC}"
@@ -580,7 +580,8 @@ FUNC_EXIT_ERROR(){
 clear
 case "$1" in
         fullnode)
-                FUNC_VALUE_CHECK
+                FUNC_NODE_DEPLOY
+                #FUNC_VALUE_CHECK
                 ;;
         initiator)
                 FUNC_INITIATOR
