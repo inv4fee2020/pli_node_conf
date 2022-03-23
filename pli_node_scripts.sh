@@ -114,7 +114,7 @@ FUNC_VALUE_CHECK(){
 
 
 FUNC_PASSWD_CHECKS(){
-# check the keystore password has been updated or if null
+# check all credentials has been updated - if not auto gen
 
 
 SAMPLE_KEYSTORE='$oM3$tr*nGp4$$w0Rd$'
@@ -122,6 +122,10 @@ SAMPLE_KEYSTORE='$oM3$tr*nGp4$$w0Rd$'
 
 SAMPLE_DB_PWD="testdbpwd1234"
 # DB_PWD_NEW value to compare against
+
+
+SAMPLE_API_EMAIL="user123@gmail.com"
+# API EMAIL value to compare against
 
 SAMPLE_API_PASS="passW0rd123"
 # API PASSWORD value to compare against
@@ -160,6 +164,26 @@ if ([ -z "$DB_PWD_NEW" ] || [ "$DB_PWD_NEW" == "$SAMPLE_DB_PWD" ]); then
     _AUTOGEN_DB_PWD="$(./gen_passwd.sh -db)"
     sed -i 's/^DB_PWD_NEW.*/DB_PWD_NEW=\"'"${_AUTOGEN_DB_PWD}"'\"/g' ~/"plinode_$(hostname -f)".vars
     DB_PWD_NEW=$_AUTOGEN_DB_PWD
+fi
+
+
+if ([ -z "$API_EMAIL" ] || [ "$API_EMAIL" == "$SAMPLE_API_EMAIL" ]); then
+    echo 
+    echo 
+    echo -e "${GREEN}########################################################################################${NC}"
+    echo -e "${GREEN}"
+    echo -e "${GREEN}     API VARIABLE 'API_EMAIL' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
+    echo -e "${GREEN}"
+    echo -e "${GREEN}     YOUR VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS"
+    echo -e "${GREEN}"
+    echo -e "${GREEN}########################################################################################${NC}"
+    sleep 2s
+    _AUTOGEN_API_USER=$(tr -cd A-Za-z < /dev/urandom | fold -w10 | head -n1)
+    API_EMAIL_NEW="$_AUTOGEN_API_USER@plinode.local"
+    #echo $API_USER_NEW
+    #_AUTOGEN_API_USER="$(./gen_passwd.sh -db)"
+    sed -i 's/^API_EMAIL.*/API_EMAIL=\"'"${API_EMAIL_NEW}"'\"/g' ~/"plinode_$(hostname -f)".vars
+    API_EMAIL=$API_EMAIL_NEW
 fi
 
 
@@ -500,6 +524,8 @@ EOF
     echo
     echo -e "${RED}##  POSTGRES DB PASSWORD:    $DB_PWD_NEW${NC}"
     echo
+    echo -e "${RED}##  API USERNAME:    $API_EMAIL${NC}"
+    echo -e "${RED}##  API PASSWORD:    $API_PASS${NC}"
     echo
     echo -e "${GREEN}#########################################################################${NC}"
     echo -e "${GREEN}#########################################################################${NC}"
