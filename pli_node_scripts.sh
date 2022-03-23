@@ -77,20 +77,10 @@ FUNC_PKG_CHECK(){
 
 
 FUNC_VALUE_CHECK(){
-    echo -e "${GREEN}#########################################################################"
-    echo -e "${GREEN}#########################################################################"
-    echo -e "${GREEN}"
-    echo -e "${GREEN}     Script Deployment menthod"
-    echo -e "${GREEN}"
-    echo -e "${GREEN}#########################################################################"
-    echo -e "${GREEN}#########################################################################${NC}"
-
-
 
     echo -e "${GREEN}#########################################################################"
-    echo
     echo -e "${GREEN}## CONFIRM SCRIPTS VARIABLES FILE HAS BEEN UPDATED...${NC}"
-    echo 
+
     # Ask the user acc for login details (comment out to disable)
     CHECK_PASSWD=false
         while true; do
@@ -122,10 +112,9 @@ FUNC_VALUE_CHECK(){
 FUNC_PASSWD_CHECKS(){
     # check all credentials has been updated - if not auto gen
     
-    
     SAMPLE_KEYSTORE='$oM3$tr*nGp4$$w0Rd$'
     # PASS_KEYSTORE value to compare against
-    
+
     SAMPLE_DB_PWD="testdbpwd1234"
     # DB_PWD_NEW value to compare against
     
@@ -137,35 +126,27 @@ FUNC_PASSWD_CHECKS(){
     # API PASSWORD value to compare against
 
     if ([ -z "$PASS_KEYSTORE" ] || [ "$PASS_KEYSTORE" == "$SAMPLE_KEYSTORE" ]); then
+    
     echo 
-    echo 
-    echo -e "${GREEN}########################################################################################${NC}"
-    echo -e "${GREEN}"
     echo -e "${GREEN}     KEYSTORE VARIABLE 'PASS_KEYSTORE' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
-    echo -e "${GREEN}"
-    echo -e "${GREEN}     YOUR VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS"
-    echo -e "${GREEN}"
-    echo -e "${GREEN}########################################################################################${NC}"
+    echo -e "${GREEN}     YOUR VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS${NC}"
+    echo 
     sleep 2s
+
     #_AUTOGEN_KEYSTORE="'$(cat /dev/urandom | tr -dc 'a-zA-Z0-9%:+*!;.?=' | head -c32)'"
     _AUTOGEN_KEYSTORE="'$(./gen_passwd.sh -keys)'"
     sed -i 's/^PASS_KEYSTORE.*/PASS_KEYSTORE='"$_AUTOGEN_KEYSTORE"'/g' ~/"plinode_$(hostname -f)".vars
     PASS_KEYSTORE=$_AUTOGEN_KEYSTORE
-
     fi
 
 
     if ([ -z "$DB_PWD_NEW" ] || [ "$DB_PWD_NEW" == "$SAMPLE_DB_PWD" ]); then
     echo 
-    echo 
-    echo -e "${GREEN}########################################################################################${NC}"
-    echo -e "${GREEN}"
     echo -e "${GREEN}     POSTGRES VARIABLE 'DB_PWD_NEW' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
-    echo -e "${GREEN}"
-    echo -e "${GREEN}     YOUR VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS"
-    echo -e "${GREEN}"
-    echo -e "${GREEN}########################################################################################${NC}"
+    echo -e "${GREEN}     YOUR VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS${NC}"
+    echo 
     sleep 2s
+
     #_AUTOGEN_DB_PWD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w20 | head -n1)
     _AUTOGEN_DB_PWD="$(./gen_passwd.sh -db)"
     sed -i 's/^DB_PWD_NEW.*/DB_PWD_NEW=\"'"${_AUTOGEN_DB_PWD}"'\"/g' ~/"plinode_$(hostname -f)".vars
@@ -174,20 +155,15 @@ FUNC_PASSWD_CHECKS(){
 
 
     if ([ -z "$API_EMAIL" ] || [ "$API_EMAIL" == "$SAMPLE_API_EMAIL" ]); then
+    
     echo 
-    echo 
-    echo -e "${GREEN}########################################################################################${NC}"
-    echo -e "${GREEN}"
     echo -e "${GREEN}     API VARIABLE 'API_EMAIL' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
-    echo -e "${GREEN}"
-    echo -e "${GREEN}     YOUR VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS"
-    echo -e "${GREEN}"
-    echo -e "${GREEN}########################################################################################${NC}"
+    echo -e "${GREEN}     YOUR VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS${NC}"
+    echo
     sleep 2s
+
     _AUTOGEN_API_USER=$(tr -cd A-Za-z < /dev/urandom | fold -w10 | head -n1)
     API_EMAIL_NEW="$_AUTOGEN_API_USER@plinode.local"
-    #echo $API_USER_NEW
-    #_AUTOGEN_API_USER="$(./gen_passwd.sh -db)"
     sed -i 's/^API_EMAIL.*/API_EMAIL=\"'"${API_EMAIL_NEW}"'\"/g' ~/"plinode_$(hostname -f)".vars
     API_EMAIL=$API_EMAIL_NEW
     fi
@@ -195,16 +171,13 @@ FUNC_PASSWD_CHECKS(){
 
 
     if ([ -z "$API_PASS_NEW" ] || [ "$API_PASS_NEW" == "$SAMPLE_API_PASS" ]); then
+
     echo 
-    echo 
-    echo -e "${GREEN}########################################################################################${NC}"
-    echo -e "${GREEN}"
     echo -e "${GREEN}     API VARIABLE 'API_PASS' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
-    echo -e "${GREEN}"
-    echo -e "${GREEN}     YOUR VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS"
-    echo -e "${GREEN}"
-    echo -e "${GREEN}########################################################################################${NC}"
+    echo -e "${GREEN}     YOUR VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS${NC}"
+    echo 
     sleep 2s
+
     #_AUTOGEN_API_PWD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w18 | head -n1)
     _AUTOGEN_API_PWD="$(./gen_passwd.sh -api)"
     sed -i 's/^API_PASS.*/API_PASS=\"'"${_AUTOGEN_API_PWD}"'\"/g' ~/"plinode_$(hostname -f)".vars
