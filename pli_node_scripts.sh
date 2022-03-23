@@ -192,9 +192,6 @@ FUNC_PASSWD_CHECKS(){
 
 
 FUNC_NODE_DEPLOY(){
-    FUNC_VARS;
-    FUNC_PASSWD_CHECKS;
-    FUNC_PKG_CHECK;
     
     echo -e "${GREEN}#########################################################################"
     echo -e "${GREEN}#########################################################################"
@@ -203,12 +200,16 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}"
     echo -e "${GREEN}#########################################################################"
     echo -e "${GREEN}#########################################################################${NC}"
-    echo 
-    echo 
-    echo -e "${GREEN}#########################################################################"
+    
+    
+    FUNC_VARS;
+    FUNC_PASSWD_CHECKS;
+    FUNC_PKG_CHECK;
+
     echo
+    echo -e "${GREEN}#########################################################################"
     echo -e "${GREEN}## Install: Clone repo to local install folder...${NC}"
-    echo 
+     
     
     if [ ! -d "/$PLI_BASE_DIR" ]; then
         sudo mkdir "/$PLI_BASE_DIR"
