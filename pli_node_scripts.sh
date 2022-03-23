@@ -226,7 +226,7 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}#########################################################################"
     echo -e "${GREEN}#########################################################################"
     echo -e "${GREEN}"
-    echo -e "${GREEN}     Script Deployment menthod"
+    echo -e "${GREEN}                      Script Deployment menthod"
     echo -e "${GREEN}"
     echo -e "${GREEN}#########################################################################"
     echo -e "${GREEN}#########################################################################${NC}"
@@ -257,43 +257,31 @@ FUNC_NODE_DEPLOY(){
     chmod 600 {$FILE_KEYSTORE,$FILE_API}
 
     # Remove the file if necessary; sudo rm -f {.env.apicred,.env.password}
-
-    echo 
+ 
     echo 
     echo -e "${GREEN}#########################################################################"
-    echo
     echo -e "${GREEN}## Install: UPDATE bash file $BASH_FILE1 with user values...${NC}"
-    echo 
 
     sed -i.bak "s/$DB_PWD_FIND/'$DB_PWD_NEW'/g" $BASH_FILE1
     cat $BASH_FILE1 | grep 'postgres PASSWORD'
     sleep 1s
 
     echo 
-    echo 
     echo -e "${GREEN}#########################################################################"
-    echo
     echo -e "${GREEN}## Install: PRE-CHECKS for bash file $BASH_FILE1...${NC}"
-    echo 
 
     sudo apt remove --autoremove golang -y
     sudo rm -rf /usr/local/go
 
     echo 
-    echo 
     echo -e "${GREEN}#########################################################################"
-    echo
     echo -e "${GREEN}## Install: EXECUTE bash file $BASH_FILE1...${NC}"
-    echo 
 
     bash /$PLI_BASE_DIR/$PLI_DEPLOY_DIR/$BASH_FILE1
 
     echo 
-    echo 
     echo -e "${GREEN}#########################################################################"
-    echo
     echo -e "${GREEN}## Install: Update bash file $BASH_FILE2 with user CREDENTIALS values...${NC}"
-    echo 
 
     sed -i.bak "s/password.txt/$FILE_KEYSTORE/g" $BASH_FILE2
     sed -i.bak "s/apicredentials.txt/$FILE_API/g" $BASH_FILE2
@@ -302,10 +290,9 @@ FUNC_NODE_DEPLOY(){
     cat $BASH_FILE2 | grep node
     sleep 1s
 
-    echo 
+     
     echo 
     echo -e "${GREEN}## Install: Update bash file $BASH_FILE2 with user TLS values...${NC}"
-    echo 
 
     sed -i.bak "s/PLUGIN_TLS_PORT=0/PLUGIN_TLS_PORT=$PLI_HTTPS_PORT/g" $BASH_FILE2
     sed -i.bak "/^export PLUGIN_TLS_PORT=.*/a export TLS_CERT_PATH=$TLS_CERT_PATH/server.crt\nexport TLS_KEY_PATH=$TLS_CERT_PATH/server.key" $BASH_FILE2
@@ -313,9 +300,7 @@ FUNC_NODE_DEPLOY(){
     sleep 1s
 
     echo 
-    echo 
     echo -e "${GREEN}## Install: Create TLS CA / Certificate & files / folders...${NC}"
-    echo 
 
     mkdir $TLS_CERT_PATH && cd $TLS_CERT_PATH
     openssl req -x509 -out server.crt -keyout server.key -newkey rsa:4096 \
@@ -324,10 +309,10 @@ FUNC_NODE_DEPLOY(){
 extendedKeyUsage=serverAuth) -subj "/CN=localhost"
     sleep 1s
 
-    echo 
+
     echo 
     echo -e "${GREEN}## Install: Update bash file $BASH_FILE2 with INITIATORS values...${NC}"
-    echo 
+
     sed -i.bak "/^ export DATABASE_TIMEOUT=.*/a export FEATURE_EXTERNAL_INITIATORS=true" $BASH_FILE2
     cat $BASH_FILE2 | grep INITIATORS
     sleep 1s
@@ -335,7 +320,7 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
 
     echo 
     echo -e "${GREEN}## Install: Update '.profile' with string 'FEATURE_EXTERNAL_INITIATORS'...${NC}"
-    echo 
+
     isInFile=$(cat ~/.profile | grep -c "FEATURE_EXTERNAL_INITIATORS")
     if [ $isInFile -eq 0 ]; then
         echo "export FEATURE_EXTERNAL_INITIATORS=true" >> ~/.profile
@@ -346,7 +331,7 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
 
 
     echo -e "${GREEN}## Install: Check Golang version & bash profile path...${NC}"
-    echo 
+
     source ~/.profile
     GO_VER=$(go version)
     go version; GO_EC=$?
@@ -357,11 +342,9 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
             echo -e "${GREEN}## Install proceeding as normal...${NC}"
             ;;
         1) echo -e "${RED}## Command exited with ERROR - updating bash profile...${NC}"
-            echo
             source ~/.profile;
             sudo sh -c 'echo "export PATH=$PATH:/usr/local/go/bin" >> /etc/profile'
             echo "cat "export PATH=$PATH:/usr/local/go/bin" >> ~/.profile"
-            echo
             echo -e "${RED}## Check GO Version manually...${NC}"
             sleep 2s
             #FUNC_EXIT_ERROR
@@ -369,7 +352,6 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
             ;;
         *) echo -e "${RED}## Command exited with OTHER ERROR...${NC}"
             echo -e "${RED}## 'go version' returned : $GO_EC ${NC}"
-            echo
             FUNC_EXIT_ERROR
             #exit 1
             ;;
@@ -378,7 +360,7 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
     sleep 1s
 
     echo -e "${GREEN}## Install: Start PM2 $BASH_FILE2 & set auto start on reboot...${NC}"
-    echo 
+
     cd /$PLI_DEPLOY_PATH
     pm2 start $BASH_FILE2
     sleep 1s
@@ -402,17 +384,15 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
 FUNC_EXPORT_NODE_KEYS(){
 
 echo 
-echo 
 echo -e "${GREEN}#########################################################################${NC}"
-echo 
 echo -e "${GREEN}   export node keys - add current user to 'postgres' group"
+
 sudo usermod -aG postgres $(getent passwd $EUID | cut -d: -f1)
 
 echo 
 echo -e "${GREEN}#########################################################################${NC}"
 echo 
 echo -e   "${RED}######    IMPORTANT FILE - NODE ADDRESS EXPORT FOR WALLET ACCESS    #####${NC}"
-echo 
 echo -e   "${RED}######    IMPORTANT FILE - PLEASE SECURE APPOPRIATELY               #####${NC}"
 echo 
 echo -e "${GREEN}   export node keys - exporting keys to file: ~/"plinode_$(hostname -f)_keys".json${NC}"
@@ -420,8 +400,9 @@ echo $(sudo -u postgres -i psql -d plugin_mainnet_db -t -c"select json from keys
 
 echo 
 echo -e "${GREEN}   export node keys - securing file permissions${NC}"
+
 chmod 400 ~/"plinode_$(hostname -f)_keys_${FDATE}".json
-sleep 3s
+sleep 4s
 }
 
 
@@ -432,9 +413,7 @@ sleep 3s
 FUNC_INITIATOR(){
     FUNC_VARS;
     echo 
-    echo 
     echo -e "${GREEN}#########################################################################${NC}"
-    echo
     echo -e "${GREEN}## CLONE & INSTALL LOCAL INITIATOR...${NC}"
     echo 
 
@@ -448,11 +427,9 @@ FUNC_INITIATOR(){
     go install
 
     echo 
-    echo 
     echo -e "${GREEN}#########################################################################${NC}"
-    echo
     echo -e "${GREEN}## CREATE LOCAL INITIATOR...${NC}"
-    echo 
+    
     export FEATURE_EXTERNAL_INITIATORS=true
     plugin admin login -f "../$FILE_API"
     sleep 0.5s
@@ -464,11 +441,9 @@ FUNC_INITIATOR(){
 
 
     echo 
-    echo 
     echo -e "${GREEN}#########################################################################${NC}"
-    echo
     echo -e "${GREEN}## CAPTURE INITIATOR CREDENTIALS & FILE MANIPULATION...${NC}"
-    echo 
+
     sed -i 's/ ║ /,/g;s/╬//g;s/═//g;s/║//g' $PLI_INIT_RAWFILE
     sed -n '/'"$PLI_L_INIT_NAME"'/,//p' $PLI_INIT_RAWFILE > $PLI_INIT_DATFILE
     sed -i 's/,/\n/g;s/^.'"$PLI_L_INIT_NAME"'//g' $PLI_INIT_DATFILE
@@ -480,22 +455,17 @@ FUNC_INITIATOR(){
 
 
     echo 
-    echo 
     echo -e "${GREEN}#########################################################################${NC}"
-    echo
     echo -e "${GREEN}## READ INITIATOR CREDENTIALS AS VARIABLES...${NC}"
     echo 
     read -r -d '' EXT_ACCESSKEY EXT_SECRET EXT_OUTGOINGTOKEN EXT_OUTGOINGSECRET <$PLI_INIT_DATFILE
-    echo
 
-    sleep 1s
+    sleep 2s
 
-    echo
     echo
     echo -e "${GREEN}#########################################################################${NC}"
-    echo
     echo -e "${GREEN}## CREATE INITIATOR PM2 SERVICE FILE: $BASH_FILE3 & file perms ${NC}"
-    echo
+
     cd /$PLI_DEPLOY_PATH
     cat <<EOF > $BASH_FILE3
 #!/bin/bash
@@ -508,16 +478,13 @@ export EI_CI_SECRET=${EXT_OUTGOINGSECRET}
 echo *** Starting EXTERNAL INITIATOR ***
 external-initiator "{\"name\":\"$PLI_E_INIT_NAME\",\"type\":\"xinfin\",\"url\":\"https://pluginrpc.blocksscan.io\"}" --chainlinkurl "http://localhost:6688/"
 EOF
-    sleep 1s
-    cat $BASH_FILE3
+    #sleep 1s
+    #cat $BASH_FILE3
     chmod u+x $BASH_FILE3
 
     echo 
-    echo 
     echo -e "${GREEN}#########################################################################${NC}"
-    echo
     echo -e "${GREEN}## START INITIATOR PM2 SERVICE $BASH_FILE3 ${NC}"
-    echo    
     
     pm2 start $BASH_FILE3
     sleep 1s
@@ -528,8 +495,6 @@ EOF
     pm2 save
 
 
-    #if [ "$CHECK_PASSWD" == "true" ]; then
-    echo
     echo
     echo -e "${GREEN}#########################################################################${NC}"
     echo -e "${GREEN}#########################################################################${NC}"
@@ -549,7 +514,6 @@ EOF
     echo -e "${GREEN}#########################################################################${NC}"
     echo -e "${GREEN}#########################################################################${NC}"
 
-    #fi
     FUNC_EXIT;
 }
 
@@ -559,15 +523,11 @@ EOF
 FUNC_DO_INIT_CHECK(){
 
     echo -e "${GREEN}#########################################################################"
-    echo
     echo -e "${GREEN}## CONFIRM SCRIPTS EXPORT VALUES HAVE BEEN UPDATED...${NC}"
-    echo 
     
         while true; do
             read -t10 -r -p "Do you wish to proceed to INITIATOR SETUP ? (Y/n) " _input
             if [ $? -gt 128 ]; then
-                #clear
-                echo
                 echo "timed out waiting for user response - proceeding as normal..."
                 FUNC_INITIATOR;
             fi
