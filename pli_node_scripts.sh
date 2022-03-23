@@ -401,7 +401,7 @@ echo -e "${GREEN}   export node keys - exporting keys to file: ~/"plinode_$(host
 echo $(sudo -u postgres -i psql -d plugin_mainnet_db -t -c"select json from keys where id=1;")  > ~/"plinode_$(hostname -f)_keys_${FDATE}".json
 
 echo 
-echo -e "${GREEN}   export node keys - securing file permissions{NC}"
+echo -e "${GREEN}   export node keys - securing file permissions${NC}"
 chmod 400 ~/"plinode_$(hostname -f)_keys_${FDATE}".json
 sleep 3s
 }
@@ -510,7 +510,7 @@ EOF
     pm2 save
 
 
-    if [ "$CHECK_PASSWD" == "true" ]; then
+    #if [ "$CHECK_PASSWD" == "true" ]; then
     echo
     echo
     echo -e "${GREEN}#########################################################################${NC}"
@@ -531,7 +531,7 @@ EOF
     echo -e "${GREEN}#########################################################################${NC}"
     echo -e "${GREEN}#########################################################################${NC}"
 
-    fi
+    #fi
     FUNC_EXIT;
 }
 
