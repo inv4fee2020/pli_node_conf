@@ -1,7 +1,15 @@
 #!/bin/bash
 
+
+# Get current user id and store as var
+USER_ID=$(getent passwd $EUID | cut -d: -f1)
+
 # Authenticate sudo perms before script execution to avoid timeouts or errors
 sudo -l > /dev/null 2>&1
+
+# Set the sudo timeout for USER_ID to expire on reboot instead of default 5mins
+echo "Defaults:$USER_ID timestamp_timeout=-1" > /tmp/plisudotmp
+sudo sh -c 'cat /tmp/plisudotmp > /etc/sudoers.d/plinode_deploy'
 
 # Set Colour Vars
 GREEN='\033[0;32m'
@@ -15,8 +23,6 @@ FDATE=$(date +"%Y_%m_%d_%H_%M")
 FUNC_VARS(){
 ## VARIABLE / PARAMETER DEFINITIONS
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    # Get current user id and store as var
-    USER_ID=$(getent passwd $EUID | cut -d: -f1)
 
 
     PLI_VARS_FILE="plinode_$(hostname -f)".vars
@@ -114,23 +120,23 @@ FUNC_VALUE_CHECK(){
 
 
 FUNC_PASSWD_CHECKS(){
-# check all credentials has been updated - if not auto gen
+    # check all credentials has been updated - if not auto gen
+    
+    
+    SAMPLE_KEYSTORE='$oM3$tr*nGp4$$w0Rd$'
+    # PASS_KEYSTORE value to compare against
+    
+    SAMPLE_DB_PWD="testdbpwd1234"
+    # DB_PWD_NEW value to compare against
+    
+    
+    SAMPLE_API_EMAIL="user123@gmail.com"
+    # API EMAIL value to compare against
+    
+    SAMPLE_API_PASS="passW0rd123"
+    # API PASSWORD value to compare against
 
-
-SAMPLE_KEYSTORE='$oM3$tr*nGp4$$w0Rd$'
-# PASS_KEYSTORE value to compare against
-
-SAMPLE_DB_PWD="testdbpwd1234"
-# DB_PWD_NEW value to compare against
-
-
-SAMPLE_API_EMAIL="user123@gmail.com"
-# API EMAIL value to compare against
-
-SAMPLE_API_PASS="passW0rd123"
-# API PASSWORD value to compare against
-
-if ([ -z "$PASS_KEYSTORE" ] || [ "$PASS_KEYSTORE" == "$SAMPLE_KEYSTORE" ]); then
+    if ([ -z "$PASS_KEYSTORE" ] || [ "$PASS_KEYSTORE" == "$SAMPLE_KEYSTORE" ]); then
     echo 
     echo 
     echo -e "${GREEN}########################################################################################${NC}"
@@ -146,10 +152,10 @@ if ([ -z "$PASS_KEYSTORE" ] || [ "$PASS_KEYSTORE" == "$SAMPLE_KEYSTORE" ]); then
     sed -i 's/^PASS_KEYSTORE.*/PASS_KEYSTORE='"$_AUTOGEN_KEYSTORE"'/g' ~/"plinode_$(hostname -f)".vars
     PASS_KEYSTORE=$_AUTOGEN_KEYSTORE
 
-fi
+    fi
 
 
-if ([ -z "$DB_PWD_NEW" ] || [ "$DB_PWD_NEW" == "$SAMPLE_DB_PWD" ]); then
+    if ([ -z "$DB_PWD_NEW" ] || [ "$DB_PWD_NEW" == "$SAMPLE_DB_PWD" ]); then
     echo 
     echo 
     echo -e "${GREEN}########################################################################################${NC}"
@@ -164,10 +170,10 @@ if ([ -z "$DB_PWD_NEW" ] || [ "$DB_PWD_NEW" == "$SAMPLE_DB_PWD" ]); then
     _AUTOGEN_DB_PWD="$(./gen_passwd.sh -db)"
     sed -i 's/^DB_PWD_NEW.*/DB_PWD_NEW=\"'"${_AUTOGEN_DB_PWD}"'\"/g' ~/"plinode_$(hostname -f)".vars
     DB_PWD_NEW=$_AUTOGEN_DB_PWD
-fi
+    fi
 
 
-if ([ -z "$API_EMAIL" ] || [ "$API_EMAIL" == "$SAMPLE_API_EMAIL" ]); then
+    if ([ -z "$API_EMAIL" ] || [ "$API_EMAIL" == "$SAMPLE_API_EMAIL" ]); then
     echo 
     echo 
     echo -e "${GREEN}########################################################################################${NC}"
@@ -184,11 +190,11 @@ if ([ -z "$API_EMAIL" ] || [ "$API_EMAIL" == "$SAMPLE_API_EMAIL" ]); then
     #_AUTOGEN_API_USER="$(./gen_passwd.sh -db)"
     sed -i 's/^API_EMAIL.*/API_EMAIL=\"'"${API_EMAIL_NEW}"'\"/g' ~/"plinode_$(hostname -f)".vars
     API_EMAIL=$API_EMAIL_NEW
-fi
+    fi
 
 
 
-if ([ -z "$API_PASS_NEW" ] || [ "$API_PASS_NEW" == "$SAMPLE_API_PASS" ]); then
+    if ([ -z "$API_PASS_NEW" ] || [ "$API_PASS_NEW" == "$SAMPLE_API_PASS" ]); then
     echo 
     echo 
     echo -e "${GREEN}########################################################################################${NC}"
@@ -203,10 +209,10 @@ if ([ -z "$API_PASS_NEW" ] || [ "$API_PASS_NEW" == "$SAMPLE_API_PASS" ]); then
     _AUTOGEN_API_PWD="$(./gen_passwd.sh -api)"
     sed -i 's/^API_PASS.*/API_PASS=\"'"${_AUTOGEN_API_PWD}"'\"/g' ~/"plinode_$(hostname -f)".vars
     API_PASS=$_AUTOGEN_DB_PWD
-fi
+    fi
 
-# Update the system memory with the newly updated variables
-source ~/"plinode_$(hostname -f)".vars
+    # Update the system memory with the newly updated variables
+    source ~/"plinode_$(hostname -f)".vars
 
 }
 
@@ -569,6 +575,8 @@ FUNC_DO_INIT_CHECK(){
 
 
 FUNC_EXIT(){
+    # remove the sudo timeout for USER_ID
+    sudo sh -c 'rm -f /etc/sudoers.d/plinode_deploy'
 	exit 0
 	}
 
