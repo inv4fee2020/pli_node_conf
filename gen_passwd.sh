@@ -71,13 +71,13 @@ digits='[[:digit:]].*[[:digit:]].*[[:digit:]]'
 upper='[[:upper:]].*[[:upper:]].*[[:upper:]]'
 lower='[[:lower:]].*[[:lower:]].*[[:lower:]]'
 
-while $BEGIN || (( len_pass < 8 && len_pass > 13 )) ||
+while $BEGIN || (( len_pass < 8 && len_pass > 20 )) ||
     [[ ! ( $test_pass =~ $digits && $test_pass =~ $upper && $test_pass =~ $lower ) ]]
 do
     #$AGAIN && echo "###  Warning: Does not meet complexity - rehashing!" || AGAIN=true
     $AGAIN || AGAIN=true
     BEGIN=false
-    PASS_API=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w30 | head -n1)
+    PASS_API=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w18 | head -n1)
     if [[ ! -z $PASS_API ]]
     then
         len_pass=${#PASS_API}
