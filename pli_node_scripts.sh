@@ -123,6 +123,9 @@ SAMPLE_KEYSTORE='$oM3$tr*nGp4$$w0Rd$'
 SAMPLE_DB_PWD="testdbpwd1234"
 # DB_PWD_NEW value to compare against
 
+SAMPLE_API_PASS="passW0rd123"
+# API PASSWORD value to compare against
+
 if ([ -z "$PASS_KEYSTORE" ] || [ "$PASS_KEYSTORE" == "$SAMPLE_KEYSTORE" ]); then
     echo 
     echo 
@@ -157,6 +160,25 @@ if ([ -z "$DB_PWD_NEW" ] || [ "$DB_PWD_NEW" == "$SAMPLE_DB_PWD" ]); then
     _AUTOGEN_DB_PWD="$(./gen_passwd.sh -db)"
     sed -i 's/^DB_PWD_NEW.*/DB_PWD_NEW=\"'"${_AUTOGEN_DB_PWD}"'\"/g' ~/"plinode_$(hostname -f)".vars
     DB_PWD_NEW=$_AUTOGEN_DB_PWD
+fi
+
+
+
+if ([ -z "$API_PASS_NEW" ] || [ "$API_PASS_NEW" == "$API_PASS" ]); then
+    echo 
+    echo 
+    echo -e "${GREEN}########################################################################################${NC}"
+    echo -e "${GREEN}"
+    echo -e "${GREEN}     API VARIABLE 'API_PASS' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
+    echo -e "${GREEN}"
+    echo -e "${GREEN}     YOUR VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS"
+    echo -e "${GREEN}"
+    echo -e "${GREEN}########################################################################################${NC}"
+    sleep 2s
+    #_AUTOGEN_API_PWD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w18 | head -n1)
+    _AUTOGEN_API_PWD="$(./gen_passwd.sh -api)"
+    sed -i 's/^API_PASS.*/API_PASS=\"'"${_AUTOGEN_API_PWD}"'\"/g' ~/"plinode_$(hostname -f)".vars
+    API_PASS=$_AUTOGEN_DB_PWD
 fi
 
 # Update the system memory with the newly updated variables
