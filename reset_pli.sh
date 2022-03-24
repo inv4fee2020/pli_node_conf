@@ -76,9 +76,11 @@ sudo userdel -r postgres && sudo groupdel postgres
 # Remove all plugin, nodejs linked folders for current user & root
 cd ~/; sudo sh -c "rm -rf .cache/ && rm -rf .nvm && rm -rf .npm && rm -rf .plugin && rm -rf Plugin && rm -rf .pm2 && rm -rf work && rm -rf go && rm -rf .yarn*"
 
-echo -e "${NC} Be sure to manually update your '.profile' file for remaining variables..."
-
-
-FUNC_EXIT(){
-	exit 0
-	}
+echo
+echo
+echo
+echo
+echo -e "${RED} Be sure to manually update your '.profile' file for remaining variables...${NC}"
+echo
+echo
+echo
