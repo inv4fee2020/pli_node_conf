@@ -8,7 +8,7 @@ NC='\033[0m' # No Color
     echo -e "${RED}#########################################################################"
     echo -e "${RED}#########################################################################"
     echo -e "${RED}"
-    echo -e "${NC}                   !! Plugin Node Reset Script !!${NC}"
+    echo -e "${RED}        !!  WARNING  !!${NC} Plugin Node Reset Script !!${RED}!!  WARNING  !!${NC}"
     echo -e "${RED}"
     echo -e "${RED}#########################################################################"
     echo -e "${RED}#########################################################################${NC}"
@@ -21,7 +21,7 @@ NC='\033[0m' # No Color
     # Ask the user acc for login details (comment out to disable)
     CHECK_PASSWD=false
         while true; do
-            read -t10 -r -p ":: WARNING :: Confirm that you wish to RESET your Plugin node installation ? (Y/n) " _input
+            read -t10 -r -p ":: DESTRUCTIVE :: Confirm that you wish to RESET your Plugin node installation ? (Y/n) " _input
             if [ $? -gt 128 ]; then
                 #clear
                 echo
