@@ -21,7 +21,7 @@ NC='\033[0m' # No Color
     # Ask the user acc for login details (comment out to disable)
     CHECK_PASSWD=false
         while true; do
-            read -t10 -r -p "${RED}:: WARNING ::${NC}Confirm that you wish to RESET your Plugin node installation ? (Y/n) " _input
+            read -t10 -r -p echo -e "${RED}:: WARNING ::${NC}Confirm that you wish to RESET your Plugin node installation ? (Y/n) " _input
             if [ $? -gt 128 ]; then
                 #clear
                 echo
