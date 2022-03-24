@@ -122,7 +122,7 @@ FUNC_PASSWD_CHECKS(){
     
     echo 
     echo -e "${GREEN}     VARIABLE 'PASS_KEYSTORE' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
-    echo -e "${GREEN}     YOUR NODE VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS${NC}"
+    #echo -e "${GREEN}     YOUR NODE VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS${NC}"
     sleep 2s
 
     #_AUTOGEN_KEYSTORE="'$(cat /dev/urandom | tr -dc 'a-zA-Z0-9%:+*!;.?=' | head -c32)'"
@@ -135,7 +135,7 @@ FUNC_PASSWD_CHECKS(){
     if ([ -z "$DB_PWD_NEW" ] || [ "$DB_PWD_NEW" == "$SAMPLE_DB_PWD" ]); then
     echo 
     echo -e "${GREEN}     VARIABLE 'DB_PWD_NEW' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
-    echo -e "${GREEN}     YOUR NODE VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS${NC}"
+    #echo -e "${GREEN}     YOUR NODE VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS${NC}"
     sleep 2s
 
     #_AUTOGEN_DB_PWD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w20 | head -n1)
@@ -149,7 +149,7 @@ FUNC_PASSWD_CHECKS(){
     
     echo 
     echo -e "${GREEN}     VARIABLE 'API_EMAIL' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
-    echo -e "${GREEN}     YOUR NODE VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS${NC}"
+    #echo -e "${GREEN}     YOUR NODE VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS${NC}"
     sleep 2s
 
     _AUTOGEN_API_USER=$(tr -cd A-Za-z < /dev/urandom | fold -w10 | head -n1)
@@ -164,7 +164,8 @@ FUNC_PASSWD_CHECKS(){
 
     echo 
     echo -e "${GREEN}     VARIABLE 'API_PASS' NOT UPDATED MANUALLY - AUTO GENERATING VALUE NOW"
-    echo -e "${GREEN}     YOUR NODE VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS${NC}"
+    #echo -e "${GREEN}     YOUR NODE VARS FILE WILL BE UPDATED WITH THE GENERATED CREDENTIALS${NC}"
+    echo
     sleep 2s
 
     #_AUTOGEN_API_PWD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w18 | head -n1)
