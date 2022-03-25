@@ -520,11 +520,13 @@ FUNC_LOGROTATE(){
     sleep 2s
 
     USER_ID=$(getent passwd $EUID | cut -d: -f1)
-    cat <<EOF > /tmp/tmpplugin-logs
-/home/$USER_ID/.pm2/logs/*.log
-/home/$USER_ID/.plugin/*.jsonl
-/home/$USER_ID/.cache/*.logf
-    {
+
+    if [ "$USER_ID" == "root" ]; then
+        cat <<EOF > /tmp/tmpplugin-logs
+/$USER_ID/.pm2/logs/*.log
+/$USER_ID/.plugin/*.jsonl
+/$USER_ID/.cache/*.logf
+        {
             su $USER_ID $USER_ID
             rotate 10
             copytruncate
@@ -537,10 +539,32 @@ FUNC_LOGROTATE(){
             postrotate
                     invoke-rc.d rsyslog rotate >/dev/null 2>&1 || true
             endscript
-    }    
+        }    
 EOF
+    else
+        cat <<EOF > /tmp/tmpplugin-logs
+/home/$USER_ID/.pm2/logs/*.log
+/home/$USER_ID/.plugin/*.jsonl
+/home/$USER_ID/.cache/*.logf
+        {
+            su $USER_ID $USER_ID
+            rotate 10
+            copytruncate
+            daily
+            missingok
+            notifempty
+            compress
+            delaycompress
+            sharedscripts
+            postrotate
+                    invoke-rc.d rsyslog rotate >/dev/null 2>&1 || true
+            endscript
+        }    
+EOF
+    fi
 
     sudo sh -c 'cat /tmp/tmpplugin-logs > /etc/logrotate.d/plugin-logs'
+    
 }
 
 
