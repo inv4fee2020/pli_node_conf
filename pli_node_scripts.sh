@@ -342,6 +342,7 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
     # NON-INTERACTIVE: Proceed with next stage of setup.
     FUNC_EXPORT_NODE_KEYS;
     FUNC_INITIATOR;
+    FUNC_LOGROTATE;
     }
 
 
@@ -510,6 +511,34 @@ FUNC_DO_INIT_CHECK(){
 }
 
 
+FUNC_LOGROTATE(){
+    # add the logrotate conf file
+
+    USER_ID=$(getent passwd $EUID | cut -d: -f1)
+    cat <<EOF > /tmp/tmpplugin-logs
+/home/$USER_ID/.pm2/logs/*.log
+/home/$USER_ID/.plugin/*.jsonl
+/home/$USER_ID/.cache/*.logf
+    {
+            su $USER_ID $USER_ID
+            rotate 10
+            copytruncate
+            daily
+            missingok
+            notifempty
+            compress
+            delaycompress
+            sharedscripts
+            postrotate
+                    invoke-rc.d rsyslog rotate >/dev/null 2>&1 || true
+            endscript
+    }    
+EOF
+
+    sudo sh -c 'cat /tmp/tmpplugin-logs > /etc/logrotate.d/plugin-logs'
+}
+
+
 FUNC_EXIT(){
     # remove the sudo timeout for USER_ID
     sudo sh -c 'rm -f /etc/sudoers.d/plinode_deploy'
@@ -534,6 +563,9 @@ case "$1" in
         keys)
                 FUNC_EXPORT_NODE_KEYS
                 ;;
+        logrotate)
+                FUNC_LOGROTATE
+                ;;
         *)
                 
                 echo 
@@ -550,5 +582,7 @@ case "$1" in
                 echo "      initiator     ==  deploys the external initiator only"
                 echo
                 echo "      keys          ==  extracts the node keys from DB and exports to json file "
+                echo
+                echo "      logrotate     ==  implements the logrotate conf file "
                 echo
 esac
