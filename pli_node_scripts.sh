@@ -342,7 +342,6 @@ extendedKeyUsage=serverAuth) -subj "/CN=localhost"
     # NON-INTERACTIVE: Proceed with next stage of setup.
     FUNC_EXPORT_NODE_KEYS;
     FUNC_INITIATOR;
-    FUNC_LOGROTATE;
     }
 
 
@@ -460,6 +459,8 @@ EOF
     pm2 save
 
 
+    FUNC_LOGROTATE;
+
     echo
     echo -e "${GREEN}#########################################################################${NC}"
     echo -e "${GREEN}#########################################################################${NC}"
@@ -513,6 +514,10 @@ FUNC_DO_INIT_CHECK(){
 
 FUNC_LOGROTATE(){
     # add the logrotate conf file
+
+    echo -e "${GREEN}#########################################################################"
+    echo -e "${GREEN}## ADDING LOGROTATE CONF FILE...${NC}"
+    sleep 2s
 
     USER_ID=$(getent passwd $EUID | cut -d: -f1)
     cat <<EOF > /tmp/tmpplugin-logs
