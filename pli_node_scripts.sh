@@ -514,6 +514,7 @@ FUNC_DO_INIT_CHECK(){
 
 FUNC_LOGROTATE(){
     # add the logrotate conf file
+    # check logrotate status = cat /var/lib/logrotate/status
 
     echo -e "${GREEN}#########################################################################"
     echo -e "${GREEN}## ADDING LOGROTATE CONF FILE...${NC}"
@@ -564,13 +565,14 @@ EOF
     fi
 
     sudo sh -c 'cat /tmp/tmpplugin-logs > /etc/logrotate.d/plugin-logs'
-    
+
 }
 
 
 FUNC_EXIT(){
     # remove the sudo timeout for USER_ID
     sudo sh -c 'rm -f /etc/sudoers.d/plinode_deploy'
+    source ~/.profile
 	exit 0
 	}
 
