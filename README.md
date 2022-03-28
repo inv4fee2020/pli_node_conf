@@ -34,6 +34,8 @@ FINALLY: To complete the installation with zero input, run the main script to do
 
 & have a working node in approx 15-20mins ready for you to perform your REMIX contract & jobs config steps.
 
+The above replaces most of the steps set out in the [node setup 101 steps](node_setup_101.md). This link is included for completeness and reference on base setup steps etc. Further updates to the steps will be added.
+
 =======
 
 > When connecting to your nodes plugin GUI as outlined in ['fund your node'](https://docs.goplugin.co/plugin-installations/fund-your-node), you must use *_'https://your_node_ip:6689'_* instead due to the configuration applied by the [main script](#main-script-actions)
