@@ -112,6 +112,8 @@ The key aspect to this function is the file manipulation to extract the access s
 
 This function exports the node address keys to allow you to access any funds that have been added to the node. This is important in scenarios where an operator wishes to rebuild a node or where they may have simply added too much funds to the node address.
 
+The output json file (example below) is then imported to MM as per step 5 of ['Withdraw PLI from Plugin Node'](https://docs.goplugin.co/node-operators/withdraw-pli-from-plugin-node#step-5-now-choose-import-account-and-select-json-file-as-type.-pass-word-should-be-same-as-your-keys) of the offical docs.
+
 
 ### Function: logrotate
 
