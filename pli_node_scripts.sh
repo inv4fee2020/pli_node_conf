@@ -115,7 +115,7 @@ FUNC_PASSWD_CHECKS(){
     SAMPLE_API_EMAIL="user123@gmail.com"
     # API EMAIL value to compare against
     
-    SAMPLE_API_PASS="passW0rd123"
+    SAMPLE_API_PASS='passW0rd123'
     # API PASSWORD value to compare against
 
     if ([ -z "$PASS_KEYSTORE" ] || [ "$PASS_KEYSTORE" == "$SAMPLE_KEYSTORE" ]); then
@@ -170,7 +170,7 @@ FUNC_PASSWD_CHECKS(){
 
     #_AUTOGEN_API_PWD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w18 | head -n1)
     _AUTOGEN_API_PWD="$(./gen_passwd.sh -api)"
-    sed -i 's/^API_PASS.*/API_PASS=\"'"${_AUTOGEN_API_PWD}"'\"/g' ~/"plinode_$(hostname -f)".vars
+    sed -i 's/^API_PASS.*/API_PASS='"${_AUTOGEN_API_PWD}"'/g' ~/"plinode_$(hostname -f)".vars
     API_PASS=$_AUTOGEN_DB_PWD
     fi
 
@@ -227,7 +227,7 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}## Install: UPDATE bash file $BASH_FILE1 with user values...${NC}"
 
     sed -i.bak "s/$DB_PWD_FIND/'$DB_PWD_NEW'/g" $BASH_FILE1
-    cat $BASH_FILE1 | grep 'postgres PASSWORD'
+    #cat $BASH_FILE1 | grep 'postgres PASSWORD'
     sleep 1s
 
     echo 
