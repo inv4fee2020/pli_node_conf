@@ -195,6 +195,12 @@ FUNC_SETUP_UFW_PORTS(){
     echo 
     echo -e "${GREEN}## Setup: Configure Firewall...${NC}"
     echo 
+
+    # Get current SSH port number 
+    CPORT=$(sudo ss -tlpn | grep sshd | awk '{print$4}' | cut -d ':' -f 2 -s)
+    #echo $CPORT
+    sudo ufw allow $CPORT/tcp
+    
     ## default ssh & non-standard ssh port
     sudo ufw allow $PLI_SSH_DEF_PORT/tcp
 
@@ -218,9 +224,6 @@ FUNC_ENABLE_UFW(){
     sudo sed -i -e 's/\#& stop/\& stop/g' /etc/rsyslog.d/20-ufw.conf
     sudo cat /etc/rsyslog.d/20-ufw.conf | grep '& stop'
 
-    # Get current SSH port number 
-    CPORT=$(sudo ss -tlpn | grep sshd | awk '{print$4}' | cut -d ':' -f 2 -s)
-    #echo $CPORT
     echo 
     echo 
     echo -e "${GREEN}#########################################################################" 
@@ -230,7 +233,6 @@ FUNC_ENABLE_UFW(){
     sudo systemctl start ufw && sudo systemctl status ufw
     sleep 2s
     sudo ufw enable
-    sudo ufw allow $CPORT/tcp
     sudo ufw status verbose
 }
 
