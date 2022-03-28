@@ -353,16 +353,15 @@ echo -e "${GREEN}   export node keys - add current user to 'postgres' group"
 
 sudo usermod -aG postgres $(getent passwd $EUID | cut -d: -f1)
 
-echo 
-echo -e "${GREEN}#########################################################################${NC}"
+#echo 
+#echo -e "${GREEN}#########################################################################${NC}"
 echo 
 echo -e   "${RED}######    IMPORTANT FILE - NODE ADDRESS EXPORT FOR WALLET ACCESS    #####${NC}"
 echo -e   "${RED}######    IMPORTANT FILE - PLEASE SECURE APPOPRIATELY               #####${NC}"
 echo 
-echo -e "${GREEN}   export node keys - exporting keys to file: ~/"plinode_$(hostname -f)_keys".json${NC}"
+echo -e "${GREEN}   export node keys - exporting keys to file: ~/"plinode_$(hostname -f)_keys_${FDATE}".json${NC}"
 echo $(sudo -u postgres -i psql -d plugin_mainnet_db -t -c"select json from keys where id=1;")  > ~/"plinode_$(hostname -f)_keys_${FDATE}".json
-
-echo 
+ 
 echo -e "${GREEN}   export node keys - securing file permissions${NC}"
 
 chmod 400 ~/"plinode_$(hostname -f)_keys_${FDATE}".json
