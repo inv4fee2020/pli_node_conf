@@ -29,12 +29,12 @@ tar -cvpzf $CONF_BACKUP_OBJ ~/plinode* ~/pli_init* ~/plugin-deployment/.env*
 #error_exit;
 
 #sleep 2s
-FUNC_DB_BACKUP_ENC
 
 if [ "$_OPTION" == "-full" ]; then
     FUNC_DB_BACKUP_LOCAL
 fi
 
+FUNC_DB_BACKUP_ENC
 
 }
 
@@ -136,6 +136,12 @@ sudo su gdbackup -c "cd ~/; .google-drive-upload/bin/gupload -q -d /$DB_BACKUP_P
 error_exit;
 }
 
+
+
+
+FUNC_EXIT(){
+	exit 0
+	}
 
 error_exit()
 {
