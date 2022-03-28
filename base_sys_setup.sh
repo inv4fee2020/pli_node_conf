@@ -195,6 +195,12 @@ FUNC_SETUP_UFW_PORTS(){
     echo 
     echo -e "${GREEN}## Setup: Configure Firewall...${NC}"
     echo 
+
+    # Get current SSH port number 
+    CPORT=$(sudo ss -tlpn | grep sshd | awk '{print$4}' | cut -d ':' -f 2 -s)
+    #echo $CPORT
+    sudo ufw allow $CPORT/tcp
+    
     ## default ssh & non-standard ssh port
     sudo ufw allow $PLI_SSH_DEF_PORT/tcp
 
