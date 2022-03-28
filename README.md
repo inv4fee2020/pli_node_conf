@@ -15,6 +15,8 @@ Thanks to all the Plugin discord community for their input / feedback with speci
 
 # TL:DR - Fully Automated Installation
 
+_Update 28.03.22 : code moved to performing automated installation by default. Operators that wish to use their own credentials should still continue to update the vars file manually before excuting the main script._
+
 
         cd $HOME
         git clone https://github.com/inv4fee2020/pli_node_conf.git
@@ -53,7 +55,7 @@ Accompanying youtube of the setup process for specific VPS providers;
 
 A sample vars file is included 'sample.vars'. This file will be copied to your user $HOME folder as part of the main script and the permissions to the file updated to restrict access to the owner of the $HOME folder.
 
-The scripts check that the local node variables file exists. The code prompts you to confirm that the file has been updated.
+The scripts check that the local node variables file exists.
 
 By using a dedicated variables file, any updates to the main script should not involve any changes to the node specific settings.
 
