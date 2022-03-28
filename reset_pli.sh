@@ -47,6 +47,10 @@ sudo -l > /dev/null 2>&1
 PLI_VARS_FILE="plinode_$(hostname -f).vars"
 source ~/$PLI_VARS_FILE
 
+
+echo -e "${GREEN} ~~ Performing fresh keys export ~~${NC}"
+./pli_node_scripts.sh keys
+
 ##  Rough script to roll back installation for testing purposes...
 ## Use with caution !
 #sudo su
@@ -83,7 +87,7 @@ echo
 echo
 echo
 echo
-echo -e "${RED} Be sure to manually update your '.profile' file for remaining variables...${NC}"
+echo -e "${RED} Be sure to manually update your '~/.profile' file for remaining variables...${NC}"
 echo
 echo
 echo
