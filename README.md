@@ -15,15 +15,13 @@ Thanks to all the Plugin discord community for their input / feedback with speci
 
 # TL:DR - Fully Automated Installation
 
-Clone this repo to your local '$HOME' folder **Preferably as a normal user & _not as root_**
-
-Copy and paste the below direct to your terminal session to your node;
 
         cd $HOME
         git clone https://github.com/inv4fee2020/pli_node_conf.git
         cd pli_node_conf
         chmod +x *.sh
         
+
 OPTIONAL : Update the the minimum variables (as per VARIABLES section below) with your own values;
 
         cp -n sample.vars ~/plinode_$(hostname -f).vars && chmod 600 ~/plinode_$(hostname -f).vars
@@ -35,9 +33,17 @@ FINALLY: To complete the installation with zero input, run the main script to do
         ./pli_node_scripts.sh fullnode
 
 & have a working node in approx 15-20mins ready for you to perform your REMIX contract & jobs config steps.
+=======
+> When connecting to your nodes plugin GUI as outlined in ['fund your node'](https://docs.goplugin.co/plugin-installations/fund-your-node), you must use *_'https://your_node_ip:6689'_* instead due to the configuration applied by the [main script](#main-script-actions)
 
 
+Accompanying youtube of the setup process for specific VPS providers;
 
+
+ - ['Ethernetservers VPS 1x vCPU + 2.5GBRAM + 70GB SSD - setup using node setup 101'](https://www.youtube.com/watch?v=IubKHAVoNTo)
+
+
+---
 ---
 ## VARIABLES file
 
@@ -65,7 +71,7 @@ You can reveiw the 'sample.vars' file for the full list of VARIABLES.
 
 ---
 ---
-## pli_node_scripts.sh
+## pli_node_scripts.sh (main script)
 
 This script performs file manipulations & executes the various plugin bash scripts in order 
 to successfully deploy the node. 
@@ -118,14 +124,14 @@ to check the state of the logrotate config, issue the following cmd;
 
 
 **_NOTE: The script uses a base install folder is your linux users $HOME folder - which is now set as a VARIABLE._**
-
+#### Main script actions
 The script performs the following actions;
 
 - Updates Postgres DB password 'sed' find/replace on BASH_FILE1
 - Removes existing Golang install as part of pre-requisite for BASH_FILE1
 - Updates BASH_FILE2 to use new '.env' files & Postgres password
 - Updates BASH_FILE2 with TLS certificate files & TLS Port
-- Creates local certificate authority & TLS certificate for use with local job server
+- Creates local certificate authority & TLS certificate for use with local job server (enabling HTTPS)
 - Updates BASH_FILE2 with EXTERNAL_INITIATORS parameter
 - Checks for the Golang path & updates bash profile as necessary
 - Initialises the BASH_FILE2 PM2 service & sets PM2 to auto start on boot
@@ -216,6 +222,7 @@ As the code is updated it will be necessary to update your local repo from time 
         git fetch
         git reset --hard HEAD
         git merge '@{u}'
+        chmod +x *.sh
 
 
    _source: https://www.freecodecamp.org/news/git-pull-force-how-to-overwrite-local-changes-with-git/_

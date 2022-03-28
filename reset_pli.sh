@@ -64,6 +64,7 @@ sudo systemctl stop postgresql
 # Delete folders for; Go install, plugin-deployment install, POSTGRES.
 sudo rm -rf /usr/local/go
 sudo rm -rf /$PLI_DEPLOY_PATH
+
 sudo rm -rf /usr/lib/postgresql/ && sudo rm -rf /var/lib/postgresql/ && sudo rm -rf /var/log/postgresql/ && sudo rm -rf /etc/postgresql/ && sudo rm -rf /etc/postgresql-common/
 
 # Remove the POSTGRES packages & clean up linked packages
