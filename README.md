@@ -188,8 +188,12 @@ _You can reveiw the 'sample.vars' file for the full list of VARIABLES._
                           -- this assumes you are installing under your current admin session (preferable not root)"
 
               -os     ==  perform OS updates & installs required packages (see sample.vars 'BASE_SYS_PACKAGES')
+              
               -user   ==  Adds a new admin account (to install the plugin node under) & SSH keys
+
               -ports  ==  Adds required ports to UFW config (see sample.vars for 'PORT' variables )
+                          -- Dynamically finds current active ssh port & adds to UFW ruleset
+
               -ufw    ==  Starts the UFW process, sets the logging to 'ufw.log' only & enables UFW service
 
               -S      ==  Secures the SSH service:
