@@ -169,7 +169,7 @@ FUNC_PASSWD_CHECKS(){
     sleep 2s
 
     #_AUTOGEN_API_PWD=$(tr -cd '[:alnum:]' < /dev/urandom | fold -w18 | head -n1)
-    _AUTOGEN_API_PWD="$(./gen_passwd.sh -api)"
+    _AUTOGEN_API_PWD="'$(./gen_passwd.sh -api)'"
     sed -i 's/^API_PASS.*/API_PASS='"${_AUTOGEN_API_PWD}"'/g' ~/"plinode_$(hostname -f)".vars
     API_PASS=$_AUTOGEN_DB_PWD
     fi
