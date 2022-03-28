@@ -102,7 +102,7 @@ The scripts has a number of functions, one of which must be passed to run the sc
 ### Function: fullnode
 
 As the name suggest, this executes all code to provision a full working node ready for the contract & jobs creation on remix.
-This function calls the 'initiator' function as part of executing all code.
+This function calls all other function as part of deploying the full node.
 
 
 ### Function: initiator
