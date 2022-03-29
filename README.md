@@ -15,35 +15,24 @@ Thanks to all the Plugin discord community for their input / feedback with speci
 
 # TL:DR - Fully Automated Installation
 
-_Update 28.03.22 : code moved to performing automated installation by default. Operators that wish to use their own credentials should still continue to update the vars file manually before excuting the main script._
+*_Update 28.03.22 : code moved to performing automated installation by default. Operators that wish to use their own credentials should still continue to update the vars file manually before excuting the main script._*
 
 
-        cd $HOME
-        git clone https://github.com/inv4fee2020/pli_node_conf.git
-        cd pli_node_conf
-        chmod +x *.sh
-        
 
-OPTIONAL : Update the the minimum variables (as per VARIABLES section below) with your own values;
+The[node automated setup steps](node_autosetup.md) builds upon the previous 'node setup 101' guide in terms of the base linux system setup but removes the need for any vars file updates or seperate commands and prompts.
 
-        cp -n sample.vars ~/plinode_$(hostname -f).vars && chmod 600 ~/plinode_$(hostname -f).vars
-        nano ~/plinode_$(hostname -f).vars
+Simply follow the steps in the [node automated setup](node_autosetup.md) & have a working node in approx 15-20mins ready for you to perform your REMIX contract & jobs config steps.
 
 
-FINALLY: To complete the installation with zero input, run the main script to do a full node deployment
 
-        ./pli_node_scripts.sh fullnode
+_NOTE: The above replaces most of the steps set out in the [node setup 101 steps](node_setup_101.md). This link is included for completeness and reference on base setup steps etc. Further updates to the steps will be added._
 
-& have a working node in approx 15-20mins ready for you to perform your REMIX contract & jobs config steps.
-
-The above replaces most of the steps set out in the [node setup 101 steps](node_setup_101.md). This link is included for completeness and reference on base setup steps etc. Further updates to the steps will be added.
-
-=======
+---
 
 > When connecting to your nodes plugin GUI as outlined in ['fund your node'](https://docs.goplugin.co/plugin-installations/fund-your-node), you must use *_'https://your_node_ip:6689'_* instead due to the configuration applied by the [main script](#main-script-actions)
 
 
-Accompanying youtube of the setup process for specific VPS providers;
+Accompanying youtube of the 'node setup 101' process for specific VPS providers;
 
 
  - ['Ethernetservers VPS 1x vCPU + 2.5GBRAM + 70GB SSD - setup using node setup 101'](https://www.youtube.com/watch?v=IubKHAVoNTo)
