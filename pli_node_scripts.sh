@@ -366,7 +366,7 @@ sudo usermod -aG postgres $(getent passwd $EUID | cut -d: -f1)
 #echo -e "${GREEN}#########################################################################${NC}"
 echo 
 echo -e   "${RED}######    IMPORTANT FILE - NODE ADDRESS EXPORT FOR WALLET ACCESS    #####${NC}"
-echo -e   "${RED}######    IMPORTANT FILE - PLEASE SECURE APPOPRIATELY               #####${NC}"
+echo -e   "${RED}######    IMPORTANT FILE - PLEASE SECURE APPROPRIATELY               #####${NC}"
 echo 
 echo -e "${GREEN}   export node keys - exporting keys to file: ~/"plinode_$(hostname -f)_keys_${FDATE}".json${NC}"
 echo $(sudo -u postgres -i psql -d plugin_mainnet_db -t -c"select json from keys where id=1;")  > ~/"plinode_$(hostname -f)_keys_${FDATE}".json
@@ -490,11 +490,12 @@ EOF
     
     #source ~/.profile
     set -x
-    source ~/.profile;
+    source ~/.profile
     export GOROOT=/usr/local/go
     export GOPATH=$HOME/work
     export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
     export FEATURE_EXTERNAL_INITIATORS=true
+    . ~/.profile
 
     FUNC_EXIT;
 }
@@ -588,12 +589,6 @@ EOF
 FUNC_EXIT(){
     # remove the sudo timeout for USER_ID
     sudo sh -c 'rm -f /etc/sudoers.d/plinode_deploy'
-    #source ~/.profile;
-    export GOROOT=/usr/local/go
-    export GOPATH=$HOME/work
-    export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-    export FEATURE_EXTERNAL_INITIATORS=true
-    #source ~/.profile
 	exit 0
 	}
 
