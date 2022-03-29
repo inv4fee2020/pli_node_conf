@@ -32,12 +32,21 @@
         ./pli_node_scripts.sh fullnode
 
 
-6. in about 12-15mins you should have a node running and ready to progress with the Remix steps
+6. In about 12-15mins you should have a node running and ready to progress with the Remix steps.
+
+7. **IMPORTANT** Be sure to record the auto created credentials that are output to the screen.  These are also writted to the node vars file in the $HOME folder
+
+|<img src="https://github.com/inv4fee2020/docs_pli/blob/main/images/plinode_autosetup_creds_2022-03-29.png" width=70% height=70%>|
+|---|  
+
+
+***
+
 
     > When connecting to your nodes plugin GUI as outlined in ['fund your node'](https://docs.goplugin.co/plugin-installations/fund-your-node), you must use *_'https://your_node_ip:6689'_* instead due to the configuration applied by the [main script](https://github.com/inv4fee2020/pli_node_conf#main-script-actions)
 
 ***
-7. When you get to the [Job Setup](https://docs.goplugin.co/oracle/job-setup) section on the main docs & have successfully created your Oracle contract address. You can then run the following script to generate the necessary json blob required to create the test job on your local node;
+8. When you get to the [Job Setup](https://docs.goplugin.co/oracle/job-setup) section on the main docs & have successfully created your Oracle contract address. You can then run the following script to generate the necessary json blob required to create the test job on your local node;
 
         ./gen_node_testjob.sh
 
