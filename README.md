@@ -17,13 +17,14 @@ Thanks to all the Plugin discord community for their input / feedback with speci
 
 *_Update 28.03.22 : code moved to performing automated installation by default. Operators that wish to use their own credentials should still continue to update the vars file manually before excuting the main script._*
 
+...
 
+The [node automated setup](node_autosetup.md) builds upon the previous 'node setup 101' guide in terms of the base linux system setup but removes the need for any vars file updates or seperate commands and prompts.
 
-The[node automated setup steps](node_autosetup.md) builds upon the previous 'node setup 101' guide in terms of the base linux system setup but removes the need for any vars file updates or seperate commands and prompts.
 
 Simply follow the steps in the [node automated setup](node_autosetup.md) & have a working node in approx 15-20mins ready for you to perform your REMIX contract & jobs config steps.
 
-
+...
 
 _NOTE: The above replaces most of the steps set out in the [node setup 101 steps](node_setup_101.md). This link is included for completeness and reference on base setup steps etc. Further updates to the steps will be added._
 
