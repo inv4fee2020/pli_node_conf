@@ -579,11 +579,11 @@ EOF
 FUNC_EXIT(){
     # remove the sudo timeout for USER_ID
     sudo sh -c 'rm -f /etc/sudoers.d/plinode_deploy'
-    source ~/.profile;
-    #export GOROOT=/usr/local/go
-    #export GOPATH=$HOME/work
-    #export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-    #export FEATURE_EXTERNAL_INITIATORS=true
+    #source ~/.profile;
+    export GOROOT=/usr/local/go
+    export GOPATH=$HOME/work
+    export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+    export FEATURE_EXTERNAL_INITIATORS=true
     #source ~/.profile
 	exit 0
 	}
