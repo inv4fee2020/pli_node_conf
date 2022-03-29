@@ -4,9 +4,7 @@
    
    i. Due to the various experiences across different VPS hosting platforms, lets update the system & add in base packages before proceeding;
 
-        sudo apt update -y && sudo apt upgrade -y
-        sudo apt install -y git nano curl
-        sudo apt autoremove -y
+         sudo apt update -y && sudo apt upgrade -y && sudo apt install -y git nano curl && sudo apt autoremove -y
 
 
 2. Create a new admin user account
