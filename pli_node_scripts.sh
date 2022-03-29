@@ -191,9 +191,18 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}#########################################################################"
     echo -e "${GREEN}#########################################################################${NC}"
     
-    
+    # loads variables 
     FUNC_VARS;
+
+    # call base_sys_setup script to perform basic system updates etc.
+    bash base_sys_setup.sh -D
+
+    echo
+    echo -e "${GREEN}#########################################################################"
+    echo -e "${GREEN}## Install: check credentials are updated against default sample values...${NC}"
     FUNC_PASSWD_CHECKS;
+
+    # installs default packages listed in vars file
     FUNC_PKG_CHECK;
 
     echo
