@@ -75,18 +75,18 @@ FUNC_PKG_CHECK(){
 FUNC_SETUP_OS(){
     #FUNC_VARS;
     
-    echo -e "${GREEN}#########################################################################"
-    echo -e "${GREEN}#########################################################################"
-    echo -e "${GREEN}"
-    echo -e "${GREEN}     Script Deployment menthod"
-    echo -e "${GREEN}"
-    echo -e "${GREEN}#########################################################################"
-    echo -e "${GREEN}#########################################################################${NC}"
+    #echo -e "${GREEN}#########################################################################"
+    #echo -e "${GREEN}#########################################################################"
+    #echo -e "${GREEN}"
+    #echo -e "${GREEN}     Script Deployment menthod"
+    #echo -e "${GREEN}"
+    #echo -e "${GREEN}#########################################################################"
+    #echo -e "${GREEN}#########################################################################${NC}"
 
 
     echo -e "${GREEN}#########################################################################"
     echo
-    echo -e "${GREEN}## Setup: System updates...${NC}"
+    echo -e "${GREEN}## Base Setup: System updates...${NC}"
     echo 
     sudo apt update -y && sudo apt upgrade -y
 
@@ -106,7 +106,7 @@ FUNC_SETUP_USER(){
 
     echo -e "${GREEN}#########################################################################"
     echo
-    echo -e "${GREEN}## Setup: Add new local admin account with sudo access...${NC}"
+    echo -e "${GREEN}## Base Setup: Add new local admin account with sudo access...${NC}"
     echo 
     #   Generate the encrypted password to be passed as follows;
     #   root@plitest:/# mkpasswd -m sha256crypt testpassword
@@ -127,7 +127,7 @@ FUNC_SETUP_USER(){
     sleep 2s
     echo -e "${GREEN}#########################################################################"
     echo
-    echo -e "${GREEN}## Setup: Creating the new acc user & group & adds to sudoers...${NC}"
+    echo -e "${GREEN}## Base Setup: Creating the new acc user & group & adds to sudoers...${NC}"
     echo 
     sudo groupadd $VAR_USERNAME
     sudo useradd -p "$encVAR_PASSWORD" "$VAR_USERNAME" -m -s /bin/bash -g "$VAR_USERNAME" -G sudo
@@ -148,7 +148,7 @@ FUNC_SETUP_USER(){
     echo 
     echo -e "${GREEN}#########################################################################"
     echo
-    echo -e "${GREEN}## Setup: Creating SSH keys for new acc user ${NC}"
+    echo -e "${GREEN}## Base Setup: Creating SSH keys for new acc user ${NC}"
     echo 
 
     cd /home/$VAR_USERNAME
@@ -193,7 +193,7 @@ FUNC_SETUP_UFW_PORTS(){
     echo 
     echo -e "${GREEN}#########################################################################" 
     echo 
-    echo -e "${GREEN}## Setup: Configure Firewall...${NC}"
+    echo -e "${GREEN}## Base Setup: Configure Firewall...${NC}"
     echo 
 
     # Get current SSH port number 
@@ -218,7 +218,7 @@ FUNC_ENABLE_UFW(){
     echo 
     echo -e "${GREEN}#########################################################################"
     echo 
-    echo -e "${GREEN}## Setup: Change UFW logging to ufw.log only${NC}"
+    echo -e "${GREEN}## Base Setup: Change UFW logging to ufw.log only${NC}"
     echo 
     # source: https://handyman.dulare.com/ufw-block-messages-in-syslog-how-to-get-rid-of-them/
     sudo sed -i -e 's/\#& stop/\& stop/g' /etc/rsyslog.d/20-ufw.conf
@@ -232,7 +232,8 @@ FUNC_ENABLE_UFW(){
     echo 
     sudo systemctl start ufw && sudo systemctl status ufw
     sleep 2s
-    sudo ufw enable
+    echo "y" | sudo ufw enable
+    #sudo ufw enable
     sudo ufw status verbose
 }
 
@@ -243,7 +244,7 @@ FUNC_SETUP_SECURE_SSH(){
     echo 
     echo -e "${GREEN}#########################################################################"
     echo
-    echo -e "${GREEN}## Setup: Change SSH port & Secure Authentication methods...${NC}"
+    echo -e "${GREEN}## Base Setup: Change SSH port & Secure Authentication methods...${NC}"
     echo 
     echo -e "${RED}# !! IMPORTANT: DO NOT close your existing ssh session..."
     echo -e "${RED}# !! Open a second connection to the new port with your existing ADMIN "
@@ -262,14 +263,14 @@ FUNC_SETUP_SECURE_SSH(){
     echo 
     echo -e "${GREEN}#########################################################################"
     echo
-    echo -e "${GREEN}## Setup: Add new SSH port to firewall...${NC}"
+    echo -e "${GREEN}## Base Setup: Add new SSH port to firewall...${NC}"
     echo
     sudo ufw allow $PLI_SSH_NEW_PORT/tcp
 
     echo
     echo -e "${GREEN}#########################################################################"
     echo
-    echo -e "${GREEN}## Setup: Restart SSH service for port change to take effect...${NC}"
+    echo -e "${GREEN}## Base Setup: Restart SSH service for port change to take effect...${NC}"
     echo 
     sudo systemctl restart sshd && sudo systemctl status sshd
     sudo netstat -tpln | grep $PLI_SSH_NEW_PORT
@@ -287,7 +288,7 @@ FUNC_EXIT(){
 
 
 FUNC_BASE_SETUP(){
-    FUNC_VALUE_CHECK;
+    #FUNC_VALUE_CHECK;
     FUNC_SETUP_OS;
     FUNC_PKG_CHECK;
     FUNC_SETUP_UFW_PORTS;
