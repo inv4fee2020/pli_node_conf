@@ -482,10 +482,10 @@ EOF
     #source ~/.profile
     set -x
     source ~/.profile;
-    export GOROOT=/usr/local/go
-    export GOPATH=$HOME/work
-    export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
-    export FEATURE_EXTERNAL_INITIATORS=true
+    #export GOROOT=/usr/local/go
+    #export GOPATH=$HOME/work
+    #export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+    #export FEATURE_EXTERNAL_INITIATORS=true
 
     FUNC_EXIT;
 }
