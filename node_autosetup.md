@@ -32,7 +32,7 @@
         ./pli_node_scripts.sh fullnode
 
 
-6. In about 12-15mins you should have a node running and ready to progress with the Remix steps.
+6. In about 20-30mins _(depending on system specs)_ you should have a node running and ready to progress with the Remix steps.
 
 7. **IMPORTANT** Be sure to record the auto created credentials that are output to the screen.  These are also written to the node vars file in the $HOME folder.
 
