@@ -22,9 +22,9 @@ Thanks to all the Plugin discord community for their input / feedback with speci
 The [node automated setup](node_autosetup.md) builds upon the previous 'node setup 101' guide in terms of the base linux system setup but removes the need for any vars file updates or seperate commands and prompts.
 
 
-Simply follow the steps in the [node automated setup](node_autosetup.md) & have a working node in approx 15-20mins ready for you to perform your REMIX contract & jobs config steps.
+Simply follow the steps in the [node automated setup](node_autosetup.md) & have a working node in approx 20-30mins _(depending on system specs)_ ready for you to perform your REMIX contract & jobs config steps.
 
-The following youtube shows the process from a fresh VPS installation to a running node based on the above setup steps;
+The following youtube shows the entire process from a fresh VPS installation to a running node based on the above setup steps;
  - [pli node deployment - automated script method](https://youtu.be/wOKA24sLmPM)
 
 ...
