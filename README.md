@@ -24,6 +24,10 @@ The [node automated setup](node_autosetup.md) builds upon the previous 'node set
 
 Simply follow the steps in the [node automated setup](node_autosetup.md) & have a working node in approx 15-20mins ready for you to perform your REMIX contract & jobs config steps.
 
+The following youtube shows the process from a fresh VPS installation to a running node based on the above setup steps;
+ - [pli node deployment - automated script method](https://youtu.be/wOKA24sLmPM)
+
+...
 ...
 
 _NOTE: The above replaces most of the steps set out in the [node setup 101 steps](node_setup_101.md). This link is included for completeness and reference on base setup steps etc. Further updates to the steps will be added._
