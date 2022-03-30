@@ -489,7 +489,7 @@ EOF
     echo -e "${GREEN}#########################################################################${NC}"
     
     #source ~/.profile
-    set -x
+    #set -x
     source ~/.profile
     export GOROOT=/usr/local/go
     export GOPATH=$HOME/work
