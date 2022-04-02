@@ -16,7 +16,7 @@ FUNC_VARS(){
     echo -e "${GREEN}"
     echo -e "${GREEN}     Source local variables file...{NC}"
     #source sample.vars
-    
+
     PLI_VARS_FILE="plinode_$(hostname -f)".vars
     if [ ! -e ~/$PLI_VARS_FILE ]; then
         clear
@@ -213,17 +213,17 @@ FUNC_SETUP_UFW_PORTS(){
     echo -e "${GREEN}## Base Setup: Configure Firewall...${NC}"
     echo 
 
-    # Get current SSH port number 
+    # Get current SSH port number & add to ufw
     CPORT=$(sudo ss -tlpn | grep sshd | awk '{print$4}' | cut -d ':' -f 2 -s)
-    #echo $CPORT
     sudo ufw allow $CPORT/tcp
     
     ## default ssh & non-standard ssh port
-    #sudo ufw allow $PLI_SSH_DEF_PORT/tcp --pager
+    #sudo ufw allow $PLI_SSH_DEF_PORT/tcp
 
     ## node local job server http/https ports
-    sudo ufw allow $PLI_HTTP_PORT/tcp && sudo ufw allow $PLI_HTTPS_PORT/tcp
-    sudo ufw status verbose --pager
+    sudo ufw allow $PLI_HTTPS_PORT/tcp
+    #sudo ufw allow $PLI_HTTP_PORT/tcp && sudo ufw allow $PLI_HTTPS_PORT/tcp
+    #sudo ufw status verbose --pager
     sleep 2s
 }
 
