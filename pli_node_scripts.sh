@@ -35,8 +35,8 @@ FUNC_VARS(){
         cp sample.vars ~/$PLI_VARS_FILE
         chmod 600 ~/$PLI_VARS_FILE
 
-        echo
-        echo -e "${GREEN}nano ~/$PLI_VARS_FILE ${NC}"
+        #echo
+        #echo -e "${GREEN}nano ~/$PLI_VARS_FILE ${NC}"
         #sleep 2s
     fi
 
