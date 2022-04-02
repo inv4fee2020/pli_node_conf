@@ -251,7 +251,7 @@ FUNC_ENABLE_UFW(){
     sleep 2s
     echo "y" | sudo ufw enable
     #sudo ufw enable
-    sudo ufw status verbose --pager
+    sudo ufw status verbose --no-pager
 }
 
 
