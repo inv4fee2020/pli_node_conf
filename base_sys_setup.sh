@@ -12,8 +12,25 @@ NC='\033[0m' # No Color
 FUNC_VARS(){
 ## VARIABLE / PARAMETER DEFINITIONS
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
+    echo -e "${GREEN}#########################################################################"
+    echo -e "${GREEN}"
+    echo -e "${GREEN}     Source local variables file...{NC}"
     #source sample.vars
+    
+    PLI_VARS_FILE="plinode_$(hostname -f)".vars
+    if [ ! -e ~/$PLI_VARS_FILE ]; then
+        clear
+        echo
+        echo -e "${RED} #### NOTICE: No VARIABLES file found. ####${NC}"
+        echo -e "${RED} ..creating local vars file '$HOME/$PLI_VARS_FILE' ${NC}"
+
+        cp sample.vars ~/$PLI_VARS_FILE
+        chmod 600 ~/$PLI_VARS_FILE
+
+        #echo
+        #echo -e "${GREEN}nano ~/$PLI_VARS_FILE ${NC}"
+        #sleep 2s
+    fi
     source ~/"plinode_$(hostname -f)".vars
 }
 
