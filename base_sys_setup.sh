@@ -199,13 +199,13 @@ FUNC_SETUP_UFW_PORTS(){
     # Get current SSH port number 
     CPORT=$(sudo ss -tlpn | grep sshd | awk '{print$4}' | cut -d ':' -f 2 -s)
     #echo $CPORT
-    sudo ufw allow $CPORT/tcp --pager
+    sudo ufw allow $CPORT/tcp
     
     ## default ssh & non-standard ssh port
     #sudo ufw allow $PLI_SSH_DEF_PORT/tcp --pager
 
     ## node local job server http/https ports
-    sudo ufw allow $PLI_HTTP_PORT/tcp && sudo ufw allow $PLI_HTTPS_PORT/tcp --pager
+    sudo ufw allow $PLI_HTTP_PORT/tcp && sudo ufw allow $PLI_HTTPS_PORT/tcp
     sudo ufw status verbose --pager
     sleep 2s
 }
@@ -265,7 +265,7 @@ FUNC_SETUP_SECURE_SSH(){
     echo
     echo -e "${GREEN}## Base Setup: Add new SSH port to firewall...${NC}"
     echo
-    sudo ufw allow $PLI_SSH_NEW_PORT/tcp --pager
+    sudo ufw allow $PLI_SSH_NEW_PORT/tcp
 
     echo
     echo -e "${GREEN}#########################################################################"
