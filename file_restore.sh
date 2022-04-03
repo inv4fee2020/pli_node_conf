@@ -25,26 +25,44 @@ FUNC_RESTORE_DECRYPT(){
     echo $RESTORE_FILE
     gpg --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE 
 
-if [[ "RESTORE_FILE" =~ "$DB_NAME" ]]; then
-    FUNC_RESTORE_DB
-else
-    FUNC_RESTORE_CONF
-fi
+    if [[ "RESTORE_FILE" =~ "$DB_NAME" ]]; then
+        FUNC_RESTORE_DB
+    else
+        FUNC_RESTORE_CONF
+    fi
+
+    FUNC_EXIT;
+
 }
 
 FUNC_RESTORE_DB(){
     echo "   DB RESTORE...."
     sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -c $RESTORE_FILE | psql -U postgres -d $DB_NAME  > /dev/null 2>&1"
     shred -uz -n 1 /$RESTORE_FILE
+    FUNC_EXIT;
 }
 
 
 FUNC_RESTORE_CONF(){
     echo "   CONFIG FILES RESTORE...."
-    tar -xvpzfs $RESTORE_FILE
+
+    echo $RESTORE_FILE
+    tar -xvpzf $RESTORE_FILE
     #shred -uz -n 1 /$RESTORE_FILE
+    FUNC_EXIT;
 }
 
+
+
+FUNC_EXIT(){
+	exit 0
+	}
+
+
+FUNC_EXIT_ERROR(){
+	exit 1
+	}
+  
 
 echo
 echo "          Showing last 8 backup files. "
