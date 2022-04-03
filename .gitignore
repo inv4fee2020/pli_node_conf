@@ -1,7 +1,7 @@
 /notes
 /notes/**
 bash_menu.sh
-file_restore.sh
-node_backup*.sh
-sample_bkup.vars
-setup_backups.sh
+#file_restore.sh
+#node_backup*.sh
+#sample_bkup.vars
+#setup_backups.sh
