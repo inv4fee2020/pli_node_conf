@@ -38,6 +38,11 @@ FUNC_RESTORE_DECRYPT(){
 FUNC_RESTORE_DB(){
     echo "   DB RESTORE...."
     sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -c $RESTORE_FILE | psql -U postgres -d $DB_NAME  > /dev/null 2>&1"
+    
+    # this fails as sudo home path is taken... required node_backups folder in / to reduce complexity
+    sudo su postgres -c "export PGPASSFILE="~/node_backups/.pgpass"; gunzip -c ~/node_backups/racknerd-ac9ce7_plugin_mainnet_db_2022_04_03_23_06.sql.gz | psql -U postgres -d plugin_mainnet_db  > /dev/null 2>&1"
+
+
     shred -uz -n 1 /$RESTORE_FILE
     FUNC_EXIT;
 }
