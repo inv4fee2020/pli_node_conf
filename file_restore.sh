@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 
 source ~/"plinode_$(hostname -f)".vars
@@ -19,7 +19,8 @@ node_backup_arr_len=${#node_backup_arr[@]}
 
 
 FUNC_RESTORE_DECRYPT(){
-    #BACKUP_FILE=""
+    BACKUP_FILE="$IFS"
+    RESTORE_FILE=""
     RESTORE_FILE=$(echo $BACKUP_FILE | sed 's/\.[^.]*$//')
     echo $RESTORE_FILE
     gpg --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE 
@@ -32,6 +33,7 @@ fi
 }
 
 FUNC_RESTORE_DB(){
+    echo "   DB RESTORE...."
     sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -c $RESTORE_FILE | psql -U postgres -d $DB_NAME  > /dev/null 2>&1"
     shred -uz -n 1 /$RESTORE_FILE
 }
@@ -39,6 +41,7 @@ FUNC_RESTORE_DB(){
 
 FUNC_RESTORE_CONF(){
     echo "   CONFIG FILES RESTORE...."
+    tar -xvpzfs $RESTORE_FILE
     #shred -uz -n 1 /$RESTORE_FILE
 }
 
