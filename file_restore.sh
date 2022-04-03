@@ -5,7 +5,7 @@ source ~/"plinode_$(hostname -f)".vars
 source ~/"plinode_$(hostname -f)"_bkup.vars
 
 node_backup_arr=()
-IFS=$'\n' read -r -d '' -a node_backup_arr < <( find ~/node_backups/ -type f -name *.gpg | head -n 8 | sort )
+BACKUP_FILE=$'\n' read -r -d '' -a node_backup_arr < <( find ~/node_backups/ -type f -name *.gpg | head -n 8 | sort )
 node_backup_arr+=(quit)
 #echo ${node_backup_arr[@]}
 node_backup_arr_len=${#node_backup_arr[@]}
@@ -19,7 +19,7 @@ node_backup_arr_len=${#node_backup_arr[@]}
 
 
 FUNC_RESTORE_DECRYPT(){
-    BACKUP_FILE="$IFS"
+    #BACKUP_FILE="$IFS"
     RESTORE_FILE=""
     RESTORE_FILE=$(echo $BACKUP_FILE | sed 's/\.[^.]*$//')
     echo $RESTORE_FILE
