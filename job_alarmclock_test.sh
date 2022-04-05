@@ -1,6 +1,7 @@
 #!/bin/bash
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
+JOB_TITLE="Alarm Clock Sample"
 JOB_FNAME="plinode_local_alarmclock_job.json"
 
 clear
@@ -75,8 +76,8 @@ jobid=(); jobid=($(cat /tmp/plinode_job_id.raw1))
 alarmclock_jobid="$(echo ${jobid[2]} | sed 's/,,.*$//')"
 
 echo -e "${GREEN}#"
-echo -e "Local node AlarmClockSample job id - Copy to your Solidity script"
+echo -e "Local node $JOB_TITLE job id - Copy to your Solidity script"
 echo -e "================================================================="
 echo -e 
 echo -e "Your Oracle Contract Address is : $ORACLE_ADDR"
-echo -e "Your Job ID is : $alarmclock_jobid ${NC}"
+echo -e "Your $JOB_TITLE Job ID is : $alarmclock_jobid ${NC}"
