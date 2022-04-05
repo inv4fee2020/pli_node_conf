@@ -69,7 +69,7 @@ echo
 echo
 cat ~/$JOB_FNAME
 
-
+plugin admin login -f ~/plugin-deployment/.env.apicred
 plugin job_specs create ~/$JOB_FNAME > /tmp/plinode_job_id.raw
 sed 's/ ║ /,/g;s/╬//g;s/═//g;s/║//g;s/╔//g;s/[[:space:]]//g' /tmp/plinode_job_id.raw > /tmp/plinode_job_id.raw1
 jobid=(); jobid=($(cat /tmp/plinode_job_id.raw1))
