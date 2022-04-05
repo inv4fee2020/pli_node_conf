@@ -2,7 +2,7 @@
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
 JOB_TITLE="Alarm Clock Sample"
-JOB_FNAME="plinode_local_alarmclock_job.json"
+JOB_FNAME="plinode_job_alarmclock.json"
 
 clear
 echo -e "${GREEN}#"
