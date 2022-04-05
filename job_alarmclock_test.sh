@@ -64,10 +64,10 @@ cat <<EOF > ~/$JOB_FNAME
 }
 EOF
 #sleep 1s
-echo
-echo " Local node json blob for AlarmClockSample job - Reference only"
-echo
-cat ~/$JOB_FNAME
+#echo
+#echo " Local node json blob for AlarmClockSample job - Reference only"
+#echo
+#cat ~/$JOB_FNAME
 
 plugin admin login -f ~/plugin-deployment/.env.apicred
 plugin job_specs create ~/$JOB_FNAME > /tmp/plinode_job_id.raw
