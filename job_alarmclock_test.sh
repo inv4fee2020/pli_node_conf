@@ -79,5 +79,5 @@ echo -e "${GREEN}#"
 echo -e "Local node $JOB_TITLE job id - Copy to your Solidity script"
 echo -e "================================================================="
 echo -e 
-echo -e "Your Oracle Contract Address is : $ORACLE_ADDR"
+echo -e "Your Oracle Contract Address is   : $ORACLE_ADDR"
 echo -e "Your $JOB_TITLE Job ID is : $alarmclock_jobid ${NC}"
