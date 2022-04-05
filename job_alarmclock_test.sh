@@ -81,3 +81,5 @@ echo -e "================================================================="
 echo -e 
 echo -e "Your Oracle Contract Address is   : $ORACLE_ADDR"
 echo -e "Your $JOB_TITLE Job ID is : $alarmclock_jobid ${NC}"
+echo 
+echo 
