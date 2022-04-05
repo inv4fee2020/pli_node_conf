@@ -62,10 +62,9 @@ cat <<EOF > ~/$JOB_FNAME
     "endAt":null
 }
 EOF
-sleep 1s
+#sleep 1s
 echo
-echo " Local node json blob for test job - copy & paste"
-echo
+echo " Local node json blob for AlarmClockSample job - Reference only"
 echo
 cat ~/$JOB_FNAME
 
@@ -74,4 +73,10 @@ plugin job_specs create ~/$JOB_FNAME > /tmp/plinode_job_id.raw
 sed 's/ ║ /,/g;s/╬//g;s/═//g;s/║//g;s/╔//g;s/[[:space:]]//g' /tmp/plinode_job_id.raw > /tmp/plinode_job_id.raw1
 jobid=(); jobid=($(cat /tmp/plinode_job_id.raw1))
 alarmclock_jobid="$(echo ${jobid[2]} | sed 's/,,.*$//')"
-echo $alarmclock_jobid
+
+echo -e "${GREEN}#"
+echo -e "Local node AlarmClockSample job id - Copy to your Solidity script"
+echo -e "================================================================="
+echo -e 
+echo -e "Your Oracle Contract Address is : $ORACLE_ADDR"
+echo -e "Your Job ID is : $alarmclock_jobid ${NC}"
