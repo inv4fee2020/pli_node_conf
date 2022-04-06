@@ -54,7 +54,7 @@ FUNC_RESTORE_DB(){
 
 
     echo "   DB RESTORE.... psql file name: $RESTORE_FILE_SQL"
-    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; pg_restore -d $DB_NAME < $RESTORE_FILE_SQL"
+    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; psql -d $DB_NAME < $RESTORE_FILE_SQL"
     #sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; pg_restore -U -d $DB_NAME -f $RESTORE_FILE_SQL"
     #sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; psql -U username -d $DB_NAME < $RESTORE_FILE_SQL > /dev/null 2>&1"
     # this fails as sudo home path is taken... required node_backups folder in / to reduce complexity
