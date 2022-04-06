@@ -72,9 +72,11 @@ FUNC_RESTORE_CONF(){
     RESTORE_FILE_CONF=$(echo "$RESTORE_FILE" | sed -e 's/\.[^.]*$//')
     echo "   CONFIG FILES RESTORE...."
 
-    echo $RESTORE_FILE_CONF
+    echo "uncompressing gz file: $RESTORE_FILE"
+    gunzip -df $RESTORE_FILE
+
+    echo "unpacking tar file: $RESTORE_FILE_CONF"
     tar -xvpzf $RESTORE_FILE_CONF
-    #gunzip -df $RESTORE_FILE | tar -xvpzf
     #shred -uz -n 1 /$RESTORE_FILE
     FUNC_EXIT;
 }
