@@ -46,8 +46,10 @@ FUNC_RESTORE_DECRYPT(){
 }
 
 FUNC_RESTORE_DB(){
-    echo "   DB RESTORE.... file name: $RESTORE_FILE"
-    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -d $RESTORE_FILE  > /dev/null 2>&1"
+    #RESTORE_FILE_SQL=$(echo "$RESTORE_FILE" | cut -f 1 -d '.')
+    RESTORE_FILE_SQL=$(echo "$RESTORE_FILE" | sed -e 's/\.[^.]*$//')
+    echo "   DB RESTORE.... file name: $RESTORE_FILE_SQL"
+    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -df $RESTORE_FILE  > /dev/null 2>&1"
     #sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -d $RESTORE_FILE | psql -U postgres -d $DB_NAME  > /dev/null 2>&1"
 
     
