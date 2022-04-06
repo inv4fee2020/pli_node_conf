@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Get current user id and store as var
+USER_ID=$(getent passwd $EUID | cut -d: -f1)
+
+# Authenticate sudo perms before script execution to avoid timeouts or errors
+sudo -l > /dev/null 2>&1
 
 source ~/"plinode_$(hostname -f)".vars
 source ~/"plinode_$(hostname -f)"_bkup.vars
@@ -7,9 +12,9 @@ source ~/"plinode_$(hostname -f)"_bkup.vars
 node_backup_arr=()
 BACKUP_FILE=$'\n' read -r -d '' -a node_backup_arr < <( find ~/node_backups/ -type f -name *.gpg | head -n 8 | sort )
 node_backup_arr+=(quit)
-echo ${node_backup_arr[@]}
+#echo ${node_backup_arr[@]}
 node_backup_arr_len=${#node_backup_arr[@]}
-echo $node_backup_arr_len
+#echo $node_backup_arr_len
 
 
 #for (( i = 0 ; i < $node_backup_arr_len ; i++))
@@ -41,11 +46,13 @@ FUNC_RESTORE_DECRYPT(){
 }
 
 FUNC_RESTORE_DB(){
-    echo "   DB RESTORE...."
-    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -d $RESTORE_FILE | psql -U postgres -d $DB_NAME  > /dev/null 2>&1"
+    echo "   DB RESTORE.... file name: $RESTORE_FILE"
+    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -d $RESTORE_FILE  > /dev/null 2>&1"
+    #sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -d $RESTORE_FILE | psql -U postgres -d $DB_NAME  > /dev/null 2>&1"
+
     
     # this fails as sudo home path is taken... required node_backups folder in / to reduce complexity
-    sudo su postgres -c "export PGPASSFILE="~/node_backups/.pgpass"; gunzip -c ~/node_backups/racknerd-ac9ce7_plugin_mainnet_db_2022_04_03_23_06.sql.gz | psql -U postgres -d plugin_mainnet_db  > /dev/null 2>&1"
+    #sudo su postgres -c "export PGPASSFILE="/home/$USER_ID/node_backups/.pgpass"; gunzip -c /home/$USER_ID/node_backups/racknerd-ac9ce7_plugin_mainnet_db_2022_04_03_23_06.sql.gz | psql -U postgres -d plugin_mainnet_db  > /dev/null 2>&1"
 
 
     shred -uz -n 1 /$RESTORE_FILE
