@@ -55,7 +55,7 @@ FUNC_RESTORE_DB(){
     #sudo su postgres -c "export PGPASSFILE="/home/$USER_ID/node_backups/.pgpass"; gunzip -c /home/$USER_ID/node_backups/racknerd-ac9ce7_plugin_mainnet_db_2022_04_03_23_06.sql.gz | psql -U postgres -d plugin_mainnet_db  > /dev/null 2>&1"
 
 
-    shred -uz -n 1 /$RESTORE_FILE
+    #shred -uz -n 1 $RESTORE_FILE
     FUNC_EXIT;
 }
 
