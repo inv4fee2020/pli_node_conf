@@ -31,10 +31,10 @@ FUNC_RESTORE_DECRYPT(){
     gpg --batch --passphrase=$_tmpkeystore -o $RESTORE_FILE --decrypt $BACKUP_FILE
     #gpg --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE 
 
-    if [[ "$BACKUP_FILE" =~ "$DB_NAME" ]]; then
+    if [[ "$BACKUP_FILE" =~ "plugin_mainnet_db" ]]; then
         echo "matched 'contains' db name..."
         FUNC_RESTORE_DB
-    else
+    elif [[ "$BACKUP_FILE" =~ "conf_vars" ]]; then
         echo "else returned so must be file restore..."
         FUNC_RESTORE_CONF
     fi
