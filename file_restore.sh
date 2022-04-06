@@ -7,11 +7,11 @@ source ~/"plinode_$(hostname -f)"_bkup.vars
 node_backup_arr=()
 BACKUP_FILE=$'\n' read -r -d '' -a node_backup_arr < <( find ~/node_backups/ -type f -name *.gpg | head -n 8 | sort )
 node_backup_arr+=(quit)
-#echo ${node_backup_arr[@]}
+echo ${node_backup_arr[@]}
 node_backup_arr_len=${#node_backup_arr[@]}
-#echo $node_backup_arr_len
+echo $node_backup_arr_len
 
-
+sleep 3
 #for (( i = 0 ; i < $node_backup_arr_len ; i++))
 #do
 #  echo "File [$i]: ${node_backup_arr[$i]}"
