@@ -91,7 +91,7 @@ do
         ${node_backup_arr[6]}) echo "Restoring file: ${node_backup_arr[6]}" ; BACKUP_FILE="${node_backup_arr[6]}"; FUNC_RESTORE_DECRYPT; break ;;
         ${node_backup_arr[7]}) echo "Restoring file: ${node_backup_arr[7]}" ; BACKUP_FILE="${node_backup_arr[7]}"; FUNC_RESTORE_DECRYPT; break ;;
         ${node_backup_arr[8]}) echo "exiting now..." ; break ;
-        *) echo invalid option;;
+        *) echo invalid option;
     esac
 done
 
