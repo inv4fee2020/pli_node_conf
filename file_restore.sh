@@ -68,10 +68,13 @@ FUNC_RESTORE_DB(){
 
 
 FUNC_RESTORE_CONF(){
+
+    RESTORE_FILE_CONF=$(echo "$RESTORE_FILE" | sed -e 's/\.[^.]*$//')
     echo "   CONFIG FILES RESTORE...."
 
-    echo $RESTORE_FILE
-    tar -xvpzf $RESTORE_FILE
+    echo $RESTORE_FILE_CONF
+    tar -xvpzf $RESTORE_FILE_CONF
+    #gunzip -df $RESTORE_FILE | tar -xvpzf
     #shred -uz -n 1 /$RESTORE_FILE
     FUNC_EXIT;
 }
