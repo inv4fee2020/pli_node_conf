@@ -17,10 +17,7 @@ node_backup_arr_len=${#node_backup_arr[@]}
 #echo $node_backup_arr_len
 
 
-#for (( i = 0 ; i < $node_backup_arr_len ; i++))
-#do
-#  echo "File [$i]: ${node_backup_arr[$i]}"
-#done
+read -r -p "please enter the previous systems .env.passowrd key : " _tmpkeystore
 
 
 FUNC_RESTORE_DECRYPT(){
@@ -30,7 +27,9 @@ FUNC_RESTORE_DECRYPT(){
     RESTORE_FILE=$(echo $BACKUP_FILE | sed 's/\.[^.]*$//')
     echo "Return new value of 'Restore File' var: $RESTORE_FILE"
     #echo $RESTORE_FILE
-    gpg --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE 
+
+    gpg --batch --passphrase=$_tmpkeystore -o $RESTORE_FILE --decrypt $BACKUP_FILE
+    #gpg --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE 
 
     if [[ "$BACKUP_FILE" =~ "$DB_NAME" ]]; then
         echo "matched 'contains' db name..."
@@ -60,6 +59,8 @@ FUNC_RESTORE_DB(){
     # this fails as sudo home path is taken... required node_backups folder in / to reduce complexity
     #sudo su postgres -c "export PGPASSFILE="/home/$USER_ID/node_backups/.pgpass"; gunzip -c /home/$USER_ID/node_backups/racknerd-ac9ce7_plugin_mainnet_db_2022_04_03_23_06.sql.gz | psql -U postgres -d plugin_mainnet_db  > /dev/null 2>&1"
     sudo systemctl restart postgresql
+
+    # NOTE: .pgpass file would need to be manually re-created inorder to restore files? As would the .env.password keystore
 
     #shred -uz -n 1 $RESTORE_FILE
     FUNC_EXIT;
