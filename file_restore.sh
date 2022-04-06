@@ -48,11 +48,14 @@ FUNC_RESTORE_DECRYPT(){
 FUNC_RESTORE_DB(){
     #RESTORE_FILE_SQL=$(echo "$RESTORE_FILE" | cut -f 1 -d '.')
     RESTORE_FILE_SQL=$(echo "$RESTORE_FILE" | sed -e 's/\.[^.]*$//')
-    echo "   DB RESTORE.... file name: $RESTORE_FILE_SQL"
+    echo "   DB RESTORE.... unzip file name: $RESTORE_FILE"
     sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -df $RESTORE_FILE  > /dev/null 2>&1"
     #sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -d $RESTORE_FILE | psql -U postgres -d $DB_NAME  > /dev/null 2>&1"
 
-    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; psql -U username -d $DB_NAME < $RESTORE_FILE_SQL > /dev/null 2>&1"
+
+    echo "   DB RESTORE.... psql file name: $RESTORE_FILE_SQL"
+    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; pg_restore -U username -f $DB_NAME -f $RESTORE_FILE_SQL"
+    #sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; psql -U username -d $DB_NAME < $RESTORE_FILE_SQL > /dev/null 2>&1"
     # this fails as sudo home path is taken... required node_backups folder in / to reduce complexity
     #sudo su postgres -c "export PGPASSFILE="/home/$USER_ID/node_backups/.pgpass"; gunzip -c /home/$USER_ID/node_backups/racknerd-ac9ce7_plugin_mainnet_db_2022_04_03_23_06.sql.gz | psql -U postgres -d plugin_mainnet_db  > /dev/null 2>&1"
 
