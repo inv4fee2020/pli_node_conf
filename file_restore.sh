@@ -76,7 +76,7 @@ FUNC_RESTORE_CONF(){
     gunzip -d $RESTORE_FILE
 
     echo "unpacking tar file: $RESTORE_FILE_CONF"
-    tar -xvpzf $RESTORE_FILE_CONF
+    tar -xvpzf $RESTORE_FILE_CONF --directory ~/
     #shred -uz -n 1 /$RESTORE_FILE
     FUNC_EXIT;
 }
