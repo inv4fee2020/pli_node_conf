@@ -21,23 +21,28 @@ node_backup_arr_len=${#node_backup_arr[@]}
 FUNC_RESTORE_DECRYPT(){
     #BACKUP_FILE="$IFS"
     RESTORE_FILE=""
+    echo "Starting value of 'Restore File' var: $RESTORE_FILE"
     RESTORE_FILE=$(echo $BACKUP_FILE | sed 's/\.[^.]*$//')
-    echo $RESTORE_FILE
+    echo "Return new value of 'Restore File' var: $RESTORE_FILE"
+    #echo $RESTORE_FILE
     gpg --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE 
 
-    if [[ "RESTORE_FILE" =~ "$DB_NAME" ]]; then
+    if [[ "$BACKUP_FILE" =~ "$DB_NAME" ]]; then
+        echo "matched 'contains' db name..."
         FUNC_RESTORE_DB
     else
+        echo "else returned so must be file restore..."
         FUNC_RESTORE_CONF
     fi
 
+    echo "if complete. existing..."
     FUNC_EXIT;
 
 }
 
 FUNC_RESTORE_DB(){
     echo "   DB RESTORE...."
-    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -c $RESTORE_FILE | psql -U postgres -d $DB_NAME  > /dev/null 2>&1"
+    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -d $RESTORE_FILE | psql -U postgres -d $DB_NAME  > /dev/null 2>&1"
     
     # this fails as sudo home path is taken... required node_backups folder in / to reduce complexity
     sudo su postgres -c "export PGPASSFILE="~/node_backups/.pgpass"; gunzip -c ~/node_backups/racknerd-ac9ce7_plugin_mainnet_db_2022_04_03_23_06.sql.gz | psql -U postgres -d plugin_mainnet_db  > /dev/null 2>&1"
