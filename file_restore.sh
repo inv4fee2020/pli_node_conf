@@ -49,6 +49,7 @@ FUNC_RESTORE_DB(){
     RESTORE_FILE_SQL=$(echo "$RESTORE_FILE" | sed -e 's/\.[^.]*$//')
     echo "   DB RESTORE.... unzip file name: $RESTORE_FILE"
     sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -df $RESTORE_FILE  > /dev/null 2>&1"
+    sleep 2
     #sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -d $RESTORE_FILE | psql -U postgres -d $DB_NAME  > /dev/null 2>&1"
 
 
@@ -58,6 +59,7 @@ FUNC_RESTORE_DB(){
     #sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; psql -U username -d $DB_NAME < $RESTORE_FILE_SQL > /dev/null 2>&1"
     # this fails as sudo home path is taken... required node_backups folder in / to reduce complexity
     #sudo su postgres -c "export PGPASSFILE="/home/$USER_ID/node_backups/.pgpass"; gunzip -c /home/$USER_ID/node_backups/racknerd-ac9ce7_plugin_mainnet_db_2022_04_03_23_06.sql.gz | psql -U postgres -d plugin_mainnet_db  > /dev/null 2>&1"
+    sleep 2
     sudo systemctl restart postgresql
 
     # NOTE: .pgpass file would need to be manually re-created inorder to restore files? As would the .env.password keystore
@@ -74,9 +76,12 @@ FUNC_RESTORE_CONF(){
 
     echo "uncompressing gz file: $RESTORE_FILE"
     gunzip -df $RESTORE_FILE
+    sleep 2
 
     echo "unpacking tar file: $RESTORE_FILE_CONF"
     tar -xvpzf $RESTORE_FILE_CONF --directory=/
+    sleep 2
+    
     shred -uz -n 1 $RESTORE_FILE RESTORE_FILE_CONF
     FUNC_EXIT;
 }
