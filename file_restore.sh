@@ -62,7 +62,7 @@ FUNC_RESTORE_DB(){
 
     # NOTE: .pgpass file would need to be manually re-created inorder to restore files? As would the .env.password keystore
 
-    shred -uz -n 1 $RESTORE_FILE
+    shred -uz -n 1 $RESTORE_FILE RESTORE_FILE_SQL
     FUNC_EXIT;
 }
 
