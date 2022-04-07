@@ -79,9 +79,9 @@ FUNC_RESTORE_CONF(){
     sleep 2
 
     echo "unpacking tar file: $RESTORE_FILE_CONF"
-    tar -xvpzf $RESTORE_FILE_CONF --directory=/
+    tar -xvf $RESTORE_FILE_CONF --directory=/
     sleep 2
-    
+
     shred -uz -n 1 $RESTORE_FILE RESTORE_FILE_CONF
     FUNC_EXIT;
 }
