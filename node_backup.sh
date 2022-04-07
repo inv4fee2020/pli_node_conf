@@ -268,7 +268,8 @@ FUNC_CHECK_DIRS
 
 echo
 echo "local backup - running tar backup process for configuration files"
-tar -cvpzf $CONF_BACKUP_OBJ ~/plinode* ~/pli_init* ~/plugin-deployment/.env*
+tar -cvpzf $CONF_BACKUP_OBJ ~/plinode* 
+#~/pli_init* ~/plugin-deployment/.env*
 #error_exit;
 
 #sleep 2s
