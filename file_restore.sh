@@ -73,7 +73,7 @@ FUNC_RESTORE_CONF(){
     echo "   CONFIG FILES RESTORE...."
 
     echo "uncompressing gz file: $RESTORE_FILE"
-    gunzip -d $RESTORE_FILE
+    gunzip -df $RESTORE_FILE
 
     echo "unpacking tar file: $RESTORE_FILE_CONF"
     tar -xvpzf $RESTORE_FILE_CONF --directory=/
