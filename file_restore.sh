@@ -82,7 +82,7 @@ FUNC_RESTORE_CONF(){
     tar -xvf $RESTORE_FILE_CONF --directory=/
     sleep 2
 
-    shred -uz -n 1 $RESTORE_FILE RESTORE_FILE_CONF
+    shred -uz -n 1 $RESTORE_FILE $RESTORE_FILE_CONF
     FUNC_EXIT;
 }
 
