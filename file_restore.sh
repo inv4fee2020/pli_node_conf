@@ -16,9 +16,9 @@ node_backup_arr+=(quit)
 node_backup_arr_len=${#node_backup_arr[@]}
 #echo $node_backup_arr_len
 
-
-read -r -p "please enter the previous systems .env.passowrd key : " _tmpkeystore
-
+if [ ! -e ~/$PLI_DB_VARS_FILE ]; then
+    read -r -p "please enter the previous systems .env.passowrd key : " _tmpkeystore
+fi
 
 FUNC_RESTORE_DECRYPT(){
     #BACKUP_FILE="$IFS"
@@ -76,7 +76,7 @@ FUNC_RESTORE_CONF(){
     gunzip -d $RESTORE_FILE
 
     echo "unpacking tar file: $RESTORE_FILE_CONF"
-    tar -xvpzf $RESTORE_FILE_CONF --directory ~/
+    tar -xvpzf $RESTORE_FILE_CONF --directory=/
     #shred -uz -n 1 /$RESTORE_FILE
     FUNC_EXIT;
 }
