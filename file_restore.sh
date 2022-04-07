@@ -17,7 +17,7 @@ node_backup_arr_len=${#node_backup_arr[@]}
 #echo $node_backup_arr_len
 
 if [ ! -e ~/$PLI_DB_VARS_FILE ]; then
-    read -r -p "please enter the previous systems .env.passowrd key : " _tmpkeystore
+    read -r -p "please enter the previous systems .env.passowrd key : " PASS_KEYSTORE
 fi
 
 FUNC_RESTORE_DECRYPT(){
@@ -28,7 +28,7 @@ FUNC_RESTORE_DECRYPT(){
     echo "Return new value of 'Restore File' var: $RESTORE_FILE"
     #echo $RESTORE_FILE
 
-    gpg --batch --passphrase=$_tmpkeystore -o $RESTORE_FILE --decrypt $BACKUP_FILE
+    gpg --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE
     #gpg --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE 
 
     if [[ "$BACKUP_FILE" =~ "plugin_mainnet_db" ]]; then
