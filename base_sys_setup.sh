@@ -205,8 +205,7 @@ FUNC_SETUP_UFW_PORTS(){
     #sudo ufw allow $PLI_SSH_DEF_PORT/tcp
 
     ## node local job server http/https ports
-    #sudo ufw allow $PLI_HTTP_PORT/tcp && 
-    sudo ufw allow $PLI_HTTPS_PORT/tcp
+    sudo ufw allow $PLI_HTTP_PORT/tcp && sudo ufw allow $PLI_HTTPS_PORT/tcp
     sudo ufw status verbose
     sleep 2s
 }
