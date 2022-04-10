@@ -218,6 +218,8 @@ elif [ ! -z "$DB_BACKUP_GUSER" ] && [ ! $(getent group $DB_BACKUP_GUSER) ]; then
     echo
     echo "pre-check vars - creating group "$DB_BACKUP_GUSER""
     sudo groupadd $DB_BACKUP_GUSER
+    echo "pre-check vars - updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_GUSER to: nodebackup"
+    sed -i.bak 's/DB_BACKUP_GUSER=\"\"/DB_BACKUP_GUSER=\"$DB_BACKUP_GUSER\"/g' ~/$PLI_DB_VARS_FILE
 fi
 
 
