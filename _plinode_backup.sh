@@ -73,24 +73,24 @@ FUNC_CHECK_DIRS(){
 #    #fi    
 #else
     # if NULL then defaults to using / & updates the 'DB_BACKUP_PATH' variable
-    if [ -z "$DB_BACKUP_ROOT" ] ; then
-        
-        #echo "DEBUG :: ROOT DIR - IF ELSE STEP"
-        DB_BACKUP_ROOT="/"
-        SET_ROOT_DIR=false      # logic to resolve the leading Root '/' path issue
-        echo
-        echo "checking vars - Detected NULL value & set variable to: "$HOME""
-        echo "checking vars - updating the value of 'DB_BACKUP_PATH' variable.."
-        DB_BACKUP_PATH="/$DB_BACKUP_DIR"
-
-        # adds the variable value to the VARS file
-        #echo 
-        #echo "checking vars - updating file "$PLI_DB_VARS_FILE" variable 'DB_BACKUP_ROOT' value to: \$HOME"
-        #sed -i.bak 's/DB_BACKUP_ROOT=\"\"/DB_BACKUP_ROOT=\"\$HOME\"/g' ~/$PLI_DB_VARS_FILE
-    fi
-    echo
-    echo "checking vars - var is set to "$DB_BACKUP_ROOT""
-    echo "checking vars - ....nothing else to do.. continuing to next variable";
+    #if [ -z "$DB_BACKUP_ROOT" ] ; then
+    #    
+    #    #echo "DEBUG :: ROOT DIR - IF ELSE STEP"
+    #    DB_BACKUP_ROOT="/"
+    #    SET_ROOT_DIR=false      # logic to resolve the leading Root '/' path issue
+    #    echo
+    #    echo "checking vars - Detected NULL value & set variable to: "$HOME""
+    #    echo "checking vars - updating the value of 'DB_BACKUP_PATH' variable.."
+    #    DB_BACKUP_PATH="/$DB_BACKUP_DIR"
+    #
+    #    # adds the variable value to the VARS file
+    #    #echo 
+    #    #echo "checking vars - updating file "$PLI_DB_VARS_FILE" variable 'DB_BACKUP_ROOT' value to: \$HOME"
+    #    #sed -i.bak 's/DB_BACKUP_ROOT=\"\"/DB_BACKUP_ROOT=\"\$HOME\"/g' ~/$PLI_DB_VARS_FILE
+    #fi
+    #echo
+    #echo "checking vars - var is set to "$DB_BACKUP_ROOT""
+    #echo "checking vars - ....nothing else to do.. continuing to next variable";
 
 
 
@@ -154,15 +154,15 @@ fi
     #    echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
     #else
     echo "checking vars - creating directory: "$DB_BACKUP_DIR""
-        sudo mkdir "/$DB_BACKUP_DIR"
-        echo
-        echo "checking vars - assigning permissions for directory: "$DB_BACKUP_DIR""
-        sudo chown $USER_ID:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
-        sudo chmod g+rw "/$DB_BACKUP_DIR"
+    sudo mkdir "/$DB_BACKUP_DIR"
+    echo
+    echo "checking vars - assigning permissions for directory: "/$DB_BACKUP_DIR""
+    sudo chown $USER_ID:$DB_BACKUP_GUSER -R \/$DB_BACKUP_DIR
+    sudo chmod g+rw \/$DB_BACKUP_DIR
         
-        # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
-        DB_BACKUP_PATH="/$DB_BACKUP_DIR"
-        echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
+    # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
+    DB_BACKUP_PATH="/$DB_BACKUP_DIR"
+    echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
     #fi
 
     DB_BACKUP_OBJ="$DB_BACKUP_PATH/$DB_BACKUP_FNAME"
