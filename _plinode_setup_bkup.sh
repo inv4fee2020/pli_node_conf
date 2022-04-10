@@ -105,7 +105,7 @@ fi
         sudo chmod g+rw "/$DB_BACKUP_DIR"
         # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
         DB_BACKUP_PATH="/$DB_BACKUP_DIR"
-        echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "/$DB_BACKUP_PATH""
+        echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
     else
     echo "checking vars - creating directory: "$DB_BACKUP_DIR""
         sudo mkdir "/$DB_BACKUP_DIR"
@@ -116,7 +116,7 @@ fi
 
         # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
         DB_BACKUP_PATH="/$DB_BACKUP_DIR"
-        echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "/$DB_BACKUP_PATH""
+        echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
     fi
 
     DB_BACKUP_OBJ="$DB_BACKUP_PATH/$DB_BACKUP_FNAME"
