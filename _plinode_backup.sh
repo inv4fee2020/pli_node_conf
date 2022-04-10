@@ -230,15 +230,16 @@ echo
 echo "pre-check vars - checking if gdrive user exits"
 if [ ! -z "$GD_FUSER" ]; then
     echo
-    echo "pre-check vars - user for gdrive remote backup is defined in VARS"
+    echo "pre-check vars - setting group members for backups - with gdrive"
     DB_GUSER_MEMBER=(postgres $USER_ID $GD_FUSER)
     #echo "${DB_GUSER_MEMBER[@]}"
-elif [ -z "$GD_FUSER" ] && [ ! $(getent passwd gdbackup) ]; then
+#elif [ -z "$GD_FUSER" ] && [ ! $(getent passwd gdbackup) ]; then
+else
     GD_ENABLED=false
     echo
-    echo "pre-check vars - user for gdrive remote backup is NOT defined in VARS"
+    echo "pre-check vars - setting group members for backups - without gdrive"
     DB_GUSER_MEMBER=(postgres $USER_ID)
-    #echo "${DB_GUSER_MEMBER[@]}"
+    echo "${DB_GUSER_MEMBER[@]}"
 fi
 
 echo
