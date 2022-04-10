@@ -55,12 +55,15 @@ FUNC_RESTORE_DB(){
     echo "   DB RESTORE.... psql file name: $RESTORE_FILE_SQL"
     sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; psql -d $DB_NAME < $RESTORE_FILE_SQL"
     sleep 2
+    
+    echo "   DB RESTORE.... restarting service postgresql"
     sudo systemctl restart postgresql
+    sleep 1
 
     # NOTE: .pgpass file would need to be manually re-created inorder to restore files? As would the .env.password keystore
 
     sudo chown $USER_ID\:$DB_BACKUP_GUSER $DB_BACKUP_PATH/\*.sql
-    shred -uz -n 1 $RESTORE_FILE RESTORE_FILE_SQL
+    #shred -uz -n 1 $RESTORE_FILE $RESTORE_FILE_SQL
     FUNC_EXIT;
 }
 
