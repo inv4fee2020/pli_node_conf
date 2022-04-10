@@ -157,8 +157,8 @@ fi
     sudo mkdir "/$DB_BACKUP_DIR"
     echo
     echo "checking vars - assigning permissions for directory: "/$DB_BACKUP_DIR""
-    sudo chown $USER_ID:$DB_BACKUP_GUSER -R \/$DB_BACKUP_DIR
-    sudo chmod g+rw \/$DB_BACKUP_DIR
+    sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
+    sudo chmod g+rw "/$DB_BACKUP_DIR"
         
     # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
     DB_BACKUP_PATH="/$DB_BACKUP_DIR"
