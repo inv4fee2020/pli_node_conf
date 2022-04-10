@@ -316,7 +316,6 @@ echo "local backup - setting pgpass file perms"
     sudo chown postgres:postgres $DB_BACKUP_PATH/.pgpass
     sudo chmod 600 $DB_BACKUP_PATH/.pgpass
 #fi
-rm -f ~/.pgpass
 
 #sleep 1s
 echo
