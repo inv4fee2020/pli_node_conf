@@ -163,7 +163,7 @@ fi
         # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
         DB_BACKUP_PATH="/$DB_BACKUP_DIR"
         echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
-    fi
+    #fi
 
     DB_BACKUP_OBJ="$DB_BACKUP_PATH/$DB_BACKUP_FNAME"
     CONF_BACKUP_OBJ="$DB_BACKUP_PATH/$NODE_BACKUP_FNAME"
