@@ -63,7 +63,7 @@ FUNC_RESTORE_DB(){
     # NOTE: .pgpass file would need to be manually re-created inorder to restore files? As would the .env.password keystore
 
     #sudo chown $USER_ID\:$DB_BACKUP_GUSER $DB_BACKUP_PATH/\*.sql
-    sudo shred -uz -n 1 $RESTORE_FILE $RESTORE_FILE_SQL
+    sudo shred -uz -n 1 $RESTORE_FILE $RESTORE_FILE_SQL > /dev/null 2>&1
     FUNC_EXIT;
 }
 
@@ -81,7 +81,7 @@ FUNC_RESTORE_CONF(){
     tar -xvf $RESTORE_FILE_CONF --directory=/
     sleep 2
 
-    shred -uz -n 1 $RESTORE_FILE $RESTORE_FILE_CONF
+    sudo shred -uz -n 1 $RESTORE_FILE $RESTORE_FILE_CONF > /dev/null 2>&1
     FUNC_EXIT;
 }
 
