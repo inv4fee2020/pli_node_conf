@@ -271,7 +271,7 @@ tar -cvpzf $CONF_BACKUP_OBJ ~/plinode*
 #error_exit;
 
 #sleep 2s
-FUNC_DB_BACKUP_ENC
+FUNC_CONF_BACKUP_ENC
 
 if [ "$_OPTION" == "-full" ]; then
     FUNC_DB_BACKUP_LOCAL
@@ -361,6 +361,13 @@ echo "local backup - securely erase unencrypted file:  "$DB_BACKUP_OBJ""
 shred -uz -n 1 $DB_BACKUP_OBJ
 fi
 
+}
+
+
+
+
+FUNC_CONF_BACKUP_ENC(){
+
 if [ -e $CONF_BACKUP_OBJ ]; then
 sudo gpg --yes --batch --passphrase=$PASS_KEYSTORE -o $ENC_PATH/$ENC_CONFNAME -c $CONF_BACKUP_OBJ
 error_exit;
@@ -372,7 +379,6 @@ echo "local backup - securely erase unencrypted file:  "$CONF_BACKUP_OBJ""
 shred -uz -n 1 $CONF_BACKUP_OBJ
 fi
 
-#sleep 2s
 }
 
 
