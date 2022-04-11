@@ -18,9 +18,7 @@ node_backup_arr_len=${#node_backup_arr[@]}
 #echo $node_backup_arr_len
 
 
-FUNC_VARS_CHECK(){
-
-}
+FUNC_VARS_CHECK(){}
 
 FUNC_RESTORE_DECRYPT(){
 
