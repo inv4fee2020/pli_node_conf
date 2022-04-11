@@ -27,7 +27,7 @@ FUNC_VARS(){
 
     PLI_VARS_FILE="plinode_$(hostname -f)".vars
     if [ ! -e ~/$PLI_VARS_FILE ]; then
-        clear
+        #clear
         echo
         echo -e "${RED} #### NOTICE: No VARIABLES file found. ####${NC}"
         echo -e "${RED} ..creating local vars file '$HOME/$PLI_VARS_FILE' ${NC}"
@@ -612,7 +612,7 @@ FUNC_EXIT_ERROR(){
 	}
   
 
-clear
+#clear
 case "$1" in
         fullnode)
                 FUNC_NODE_DEPLOY
