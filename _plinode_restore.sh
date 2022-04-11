@@ -59,7 +59,7 @@ FUNC_RESTORE_DECRYPT(){
     #sudo chmod g+rw "/$DB_BACKUP_DIR";
 
     echo "if complete. existing..."
-    if [[ ! -e $RESTORE_FILE]]; then
+    if [[ ! -e "$RESTORE_FILE" ]]; then
     echo "ERROR :: Restore file does not exist"
     FUNC_EXIT_ERROR;
     fi
