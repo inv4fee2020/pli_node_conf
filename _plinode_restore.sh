@@ -21,16 +21,20 @@ node_backup_arr_len=${#node_backup_arr[@]}
 FUNC_VARS_CHECK(){
 
 PLI_VARS_FILE="plinode_$(hostname -f)".vars
+
 if [ ! -e ~/$PLI_DB_VARS_FILE ]; then
-    read -r -p "please enter the previous systems .env.passowrd key : " PASS_KEYSTORE
+    read -r -p "please enter the previous systems .env.password key : " PASS_KEYSTORE
 fi
+
 }
 
 FUNC_RESTORE_DECRYPT(){
-    FUNC_VARS_CHECK;
+
+    FUNC_VARS_CHECK
+
     #BACKUP_FILE="$IFS"
     RESTORE_FILE=""
-    echo "Starting value of 'Restore File' var: $RESTORE_FILE"
+    #echo "Starting value of 'Restore File' var: $RESTORE_FILE"
     RESTORE_FILE=$(echo $BACKUP_FILE | sed 's/\.[^.]*$//')
     echo "Return new value of 'Restore File' var: $RESTORE_FILE"
     #echo $RESTORE_FILE
