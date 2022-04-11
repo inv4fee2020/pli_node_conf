@@ -85,7 +85,7 @@ FUNC_RESTORE_DB(){
     echo 
     sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -vdf $RESTORE_FILE"
     #sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -df $RESTORE_FILE  > /dev/null 2>&1"
-
+    sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "$RESTORE_FILE_SQL"
     sleep 2
 
 
