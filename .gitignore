@@ -6,4 +6,4 @@ node_backup.sh
 node_backup2.sh
 sample_bkup.vars
 setup_backups.sh
-_plinode_setup_bkup.sh
+#_plinode_setup_bkup.sh
