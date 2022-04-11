@@ -24,31 +24,7 @@ FUNC_RESTORE_DECRYPT(){
     PLI_VARS_FILE="plinode_$(hostname -f)".vars
     #echo $PLI_VARS_FILE
     if [[ ! -e ~/$PLI_VARS_FILE ]]; then
-        read -r -p "please enter the previous systems .env.password key : " PASS_KEYSTORE
-    elif [[ -e ~/$PLI_VARS_FILE ]]; then
-        while true; do
-            read -t7 -r -p "Is this a Node move or full recovery ? (Y/n) " _input
-            if [ $? -gt 128 ]; then
-                #clear
-                echo
-                echo "timed out waiting for user response - proceeding as normal..."
-                break
-            fi
-            case $_input in
-                [Yy][Ee][Ss]|[Yy]* ) 
-                    echo
-                    read -r -p "please enter the previous systems .env.password key : " PASS_KEYSTORE
-                    break
-                    ;;
-                [Nn][Oo]|[Nn]* ) 
-                    break
-                    ;;
-                * ) echo "Please answer (y)es or (n)o.";;
-            esac
-        done
-
-
-        
+        read -r -p "please enter the previous systems .env.password key : " PASS_KEYSTORE      
     fi
 
 
@@ -69,6 +45,10 @@ FUNC_RESTORE_DECRYPT(){
         echo "else returned so must be file restore..."
         FUNC_RESTORE_CONF
     fi
+
+
+    sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR/$RESTORE_FILE"
+    #sudo chmod g+rw "/$DB_BACKUP_DIR";
 
     echo "if complete. existing..."
     FUNC_EXIT;
