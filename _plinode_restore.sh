@@ -69,7 +69,6 @@ FUNC_RESTORE_DECRYPT(){
 }
 
 FUNC_RESTORE_DB(){
-    #RESTORE_FILE_SQL=$(echo "$RESTORE_FILE" | cut -f 1 -d '.')
     RESTORE_FILE_SQL=$(echo "$RESTORE_FILE" | sed -e 's/\.[^.]*$//')
     
     sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
@@ -83,8 +82,7 @@ FUNC_RESTORE_DB(){
     echo "   DB RESTORE.... unzip file name: $RESTORE_FILE"
     echo " the path to file is: $DB_BACKUP_PATH"
     echo 
-    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -vdf $RESTORE_FILE"
-    #sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -df $RESTORE_FILE  > /dev/null 2>&1"
+    gunzip -vdf $RESTORE_FILE"
     sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "$RESTORE_FILE_SQL"
     sleep 2
 
@@ -100,8 +98,7 @@ FUNC_RESTORE_DB(){
     # NOTE: .pgpass file would need to be manually re-created inorder to restore files? As would the .env.password keystore
 
     #sudo chown $USER_ID\:$DB_BACKUP_GUSER $DB_BACKUP_PATH/\*.sql
-    shred -vuz -n 1 $RESTORE_FILE_SQL
-    # > /dev/null 2>&1
+    shred -uz -n 1 $RESTORE_FILE_SQL > /dev/null 2>&1
     FUNC_EXIT;
 }
 
@@ -119,8 +116,7 @@ FUNC_RESTORE_CONF(){
     tar -xvf $RESTORE_FILE_CONF --directory=/
     sleep 2
 
-    shred -uz -n 1 $RESTORE_FILE $RESTORE_FILE_CONF 
-    #> /dev/null 2>&1
+    shred -uz -n 1 $RESTORE_FILE $RESTORE_FILE_CONF > /dev/null 2>&1
     FUNC_EXIT;
 }
 
