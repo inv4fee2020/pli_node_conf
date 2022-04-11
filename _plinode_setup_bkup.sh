@@ -168,17 +168,17 @@ fi
     echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
     #fi
 
-    DB_BACKUP_OBJ="$DB_BACKUP_PATH/$DB_BACKUP_FNAME"
-    CONF_BACKUP_OBJ="$DB_BACKUP_PATH/$NODE_BACKUP_FNAME"
-    echo "checking vars - assigning 'DB_BACKUP_OBJ' variable: "$DB_BACKUP_OBJ""
-    echo "checking vars - assigning 'CONF_BACKUP_OBJ' variable: "$CONF_BACKUP_OBJ""
+    #DB_BACKUP_OBJ="$DB_BACKUP_PATH/$DB_BACKUP_FNAME"
+    #CONF_BACKUP_OBJ="$DB_BACKUP_PATH/$NODE_BACKUP_FNAME"
+    #echo "checking vars - assigning 'DB_BACKUP_OBJ' variable: "$DB_BACKUP_OBJ""
+    #echo "checking vars - assigning 'CONF_BACKUP_OBJ' variable: "$CONF_BACKUP_OBJ""
     
-    echo
-    echo "checking vars - exiting directory check & continuing..."
+    #echo
+    #echo "checking vars - exiting directory check & continuing..."
     #sleep 2s
 
-echo
-echo "checking vars - your configured node backup PATH is: $DB_BACKUP_PATH"
+#echo
+#echo "checking vars - your configured node backup PATH is: $DB_BACKUP_PATH"
 #sleep 2s
 
 }
@@ -292,9 +292,9 @@ if [ "$_OPTION" == "-local" ]; then
     FUNC_CHECK_DIRS
 fi
 
-crontab -u $USER_ID -l > /tmp/crontabfull
-echo "5 0 * * */1 ~/pli_node_conf/_plinode_backup.sh -local" > /tmp/crontabfull
-crontab -u $USER_ID /tmp/crontabfull
+#crontab -u $USER_ID -l > /tmp/crontabfull
+#echo "5 0 * * */1 ~/pli_node_conf/_plinode_backup.sh -local" > /tmp/crontabfull
+#crontab -u $USER_ID /tmp/crontabfull
 
 }
 
@@ -310,9 +310,9 @@ if [ "$_OPTION" == "-remote" ]; then
 fi
 
 
-crontab -u nmadmin -l > /tmp/crontabremote
-echo "10 0 * * */1 ~/pli_node_conf/node_backup2.sh -remote" >> /tmp/crontabremote
-crontab -u nmadmin /tmp/crontabremote
+#crontab -u nmadmin -l > /tmp/crontabremote
+#echo "10 0 * * */1 ~/pli_node_conf/node_backup2.sh -remote" >> /tmp/crontabremote
+#crontab -u nmadmin /tmp/crontabremote
 
 }
 
