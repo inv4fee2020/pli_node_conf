@@ -34,9 +34,10 @@ FUNC_RESTORE_DECRYPT(){
     RESTORE_FILE=$(echo $BACKUP_FILE | sed 's/\.[^.]*$//')
     echo "Return new value of 'Restore File' var: $RESTORE_FILE"
     echo "key store secret used: $PASS_KEYSTORE"
-    echo $(ll )
+    echo $(ls -alh  /plinode_backups/)
     gpg -v --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE
 
+    echo $(ls -alh  /plinode_backups/)
     if [[ "$BACKUP_FILE" =~ "plugin_mainnet_db" ]]; then
         echo "matched 'contains' db name..."
         FUNC_RESTORE_DB
