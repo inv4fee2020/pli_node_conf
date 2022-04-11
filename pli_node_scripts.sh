@@ -497,6 +497,7 @@ EOF
     export FEATURE_EXTERNAL_INITIATORS=true
     . ~/.profile
 
+    FUNC_NODE_ADDR;
     FUNC_EXIT;
 }
 
@@ -586,6 +587,19 @@ EOF
 }
 
 
+FUNC_NODE_ADDR(){
+    cd ~/plugin-deployment
+    plugin admin login -f .env.apicred
+    node_keys_arr=()
+    IFS=$'\n' read -r -d '' -a node_keys_arr < <( plugin keys eth list | grep Address && printf '\0' )
+    node_key_primary=$(echo ${node_keys_arr[0]} | sed s/Address:[[:space:]]/''/)
+    echo
+    echo -e "${RED}Your Plugin node wallet address is: $node_key_primary ${NC}"
+    echo
+    echo -e "${GREEN}#########################################################################${NC}"
+}
+
+
 FUNC_EXIT(){
     # remove the sudo timeout for USER_ID
     sudo sh -c 'rm -f /etc/sudoers.d/plinode_deploy'
@@ -613,6 +627,9 @@ case "$1" in
         logrotate)
                 FUNC_LOGROTATE
                 ;;
+        address)
+                FUNC_NODE_ADDR
+                ;;
         *)
                 
                 echo 
@@ -628,8 +645,10 @@ case "$1" in
                 echo 
                 echo "      initiator     ==  deploys the external initiator only"
                 echo
-                echo "      keys          ==  extracts the node keys from DB and exports to json file "
+                echo "      keys          ==  extracts the node keys from DB and exports to json file for import to MetaMask"
                 echo
                 echo "      logrotate     ==  implements the logrotate conf file "
+                echo
+                echo "      address       ==  displays the local nodes address (after full node install) - required for the Oracale Deployment step"
                 echo
 esac
