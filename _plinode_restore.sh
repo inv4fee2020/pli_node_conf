@@ -39,7 +39,7 @@ FUNC_RESTORE_DECRYPT(){
     echo $(ls -lh  /plinode_backups/)
     echo 
     echo 
-    gpg -v --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE
+    gpg --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE --verbose 
 
     echo 
     echo 
@@ -59,6 +59,11 @@ FUNC_RESTORE_DECRYPT(){
     #sudo chmod g+rw "/$DB_BACKUP_DIR";
 
     echo "if complete. existing..."
+    if [[ ! -e $RESTORE_FILE]]; then
+    echo "ERROR :: Restore file does not exist"
+    FUNC_EXIT_ERROR;
+    fi
+
     FUNC_EXIT;
 
 }
