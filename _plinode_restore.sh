@@ -62,8 +62,10 @@ FUNC_RESTORE_DB(){
 
     echo "   DB RESTORE.... unzip file name: $RESTORE_FILE"
     echo " the path to file is: $DB_BACKUP_PATH"
-    echo " the pat"
-    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -df $DB_BACKUP_PATH/$RESTORE_FILE  > /dev/null 2>&1"
+    echo 
+    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -df $DB_BACKUP_PATH/$RESTORE_FILE"
+    #sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -df $DB_BACKUP_PATH/$RESTORE_FILE  > /dev/null 2>&1"
+
     sleep 2
 
 
