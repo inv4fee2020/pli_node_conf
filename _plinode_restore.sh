@@ -47,8 +47,7 @@ FUNC_RESTORE_DECRYPT(){
     fi
 
 
-    sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR/*.gz"
-    sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR/*.sql"
+    sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
     #sudo chmod g+rw "/$DB_BACKUP_DIR";
 
     echo "if complete. existing..."
@@ -59,6 +58,9 @@ FUNC_RESTORE_DECRYPT(){
 FUNC_RESTORE_DB(){
     #RESTORE_FILE_SQL=$(echo "$RESTORE_FILE" | cut -f 1 -d '.')
     RESTORE_FILE_SQL=$(echo "$RESTORE_FILE" | sed -e 's/\.[^.]*$//')
+    
+    sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
+
     echo "   DB RESTORE.... unzip file name: $RESTORE_FILE"
     sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -df $RESTORE_FILE  > /dev/null 2>&1"
     sleep 2
