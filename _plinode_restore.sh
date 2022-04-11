@@ -48,6 +48,7 @@ FUNC_RESTORE_DECRYPT(){
 
 
     sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR/*.gz"
+    sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR/*.sql"
     #sudo chmod g+rw "/$DB_BACKUP_DIR";
 
     echo "if complete. existing..."
