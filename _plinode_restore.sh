@@ -39,7 +39,7 @@ FUNC_RESTORE_DECRYPT(){
     echo $(ls -lh  /plinode_backups/)
     echo 
     echo 
-    gpg --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE --verbose 
+    gpg --verbose --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE  
 
     echo 
     echo 
@@ -73,6 +73,12 @@ FUNC_RESTORE_DB(){
     RESTORE_FILE_SQL=$(echo "$RESTORE_FILE" | sed -e 's/\.[^.]*$//')
     
     sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
+
+
+    if [[ ! -e "$RESTORE_FILE" ]]; then
+    echo "ERROR :: Restore file does not exist"
+    FUNC_EXIT_ERROR;
+    fi
 
     echo "   DB RESTORE.... unzip file name: $RESTORE_FILE"
     echo " the path to file is: $DB_BACKUP_PATH"
