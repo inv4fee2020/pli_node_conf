@@ -33,6 +33,7 @@ FUNC_RESTORE_DECRYPT(){
     #echo "Starting value of 'Restore File' var: $RESTORE_FILE"
     RESTORE_FILE=$(echo $BACKUP_FILE | sed 's/\.[^.]*$//')
     echo "Return new value of 'Restore File' var: $RESTORE_FILE"
+    echo "key store secret used: $PASS_KEYSTORE"
     #echo $RESTORE_FILE
 
     gpg --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE
