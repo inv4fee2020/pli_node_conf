@@ -34,10 +34,8 @@ FUNC_RESTORE_DECRYPT(){
     RESTORE_FILE=$(echo $BACKUP_FILE | sed 's/\.[^.]*$//')
     echo "Return new value of 'Restore File' var: $RESTORE_FILE"
     echo "key store secret used: $PASS_KEYSTORE"
-    #echo $RESTORE_FILE
 
     gpg --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE
-    #gpg --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE 
 
     if [[ "$BACKUP_FILE" =~ "plugin_mainnet_db" ]]; then
         echo "matched 'contains' db name..."
@@ -63,12 +61,14 @@ FUNC_RESTORE_DB(){
     sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
 
     echo "   DB RESTORE.... unzip file name: $RESTORE_FILE"
-    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -df $RESTORE_FILE  > /dev/null 2>&1"
+    echo " the path to file is: $DB_BACKUP_PATH"
+    echo " the pat"
+    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; gunzip -df $DB_BACKUP_PATH/$RESTORE_FILE  > /dev/null 2>&1"
     sleep 2
 
 
     echo "   DB RESTORE.... psql file name: $RESTORE_FILE_SQL"
-    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; psql -d $DB_NAME < $RESTORE_FILE_SQL"
+    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; psql -d $DB_NAME < $DB_BACKUP_PATH/$RESTORE_FILE_SQL"
     sleep 2
     
     echo "   DB RESTORE.... restarting service postgresql"
