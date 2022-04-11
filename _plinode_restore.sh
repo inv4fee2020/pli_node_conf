@@ -36,14 +36,14 @@ FUNC_RESTORE_DECRYPT(){
     echo "key store secret used: $PASS_KEYSTORE"
     echo 
     echo 
-    echo $(ll  /plinode_backups/)
+    echo $(ls -lh  /plinode_backups/)
     echo 
     echo 
     gpg -v --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE
 
     echo 
     echo 
-    echo $(ll  /plinode_backups/)
+    echo $(ls -lh  /plinode_backups/)
     echo 
     echo 
     if [[ "$BACKUP_FILE" =~ "plugin_mainnet_db" ]]; then
