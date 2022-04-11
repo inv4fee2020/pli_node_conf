@@ -6,7 +6,7 @@ USER_ID=$(getent passwd $EUID | cut -d: -f1)
 # Authenticate sudo perms before script execution to avoid timeouts or errors
 sudo -l > /dev/null 2>&1
 
-PLI_VARS_FILE="plinode_$(hostname -f)".vars
+
 source ~/"plinode_$(hostname -f)".vars
 source ~/"plinode_$(hostname -f)"_bkup.vars
 
@@ -18,11 +18,16 @@ node_backup_arr_len=${#node_backup_arr[@]}
 #echo $node_backup_arr_len
 
 
+FUNC_VARS_CHECK(){
+
+PLI_VARS_FILE="plinode_$(hostname -f)".vars
 if [ ! -e ~/$PLI_DB_VARS_FILE ]; then
     read -r -p "please enter the previous systems .env.passowrd key : " PASS_KEYSTORE
 fi
+}
 
 FUNC_RESTORE_DECRYPT(){
+    FUNC_VARS_CHECK;
     #BACKUP_FILE="$IFS"
     RESTORE_FILE=""
     echo "Starting value of 'Restore File' var: $RESTORE_FILE"
