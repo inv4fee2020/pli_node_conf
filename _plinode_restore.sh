@@ -23,7 +23,7 @@ FUNC_RESTORE_DECRYPT(){
     
     PLI_VARS_FILE="plinode_$(hostname -f)".vars
     echo $PLI_VARS_FILE
-    if [[ ! -e ~/$PLI_DB_VARS_FILE ]]; then
+    if [[ ! -e ~/$PLI_VARS_FILE ]]; then
         read -r -p "please enter the previous systems .env.password key : " PASS_KEYSTORE
     fi
 
