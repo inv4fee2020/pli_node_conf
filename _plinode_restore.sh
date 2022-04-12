@@ -69,6 +69,7 @@ FUNC_RESTORE_DECRYPT(){
 }
 
 FUNC_RESTORE_DB(){
+
     RESTORE_FILE_SQL=$(echo "$RESTORE_FILE" | sed -e 's/\.[^.]*$//')
     
     sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
@@ -82,7 +83,7 @@ FUNC_RESTORE_DB(){
     echo "   DB RESTORE.... unzip file name: $RESTORE_FILE"
     echo " the path to file is: $DB_BACKUP_PATH"
     echo 
-    gunzip -vdf $RESTORE_FILE"
+    gunzip -vdf $RESTORE_FILE
     sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "$RESTORE_FILE_SQL"
     sleep 2
 
@@ -99,7 +100,7 @@ FUNC_RESTORE_DB(){
 
     #sudo chown $USER_ID\:$DB_BACKUP_GUSER $DB_BACKUP_PATH/\*.sql
     shred -uz -n 1 $RESTORE_FILE_SQL > /dev/null 2>&1
-    FUNC_EXIT;
+    FUNC_EXIT
 }
 
 
@@ -117,7 +118,7 @@ FUNC_RESTORE_CONF(){
     sleep 2
 
     shred -uz -n 1 $RESTORE_FILE $RESTORE_FILE_CONF > /dev/null 2>&1
-    FUNC_EXIT;
+    FUNC_EXIT
 }
 
 
