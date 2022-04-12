@@ -160,6 +160,14 @@ fi
     #sudo mkdir "/$DB_BACKUP_DIR"
     #echo
     #echo "checking vars - assigning permissions for directory: "/$DB_BACKUP_DIR""
+    
+        if [ ! -d "/$DB_BACKUP_DIR" ]; then
+            echo -e "${RED} SETTING FOLDER PERMS  ${NC}"
+            echo "checking DIR vars - check directory exists & setting perms..."
+            sudo mkdir "/$DB_BACKUP_DIR"
+            sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
+            sudo chmod g+rw "/$DB_BACKUP_DIR";
+        fi
         
     # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
     DB_BACKUP_PATH="/$DB_BACKUP_DIR"
@@ -400,12 +408,12 @@ FUNC_DB_BACKUP_REMOTE(){
     if [ "$_OPTION" == "-remote" ]; then
         FUNC_DB_VARS
     fi
-    
+
     # add check that gupload is installed!
     # switches to gupload user to run cmd to upload encrypted file to your google drive - skips existing files
-    
+
     # add check for user account & installation
-    
+
     sudo su gdbackup -c "cd ~/; .google-drive-upload/bin/gupload -q -d /$DB_BACKUP_PATH/*.gpg -C $(hostname -f) --hide"
     error_exit;
 }
