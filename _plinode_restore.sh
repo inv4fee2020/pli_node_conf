@@ -99,7 +99,18 @@ FUNC_RESTORE_DB(){
     # NOTE: .pgpass file would need to be manually re-created inorder to restore files? As would the .env.password keystore
 
     #sudo chown $USER_ID\:$DB_BACKUP_GUSER $DB_BACKUP_PATH/\*.sql
-    shred -uz -n 1 $RESTORE_FILE_SQL > /dev/null 2>&1
+    shred -uz -n 1 $RESTORE_FILE_SQL 
+    
+    echo "  DB RESTORE COMPLETED"
+
+    if [[ "$DR_RESTORE" == "true" ]]; then
+        
+        plugin admin login -f ~/plugin-deployment/.env.apicred
+        plugin initiators destroy $PLI_L_INIT_NAME
+
+        $(./pli_node_scripts.sh initiator)
+    fi
+
     FUNC_EXIT
 }
 
@@ -130,28 +141,61 @@ FUNC_EXIT(){
 
 FUNC_EXIT_ERROR(){
 	exit 1
-	}
+}
   
 
-echo
-echo "          Showing last 8 backup files. "
-echo "          Select the number for the file you wish to restore "
-echo
-
-select _file in "${node_backup_arr[@]}"
-do
-    case $_file in
-        ${node_backup_arr[0]}) echo "Restoring file: ${node_backup_arr[0]}" ; BACKUP_FILE="${node_backup_arr[0]}"; FUNC_RESTORE_DECRYPT; break ;;
-        ${node_backup_arr[1]}) echo "Restoring file: ${node_backup_arr[1]}" ; BACKUP_FILE="${node_backup_arr[1]}"; FUNC_RESTORE_DECRYPT; break ;;
-        ${node_backup_arr[2]}) echo "Restoring file: ${node_backup_arr[2]}" ; BACKUP_FILE="${node_backup_arr[2]}"; FUNC_RESTORE_DECRYPT; break ;;
-        ${node_backup_arr[3]}) echo "Restoring file: ${node_backup_arr[3]}" ; BACKUP_FILE="${node_backup_arr[3]}"; FUNC_RESTORE_DECRYPT; break ;;
-        ${node_backup_arr[4]}) echo "Restoring file: ${node_backup_arr[4]}" ; BACKUP_FILE="${node_backup_arr[4]}"; FUNC_RESTORE_DECRYPT; break ;;
-        ${node_backup_arr[5]}) echo "Restoring file: ${node_backup_arr[5]}" ; BACKUP_FILE="${node_backup_arr[5]}"; FUNC_RESTORE_DECRYPT; break ;;
-        ${node_backup_arr[6]}) echo "Restoring file: ${node_backup_arr[6]}" ; BACKUP_FILE="${node_backup_arr[6]}"; FUNC_RESTORE_DECRYPT; break ;;
-        ${node_backup_arr[7]}) echo "Restoring file: ${node_backup_arr[7]}" ; BACKUP_FILE="${node_backup_arr[7]}"; FUNC_RESTORE_DECRYPT; break ;;
-        ${node_backup_arr[8]}) echo "exiting now..." ; FUNC_EXIT; break ;;
-        *) echo invalid option;;
-    esac
-done
 
 
+FUNC_RESTORE_MENU(){
+
+    echo
+    echo "          Showing last 8 backup files. "
+    echo "          Select the number for the file you wish to restore "
+    echo
+
+    select _file in "${node_backup_arr[@]}"
+    do
+        case $_file in
+            ${node_backup_arr[0]}) echo "Restoring file: ${node_backup_arr[0]}" ; BACKUP_FILE="${node_backup_arr[0]}"; FUNC_RESTORE_DECRYPT; break ;;
+            ${node_backup_arr[1]}) echo "Restoring file: ${node_backup_arr[1]}" ; BACKUP_FILE="${node_backup_arr[1]}"; FUNC_RESTORE_DECRYPT; break ;;
+            ${node_backup_arr[2]}) echo "Restoring file: ${node_backup_arr[2]}" ; BACKUP_FILE="${node_backup_arr[2]}"; FUNC_RESTORE_DECRYPT; break ;;
+            ${node_backup_arr[3]}) echo "Restoring file: ${node_backup_arr[3]}" ; BACKUP_FILE="${node_backup_arr[3]}"; FUNC_RESTORE_DECRYPT; break ;;
+            ${node_backup_arr[4]}) echo "Restoring file: ${node_backup_arr[4]}" ; BACKUP_FILE="${node_backup_arr[4]}"; FUNC_RESTORE_DECRYPT; break ;;
+            ${node_backup_arr[5]}) echo "Restoring file: ${node_backup_arr[5]}" ; BACKUP_FILE="${node_backup_arr[5]}"; FUNC_RESTORE_DECRYPT; break ;;
+            ${node_backup_arr[6]}) echo "Restoring file: ${node_backup_arr[6]}" ; BACKUP_FILE="${node_backup_arr[6]}"; FUNC_RESTORE_DECRYPT; break ;;
+            ${node_backup_arr[7]}) echo "Restoring file: ${node_backup_arr[7]}" ; BACKUP_FILE="${node_backup_arr[7]}"; FUNC_RESTORE_DECRYPT; break ;;
+            ${node_backup_arr[8]}) echo "exiting now..." ; FUNC_EXIT; break ;;
+            *) echo invalid option;;
+        esac
+    done
+
+}
+
+
+
+echo -e "${GREEN}#########################################################################"
+echo -e "${GREEN}## RESTORE SCENARIO CONFIRMATION...${NC}"
+
+# Ask the user acc for login details (comment out to disable)
+DR_RESTORE=false
+    while true; do
+        read -t7 -r -p "Are you performing a full restore to BLANK / NEW VPS ? (Y/n) " _RES_INPUT
+        if [ $? -gt 128 ]; then
+            #clear
+            echo
+            echo "timed out waiting for user response - proceeding as normal..."
+            #DR_RESTORE=false
+            FUNC_RESTORE_MENU;
+        fi
+        case $_RES_INPUT in
+            [Yy][Ee][Ss]|[Yy]* ) 
+                DR_RESTORE=true
+                FUNC_RESTORE_MENU
+                break
+                ;;
+            [Nn][Oo]|[Nn]* ) 
+                FUNC_RESTORE_MENU
+                ;;
+            * ) echo "Please answer (y)es or (n)o.";;
+        esac
+    done
