@@ -120,7 +120,7 @@ if [ ! -z "$DB_BACKUP_DIR" ] ; then
     #    #echo "DEBUG :: BACKUP DIR - IF ELSE STEP"
     #    #echo " root dir flag is false"
         if [ ! -d "/$DB_BACKUP_DIR" ]; then
-            echo -e "${RED} SETTING FOLDER PERMS  ${NC}"
+            echo -e "${GREEN} SETTING FOLDER PERMS  ${NC}"
             echo "checking DIR vars - check directory exists & setting perms..."
             sudo mkdir "/$DB_BACKUP_DIR"
             sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
