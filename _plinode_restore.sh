@@ -155,7 +155,7 @@ FUNC_RESTORE_MENU(){
     echo "          Select the number for the file you wish to restore "
     echo
 
-    select _file in "${node_backup_arr[@]}" "exit"
+    select _file in "${node_backup_arr[@]}" "QUIT"
     do
         case $_file in
             ${node_backup_arr[0]}) echo "Restoring file: ${node_backup_arr[0]}" ; BACKUP_FILE="${node_backup_arr[0]}"; FUNC_RESTORE_DECRYPT; break ;;
@@ -166,7 +166,7 @@ FUNC_RESTORE_MENU(){
             ${node_backup_arr[5]}) echo "Restoring file: ${node_backup_arr[5]}" ; BACKUP_FILE="${node_backup_arr[5]}"; FUNC_RESTORE_DECRYPT; break ;;
             ${node_backup_arr[6]}) echo "Restoring file: ${node_backup_arr[6]}" ; BACKUP_FILE="${node_backup_arr[6]}"; FUNC_RESTORE_DECRYPT; break ;;
             ${node_backup_arr[7]}) echo "Restoring file: ${node_backup_arr[7]}" ; BACKUP_FILE="${node_backup_arr[7]}"; FUNC_RESTORE_DECRYPT; break ;;
-            "exit") echo "exiting now..." ; FUNC_EXIT; break ;;
+            "QUIT") echo "exiting now..." ; FUNC_EXIT; break ;;
             *) echo invalid option;;
         esac
     done
