@@ -160,9 +160,9 @@ fi
     #sudo mkdir "/$DB_BACKUP_DIR"
     #echo
     #echo "checking vars - assigning permissions for directory: "/$DB_BACKUP_DIR""
-    
+
         if [ ! -d "/$DB_BACKUP_DIR" ]; then
-            echo -e "${RED} SETTING FOLDER PERMS  ${NC}"
+            echo -e "${GREEN} SETTING FOLDER PERMS  ${NC}"
             echo "checking DIR vars - check directory exists & setting perms..."
             sudo mkdir "/$DB_BACKUP_DIR"
             sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
@@ -284,7 +284,7 @@ FUNC_CONF_BACKUP_LOCAL(){
 
     echo
     echo "local backup - running tar backup process for configuration files"
-    tar -cvpzf $CONF_BACKUP_OBJ ~/plinode* 
+    tar -cvpzf $CONF_BACKUP_OBJ ~/plinode* > /dev/null 2>&1
     #~/pli_init* ~/plugin-deployment/.env*
     #error_exit;
 
