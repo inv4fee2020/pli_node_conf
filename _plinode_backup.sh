@@ -316,7 +316,7 @@ FUNC_DB_BACKUP_LOCAL(){
     #echo "$DB_BACKUP_PATH"
     #sleep 2s
     echo "local backup - checking pgpass file exists - create if necessary"
-    if [ ! -e $DB_BACKUP_PATH/.pgpass ]; then
+    if [ ! -e ~/.pgpass ]; then
     #clear
 cat <<EOF > ~/.pgpass
 Localhost:5432:$DB_NAME:postgres:$DB_PWD_NEW
