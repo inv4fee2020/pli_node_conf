@@ -439,7 +439,7 @@ case "$1" in
                 FUNC_DB_BACKUP_LOCAL
                 ;;
         *)
-                clear
+                #clear
                 echo 
                 echo 
                 echo -e "${GREEN}Usage: $0 {function}${NC}"
