@@ -16,6 +16,7 @@ source ~/"plinode_$(hostname -f)".vars
 source ~/"plinode_$(hostname -f)"_bkup.vars
 
 
+FUNC_RESTORE_MENU;
 
 FUNC_RESTORE_DECRYPT(){
     
@@ -69,7 +70,7 @@ FUNC_RESTORE_DECRYPT(){
 FUNC_RESTORE_DB(){
 
     FUNC_DB_DR_CHECK
-    
+
     ### removes last extension suffix to get next file name
     RESTORE_FILE_SQL=$(echo "$RESTORE_FILE" | sed -e 's/\.[^.]*$//')
     
@@ -268,7 +269,7 @@ FUNC_DB_DR_CHECK(){
             case $_RES_INPUT in
                 [Yy][Ee][Ss]|[Yy]* ) 
                     DR_RESTORE=true
-                    #UNC_RESTORE_MENU
+                    #FUNC_RESTORE_MENU
                     break
                     ;;
                 [Nn][Oo]|[Nn]* ) 
@@ -280,5 +281,4 @@ FUNC_DB_DR_CHECK(){
             esac
         done
 }
-
-FUNC_RESTORE_MENU;    
+    
