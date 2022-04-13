@@ -26,20 +26,20 @@ FUNC_RESTORE_DECRYPT(){
     RESTORE_FILE=""
     #echo "Starting value of 'Restore File' var: $RESTORE_FILE"
     RESTORE_FILE=$(echo $BACKUP_FILE | sed 's/\.[^.]*$//')
-    echo "Return new value of 'Restore File' var: $RESTORE_FILE"
-    echo "key store secret used: $PASS_KEYSTORE"
-    echo 
-    echo 
-    echo $(ls -lh  /plinode_backups/)
-    echo 
-    echo 
+    #echo "Return new value of 'Restore File' var: $RESTORE_FILE"
+    #echo "key store secret used: $PASS_KEYSTORE"
+    #echo 
+    #echo 
+    #echo $(ls -lh  /plinode_backups/)
+    #echo 
+    #echo 
     gpg --verbose --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE  
 
-    echo 
-    echo 
-    echo $(ls -lh  /plinode_backups/)
-    echo 
-    echo 
+    #echo 
+    #echo 
+    #echo $(ls -lh  /plinode_backups/)
+    #echo 
+    #echo 
     if [[ "$BACKUP_FILE" =~ "plugin_mainnet_db" ]]; then
         echo "matched 'contains' db name..."
         FUNC_RESTORE_DB
@@ -75,8 +75,8 @@ FUNC_RESTORE_DB(){
     fi
 
     echo "   DB RESTORE.... unzip file name: $RESTORE_FILE"
-    echo " the path to file is: $DB_BACKUP_PATH"
-    echo 
+    #echo " the path to file is: $DB_BACKUP_PATH"
+    #echo 
     gunzip -vdf $RESTORE_FILE
     sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "$RESTORE_FILE_SQL"
     sleep 2
