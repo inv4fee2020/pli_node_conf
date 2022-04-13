@@ -260,7 +260,8 @@ FUNC_DB_DR_CHECK(){
                 #clear
                 echo
                 echo
-                echo "....timed out waiting for user response - proceeding as standard in-place restore to existing system..."
+                echo "....timed out waiting for user response - please select a file to restore..."
+                #echo "....timed out waiting for user response - proceeding as standard in-place restore to existing system..."
                 echo
                 #DR_RESTORE=false
                 #break
