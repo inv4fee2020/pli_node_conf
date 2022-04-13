@@ -42,7 +42,7 @@ The following commands will perform a **DATABASE** only backup
 ### What files are backed up?
 
  - Conf files;
-    All files in you $HOME folder with the _'plinode'_ prefix are selected for backup. This covers the following as an example;
+ All files in you $HOME folder with the _'plinode'_ prefix are selected for backup. This covers the following as an example;
     - node & backup vars files
     - exported node recovery keys json files
     
@@ -104,4 +104,3 @@ The full restore approach targets the following scenarios;
   -  where a full rebuild of your current VPS host, either using the reset script or control panel reset option 
   -  migration of your node to another VPS hosting platform
 
-  
