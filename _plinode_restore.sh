@@ -93,18 +93,23 @@ FUNC_RESTORE_DB(){
     
     echo "   DB RESTORE.... restarting service postgresql"
     sudo systemctl restart postgresql
-    sleep 15
+    until $(curl --output /dev/null --silent --head --fail http://localhost:6688); do
+        printf '.'
+        sleep 5
+    done        
+    echo "   DB RESTORE.... API connection responding - continuing"
+    #sleep 15
 
     ### NOTE: .pgpass file would need to be manually re-created inorder to restore files? As would the .env.password keystore
 
     #sudo chown $USER_ID\:$DB_BACKUP_GUSER $DB_BACKUP_PATH/\*.sql
     shred -uz -n 1 $RESTORE_FILE_SQL > /dev/null 2>&1
-    
-    echo "  DB RESTORE COMPLETED"
 
     if [[ "$DR_RESTORE" == "true" ]]; then
         FUNC_REBUILD_EI
     fi
+    
+    echo "   DB RESTORE - COMPLETED"
 
     FUNC_EXIT
 }
