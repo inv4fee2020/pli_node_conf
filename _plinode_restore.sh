@@ -16,7 +16,6 @@ source ~/"plinode_$(hostname -f)".vars
 source ~/"plinode_$(hostname -f)"_bkup.vars
 
 
-FUNC_RESTORE_MENU
 
 FUNC_RESTORE_DECRYPT(){
     
@@ -281,4 +280,5 @@ FUNC_DB_DR_CHECK(){
             esac
         done
 }
-    
+
+FUNC_RESTORE_MENU;    
