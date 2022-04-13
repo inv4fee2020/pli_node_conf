@@ -95,7 +95,7 @@ FUNC_RESTORE_DB(){
     sudo systemctl restart postgresql
     sleep 15
 
-    # NOTE: .pgpass file would need to be manually re-created inorder to restore files? As would the .env.password keystore
+    ### NOTE: .pgpass file would need to be manually re-created inorder to restore files? As would the .env.password keystore
 
     #sudo chown $USER_ID\:$DB_BACKUP_GUSER $DB_BACKUP_PATH/\*.sql
     shred -uz -n 1 $RESTORE_FILE_SQL > /dev/null 2>&1
@@ -133,19 +133,20 @@ FUNC_REBUILD_EI(){
 
     source ~/"plinode_$(hostname -f)".vars
 
-    EI_FILE=$(echo "$BASH_FILE3" | sed -e 's/\.[^.]*$//')
-    pm2 stop $EI_FILE && pm2 delete $EI_FILE && pm2 reset all && pm2 save 
+    EI_FILE=$(echo "$BASH_FILE3" | sed -e 's/\.[^.]*$//')                       # cuts the file extension to get the namespace for pm2
+    pm2 stop $EI_FILE && pm2 delete $EI_FILE && pm2 reset all && pm2 save       # deletes existing EI process 
     sleep 3s
 
-    echo $PWD
-    echo "login to plugin admin with auth file: $FILE_API"
+    #echo $PWD
+    echo "DB RESTORE - REBUILD EI - authenticate to API with credentials file: $FILE_API"
     plugin admin login -f ~/plugin-deployment/$FILE_API
 
-    echo "delete existing EI: $PLI_L_INIT_NAME"
+    echo "DB RESTORE - REBUILD EI - delete existing EI: $PLI_L_INIT_NAME"
     plugin initiators destroy $PLI_L_INIT_NAME
     sleep 2s
     cd /$PLI_DEPLOY_PATH/$PLI_INITOR_DIR
 
+    echo "DB RESTORE - REBUILD EI - generating new EI values & extract to file"
     plugin initiators create $PLI_L_INIT_NAME http://localhost:8080/jobs > $PLI_INIT_RAWFILE
 
     sed -i 's/ ║ /,/g;s/╬//g;s/═//g;s/║//g' $PLI_INIT_RAWFILE
@@ -158,8 +159,11 @@ FUNC_REBUILD_EI(){
     cat $PLI_INIT_DATFILE
     sleep 2s
 
+    echo "DB RESTORE - REBUILD EI - reading new EI values to variables"
     read -r -d '' EXT_ACCESSKEY EXT_SECRET EXT_OUTGOINGTOKEN EXT_OUTGOINGSECRET <$PLI_INIT_DATFILE
 
+
+    echo "DB RESTORE - REBUILD EI - creating new EI file"
     cd /$PLI_DEPLOY_PATH
     cat <<EOF > $BASH_FILE3
 #!/bin/bash
