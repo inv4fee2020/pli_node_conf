@@ -124,7 +124,7 @@ FUNC_RESTORE_CONF(){
 
 
 FUNC_REBUILD_EI(){
-    pm2 stop 1 && pm2 delete 1
+    pm2 stop $BASH_FILE3 && pm2 delete $BASH_FILE3 && pm2 reset all && pm2 save 
     plugin admin login -f ~/plugin-deployment/$FILE_API
     plugin initiators destroy $PLI_L_INIT_NAME
 
