@@ -56,40 +56,24 @@ As touched on above, all compressed backup files are gpg encrypted.  The process
     
 ---
 
+
 ## Performing a RESTORE
 
 There are two approaches to the restore operation as set out below.
 
+---
+---
 ### In-Place RESTORE
 
 An 'in-place' restore is where you need to revert the node to a previous state, this could be either just the conf files or the database files or indeed both.  
 
 This is not a very involved operation with minimal steps as follows;
 
-  - run the restore script as follows;
+  1. run the restore script as follows;
     
         ./_plinode_restore.sh
 
-    you will then be presented with the scenario check message where you confirm which approach you wish to execute;
-
-        #########################################################################
-        #########################################################################
-        ##
-        ##      RESTORE SCENARIO CONFIRMATION...
-        ##
-        ##
-        ##  A Full Restore is ONLY where you have moved backup files to a FRESH / NEW VPS host
-        ##  this includes where you have reset your previous VPS installation to start again..
-        ##
-
-        Are you performing a Full Restore to BLANK / NEW VPS ? (Y/n)
-
-  - As this is an 'in-place' restore, we simply respond no
-    There is also a timer set on this input which defaults to no and presents the following message; before continuing to list the available files for restore.
-
-        ....timed out waiting for user response - proceeding as standard in-place restore to existing system...
-
-  - Now to selecting the type & date-time stamp backup file to restore. You should be presented with a list of files similar to the following;
+  2. Now to selecting the type & date-time stamp backup file to restore. You should be presented with a list of files similar to the following;
     
     **NOTE ::**_The list of files that you see will be dependent on how many backups you have performed._
 
@@ -103,8 +87,36 @@ This is not a very involved operation with minimal steps as follows;
             5) /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_08_21.sql.gz.gpg
             #?
 
+    
+   3. The code detects the file selection and calls the appropriate function to handle the file. 
+   
+      i.  If you choose a "conf" file then the script proceeds to restore the contents to the original location: $HOME
+   
+      ii. If you chose a "db" file you will then be presented with the scenario check message as follows; where you confirm which approach you wish to execute;
+
+            #########################################################################
+            #########################################################################
+            ##
+            ##      RESTORE SCENARIO CONFIRMATION...
+            ##
+            ##
+            ##  A Full Restore is ONLY where you have moved backup files to a FRESH / NEW VPS host
+            ##  this includes where you have reset your previous VPS installation to start again..
+            ##
+
+            Are you performing a Full Restore to BLANK / NEW VPS? - Please answer (Y)es or (N)o 
+
+  4. As this is an 'in-place' restore, we simply respond no
+     
+     **NOTE ::** There is also a timer set on this input which presents the following message; before repeating to list the available files for restore.
+
+        ....timed out waiting for user response - please select a file to restore...
+
+  - At this point you either select the file to restore 
 
 
+---
+---
 ### Full RESTORE 
 
 The full restore approach targets the following scenarios;
