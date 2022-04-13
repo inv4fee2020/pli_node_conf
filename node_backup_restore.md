@@ -85,15 +85,15 @@ This is not a very involved operation with minimal steps as follows;
     
     **NOTE ::**_The list of files that you see will be dependent on how many backups you have performed._
 
->                      Showing last 8 backup files.
->                      Select the number for the file you wish to restore
->
->            1) /plinode_backups/plitest_conf_vars_2022_04_12_22_43.tar.gz.gpg	       6) /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_08_25.sql.gz.gpg
->            2) /plinode_backups/plitest_conf_vars_2022_04_13_10_09.tar.gz.gpg	       7) /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_08_29.sql.gz.gpg
->            3) /plinode_backups/plitest_plugin_mainnet_db_2022_04_12_22_43.sql.gz.gpg  8) /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_10_05.sql.gz.gpg
->            4) /plinode_backups/plitest_plugin_mainnet_db_2022_04_12_22_54.sql.gz.gpg  9) QUIT
->            5) /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_08_21.sql.gz.gpg
->            #?
+                      Showing last 8 backup files.
+                      Select the number for the file you wish to restore
+
+            1) /plinode_backups/plitest_conf_vars_2022_04_12_22_43.tar.gz.gpg	       6) /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_08_25.sql.gz.gpg
+            2) /plinode_backups/plitest_conf_vars_2022_04_13_10_09.tar.gz.gpg	       7) /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_08_29.sql.gz.gpg
+            3) /plinode_backups/plitest_plugin_mainnet_db_2022_04_12_22_43.sql.gz.gpg  8) /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_10_05.sql.gz.gpg
+            4) /plinode_backups/plitest_plugin_mainnet_db_2022_04_12_22_54.sql.gz.gpg  9) QUIT
+            5) /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_08_21.sql.gz.gpg
+            #?
 
 
 
@@ -101,4 +101,7 @@ This is not a very involved operation with minimal steps as follows;
 
 The full restore approach targets the following scenarios;
 
-  -  where a full rebuilt of your VPS host is necess
+  -  where a full rebuild of your current VPS host, either using the reset script or control panel reset option 
+  -  migration of your node to another VPS hosting platform
+
+  
