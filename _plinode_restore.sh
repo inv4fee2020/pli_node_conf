@@ -130,11 +130,15 @@ FUNC_REBUILD_EI(){
 
     EI_FILE=$(echo "$BASH_FILE3" | sed -e 's/\.[^.]*$//')
     pm2 stop $EI_FILE && pm2 delete $EI_FILE && pm2 reset all && pm2 save 
-    sleep 2s
-
+    sleep 3s
+    
+    echo $PWD
+    echo "login to plugin admin"
     plugin admin login -f ~/plugin-deployment/$FILE_API
-    plugin initiators destroy $PLI_L_INIT_NAME
 
+    echo "delete existing EI: $PLI_L_INIT_NAME"
+    plugin initiators destroy $PLI_L_INIT_NAME
+    sleep 2s
     cd /$PLI_DEPLOY_PATH/$PLI_INITOR_DIR
 
     plugin initiators create $PLI_L_INIT_NAME http://localhost:8080/jobs > $PLI_INIT_RAWFILE
