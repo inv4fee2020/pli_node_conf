@@ -22,12 +22,12 @@ FUNC_DB_VARS(){
 
     PLI_DB_VARS_FILE="plinode_$(hostname -f)"_bkup.vars
     if [ ! -e ~/$PLI_DB_VARS_FILE ]; then
-        clear
+        #clear
         echo
         echo
-        echo -e "${GREEN} #### NOTICE: No VARIABLES file found.. ####${NC}"
+        echo -e "${GREEN} #### NOTICE: No backup VARIABLES file found.. ####${NC}"
         echo
-        echo -e "${GREEN} ..creating local vars file '$HOME/$PLI_DB_VARS_FILE' ${NC}"
+        echo -e "${GREEN} ..creating local backup vars file '$HOME/$PLI_DB_VARS_FILE' ${NC}"
         cp -n sample_bkup.vars ~/$PLI_DB_VARS_FILE
         chmod 600 ~/$PLI_DB_VARS_FILE
         echo
