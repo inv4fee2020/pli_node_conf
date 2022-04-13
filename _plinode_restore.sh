@@ -241,26 +241,26 @@ FUNC_RESTORE_MENU(){
 
 FUNC_DB_DR_CHECK(){
 
-    echo -e "${GREEN}######################################################################################${NC}"
-    echo -e "${GREEN}######################################################################################${NC}"
-    echo -e "${GREEN}##${NC}"
-    echo -e "${GREEN}##      RESTORE SCENARIO CONFIRMATION...${NC}"
-    echo -e "${GREEN}##${NC}"   
+    echo -e "${GREEN}       ######################################################################################${NC}"
+    echo -e "${GREEN}       ######################################################################################${NC}"
+    echo -e "${GREEN}       ##${NC}"
+    echo -e "${GREEN}       ##      RESTORE SCENARIO CONFIRMATION...${NC}"
+    echo -e "${GREEN}       ##${NC}"   
 
     # Ask the user acc for login details (comment out to disable)
     #DR_RESTORE=false
         while true; do
-            echo -e "${GREEN}##${NC}"
-            echo -e "${GREEN}##  A Full Restore is ONLY where you have moved backup files to a FRESH / NEW VPS host${NC}"
-            echo -e "${GREEN}##  this includes where you have reset your previous VPS installation to start again..${NC}"
-            echo -e "${GREEN}##${NC}"
+            echo -e "${GREEN}       ##${NC}"
+            echo -e "${GREEN}       ##  A Full Restore is ONLY where you have moved backup files to a FRESH / NEW VPS host${NC}"
+            echo -e "${GREEN}       ##  this includes where you have reset your previous VPS installation to start again..${NC}"
+            echo -e "${GREEN}       ##${NC}"
             echo
-            read -t15 -r -p "Are you performing a Full Restore to BLANK / NEW VPS? - Please answer (Y)es or (N)o " _RES_INPUT
+            read -t15 -r -p "       Are you performing a Full Restore to BLANK / NEW VPS? - Please answer (Y)es or (N)o " _RES_INPUT
             if [ $? -gt 128 ]; then
                 #clear
                 echo
                 echo
-                echo "....timed out waiting for user response - please select a file to restore..."
+                echo "      ....timed out waiting for user response - please select a file to restore..."
                 #echo "....timed out waiting for user response - proceeding as standard in-place restore to existing system..."
                 echo
                 #DR_RESTORE=false
