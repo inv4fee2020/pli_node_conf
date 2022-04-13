@@ -113,9 +113,37 @@ The full restore approach targets the following scenarios;
   2.  where a full rebuild of your current VPS host - using the control panel reset option of your VPS hosting portal
   3.  migration of your node to another VPS hosting platform
 
-With option 1. the assumtption is that there os no movement of any backup files are they have remained intact in their default location "/plinode_backups".
+With scenario 1. the assumption is that there is no movement of any backup files are they have remained intact in their default location of "/plinode_backups".
 
-With option 2. & 3. the assumtption is that you have copied the relevant backup files to the original path "/plinode_backups" on your now reset / new VPS host.
+With scenarios 2. & 3. the assumption is that you have copied the relevant backup files to the original path "/plinode_backups" on your now reset / new VPS host.
 
 #### How to perform a full restore
 
+  1. With the necessary files copied to the fresh VPS under folder "/plinode_backups", we need to set the necessary file permissions so that the main scripts can execute.
+
+  2. Lets run the setup script;
+
+            ./_plinode_setup_bkup.sh
+
+  3. This will produce output to the terminal as it executes, the following is an example of what you can expect;
+
+            nmadmin@plitest:~/pli_node_conf$ ./_plinode_setup_bkup.sh
+            [sudo] password for nmadmin:
+            pre-check vars - checking if gdrive user exits
+            pre-check vars - setting group members for backups - without gdrive
+            pre-check vars - assiging user-group permissions..
+            checking vars - updating file plinode_plitest_bkup.vars variable 'DB_BACKUP_DIR' to: plinode_backups
+            checking vars - assigning permissions for directory: /plinode_backups
+            checking vars - assigning 'DB_BACKUP_PATH' variable: /plinode_backups
+            nmadmin@plitest:~/pli_node_conf$
+
+  4. Lets check the permissions on the "/plinode_backups" folder
+
+            ll / | grep plinode
+
+  5. We should see the folder permissions set like the following example;
+
+            drwxrwxr-x   2 nmadmin nodebackup       4096 Apr 13 10:09 plinode_backups
+
+  6. Now we progress to restore the "conf" files so that we have all our credentials and variables necessary for the re-install of the node software.
+     During this step you will be prompted for your origianl KeyStore P
