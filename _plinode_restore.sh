@@ -88,7 +88,7 @@ FUNC_RESTORE_DB(){
     
     echo "   DB RESTORE.... restarting service postgresql"
     sudo systemctl restart postgresql
-    sleep 1
+    sleep 10
 
     # NOTE: .pgpass file would need to be manually re-created inorder to restore files? As would the .env.password keystore
 
@@ -131,7 +131,7 @@ FUNC_REBUILD_EI(){
     EI_FILE=$(echo "$BASH_FILE3" | sed -e 's/\.[^.]*$//')
     pm2 stop $EI_FILE && pm2 delete $EI_FILE && pm2 reset all && pm2 save 
     sleep 3s
-    
+
     echo $PWD
     echo "login to plugin admin"
     plugin admin login -f ~/plugin-deployment/$FILE_API
