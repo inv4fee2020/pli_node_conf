@@ -68,6 +68,8 @@ FUNC_RESTORE_DECRYPT(){
 
 FUNC_RESTORE_DB(){
 
+    FUNC_DB_DR_CHECK
+    
     ### removes last extension suffix to get next file name
     RESTORE_FILE_SQL=$(echo "$RESTORE_FILE" | sed -e 's/\.[^.]*$//')
     
@@ -237,40 +239,46 @@ FUNC_RESTORE_MENU(){
 }
 
 
+FUNC_DB_DR_CHECK(){
 
-echo -e "${GREEN}#########################################################################${NC}"
-echo -e "${GREEN}#########################################################################${NC}"
-echo -e "${GREEN}##${NC}"
-echo -e "${GREEN}##      RESTORE SCENARIO CONFIRMATION...${NC}"
-echo -e "${GREEN}##${NC}"
+    echo -e "${GREEN}#########################################################################${NC}"
+    echo -e "${GREEN}#########################################################################${NC}"
+    echo -e "${GREEN}##${NC}"
+    echo -e "${GREEN}##      RESTORE SCENARIO CONFIRMATION...${NC}"
+    echo -e "${GREEN}##${NC}"   
 
-# Ask the user acc for login details (comment out to disable)
-DR_RESTORE=false
-    while true; do
-        echo -e "${GREEN}##${NC}"
-        echo -e "${GREEN}##  A Full Restore is ONLY where you have moved backup files to a FRESH / NEW VPS host${NC}"
-        echo -e "${GREEN}##  this includes where you have reset your previous VPS installation to start again..${NC}"
-        echo -e "${GREEN}##${NC}"
-        echo
-        read -t15 -r -p "Are you performing a Full Restore to BLANK / NEW VPS ? (Y/n) " _RES_INPUT
-        if [ $? -gt 128 ]; then
-            #clear
+    # Ask the user acc for login details (comment out to disable)
+    #DR_RESTORE=false
+        while true; do
+            echo -e "${GREEN}##${NC}"
+            echo -e "${GREEN}##  A Full Restore is ONLY where you have moved backup files to a FRESH / NEW VPS host${NC}"
+            echo -e "${GREEN}##  this includes where you have reset your previous VPS installation to start again..${NC}"
+            echo -e "${GREEN}##${NC}"
             echo
-            echo
-            echo "....timed out waiting for user response - proceeding as standard in-place restore to existing system..."
-            echo
-            #DR_RESTORE=false
-            FUNC_RESTORE_MENU;
-        fi
-        case $_RES_INPUT in
-            [Yy][Ee][Ss]|[Yy]* ) 
-                DR_RESTORE=true
-                FUNC_RESTORE_MENU
-                break
-                ;;
-            [Nn][Oo]|[Nn]* ) 
-                FUNC_RESTORE_MENU
-                ;;
-            * ) echo "Please answer (y)es or (n)o.";;
-        esac
-    done
+            read -t15 -r -p "Are you performing a Full Restore to BLANK / NEW VPS ? (Y/n) " _RES_INPUT
+            if [ $? -gt 128 ]; then
+                #clear
+                echo
+                echo
+                echo "....timed out waiting for user response - proceeding as standard in-place restore to existing system..."
+                echo
+                #DR_RESTORE=false
+                FUNC_RESTORE_MENU;
+            fi
+            case $_RES_INPUT in
+                [Yy][Ee][Ss]|[Yy]* ) 
+                    DR_RESTORE=true
+                    #UNC_RESTORE_MENU
+                    break
+                    ;;
+                [Nn][Oo]|[Nn]* ) 
+                    #FUNC_RESTORE_MENU
+                    DR_RESTORE=false
+                    break
+                    ;;
+                * ) echo "Please answer (y)es or (n)o.";;
+            esac
+        done
+}
+
+FUNC_RESTORE_MENU;    
