@@ -119,9 +119,11 @@ With scenarios 2. & 3. the assumption is that you have copied the relevant backu
 
 #### How to perform a full restore
 
-  1. With the necessary files copied to the fresh VPS under folder "/plinode_backups", we need to set the necessary file permissions so that the main scripts can execute.
+  1. With the necessary files copied to the fresh VPS under folder "/plinode_backups", we need to set the necessary file permissions so that the main scripts can execute. Lets get into the correct folder to run the scripts;
 
-  2. Lets run the setup script;
+            cd ~/pli_node_conf
+
+  2. Lets now run the setup script;
 
             ./_plinode_setup_bkup.sh
 
@@ -146,4 +148,27 @@ With scenarios 2. & 3. the assumption is that you have copied the relevant backu
             drwxrwxr-x   2 nmadmin nodebackup       4096 Apr 13 10:09 plinode_backups
 
   6. Now we progress to restore the "conf" files so that we have all our credentials and variables necessary for the re-install of the node software.
-     During this step you will be prompted for your origianl KeyStore P
+     During this step you will be prompted for your origianl _KEYSTORE PASSWORD_ so best to have it to hand ready for pasting into the terminal.
+
+  7. Lets kick off the "conf" files restore by running the main restore script;
+    
+        ./_plinode_restore.sh
+
+  8. You will then be presented with the scenario check message where you confirm which approach you wish to execute;
+
+            #########################################################################
+            #########################################################################
+            ##
+            ##      RESTORE SCENARIO CONFIRMATION...
+            ##
+            ##
+            ##  A Full Restore is ONLY where you have moved backup files to a FRESH / NEW VPS host
+            ##  this includes where you have reset your previous VPS installation to start again..
+            ##
+
+            Are you performing a Full Restore to BLANK / NEW VPS ? (Y/n)
+
+    
+  9. As we are indeed performing a Full Restore, we proceed to confirm by inputting Y and press enter
+     
+     NOTE:: By confirming this input we are telling the script to run some extra code that will also  
