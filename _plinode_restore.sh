@@ -7,6 +7,11 @@ USER_ID=$(getent passwd $EUID | cut -d: -f1)
 sudo -l > /dev/null 2>&1
 
 
+# Set Colour Vars
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
 source ~/"plinode_$(hostname -f)".vars
 source ~/"plinode_$(hostname -f)"_bkup.vars
 
