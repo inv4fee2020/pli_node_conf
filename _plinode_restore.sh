@@ -243,11 +243,13 @@ DR_RESTORE=false
         echo -e "${GREEN}##  this includes where you have reset your previous VPS installation to start again..${NC}"
         echo -e "${GREEN}##${NC}"
         echo
-        read -t12 -r -p "Are you performing a Full Restore to BLANK / NEW VPS ? (Y/n) " _RES_INPUT
+        read -t15 -r -p "Are you performing a Full Restore to BLANK / NEW VPS ? (Y/n) " _RES_INPUT
         if [ $? -gt 128 ]; then
             #clear
             echo
-            echo "timed out waiting for user response - proceeding as normal..."
+            echo
+            echo "....timed out waiting for user response - proceeding as standard in-place restore to existing system..."
+            echo
             #DR_RESTORE=false
             FUNC_RESTORE_MENU;
         fi
