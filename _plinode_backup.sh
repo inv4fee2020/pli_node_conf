@@ -254,7 +254,7 @@ FUNC_DB_PRE_CHECKS(){
         #echo
         echo "pre-check vars - setting group members for backups - without gdrive"
         DB_GUSER_MEMBER=(postgres $USER_ID)
-        echo "${DB_GUSER_MEMBER[@]}"
+        #echo "${DB_GUSER_MEMBER[@]}"
     fi
     
     #echo
@@ -343,7 +343,7 @@ EOF
     #error_exit;
     
     #echo
-    echo "local backup - successfully created file:  "$DB_BACKUP_OBJ""
+    echo "local backup - successfully created unencrypted compressed gz file:  "$DB_BACKUP_OBJ""
     sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER $DB_BACKUP_OBJ
     
     # Calls the file encryption 
@@ -371,10 +371,10 @@ FUNC_DB_BACKUP_ENC(){
         sudo gpg --yes --batch --passphrase=$PASS_KEYSTORE -o $ENC_PATH/$ENC_FNAME -c $DB_BACKUP_OBJ
         error_exit;
         #echo
-        echo "local backup - successfully created file:  "$ENC_FNAME""
+        echo "local backup - successfully created encrypted gpg file:  "$ENC_FNAME""
         sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER $ENC_PATH/$ENC_FNAME
         #echo
-        echo "local backup - securely erase unencrypted file:  "$DB_BACKUP_OBJ""
+        echo "local backup - securely erased unencrypted compressed gz file:  "$DB_BACKUP_OBJ""
         shred -uz -n 1 $DB_BACKUP_OBJ
     fi
 }
