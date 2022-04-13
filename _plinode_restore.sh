@@ -124,8 +124,14 @@ FUNC_RESTORE_CONF(){
 
 
 FUNC_REBUILD_EI(){
+
+
+    source ~/"plinode_$(hostname -f)".vars
+
     EI_FILE=$(echo "$BASH_FILE3" | sed -e 's/\.[^.]*$//')
     pm2 stop $EI_FILE && pm2 delete $EI_FILE && pm2 reset all && pm2 save 
+    sleep 2s
+
     plugin admin login -f ~/plugin-deployment/$FILE_API
     plugin initiators destroy $PLI_L_INIT_NAME
 
@@ -142,6 +148,8 @@ FUNC_REBUILD_EI(){
 
     cat $PLI_INIT_DATFILE
     sleep 2s
+
+    read -r -d '' EXT_ACCESSKEY EXT_SECRET EXT_OUTGOINGTOKEN EXT_OUTGOINGSECRET <$PLI_INIT_DATFILE
 
     cd /$PLI_DEPLOY_PATH
     cat <<EOF > $BASH_FILE3
