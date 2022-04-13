@@ -82,7 +82,7 @@ FUNC_RESTORE_DB(){
     echo "   DB RESTORE.... unzip file name: $RESTORE_FILE"
     #echo " the path to file is: $DB_BACKUP_PATH"
     #echo 
-    gunzip -vdf $RESTORE_FILE
+    gunzip -vdf $RESTORE_FILE > /dev/null 2>&1
     sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "$RESTORE_FILE_SQL"
     sleep 2
 
