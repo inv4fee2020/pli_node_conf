@@ -234,7 +234,6 @@ echo -e "${GREEN}###############################################################
 echo -e "${GREEN}##${NC}"
 echo -e "${GREEN}##      RESTORE SCENARIO CONFIRMATION...${NC}"
 echo -e "${GREEN}##${NC}"
-echo -e "${GREEN}##${NC}"
 
 # Ask the user acc for login details (comment out to disable)
 DR_RESTORE=false
@@ -243,7 +242,8 @@ DR_RESTORE=false
         echo -e "${GREEN}##  A Full Restore is ONLY where you have moved backup files to a FRESH / NEW VPS host${NC}"
         echo -e "${GREEN}##  this includes where you have reset your previous VPS installation to start again..${NC}"
         echo -e "${GREEN}##${NC}"
-        read -t7 -r -p "Are you performing a Full Restore to BLANK / NEW VPS ? (Y/n) " _RES_INPUT
+        echo
+        read -t12 -r -p "Are you performing a Full Restore to BLANK / NEW VPS ? (Y/n) " _RES_INPUT
         if [ $? -gt 128 ]; then
             #clear
             echo
