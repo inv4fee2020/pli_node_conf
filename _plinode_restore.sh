@@ -98,11 +98,7 @@ FUNC_RESTORE_DB(){
     echo "  DB RESTORE COMPLETED"
 
     if [[ "$DR_RESTORE" == "true" ]]; then
-        
-        plugin admin login -f ~/plugin-deployment/.env.apicred
-        plugin initiators destroy $PLI_L_INIT_NAME
-
-        $(./pli_node_scripts.sh initiator)
+        FUNC_REBUILD_EI
     fi
 
     FUNC_EXIT
@@ -126,6 +122,42 @@ FUNC_RESTORE_CONF(){
     FUNC_EXIT
 }
 
+
+FUNC_REBUILD_EI(){
+    pm2 stop 1 && pm2 delete 1
+    plugin admin login -f ~/plugin-deployment/$FILE_API
+    plugin initiators destroy $PLI_L_INIT_NAME
+
+        #$(./pli_node_scripts.sh initiator)
+    plugin initiators create $PLI_L_INIT_NAME http://localhost:8080/jobs > $PLI_INIT_RAWFILE
+
+    sed -i 's/ ║ /,/g;s/╬//g;s/═//g;s/║//g' $PLI_INIT_RAWFILE
+    sed -n '/'"$PLI_L_INIT_NAME"'/,//p' $PLI_INIT_RAWFILE > $PLI_INIT_DATFILE
+    sed -i 's/,/\n/g;s/^.'"$PLI_L_INIT_NAME"'//g' $PLI_INIT_DATFILE
+    sed -i 's/^http.*//g' $PLI_INIT_DATFILE
+    sed -i.bak '/^$/d;/^\s*$/d;s/[ \t]\+$//' $PLI_INIT_DATFILE
+    cp -n $PLI_INIT_DATFILE ~/$PLI_INIT_DATFILE.bak  && chmod 600 ~/$PLI_INIT_DATFILE.bak
+
+    cd /$PLI_DEPLOY_PATH
+    cat <<EOF > $BASH_FILE3
+#!/bin/bash
+export EI_DATABASEURL=postgresql://postgres:${DB_PWD_NEW}@127.0.0.1:5432/plugin_mainnet_db?sslmode=disable
+export EI_CHAINLINKURL=http://localhost:6688
+export EI_IC_ACCESSKEY=${EXT_ACCESSKEY}
+export EI_IC_SECRET=${EXT_SECRET}
+export EI_CI_ACCESSKEY=${EXT_OUTGOINGTOKEN}
+export EI_CI_SECRET=${EXT_OUTGOINGSECRET}
+echo *** Starting EXTERNAL INITIATOR ***
+external-initiator "{\"name\":\"$PLI_E_INIT_NAME\",\"type\":\"xinfin\",\"url\":\"https://plirpc.blocksscan.io\"}" --chainlinkurl "http://localhost:6688/"
+EOF
+    #sleep 1s
+    #cat $BASH_FILE3
+    chmod u+x $BASH_FILE3
+
+    pm2 start $BASH_FILE3
+    pm2 save
+
+}
 
 
 FUNC_EXIT(){
