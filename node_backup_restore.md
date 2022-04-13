@@ -75,7 +75,8 @@ This is not a very involved operation with minimal steps as follows;
 
   2. Now to selecting the type & date-time stamp backup file to restore. You should be presented with a list of files similar to the following;
     
-    **NOTE ::**_The list of files that you see will be dependent on how many backups you have performed._
+    **NOTE ::** _The list of files that you see will be dependent on how many backups you have performed._
+
 
                       Showing last 8 backup files.
                       Select the number for the file you wish to restore
@@ -94,8 +95,8 @@ This is not a very involved operation with minimal steps as follows;
    
       ii. If you chose a "db" file you will then be presented with the scenario check message as follows; where you confirm which approach you wish to execute;
 
-            #########################################################################
-            #########################################################################
+            ######################################################################################
+            ######################################################################################
             ##
             ##      RESTORE SCENARIO CONFIRMATION...
             ##
