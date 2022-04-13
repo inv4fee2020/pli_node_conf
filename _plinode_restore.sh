@@ -18,7 +18,6 @@ source ~/"plinode_$(hostname -f)"_bkup.vars
 
 
 FUNC_RESTORE_DECRYPT(){
-
     
     PLI_VARS_FILE="plinode_$(hostname -f)".vars
     #echo $PLI_VARS_FILE
@@ -38,7 +37,7 @@ FUNC_RESTORE_DECRYPT(){
     #echo $(ls -lh  /plinode_backups/)
     #echo 
     #echo 
-    gpg --verbose --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE  
+    gpg --verbose --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE  > /dev/null 2>&1 
 
     #echo 
     #echo 
@@ -46,10 +45,10 @@ FUNC_RESTORE_DECRYPT(){
     #echo 
     #echo 
     if [[ "$BACKUP_FILE" =~ "plugin_mainnet_db" ]]; then
-        echo "matched 'contains' db name..."
+        #echo "matched 'contains' db name..."
         FUNC_RESTORE_DB
     elif [[ "$BACKUP_FILE" =~ "conf_vars" ]]; then
-        echo "else returned so must be file restore..."
+        #echo "else returned so must be file restore..."
         FUNC_RESTORE_CONF
     fi
 
@@ -57,9 +56,9 @@ FUNC_RESTORE_DECRYPT(){
     sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
     #sudo chmod g+rw "/$DB_BACKUP_DIR";
 
-    echo "if complete. existing..."
+    #echo "if complete. existing..."
     if [[ ! -e "$RESTORE_FILE" ]]; then
-    echo "ERROR :: Restore file does not exist"
+    echo "DECRYPT ERROR :: Restore file does not exist"
     FUNC_EXIT_ERROR;
     fi
 
@@ -69,6 +68,7 @@ FUNC_RESTORE_DECRYPT(){
 
 FUNC_RESTORE_DB(){
 
+    ### removes last extension suffix to get next file name
     RESTORE_FILE_SQL=$(echo "$RESTORE_FILE" | sed -e 's/\.[^.]*$//')
     
     sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
