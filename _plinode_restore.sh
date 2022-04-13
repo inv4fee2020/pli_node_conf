@@ -138,7 +138,10 @@ FUNC_REBUILD_EI(){
     sed -i 's/,/\n/g;s/^.'"$PLI_L_INIT_NAME"'//g' $PLI_INIT_DATFILE
     sed -i 's/^http.*//g' $PLI_INIT_DATFILE
     sed -i.bak '/^$/d;/^\s*$/d;s/[ \t]\+$//' $PLI_INIT_DATFILE
-    cp -n $PLI_INIT_DATFILE ~/$PLI_INIT_DATFILE.bak  && chmod 600 ~/$PLI_INIT_DATFILE.bak
+    cp $PLI_INIT_DATFILE ~/$PLI_INIT_DATFILE.bak  && chmod 600 ~/$PLI_INIT_DATFILE.bak
+
+    cat $PLI_INIT_DATFILE
+    sleep 2s
 
     cd /$PLI_DEPLOY_PATH
     cat <<EOF > $BASH_FILE3
