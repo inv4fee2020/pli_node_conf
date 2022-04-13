@@ -131,13 +131,13 @@ else
     # If NULL then defaults to using 'plinode_backups' for 'DB_BACKUP_DIR' variable
 
 
-    echo
+    #echo
     echo "checking vars - Detected NULL - setting 'default'value.."
     DB_BACKUP_DIR="plinode_backups"
     #echo "checking vars - var 'DB_BACKUP_DIR' value is now: $DB_BACKUP_DIR"
 
     # adds the variable value to the VARS file
-    echo
+    #echo
     echo "checking vars - updating file "$PLI_DB_VARS_FILE" variable 'DB_BACKUP_DIR' to: "$DB_BACKUP_DIR""
     sed -i.bak 's/DB_BACKUP_DIR=\"\"/DB_BACKUP_DIR=\"'$DB_BACKUP_DIR'\"/g' ~/$PLI_DB_VARS_FILE
 fi
@@ -215,13 +215,13 @@ FUNC_DB_PRE_CHECKS(){
     
     # check shared group '$DB_BACKUP_GUSER' exists & set permissions
     #if [ -z "$DB_BACKUP_GUSER" ] && [ ! $(getent group nodebackup) ]; then
-        echo
+        #echo
         echo "pre-check vars - variable 'DB_BACKUP_GUSER is: NULL && 'default' does not exist"
         echo "pre-check vars - creating group 'nodebackup'"
         sudo groupadd nodebackup
     
         # adds the variable value to the VARS file
-        echo
+        #echo
         echo "pre-check vars - updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_GUSER to: nodebackup"
         sed -i.bak 's/DB_BACKUP_GUSER=\"\"/DB_BACKUP_GUSER=\"nodebackup\"/g' ~/$PLI_DB_VARS_FILE
         #export DB_BACKUP_GUSER="nodebackup"
@@ -241,24 +241,24 @@ FUNC_DB_PRE_CHECKS(){
     
     # add users to the group
     
-    echo
+    #echo
     echo "pre-check vars - checking if gdrive user exits"
     if [ ! -z "$GD_FUSER" ]; then
-        echo
+        #echo
         echo "pre-check vars - setting group members for backups - with gdrive"
         DB_GUSER_MEMBER=(postgres $USER_ID $GD_FUSER)
         #echo "${DB_GUSER_MEMBER[@]}"
     #elif [ -z "$GD_FUSER" ] && [ ! $(getent passwd gdbackup) ]; then
     else
         GD_ENABLED=false
-        echo
+        #echo
         echo "pre-check vars - setting group members for backups - without gdrive"
         DB_GUSER_MEMBER=(postgres $USER_ID)
         echo "${DB_GUSER_MEMBER[@]}"
     fi
     
-    echo
-    echo
+    #echo
+    #echo
     echo "pre-check vars - assiging user-group permissions.."
     for _user in "${DB_GUSER_MEMBER[@]}"
     do
@@ -282,7 +282,7 @@ FUNC_CONF_BACKUP_LOCAL(){
     FUNC_DB_PRE_CHECKS  # order is specific as pre checks for user/groups which are assigned to dirs 
     FUNC_CHECK_DIRS
 
-    echo
+    #echo
     echo "local backup - running tar backup process for configuration files"
     tar -cvpzf $CONF_BACKUP_OBJ ~/plinode* > /dev/null 2>&1
     #~/pli_init* ~/plugin-deployment/.env*
@@ -323,7 +323,7 @@ Localhost:5432:$DB_NAME:postgres:$DB_PWD_NEW
 EOF
     fi
 
-    echo
+    #echo
     echo "local backup - setting pgpass file perms"
     #if [ "$SET_ROOT_DIR" == "true" ]; then
     #    cp -p ~/.pgpass /$DB_BACKUP_PATH/.pgpass
@@ -336,13 +336,13 @@ EOF
     #fi
     
     #sleep 1s
-    echo
+    #echo
     echo "local backup - running pgdump backup process"
     # switch to 'postgres' user and run command to create inital sql dump file
     sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; pg_dump -c -w -U postgres $DB_NAME | gzip > $DB_BACKUP_OBJ"
     #error_exit;
     
-    echo
+    #echo
     echo "local backup - successfully created file:  "$DB_BACKUP_OBJ""
     sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER $DB_BACKUP_OBJ
     
@@ -370,14 +370,13 @@ FUNC_DB_BACKUP_ENC(){
     if [ -e $DB_BACKUP_OBJ ]; then
         sudo gpg --yes --batch --passphrase=$PASS_KEYSTORE -o $ENC_PATH/$ENC_FNAME -c $DB_BACKUP_OBJ
         error_exit;
-        echo
+        #echo
         echo "local backup - successfully created file:  "$ENC_FNAME""
         sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER $ENC_PATH/$ENC_FNAME
-        echo
+        #echo
         echo "local backup - securely erase unencrypted file:  "$DB_BACKUP_OBJ""
         shred -uz -n 1 $DB_BACKUP_OBJ
     fi
-
 }
 
 
@@ -388,22 +387,17 @@ FUNC_CONF_BACKUP_ENC(){
     if [ -e $CONF_BACKUP_OBJ ]; then
         sudo gpg --yes --batch --passphrase=$PASS_KEYSTORE -o $ENC_PATH/$ENC_CONFNAME -c $CONF_BACKUP_OBJ
         error_exit;
-        echo
+        #echo
         echo "local backup - successfully created file:  "$ENC_CONFNAME""
         sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER $ENC_PATH/$ENC_CONFNAME
-        echo
+        #echo
         echo "local backup - securely erase unencrypted file:  "$CONF_BACKUP_OBJ""
         shred -uz -n 1 $CONF_BACKUP_OBJ
     fi
-
 }
 
 
-
-
-
 FUNC_DB_BACKUP_REMOTE(){
-
 
     if [ "$_OPTION" == "-remote" ]; then
         FUNC_DB_VARS
@@ -418,26 +412,10 @@ FUNC_DB_BACKUP_REMOTE(){
     error_exit;
 }
 
-#FUNC_CLEAN_UP_REMOTE(){
-# remove files store in the backups folder    
-#}
 
-
-#error_exit() {
-#    exit_code=$1
-#    last_command=${@:2}
-#    if [ "$exit_code" != 0 ]; then
-#        >&2 echo "\"${last_command}\" command failed with exit code ${exit_code}."
-#        exit "$exit_code"
-#    else
-#        return
-#    fi
-#}
-
-error_exit()
-{
+error_exit(){
     if [ $? != 0 ]; then
-        echo
+        #echo
         echo "ERROR - Exiting early"
         exit 1
     else
@@ -460,16 +438,6 @@ case "$1" in
                 _OPTION="-db"
                 FUNC_DB_BACKUP_LOCAL
                 ;;
-        #-remote)
-        #        _OPTION="-remote"
-        #        FUNC_DB_BACKUP_REMOTE
-        #        ;;
-#        -p)
-#                FUNC_DB_PRE_CHECKS
-#                ;;
-#        -f)
-#                FUNC_CHECK_DIRS
-#                ;;
         *)
                 clear
                 echo 
@@ -484,8 +452,6 @@ case "$1" in
                 echo 
                 echo -e "${GREEN}      -remote    ==  copies local backup files to your google drive (if configured)${NC}"
                 echo
-                #echo  -e "${GREEN}      -p         ==  carries out pre-checks on user / group variables defined in file: $PLI_DB_VARS_FILE ${NC}"
-                #echo  -e "${GREEN}      -f         ==  carries out pre-checks on directory / path variables defined in file: $PLI_DB_VARS_FILE ${NC}"
                 echo 
                 echo 
 esac
