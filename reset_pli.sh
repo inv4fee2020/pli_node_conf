@@ -83,6 +83,7 @@ sudo groupdel nodebackup
 
 # Remove all plugin, nodejs linked folders for current user & root
 cd ~/; sudo sh -c "rm -rf .cache/ && rm -rf .nvm && rm -rf .npm && rm -rf .plugin && rm -rf Plugin && rm -rf .pm2 && rm -rf work && rm -rf go && rm -rf .yarn*"
+rm ~/.tmp_profile
 
 # Remove logrotate file
 sudo sh -c 'rm -f /etc/logrotate.d/plugin-logs'
