@@ -71,7 +71,7 @@ This is not a very involved operation with minimal steps as follows;
 
   1. run the restore script as follows;
     
-        ./_plinode_restore.sh
+            ./_plinode_restore.sh
 
   2. Now to selecting the type & date-time stamp backup file to restore. You should be presented with a list of files similar to the following;
     
@@ -111,7 +111,7 @@ This is not a very involved operation with minimal steps as follows;
      
      **NOTE ::** There is also a timer set on this input which presents the following message; before repeating to list the available files for restore.
 
-        ....timed out waiting for user response - please select a file to restore...
+            ....timed out waiting for user response - please select a file to restore...
 
   - At this point you either select the file to restore 
 
