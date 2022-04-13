@@ -2,11 +2,13 @@
 
 This document aims to provide guidance on the usage of the scripts associated with performing manual backup & restore operations.
 
-_NOTE: There is no **TL:DR** section on this topic given the significance of operations being performed so please take the time to read the documentention_
+_NOTE: There is no **TL:DR** section on this topic given the significance of operations being performed so please take the time to read the documentation_
 
 This particular document assumes that you already have a local clone of the repo on your node.
 
 ## Performing a BACKUP
+
+**IMPORTANT ::** _Backups are stored locally on your VPS host. It is YOUR responsibility to ensure these files are copied to another location off the local node so that you can recover the node in the event of disk corruption / failure._
 
 ### Usage syntax
 
@@ -40,7 +42,7 @@ The following commands will perform a **DATABASE** only backup
 ### What files are backed up?
 
  - Conf files;
- All files in you $HOME folder with the _'plinode'_ prefix are selected for backup. This covers the following as an example;
+    All files in you $HOME folder with the _'plinode'_ prefix are selected for backup. This covers the following as an example;
     - node & backup vars files
     - exported keys json files
     
@@ -48,6 +50,7 @@ The following commands will perform a **DATABASE** only backup
 
 ## Performing a RESTORE
 
+There are two approaches to the restore operation as set out below. 
 
 ### In-Place RESTORE
 
