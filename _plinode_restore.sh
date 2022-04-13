@@ -83,7 +83,7 @@ FUNC_RESTORE_DB(){
 
 
     echo "   DB RESTORE.... psql file name: $RESTORE_FILE_SQL"
-    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; psql -d $DB_NAME < $RESTORE_FILE_SQL"
+    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; psql -d $DB_NAME < $RESTORE_FILE_SQL" > /dev/null 2>&1
     sleep 2
     
     echo "   DB RESTORE.... restarting service postgresql"
@@ -93,7 +93,7 @@ FUNC_RESTORE_DB(){
     # NOTE: .pgpass file would need to be manually re-created inorder to restore files? As would the .env.password keystore
 
     #sudo chown $USER_ID\:$DB_BACKUP_GUSER $DB_BACKUP_PATH/\*.sql
-    shred -uz -n 1 $RESTORE_FILE_SQL 
+    shred -uz -n 1 $RESTORE_FILE_SQL > /dev/null 2>&1
     
     echo "  DB RESTORE COMPLETED"
 
@@ -129,7 +129,8 @@ FUNC_REBUILD_EI(){
     plugin admin login -f ~/plugin-deployment/$FILE_API
     plugin initiators destroy $PLI_L_INIT_NAME
 
-        #$(./pli_node_scripts.sh initiator)
+    cd /$PLI_DEPLOY_PATH/$PLI_INITOR_DIR
+
     plugin initiators create $PLI_L_INIT_NAME http://localhost:8080/jobs > $PLI_INIT_RAWFILE
 
     sed -i 's/ ║ /,/g;s/╬//g;s/═//g;s/║//g' $PLI_INIT_RAWFILE
