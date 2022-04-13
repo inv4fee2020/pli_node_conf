@@ -16,7 +16,7 @@ source ~/"plinode_$(hostname -f)".vars
 source ~/"plinode_$(hostname -f)"_bkup.vars
 
 
-FUNC_RESTORE_MENU;
+FUNC_RESTORE_MENU
 
 FUNC_RESTORE_DECRYPT(){
     
