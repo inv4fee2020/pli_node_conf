@@ -4,7 +4,7 @@ NC='\033[0m' # No Color
 JOB_TITLE="Alarm Clock Sample"
 JOB_FNAME="plinode_job_alarmclock.json"
 
-clear
+#clear
 echo -e "${GREEN}#"
 echo -e "#   This script generates the necessary json blob for the Oracle Job-Setup section in the docs"
 echo -e "#   source: https://docs.goplugin.co/oracle/job-setup"
