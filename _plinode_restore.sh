@@ -124,7 +124,8 @@ FUNC_RESTORE_CONF(){
 
 
 FUNC_REBUILD_EI(){
-    pm2 stop $BASH_FILE3 && pm2 delete $BASH_FILE3 && pm2 reset all && pm2 save 
+    EI_FILE=$(echo "$BASH_FILE3" | sed -e 's/\.[^.]*$//')
+    pm2 stop $EI_FILE && pm2 delete $EI_FILE && pm2 reset all && pm2 save 
     plugin admin login -f ~/plugin-deployment/$FILE_API
     plugin initiators destroy $PLI_L_INIT_NAME
 
