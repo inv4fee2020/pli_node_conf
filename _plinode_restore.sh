@@ -141,7 +141,7 @@ FUNC_REBUILD_EI(){
     echo "DB RESTORE - REBUILD EI - authenticate to API with credentials file: $FILE_API"
     plugin admin login -f ~/plugin-deployment/$FILE_API
 
-    echo "DB RESTORE - REBUILD EI - delete existing EI: $PLI_L_INIT_NAME"
+    echo "DB RESTORE - REBUILD EI - delete existing EI"
     plugin initiators destroy $PLI_L_INIT_NAME
     sleep 2s
     cd /$PLI_DEPLOY_PATH/$PLI_INITOR_DIR
@@ -156,7 +156,7 @@ FUNC_REBUILD_EI(){
     sed -i.bak '/^$/d;/^\s*$/d;s/[ \t]\+$//' $PLI_INIT_DATFILE
     cp $PLI_INIT_DATFILE ~/$PLI_INIT_DATFILE.bak  && chmod 600 ~/$PLI_INIT_DATFILE.bak
 
-    cat $PLI_INIT_DATFILE
+    #cat $PLI_INIT_DATFILE
     sleep 2s
 
     echo "DB RESTORE - REBUILD EI - reading new EI values to variables"
