@@ -53,6 +53,15 @@ Using the inbuilt postgres database utility, we take a full backup of the plugin
 
 #### File Encryption
 As touched on above, all compressed backup files are gpg encrypted.  The process follows the same approach as the actual node installation whereby the _KEYSTORE PASSWORD_ is used to secure the backup files.  As this password is already securely stored in your password manager / key safe, it was the logical method to employ rather than creating another strong password to have to store & document.
+
+
+### Where are my backup files stored?
+
+When you manually run the backup script, the file are always written to the folder named "plinode_backups" which itself is located at the Root '/' folder.
+
+### When should I run the backup script?
+
+You should make your first backup after deploying the node. Follow up backups should be capture before every major system update & when you have added additional adapter/initiator configuration to the node.
     
 ---
 ---
