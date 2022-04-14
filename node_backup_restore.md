@@ -197,7 +197,16 @@ All of these scenarios involved the installation of the node deployment files
             drwxrwxr-x   2 nmadmin nodebackup       4096 Apr 13 10:09 plinode_backups
 
 
+---
+---
 
+>  **NOTE :: At this point you would copy the backup files onto the new VPS host at this stage, now that the backups folder has been re-created.**
+>
+>  **An example of this would be using SCP to copy from another linux VPS**
+>
+>  **You will need to re-run the above setup script to reset the file permissions for the files that you have copied into the backups folder in order that the scripts will have the correct permissions to the files as part of the restore process.**
+
+---
 ---
 #### Restore the conf files
 
