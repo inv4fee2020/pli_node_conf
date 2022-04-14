@@ -250,7 +250,9 @@ All of these scenarios involved the installation of the node deployment files
 
             ./pli_node_scripts.sh fullnode
 
-  2. When the installation completes we then proceed to restore the database.
+  2. When the installation completes - REBOOT the VPS host
+  
+  3. Once the VPS has successfully rebooted, we then proceed to restore the database.
 
 
 ---
