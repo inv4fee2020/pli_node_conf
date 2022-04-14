@@ -92,6 +92,17 @@ This is not a very involved operation with minimal steps as follows;
       i.  If you choose a "conf" file then the script proceeds to restore the contents to the original location: $HOME
           An example of the output would be as follows;
 
+                   RESTORE MENU - Restoring file: /plinode_backups/plitest_conf_vars_2022_04_13_10_09.tar.gz.gpg
+                   CONFIG FILES RESTORE....
+                uncompressing gz file: /plinode_backups/plitest_conf_vars_2022_04_13_10_09.tar.gz
+                unpacking tar file: /plinode_backups/plitest_conf_vars_2022_04_13_10_09.tar
+                home/nmadmin/plinode_job_alarmclock.json
+                home/nmadmin/plinode_plitest_bkup.vars
+                home/nmadmin/plinode_plitest_bkup.vars.bak
+                home/nmadmin/plinode_plitest_keys_2022_04_12_21_44.json
+                home/nmadmin/plinode_plitest_keys_2022_04_13_09_10.json
+                home/nmadmin/plinode_plitest.vars
+
             
    
       ii. If you chose a "db" file you will then be presented with the scenario check message as follows; where you confirm which approach you wish to execute;
@@ -124,18 +135,15 @@ This is not a very involved operation with minimal steps as follows;
 
 The full restore approach targets the following scenarios;
 
->>>  1.  where a full rebuild of your current VPS host - using the "reset_pli.sh" script _(soft reset)_
->>>  2.  where a full rebuild of your current VPS host - using the control panel reset option of your VPS hosting portal _(hard reset)_
->>>  3.  migration of your node to another VPS hosting platform
+>  1.  where a full rebuild of your current VPS host - using the "reset_pli.sh" script _(soft reset)_
+>  2.  where a full rebuild of your current VPS host - using the control panel reset option of your VPS hosting portal _(hard reset)_
+>  3.  migration of your node to another VPS hosting platform 
 
 
 With scenario 1. the assumption is that there is no movement of any backup files are they have remained intact in their default location of "/plinode_backups".
 
 With scenarios 2. & 3. the assumption is that you have copied the relevant backup files to the original path "/plinode_backups" on your now reset / new VPS host.
 
-
-###
-###
 
 ##### Keys points to remember.
 
@@ -145,8 +153,8 @@ With scenarios 2. & 3. the assumption is that you have copied the relevant backu
 
   - The script will always restore to the location where the backup files originated. This is only a concern when performing a Full Restore. Operators should ensure that they maintain the same user account details when migrating
 
-###
 
+---
 #### How to perform a full restore
 
   1. With the necessary files copied to the fresh VPS under folder "/plinode_backups", we need to set the necessary file permissions so that the main scripts can execute. Lets get into the correct folder to run the scripts;
@@ -186,8 +194,8 @@ With scenarios 2. & 3. the assumption is that you have copied the relevant backu
 
   8. You will then be presented with the scenario check message where you confirm which approach you wish to execute;
 
-            #########################################################################
-            #########################################################################
+            ######################################################################################
+            ######################################################################################
             ##
             ##      RESTORE SCENARIO CONFIRMATION...
             ##
