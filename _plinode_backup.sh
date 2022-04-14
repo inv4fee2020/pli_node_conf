@@ -45,61 +45,34 @@ FUNC_DB_VARS(){
 
 
 
+FUNC_PKG_CHECK(){
+
+    BKUP_PACKAGES=(gpg shred gunzip)
+
+    echo -e "${GREEN}#########################################################################"
+    echo -e "${GREEN}## CHECK NECESSARY PACKAGES HAVE BEEN INSTALLED...${NC}"
+
+    for i in "${BKUP_PACKAGES[@]}"
+    do
+        hash $i &> /dev/null
+        if [ $? -eq 1 ]; then
+           echo >&2 "package "$i" not found. installing...."
+           sudo apt install -y "$i"
+        fi
+        echo "packages "$i" exist. proceeding...."
+    done
+
+}
+
+
 FUNC_CHECK_DIRS(){
 
-# checks that the DB_BACKUP_ROOT var is not NULL & not '/root' or is not NULL & not $HOME so as not to create these folder & change perms
-#if ([ ! -z "$DB_BACKUP_ROOT" ] && ([ ! "$DB_BACKUP_ROOT" =~ ^/root ] || [ "$DB_BACKUP_ROOT" != "$HOME" ] || [ ! "$DB_BACKUP_ROOT" =~ ^/home ])); then
-#
-#    SET_ROOT_DIR=true       # logic to resolve the leading Root '/' path issue - true activates the leading '/' & false removes
-#
-#    #echo "DEBUG :: ROOT_DIR - IF STEP"
-#    echo "checking vars - variable 'DB_BACKUP_ROOT' value is: $DB_BACKUP_ROOT"
-#    echo "checking vars - variable 'DB_BACKUP_ROOT' is not NULL"
-#    echo "checking vars - check directory exists & create if NOT..."
-#    #if [ "$SET_ROOT_DIR" == "true" ]; then
-#    #    echo "DEBUG :: ROOT_DIR true check - IF STEP"
-#    #    echo " root dir flag is true"
-#        if [ ! -d "/$DB_BACKUP_ROOT" ]; then
-#            sudo mkdir "/$DB_BACKUP_ROOT"
-#            sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT"
-#        fi
-#    #else
-#    #    echo "DEBUG :: ROOT_DIR true check - IF ELSESTEP"
-#    #    echo " root dir flag is true"
-#    #    if [ ! -d "$DB_BACKUP_ROOT" ]; then
-#    #        sudo mkdir "$DB_BACKUP_ROOT"
-#    #        sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "$DB_BACKUP_ROOT"
-#    #    fi
-#    #fi    
-#else
-    # if NULL then defaults to using / & updates the 'DB_BACKUP_PATH' variable
-    #if [ -z "$DB_BACKUP_ROOT" ] ; then
-    #    
-    #    #echo "DEBUG :: ROOT DIR - IF ELSE STEP"
-    #    DB_BACKUP_ROOT="/"
-    #    SET_ROOT_DIR=false      # logic to resolve the leading Root '/' path issue
-    #    echo
-    #    echo "checking vars - Detected NULL value & set variable to: "$HOME""
-    #    echo "checking vars - updating the value of 'DB_BACKUP_PATH' variable.."
-    #    DB_BACKUP_PATH="/$DB_BACKUP_DIR"
-    #
-    #    # adds the variable value to the VARS file
-    #    #echo 
-    #    #echo "checking vars - updating file "$PLI_DB_VARS_FILE" variable 'DB_BACKUP_ROOT' value to: \$HOME"
-    #    #sed -i.bak 's/DB_BACKUP_ROOT=\"\"/DB_BACKUP_ROOT=\"\$HOME\"/g' ~/$PLI_DB_VARS_FILE
-    #fi
-    #echo
-    #echo "checking vars - var is set to "$DB_BACKUP_ROOT""
-    #echo "checking vars - ....nothing else to do.. continuing to next variable";
+
 
 
 
 # Checks if NOT NULL for the 'DB_BACKUP_DIR'variable
 if [ ! -z "$DB_BACKUP_DIR" ] ; then
-    #SET_ROOT_DIR=true
-    #echo
-    #echo "checking vars - var is not NULL"
-    #echo "checking vars - var 'DB_BACKUP_DIR' value is: $DB_BACKUP_DIR"
     echo "checking DIR vars - apply default directory value..."
 
     DB_BACKUP_DIR="plinode_backups"
@@ -143,22 +116,7 @@ else
 fi
     # Checks if directory exists & creates if not + sets perms
     
-    #echo
-    #if [ "$SET_ROOT_DIR" == "true" ]; then
-    #echo "checking vars - creating directory: "/$DB_BACKUP_DIR""
-    #    sudo mkdir "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-    #    #echo "sudo chown $USER_ID:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
-    #    sudo chown $USER_ID:$DB_BACKUP_GUSER -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-    #    #echo "sudo chmod g+w -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR""
-    #    sudo chmod g+rw "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-    #    #sudo chmod o-rx -R "/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-    #    # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
-    #    DB_BACKUP_PATH="/$DB_BACKUP_ROOT/$DB_BACKUP_DIR"
-    #    echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
-    #else
-    #e#cho "checking vars - creating directory: "$DB_BACKUP_DIR""
-    #sudo mkdir "/$DB_BACKUP_DIR"
-    #echo
+    
     #echo "checking vars - assigning permissions for directory: "/$DB_BACKUP_DIR""
 
         if [ ! -d "/$DB_BACKUP_DIR" ]; then
@@ -278,6 +236,7 @@ FUNC_DB_PRE_CHECKS(){
 
 FUNC_CONF_BACKUP_LOCAL(){
 
+    FUNC_PKG_CHECK
     FUNC_DB_VARS
     FUNC_DB_PRE_CHECKS  # order is specific as pre checks for user/groups which are assigned to dirs 
     FUNC_CHECK_DIRS
