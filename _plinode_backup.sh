@@ -31,14 +31,6 @@ FUNC_DB_VARS(){
         cp -n sample_bkup.vars ~/$PLI_DB_VARS_FILE
         chmod 600 ~/$PLI_DB_VARS_FILE
         echo
-        #echo -e "${GREEN} please update the vars file with your specific values.. ${NC}"
-        #echo -e "${GREEN} copy command to edit: ${NC}"
-        #echo
-        #echo -e "${GREEN}       nano ~/"$PLI_DB_VARS_FILE" ${NC}"
-        #echo
-        #echo
-        #sleep 2s
-        #exit 1
     fi
     source ~/$PLI_DB_VARS_FILE
 }
@@ -67,31 +59,15 @@ FUNC_PKG_CHECK(){
 
 FUNC_CHECK_DIRS(){
 
-
-
-
-
-# Checks if NOT NULL for the 'DB_BACKUP_DIR'variable
-if [ ! -z "$DB_BACKUP_DIR" ] ; then
-    echo "checking DIR vars - apply default directory value..."
-
-    DB_BACKUP_DIR="plinode_backups"
-
-    # Checks if directory exists & creates if not + sets perms
-    # following logic attempts to resolve the leading Root '/' path issue
-
-    #if [ "$SET_ROOT_DIR" == "true" ]; then
-    #    #echo "DEBUG :: BACKUP DIR - IF STEP"
-    #    #echo " root dir flag is true"
-    #    if [ ! -d "/$DB_BACKUP_DIR" ]; then
-    #        echo -e "${RED} SETTING FOLDER PERMS  ${NC}"
-    #        sudo mkdir "$DB_BACKUP_DIR"
-    #        sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
-    #        sudo chmod g+rw "/$DB_BACKUP_DIR";
-    #    fi
-    #else
-    #    #echo "DEBUG :: BACKUP DIR - IF ELSE STEP"
-    #    #echo " root dir flag is false"
+    # Checks if NOT NULL for the 'DB_BACKUP_DIR'variable
+    if [ ! -z "$DB_BACKUP_DIR" ] ; then
+        echo "checking DIR vars - apply default directory value..."
+    
+        DB_BACKUP_DIR="plinode_backups"
+    
+        # Checks if directory exists & creates if not + sets perms
+        # following logic attempts to resolve the leading Root '/' path issue
+    
         if [ ! -d "/$DB_BACKUP_DIR" ]; then
             echo -e "${GREEN} SETTING FOLDER PERMS  ${NC}"
             echo "checking DIR vars - check directory exists & setting perms..."
@@ -99,40 +75,33 @@ if [ ! -z "$DB_BACKUP_DIR" ] ; then
             sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
             sudo chmod g+rw "/$DB_BACKUP_DIR";
         fi
-    #fi
-else
-    # If NULL then defaults to using 'plinode_backups' for 'DB_BACKUP_DIR' variable
+    else
+        #echo
+        echo "checking vars - Detected NULL - setting 'default'value.."
+        DB_BACKUP_DIR="plinode_backups"
+        #echo "checking vars - var 'DB_BACKUP_DIR' value is now: $DB_BACKUP_DIR"
+    
+        # adds the variable value to the VARS file
+        #echo
+        echo "checking vars - updating file "$PLI_DB_VARS_FILE" variable 'DB_BACKUP_DIR' to: "$DB_BACKUP_DIR""
+        sed -i.bak 's/DB_BACKUP_DIR=\"\"/DB_BACKUP_DIR=\"'$DB_BACKUP_DIR'\"/g' ~/$PLI_DB_VARS_FILE
+    fi
 
-
-    #echo
-    echo "checking vars - Detected NULL - setting 'default'value.."
-    DB_BACKUP_DIR="plinode_backups"
-    #echo "checking vars - var 'DB_BACKUP_DIR' value is now: $DB_BACKUP_DIR"
-
-    # adds the variable value to the VARS file
-    #echo
-    echo "checking vars - updating file "$PLI_DB_VARS_FILE" variable 'DB_BACKUP_DIR' to: "$DB_BACKUP_DIR""
-    sed -i.bak 's/DB_BACKUP_DIR=\"\"/DB_BACKUP_DIR=\"'$DB_BACKUP_DIR'\"/g' ~/$PLI_DB_VARS_FILE
-fi
     # Checks if directory exists & creates if not + sets perms
     
-    
-    #echo "checking vars - assigning permissions for directory: "/$DB_BACKUP_DIR""
-
-        if [ ! -d "/$DB_BACKUP_DIR" ]; then
-            echo -e "${GREEN} SETTING FOLDER PERMS  ${NC}"
-            echo "checking DIR vars - check directory exists & setting perms..."
-            sudo mkdir "/$DB_BACKUP_DIR"
-            sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
-            sudo chmod g+rw "/$DB_BACKUP_DIR";
-        fi
+    if [ ! -d "/$DB_BACKUP_DIR" ]; then
+        echo -e "${GREEN} SETTING FOLDER PERMS  ${NC}"
+        echo "checking DIR vars - check directory exists & setting perms..."
+        sudo mkdir "/$DB_BACKUP_DIR"
+        sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
+        sudo chmod g+rw "/$DB_BACKUP_DIR";
+    fi
         
     # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
     DB_BACKUP_PATH="/$DB_BACKUP_DIR"
     sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
     sudo chmod g+rw "/$DB_BACKUP_DIR"
-    #echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
-    #fi
+
 
     ###  Based on the above changes in values originally read form var file
     ###  we then update the other vars to reflect these changes so the whole
@@ -140,16 +109,14 @@ fi
 
     DB_BACKUP_OBJ="$DB_BACKUP_PATH/$DB_BACKUP_FNAME"
     CONF_BACKUP_OBJ="$DB_BACKUP_PATH/$NODE_BACKUP_FNAME"
-    #echo "checking vars - assigning 'DB_BACKUP_OBJ' variable: "$DB_BACKUP_OBJ""
-    #echo "checking vars - assigning 'CONF_BACKUP_OBJ' variable: "$CONF_BACKUP_OBJ""
     
     #echo
     #echo "checking vars - exiting directory check & continuing..."
     #sleep 2s
 
-#echo
-echo "checking vars - your configured node backup PATH is: $DB_BACKUP_PATH"
-sleep 2s
+    #echo
+    echo "checking vars - your configured node backup PATH is: $DB_BACKUP_PATH"
+    sleep 2s
 
 }
 
@@ -244,8 +211,6 @@ FUNC_CONF_BACKUP_LOCAL(){
     #echo
     echo "local backup - running tar backup process for configuration files"
     tar -cvpzf $CONF_BACKUP_OBJ ~/plinode* > /dev/null 2>&1
-    #~/pli_init* ~/plugin-deployment/.env*
-    #error_exit;
 
     #sleep 2s
     FUNC_CONF_BACKUP_ENC
