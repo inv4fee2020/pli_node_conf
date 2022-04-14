@@ -242,7 +242,7 @@ FUNC_RESTORE_MENU(){
     echo "          Select the number for the file you wish to restore "
     echo
 
-    select _file in "${node_backup_arr[@]}" "QUIT"
+    select _file in "${node_backup_arr[@]}" "QUIT" "REBUILD-EI"
     do
         case $_file in
             ${node_backup_arr[0]}) echo "   RESTORE MENU - Restoring file: ${node_backup_arr[0]}" ; BACKUP_FILE="${node_backup_arr[0]}"; FUNC_RESTORE_DECRYPT; break ;;
@@ -254,6 +254,7 @@ FUNC_RESTORE_MENU(){
             ${node_backup_arr[6]}) echo "   RESTORE MENU - Restoring file: ${node_backup_arr[6]}" ; BACKUP_FILE="${node_backup_arr[6]}"; FUNC_RESTORE_DECRYPT; break ;;
             ${node_backup_arr[7]}) echo "   RESTORE MENU - Restoring file: ${node_backup_arr[7]}" ; BACKUP_FILE="${node_backup_arr[7]}"; FUNC_RESTORE_DECRYPT; break ;;
             "QUIT") echo "exiting now..." ; FUNC_EXIT; break ;;
+            "REBUILD-EI") echo "   REBUILD-EI workaround"; FUNC_REBUILD_EI; break;;
             *) echo invalid option;;
         esac
     done
