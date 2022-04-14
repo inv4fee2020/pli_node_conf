@@ -191,7 +191,7 @@ fi
 
 #echo
 echo "checking vars - your configured node backup PATH is: $DB_BACKUP_PATH"
-#sleep 2s
+sleep 2s
 
 }
 
@@ -267,7 +267,7 @@ FUNC_DB_PRE_CHECKS(){
         sudo usermod -aG "$DB_BACKUP_GUSER" "$_user"
     done 
     
-    sleep 1s
+    sleep 2s
 }
 
 
