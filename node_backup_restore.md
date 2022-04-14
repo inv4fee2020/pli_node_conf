@@ -124,11 +124,9 @@ This is not a very involved operation with minimal steps as follows;
 
 The full restore approach targets the following scenarios;
 
-  **1.**  where a full rebuild of your current VPS host - using the "reset_pli.sh" script _(soft reset)_
-
-  **2.**  where a full rebuild of your current VPS host - using the control panel reset option of your VPS hosting portal _(hard reset)_
-
-  **3.**  migration of your node to another VPS hosting platform
+  1.  where a full rebuild of your current VPS host - using the "reset_pli.sh" script _(soft reset)_
+  2.  where a full rebuild of your current VPS host - using the control panel reset option of your VPS hosting portal _(hard reset)_
+  3.  migration of your node to another VPS hosting platform
 
 
 With scenario 1. the assumption is that there is no movement of any backup files are they have remained intact in their default location of "/plinode_backups".
@@ -136,6 +134,7 @@ With scenario 1. the assumption is that there is no movement of any backup files
 With scenarios 2. & 3. the assumption is that you have copied the relevant backup files to the original path "/plinode_backups" on your now reset / new VPS host.
 
 
+###
 ###
 
 ##### Keys points to remember.
