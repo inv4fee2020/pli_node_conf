@@ -250,9 +250,12 @@ All of these scenarios involved the installation of the node deployment files
 
             ./pli_node_scripts.sh fullnode
 
-  2. When the installation completes - REBOOT the VPS host
+
+  2. When the installation completes you will see the credentials & node address details output to the terminal screen. You should note that the node address is different from your original working node. This is where our db restore comes into play.
   
-  3. Once the VPS has successfully rebooted, we then proceed to restore the database.
+  3. **IMPORTANT STEP** Now REBOOT the VPS host
+  
+  4. Once the VPS has successfully rebooted, we then proceed to restore the database.
 
 
 ---
