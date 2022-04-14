@@ -120,15 +120,29 @@ This is not a very involved operation with minimal steps as follows;
 ---
 ### Full RESTORE 
 
+
+
 The full restore approach targets the following scenarios;
 
-  1.  where a full rebuild of your current VPS host - using the "reset_pli.sh" script 
-  2.  where a full rebuild of your current VPS host - using the control panel reset option of your VPS hosting portal
+  1.  where a full rebuild of your current VPS host - using the "reset_pli.sh" script _(soft reset)_
+  2.  where a full rebuild of your current VPS host - using the control panel reset option of your VPS hosting portal _(hard reset)_
   3.  migration of your node to another VPS hosting platform
 
 With scenario 1. the assumption is that there is no movement of any backup files are they have remained intact in their default location of "/plinode_backups".
 
 With scenarios 2. & 3. the assumption is that you have copied the relevant backup files to the original path "/plinode_backups" on your now reset / new VPS host.
+
+###
+
+Keys points to remember.
+
+  - The "vars" configuration file name structure uses the 'hostname' of the VPS where it was created. When migrating to a new VPS hosting platform be aware that the newly provisioned VPS will have a different 'hostname'. 
+
+  - To reduce effort it is recommended that you rename the new VPS to match that of your original system. If this is not possible then you will therefor need to rename the restored files so that they are compatible with the scripts.  
+
+  - The script will always restore to the location where the backup files originated. This is only a concern when performing a Full Restore. Operators should ensure that they maintain the same user account details when migrating
+
+###
 
 #### How to perform a full restore
 
@@ -185,3 +199,22 @@ With scenarios 2. & 3. the assumption is that you have copied the relevant backu
   9. As we are indeed performing a Full Restore, we proceed to confirm by inputting Y and press enter
      
      NOTE:: By confirming this input we are telling the script to run some extra code that will also  
+
+
+---
+---
+## Renaming files
+
+In the scenario where the restore system is different from the original system where the backup files were created, you will need to update the main 'vars' file at a minimum. The file name structure adheres to the following structure;
+
+>>>     plinode_{hostname}.vars
+
+Once the "conf" files are restored you should rename the file to match your current systems 'hostname' as follows;
+
+  1. change in to the folder where the vars file is located - by default this is your users home folder.
+
+            cd /$HOME
+
+  2. now we rename the file to match the current system 'hostname'
+
+            mv plinode_plitest.vars "plinode_$(hostname -f)".vars
