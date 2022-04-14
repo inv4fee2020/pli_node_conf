@@ -46,54 +46,17 @@ FUNC_CHECK_DIRS(){
 
     DB_BACKUP_DIR="plinode_backups"
 
-    # Checks if NOT NULL for the 'DB_BACKUP_DIR'variable
-    #if [ ! -z "$DB_BACKUP_DIR" ] ; then
-    #SET_ROOT_DIR=true
-    #echo
-    #echo "checking vars - var is not NULL"
-    #echo "checking vars - var 'DB_BACKUP_DIR' value is: $DB_BACKUP_DIR"
-    #echo "checking vars - check directory exists & create if NOT..."
-
-
-    # Checks if directory exists & creates if not + sets perms
-    # following logic attempts to resolve the leading Root '/' path issue
-
-    #if [ "$SET_ROOT_DIR" == "true" ]; then
-    #    #echo "DEBUG :: BACKUP DIR - IF STEP"
-    #    #echo " root dir flag is true"
-    #    if [ ! -d "/$DB_BACKUP_DIR" ]; then
-    #        echo -e "${RED} SETTING FOLDER PERMS  ${NC}"
-    #        sudo mkdir "$DB_BACKUP_DIR"
-    #        sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
-    #        sudo chmod g+rw "/$DB_BACKUP_DIR";
-    #    fi
-    #else
-        #echo "DEBUG :: BACKUP DIR - IF ELSE STEP"
-        #echo " root dir flag is false"
         if [ ! -d "/$DB_BACKUP_DIR" ]; then
             echo -e "${NC} SETTING FOLDER PERMS  ${NC}"
             sudo mkdir "/$DB_BACKUP_DIR"
-            #sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
-            #sudo chmod g+rw "/$DB_BACKUP_DIR";
         fi
-    #fi
-    #else
-    # If NULL then defaults to using 'plinode_backups' for 'DB_BACKUP_DIR' variable
-    #echo
-    #echo "checking vars - Detected NULL - setting 'default' value.."
-    #export DB_BACKUP_DIR="plinode_backups"
-    #echo "checking vars - var 'DB_BACKUP_DIR' value is now: $DB_BACKUP_DIR"
 
     # adds the variable value to the VARS file
     #echo
     echo "checking vars - updating file "$PLI_DB_VARS_FILE" variable 'DB_BACKUP_DIR' to: "$DB_BACKUP_DIR""
     sed -i.bak 's/DB_BACKUP_DIR=\"\"/DB_BACKUP_DIR=\"'$DB_BACKUP_DIR'\"/g' ~/$PLI_DB_VARS_FILE
-    #fi
-    # Checks if directory exists & creates if not + sets perms
     
     #echo "checking vars - creating directory: "$DB_BACKUP_DIR""
-    #sudo mkdir "/$DB_BACKUP_DIR"
-    #echo
     echo "checking vars - assigning permissions for directory: "/$DB_BACKUP_DIR""
     sudo chown $USER_ID\:$DB_BACKUP_GUSER -R "/$DB_BACKUP_DIR"
     sudo chmod g+rw "/$DB_BACKUP_DIR"
@@ -198,35 +161,3 @@ FUNC_CHECK_DIRS
 
 
 
-
-
-
-
-#case "$1" in
-#        -full)
-#                _OPTION="-full"
-#                FUNC_SETUP_FULL
-#                ;;
-#        -local)
-#                _OPTION="-local"
-#                FUNC_SETUP_LOCAL
-#                ;;
-#        -remote)
-#                _OPTION="-remote"
-#                FUNC_SETUP_REMOTE
-#                ;;
-#        *)
-#                clear
-#                echo 
-#                echo 
-#                echo -e "${GREEN}Usage: $0 {function}${NC}"
-#                echo 
-#                echo -e "${GREEN}where {function} is one of the following;${NC}"
-#                echo 
-#                echo -e "${GREEN}      -full      ==  Configures system for both local & remote backup of config & DB files${NC}"
-#                echo -e "${GREEN}      -local     ==  Configures system for local backup of config & DB files${NC}"
-#                echo -e "${GREEN}      -remote    ==  Configures the system for backup to google drive of config & DB files${NC}"
-#                echo
-#                echo 
-#                echo 
-#esac
