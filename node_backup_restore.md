@@ -29,7 +29,7 @@ When you manually run the backup script, the file are always written to the fold
 
 ### When should I run the backup script?
 
-You should make your first backup after deploying the node. Follow up backups should be captured before every major system update & when you have added additional adapter/initiator configuration to the node.
+You should make your first backup after deploying the node for the first time. Follow up backups should be captured before every major system update & when you have added additional adapter/initiator configuration to the node.
 
 ---
 ---
