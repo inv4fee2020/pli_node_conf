@@ -298,16 +298,110 @@ All of these scenarios involved the installation of the node deployment files
 
             ....timed out waiting for user response - please select a file to restore...
 
-  5. Having confirmed Yes to the scenario confirmation message, this sets a flag within the code the forces a rebuild of the External Initiator process. We see the script restore messages as follows;
+
+  5. Having confirmed Yes to the scenario confirmation message, this sets a flag within the code the forces a rebuild of the External Initiator (EI) process. We see the script restore messages as follows;
 
                DB RESTORE.... unzip file name: /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_10_05.sql.gz
                DB RESTORE.... psql file name: /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_10_05.sql
                DB RESTORE.... restarting service postgresql
             ..   DB RESTORE.... API connection responding - continuing
 
+
   6. There will be a short delay here where the script waits for the local node API to respond following the database service restart.
 
-  7. 
+  7. The next updates to the terminal will show the External Initiator (EI) process being stopped & deleted as part of the rebuild process
+
+            [PM2] Applying action stopProcessId on app [3_initiatorStartPM2](ids: [ 5 ])
+            [PM2] [3_initiatorStartPM2](5) ✓
+            ┌─────┬────────────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+            │ id  │ name                   │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+            ├─────┼────────────────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+            │ 0   │ 2_nodeStartPM2         │ default     │ N/A     │ fork    │ 845384   │ 7s     │ 3    │ online    │ 0%       │ 3.1mb    │ nmadmin  │ disabled │
+            │ 5   │ 3_initiatorStartPM2    │ default     │ N/A     │ fork    │ 0        │ 0      │ 0    │ stopped   │ 0%       │ 0b       │ nmadmin  │ disabled │
+            └─────┴────────────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+            [PM2] Applying action deleteProcessId on app [3_initiatorStartPM2](ids: [ 5 ])
+            [PM2] [3_initiatorStartPM2](5) ✓
+            ┌─────┬───────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+            │ id  │ name              │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+            ├─────┼───────────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+            │ 0   │ 2_nodeStartPM2    │ default     │ N/A     │ fork    │ 845384   │ 7s     │ 3    │ online    │ 0%       │ 3.1mb    │ nmadmin  │ disabled │
+            └─────┴───────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+            [PM2][WARN] Current process list is not synchronized with saved list. App 3_initiatorStartPM2 differs. Type 'pm2 save' to synchronize.
+
+
+  8. The following messages immediately follow, confirming the rebuild of the External Initiator (EI) & restarting the PM2 process
+
+            DB RESTORE - REBUILD EI - authenticate to API with credentials file: .env.apicred
+            DB RESTORE - REBUILD EI - delete existing EI
+            DB RESTORE - REBUILD EI - generating new EI values & extract to file
+            DB RESTORE - REBUILD EI - reading new EI values to variables
+            DB RESTORE - REBUILD EI - creating new EI file
+            [PM2] Starting /home/nmadmin/plugin-deployment/3_initiatorStartPM2.sh in fork_mode (1 instance)
+            [PM2] Done.
+            ┌─────┬────────────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+            │ id  │ name                   │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+            ├─────┼────────────────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+            │ 0   │ 2_nodeStartPM2         │ default     │ N/A     │ fork    │ 846491   │ 16s    │ 7    │ online    │ 0%       │ 3.1mb    │ nmadmin  │ disabled │
+            │ 6   │ 3_initiatorStartPM2    │ default     │ N/A     │ fork    │ 846584   │ 0s     │ 0    │ online    │ 0%       │ 3.3mb    │ nmadmin  │ disabled │
+            └─────┴────────────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+            [PM2] Saving current process list...
+            [PM2] Successfully saved in /home/nmadmin/.pm2/dump.pm2
+
+
+  9. The final message should be confirmation that the restore completed
+
+               DB RESTORE - COMPLETED
+            
+
+  10. In order to validate that the External Initiator (EI) rebuild was successful, we generate a dummy job for the local node, using the job script as follows;
+
+            ./job_alarmclock_test.sh
+
+  11. When prompted enter a dummy string beginning with either xdc or 0x as shown below;
+
+            #
+            #   This script generates the necessary json blob for the Oracle Job-Setup section in the docs
+            #   source: https://docs.goplugin.co/oracle/job-setup
+            #
+            #   The script uses the 'name' & 'endpoint' variables from your local VARS file & prompts
+            #   you to enter the newly generated Oracle contract address (which was generated by the Oracle Deployment section)
+            #
+            #   The script checks for leading  / trailing white spaces and removes as necessary
+            #   & converts the 'xdc' prefix to '0x' as necessary
+            #
+            #
+            Enter your Oracle Contract Address : xdcthisisadummyocatest
+
+
+  12. Having entered the dummy OCA and hit enter, you will see further output as follows;
+
+            --- /dev/fd/63	2022-04-14 01:35:00.131731297 +0000
+            +++ /dev/fd/62	2022-04-14 01:35:00.131731297 +0000
+            @@ -1 +1 @@
+            -xdcthisisadummyocatest
+            +0xthisisadummyocatest
+            #
+            Local node Alarm Clock Sample job id - Copy to your Solidity script
+            =================================================================
+
+            Your Oracle Contract Address is   : 0xthisisadummyocatest
+            Your Alarm Clock Sample Job ID is : cce1ab17354d46d29ce30356d03f4148
+
+
+  13. With a valid Job ID printed to the terminal you have validated that the db restore  & the External Initiator (EI) rebuild was successful
+
+  14. The final check is to confirm that the local Node Address is the same as before you reset / migrated your node. Do this by running the following command;
+
+            ./pli_node_scripts.sh address
+
+
+  15. This command with print the local Node Address to the terminal screen for you to check.
+
+            nmadmin@plitest:~/pli_node_conf$ ./pli_node_scripts.sh address
+
+            Your Plugin node wallet address is: 0x160C2b4b7ea040c58D733feec394774A915D0cb5
+
+            #########################################################################
 
 ---
 ---
