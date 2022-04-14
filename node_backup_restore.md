@@ -6,9 +6,65 @@ _NOTE: There is no **TL:DR** section on this topic given the significance of ope
 
 This particular document assumes that you already have a local clone of the repo on your node.
 
+
+### What files are backed up?
+
+The following details clarify what we are backing up, but as part of the process all files are compressed using gunzip and then gpg encrypted
+#### Conf files;
+All files in you $HOME folder with the _'plinode'_ prefix are selected for backup. This covers the following as an example;
+    - node & backup vars files
+    - exported node recovery keys json files
+
+#### Database files;
+Using the inbuilt postgres database utility, we take a full backup of the plugin node database *_"plugin_mainnet_db"_*, which produces a single sql data file.
+
+
+#### File Encryption
+As touched on above, all compressed backup files are gpg encrypted.  The process follows the same approach as the actual node installation whereby the _KEYSTORE PASSWORD_ is used to secure the backup files.  As this password is already securely stored in your password manager / key safe, it was the logical method to employ rather than creating another strong password to have to store & document.
+
+
+### Where are my backup files stored?
+
+When you manually run the backup script, the file are always written to the folder named "plinode_backups" which itself is located at the Root '/' folder.
+
+### When should I run the backup script?
+
+You should make your first backup after deploying the node. Follow up backups should be captured before every major system update & when you have added additional adapter/initiator configuration to the node.
+
+---
+---
+
 # Performing a BACKUP
 
 **IMPORTANT ::** _Backups are stored locally on your VPS host. It is YOUR responsibility as a node operator to ensure these files are copied to another location off the local node so that you can recover the node in the event of disk corruption / failure._
+
+## 1st time backup - setup step
+
+In the scenario where you are backing up any files for the fisrt time, we need to run the setup script to ensure that all the backup folder and permissions are in place.
+
+  1. Lets now run the setup script to ensure that the backup folder & permissions are in place;
+
+            ./_plinode_setup_bkup.sh
+
+  2. This will produce output to the terminal as it executes, the following is an example of what you can expect;
+
+            nmadmin@plitest:~/pli_node_conf$ ./_plinode_setup_bkup.sh
+            [sudo] password for nmadmin:
+            pre-check vars - checking if gdrive user exits
+            pre-check vars - setting group members for backups - without gdrive
+            pre-check vars - assiging user-group permissions..
+            checking vars - updating file plinode_plitest_bkup.vars variable 'DB_BACKUP_DIR' to: plinode_backups
+            checking vars - assigning permissions for directory: /plinode_backups
+            checking vars - assigning 'DB_BACKUP_PATH' variable: /plinode_backups
+            nmadmin@plitest:~/pli_node_conf$
+
+  3. Lets check the permissions on the "/plinode_backups" folder
+
+            ll / | grep plinode
+
+  4. We should see the folder permissions set like the following example;
+
+            drwxrwxr-x   2 nmadmin nodebackup       4096 Apr 13 10:09 plinode_backups
 
 ### Usage syntax
 
@@ -39,29 +95,7 @@ The following commands will perform a **DATABASE** only backup
 
 ---
 
-### What files are backed up?
 
-The following details clarify what we are backing up, but as part of the process all files are compressed using gunzip and then gpg encrypted
-#### Conf files;
-All files in you $HOME folder with the _'plinode'_ prefix are selected for backup. This covers the following as an example;
-    - node & backup vars files
-    - exported node recovery keys json files
-
-#### Database files;
-Using the inbuilt postgres database utility, we take a full backup of the plugin node database *_"plugin_mainnet_db"_*, which produces a single sql data file.
-
-
-#### File Encryption
-As touched on above, all compressed backup files are gpg encrypted.  The process follows the same approach as the actual node installation whereby the _KEYSTORE PASSWORD_ is used to secure the backup files.  As this password is already securely stored in your password manager / key safe, it was the logical method to employ rather than creating another strong password to have to store & document.
-
-
-### Where are my backup files stored?
-
-When you manually run the backup script, the file are always written to the folder named "plinode_backups" which itself is located at the Root '/' folder.
-
-### When should I run the backup script?
-
-You should make your first backup after deploying the node. Follow up backups should be capture before every major system update & when you have added additional adapter/initiator configuration to the node.
     
 ---
 ---
@@ -181,7 +215,7 @@ All of these scenarios involved the installation of the node deployment files
 
             cd ~/pli_node_conf
 
-  2. Lets now run the setup script;
+  2. Lets now run the setup script to ensure that the backup folder & permissions are in place;
 
             ./_plinode_setup_bkup.sh
 
