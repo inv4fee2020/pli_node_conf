@@ -8,7 +8,7 @@ This particular document assumes that you already have a local clone of the repo
 
 # Performing a BACKUP
 
-**IMPORTANT ::** _Backups are stored locally on your VPS host. It is YOUR responsibility to ensure these files are copied to another location off the local node so that you can recover the node in the event of disk corruption / failure._
+**IMPORTANT ::** _Backups are stored locally on your VPS host. It is YOUR responsibility as a node operator to ensure these files are copied to another location off the local node so that you can recover the node in the event of disk corruption / failure._
 
 ### Usage syntax
 
@@ -62,9 +62,9 @@ As touched on above, all compressed backup files are gpg encrypted.  The process
 There are two approaches to the restore operation as set out below.
 
 ---
-### In-Place RESTORE
+## The in-place RESTORE
 
-An 'in-place' restore is where you need to revert the node to a previous state, this could be either just the conf files or the database files or indeed both.  
+An 'in-place' restore is where you need to revert the node to a previous state, this could be either just the conf files or the database files or indeed both. This scenario does not invole the re-installation of the node deployment files. 
 
 This is not a very involved operation with minimal steps as follows;
 
@@ -129,7 +129,7 @@ This is not a very involved operation with minimal steps as follows;
 
 ---
 ---
-### Full RESTORE 
+## Full RESTORE 
 
 
 
@@ -144,6 +144,7 @@ With scenario 1. the assumption is that there is no movement of any backup files
 
 With scenarios 2. & 3. the assumption is that you have copied the relevant backup files to the original path "/plinode_backups" on your now reset / new VPS host.
 
+All of these scenarios involved the installation of the node deployment files
 
 ##### Keys points to remember.
 
@@ -155,7 +156,17 @@ With scenarios 2. & 3. the assumption is that you have copied the relevant backu
 
 
 ---
-#### How to perform a full restore
+### How to perform a full restore
+
+> This is consists of 4 main steps;
+>   1. Setup system permissions
+>   2. Restore the conf files
+>   3. Perform a fresh node deployment install
+>   4. Restore the database 
+
+
+---
+#### Setup system permissions
 
   1. With the necessary files copied to the fresh VPS under folder "/plinode_backups", we need to set the necessary file permissions so that the main scripts can execute. Lets get into the correct folder to run the scripts;
 
@@ -185,14 +196,19 @@ With scenarios 2. & 3. the assumption is that you have copied the relevant backu
 
             drwxrwxr-x   2 nmadmin nodebackup       4096 Apr 13 10:09 plinode_backups
 
-  6. Now we progress to restore the "conf" files so that we have all our credentials and variables necessary for the re-install of the node software.
+
+
+---
+#### Restore the conf files
+
+  1. Now we progress to restore the "conf" files so that we have all our credentials and variables necessary for the re-install of the node software.
      During this step you will be prompted for your origianl _KEYSTORE PASSWORD_ so best to have it to hand ready for pasting into the terminal.
 
-  7. Lets kick off the "conf" files restore by running the main restore script;
+  2. Lets kick off the "conf" files restore by running the main restore script;
     
         ./_plinode_restore.sh
 
-  8. Now to selecting the type & date-time stamp backup file to restore. You should be presented with a list of files similar to the following;
+  3. Now to selecting the type & date-time stamp backup file to restore. You should be presented with a list of files similar to the following;
      **NOTE ::** _The list of files that you see will be dependent on how many backups you have performed._
 
 
@@ -207,9 +223,9 @@ With scenarios 2. & 3. the assumption is that you have copied the relevant backu
             #?
 
 
-  9. The code detects the file selection and calls the appropriate function to handle the file. 
+    _NOTE :: The code detects the file selection and calls the appropriate function to handle the file._
    
-      i.  If you choose a "conf" file then the script proceeds to restore the contents to the original location: $HOME
+  4. Choose a "conf" file then the script proceeds to restore the contents to the original location: $HOME
           An example of the output would be as follows;
 
                    RESTORE MENU - Restoring file: /plinode_backups/plitest_conf_vars_2022_04_13_10_09.tar.gz.gpg
@@ -226,29 +242,72 @@ With scenarios 2. & 3. the assumption is that you have copied the relevant backu
         
        **REMINDER :: _Be aware of changes to your systems hostname when migrating to a new VPS_**
 
-   
-      ii. If you chose a "db" file you will then be presented with the scenario check message as follows; where you confirm which approach you wish to execute;
 
-            ######################################################################################
-            ######################################################################################
-            ##
-            ##      RESTORE SCENARIO CONFIRMATION...
-            ##
-            ##
-            ##  A Full Restore is ONLY where you have moved backup files to a FRESH / NEW VPS host
-            ##  this includes where you have reset your previous VPS installation to start again..
-            ##
+---
+#### Perform a fresh node deployment install
 
-            Are you performing a Full Restore to BLANK / NEW VPS? - Please answer (Y)es or (N)o 
+  1. We now have your original conf files restored so now we can perform a fresh node installation which will re-use those existing credentials & settings
+
+            ./pli_node_scripts.sh fullnode
+
+  2. When the installation completes we then proceed to restore the database.
 
 
-  10. As this is a full restore, we simply respond Yes to proceed.
+---
+#### Restore the database
+
+  1. Lets kick off the "db" files restore by running the main restore script;
+    
+        ./_plinode_restore.sh
+
+  2. Now to selecting the type & date-time stamp backup file to restore. You should be presented with a list of files similar to the following;
+     **NOTE ::** _The list of files that you see will be dependent on how many backups you have performed._
+
+
+                      Showing last 8 backup files.
+                      Select the number for the file you wish to restore
+
+            1) /plinode_backups/plitest_conf_vars_2022_04_12_22_43.tar.gz.gpg	       6) /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_08_25.sql.gz.gpg
+            2) /plinode_backups/plitest_conf_vars_2022_04_13_10_09.tar.gz.gpg	       7) /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_08_29.sql.gz.gpg
+            3) /plinode_backups/plitest_plugin_mainnet_db_2022_04_12_22_43.sql.gz.gpg  8) /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_10_05.sql.gz.gpg
+            4) /plinode_backups/plitest_plugin_mainnet_db_2022_04_12_22_54.sql.gz.gpg  9) QUIT
+            5) /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_08_21.sql.gz.gpg
+            #?
+
+
+    _NOTE :: The code detects the file selection and calls the appropriate function to handle the file._
+
+  3. Choose a "db" file you will then be presented with the scenario check message as follows; where you confirm which approach you wish to execute;
+
+               RESTORE MENU - Restoring file: /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_10_05.sql.gz.gpg
+                   ######################################################################################
+                   ######################################################################################
+                   ##
+                   ##      RESTORE SCENARIO CONFIRMATION...
+                   ##
+                   ##
+                   ##  A Full Restore is ONLY where you have moved backup files to a FRESH / NEW VPS host
+                   ##  this includes where you have reset your previous VPS installation to start again..
+                   ##
+
+                   Are you performing a Full Restore to BLANK / NEW VPS? - Please answer (Y)es or (N)o 
+
+
+  4. As this is a full restore, we simply respond Yes to proceed.
      **NOTE ::** _There is also a timer set on this input which presents the following message; before repeating to list the available files for restore._
 
             ....timed out waiting for user response - please select a file to restore...
 
-  11. Having confirmed Yes to the scenario confirmation message, this sets a flag within the code the forces a rebuild of the External Initiator process.
+  5. Having confirmed Yes to the scenario confirmation message, this sets a flag within the code the forces a rebuild of the External Initiator process. We see the script restore messages as follows;
 
+               DB RESTORE.... unzip file name: /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_10_05.sql.gz
+               DB RESTORE.... psql file name: /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_10_05.sql
+               DB RESTORE.... restarting service postgresql
+            ..   DB RESTORE.... API connection responding - continuing
+
+  6. There will be a short delay here where the script waits for the local node API to respond following the database service restart.
+
+  7. 
 
 ---
 ---
