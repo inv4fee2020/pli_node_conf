@@ -468,6 +468,11 @@ EOF
 
 
     FUNC_LOGROTATE;
+    
+
+    if [ "$_OPTION" == "fullnode" ]; then
+        bash _plinode_setup_bkup.sh > /dev/null 2>&1
+    fi
 
     echo
     echo -e "${GREEN}#########################################################################${NC}"
@@ -603,6 +608,7 @@ FUNC_NODE_ADDR(){
 FUNC_EXIT(){
     # remove the sudo timeout for USER_ID
     sudo sh -c 'rm -f /etc/sudoers.d/plinode_deploy'
+    source ~/.profile
 	exit 0
 	}
 
@@ -615,6 +621,7 @@ FUNC_EXIT_ERROR(){
 #clear
 case "$1" in
         fullnode)
+                _OPTION="fullnode"
                 FUNC_NODE_DEPLOY
                 #FUNC_VALUE_CHECK
                 ;;
