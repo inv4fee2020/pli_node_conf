@@ -472,7 +472,7 @@ EOF
 
     if [ "$_OPTION" == "fullnode" ]; then
         echo "...INITIAL SETUP FOR BACKUP FOLDER & PERMS"
-        sh _plinode_setup_bkup.sh 
+        bash ~/pli_node_conf/_plinode_setup_bkup.sh
         #> /dev/null 2>&1
     fi
 
