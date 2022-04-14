@@ -601,7 +601,7 @@ FUNC_NODE_ADDR(){
     IFS=$'\n' read -r -d '' -a node_keys_arr < <( plugin keys eth list | grep Address && printf '\0' )
     node_key_primary=$(echo ${node_keys_arr[0]} | sed s/Address:[[:space:]]/''/)
     echo
-    echo -e "${GREEN}      Your Plugin node address is:${NC} ${RED}$node_key_primary ${NC}"
+    echo -e "${GREEN}Your Plugin node regular address is:${NC} ${RED}$node_key_primary ${NC}"
     echo
     echo -e "${GREEN}#########################################################################${NC}"
 }
