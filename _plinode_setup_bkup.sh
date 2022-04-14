@@ -38,18 +38,16 @@ FUNC_DB_VARS(){
 }
 
 
-# create folders
 
 
 FUNC_CHECK_DIRS(){
 
-
     DB_BACKUP_DIR="plinode_backups"
 
-        if [ ! -d "/$DB_BACKUP_DIR" ]; then
-            echo -e "${NC} SETTING FOLDER PERMS  ${NC}"
-            sudo mkdir "/$DB_BACKUP_DIR"
-        fi
+    if [ ! -d "/$DB_BACKUP_DIR" ]; then
+        echo -e "${NC} SETTING FOLDER PERMS  ${NC}"
+        sudo mkdir "/$DB_BACKUP_DIR"
+    fi
 
     # adds the variable value to the VARS file
     #echo
@@ -64,7 +62,6 @@ FUNC_CHECK_DIRS(){
     # Updates the 'DB_BACKUP_PATH' & 'DB_BACKUP_OBJ' variable
     echo "checking vars - assigning 'DB_BACKUP_PATH' variable: "$DB_BACKUP_PATH""
     DB_BACKUP_PATH="/$DB_BACKUP_DIR"
-    
 
 }
 
