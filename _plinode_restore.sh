@@ -123,11 +123,11 @@ FUNC_RESTORE_CONF(){
     echo "   CONFIG FILES RESTORE...."
 
     echo "uncompressing gz file: $RESTORE_FILE"
-    gunzip -df $RESTORE_FILE
-    sleep 2
+    gunzip -df $RESTORE_FILE > /dev/null 2>&1
+    #sleep 2
 
     echo "unpacking tar file: $RESTORE_FILE_CONF"
-    tar -xvf $RESTORE_FILE_CONF --directory=/
+    tar -xvf $RESTORE_FILE_CONF --directory=/$HOME
     sleep 2
 
     shred -uz -n 1 $RESTORE_FILE $RESTORE_FILE_CONF > /dev/null 2>&1
