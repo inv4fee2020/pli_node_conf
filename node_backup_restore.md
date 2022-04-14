@@ -6,7 +6,7 @@ _NOTE: There is no **TL:DR** section on this topic given the significance of ope
 
 This particular document assumes that you already have a local clone of the repo on your node.
 
-## Performing a BACKUP
+# Performing a BACKUP
 
 **IMPORTANT ::** _Backups are stored locally on your VPS host. It is YOUR responsibility to ensure these files are copied to another location off the local node so that you can recover the node in the event of disk corruption / failure._
 
@@ -57,7 +57,7 @@ As touched on above, all compressed backup files are gpg encrypted.  The process
 ---
 ---
 
-## Performing a RESTORE
+# Performing a RESTORE
 
 There are two approaches to the restore operation as set out below.
 
@@ -192,7 +192,42 @@ With scenarios 2. & 3. the assumption is that you have copied the relevant backu
     
         ./_plinode_restore.sh
 
-  8. You will then be presented with the scenario check message where you confirm which approach you wish to execute;
+  8. Now to selecting the type & date-time stamp backup file to restore. You should be presented with a list of files similar to the following;
+     **NOTE ::** _The list of files that you see will be dependent on how many backups you have performed._
+
+
+                      Showing last 8 backup files.
+                      Select the number for the file you wish to restore
+
+            1) /plinode_backups/plitest_conf_vars_2022_04_12_22_43.tar.gz.gpg	       6) /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_08_25.sql.gz.gpg
+            2) /plinode_backups/plitest_conf_vars_2022_04_13_10_09.tar.gz.gpg	       7) /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_08_29.sql.gz.gpg
+            3) /plinode_backups/plitest_plugin_mainnet_db_2022_04_12_22_43.sql.gz.gpg  8) /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_10_05.sql.gz.gpg
+            4) /plinode_backups/plitest_plugin_mainnet_db_2022_04_12_22_54.sql.gz.gpg  9) QUIT
+            5) /plinode_backups/plitest_plugin_mainnet_db_2022_04_13_08_21.sql.gz.gpg
+            #?
+
+
+  9. The code detects the file selection and calls the appropriate function to handle the file. 
+   
+      i.  If you choose a "conf" file then the script proceeds to restore the contents to the original location: $HOME
+          An example of the output would be as follows;
+
+                   RESTORE MENU - Restoring file: /plinode_backups/plitest_conf_vars_2022_04_13_10_09.tar.gz.gpg
+                   CONFIG FILES RESTORE....
+                uncompressing gz file: /plinode_backups/plitest_conf_vars_2022_04_13_10_09.tar.gz
+                unpacking tar file: /plinode_backups/plitest_conf_vars_2022_04_13_10_09.tar
+                home/nmadmin/plinode_job_alarmclock.json
+                home/nmadmin/plinode_plitest_bkup.vars
+                home/nmadmin/plinode_plitest_bkup.vars.bak
+                home/nmadmin/plinode_plitest_keys_2022_04_12_21_44.json
+                home/nmadmin/plinode_plitest_keys_2022_04_13_09_10.json
+                home/nmadmin/plinode_plitest.vars
+
+        
+       **REMINDER :: _Be aware of changes to your systems hostname when migrating to a new VPS_**
+
+   
+      ii. If you chose a "db" file you will then be presented with the scenario check message as follows; where you confirm which approach you wish to execute;
 
             ######################################################################################
             ######################################################################################
@@ -204,12 +239,15 @@ With scenarios 2. & 3. the assumption is that you have copied the relevant backu
             ##  this includes where you have reset your previous VPS installation to start again..
             ##
 
-            Are you performing a Full Restore to BLANK / NEW VPS ? (Y/n)
+            Are you performing a Full Restore to BLANK / NEW VPS? - Please answer (Y)es or (N)o 
 
-    
-  9. As we are indeed performing a Full Restore, we proceed to confirm by inputting Y and press enter
-     
-     NOTE:: By confirming this input we are telling the script to run some extra code that will also  
+
+  10. As this is a full restore, we simply respond Yes to proceed.
+     **NOTE ::** _There is also a timer set on this input which presents the following message; before repeating to list the available files for restore._
+
+            ....timed out waiting for user response - please select a file to restore...
+
+  11. Having confirmed Yes to the scenario confirmation message, this sets a flag within the code the forces a rebuild of the External Initiator process.
 
 
 ---
@@ -218,7 +256,7 @@ With scenarios 2. & 3. the assumption is that you have copied the relevant backu
 
 In the scenario where the restore system is different from the original system where the backup files were created, you will need to update the main 'vars' file at a minimum. The file name structure adheres to the following structure;
 
->>>     plinode_{hostname}.vars
+     plinode_{hostname}.vars
 
 Once the "conf" files are restored you should rename the file to match your current systems 'hostname' as follows;
 
