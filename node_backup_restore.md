@@ -125,7 +125,9 @@ This is not a very involved operation with minimal steps as follows;
 The full restore approach targets the following scenarios;
 
   **1.**  where a full rebuild of your current VPS host - using the "reset_pli.sh" script _(soft reset)_
+
   **2.**  where a full rebuild of your current VPS host - using the control panel reset option of your VPS hosting portal _(hard reset)_
+
   **3.**  migration of your node to another VPS hosting platform
 
 
@@ -136,7 +138,7 @@ With scenarios 2. & 3. the assumption is that you have copied the relevant backu
 
 ###
 
-### Keys points to remember.
+##### Keys points to remember.
 
   - The "vars" configuration file name structure uses the 'hostname' of the VPS where it was created. When migrating to a new VPS hosting platform be aware that the newly provisioned VPS will have a different 'hostname'. 
 
