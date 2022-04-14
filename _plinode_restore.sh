@@ -149,7 +149,7 @@ FUNC_RESTORE_CONF(){
     #sleep 2
 
     echo "unpacking tar file: $RESTORE_FILE_CONF"
-    tar -xvf $RESTORE_FILE_CONF --directory=/$HOME
+    tar -xvf $RESTORE_FILE_CONF --directory=/
     sleep 2
 
     shred -uz -n 1 $RESTORE_FILE $RESTORE_FILE_CONF > /dev/null 2>&1
