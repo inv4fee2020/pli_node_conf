@@ -408,6 +408,15 @@ All of these scenarios involved the installation of the node deployment files
 
             #########################################################################
 
+  16. **FINAL VERIFICATION STEP**
+  As this is a production node restore, you should now proceed to complete the following steps;
+  
+    - Perform a complete AlarmClockSample job with new OCA etc. as per the official docs
+    - confirm the local node balance for PLI & XDC tokens
+
+
+
+
 ---
 ---
 ## Renaming files
