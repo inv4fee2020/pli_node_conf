@@ -70,7 +70,7 @@ FUNC_RESTORE_DECRYPT(){
     #echo $(ls -lh  /plinode_backups/)
     #echo 
     #echo 
-    gpg --verbose --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE  > /dev/null 2>&1 
+    gpg --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE  > /dev/null 2>&1 
     if [[ $? != 0 ]]; then
         echo
         echo -e "${RED}ERROR :: There was a problem with the entered KeyStore password... please check${NC}"
