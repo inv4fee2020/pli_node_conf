@@ -46,7 +46,7 @@ fi
 FUNC_RESTORE_DECRYPT(){
 
     #FUNC_PKG_CHECK
-    set -x
+    #set -x
     PLI_VARS_FILE="plinode_$(hostname -f)".vars
     #echo $PLI_VARS_FILE
     if [[ ! -e ~/$PLI_VARS_FILE ]]; then
@@ -79,7 +79,7 @@ FUNC_RESTORE_DECRYPT(){
         FUNC_EXIT_ERROR;
     fi      
 
-    set +x
+    ##set +x
 
     #echo 
     #echo 
