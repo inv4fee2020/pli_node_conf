@@ -205,7 +205,7 @@ FUNC_CONF_BACKUP_LOCAL(){
 
     ### Call the setup script 
     #set -x
-    bash _plinode_setup_bkup.sh.sh
+    bash _plinode_setup_bkup.sh
     #set +x
 
     #FUNC_PKG_CHECK
