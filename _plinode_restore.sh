@@ -241,7 +241,7 @@ FUNC_RESTORE_MENU(){
     bash _plinode_setup_bkup.sh > /dev/null 2>&1
 
     node_backup_arr=()
-    BACKUP_FILE=$'\n' read -r -d '' -a node_backup_arr < <( find /plinode_backups/ -type f -name *.gpg | head -n 8 | sort )
+    BACKUP_FILE=$'\n' read -r -d '' -a node_backup_arr < <( find /plinode_backups/ -type f -name *.gpg | head -n 8 | sort -z )
     #node_backup_arr+=(quit)
     #echo ${node_backup_arr[@]}
     node_backup_arr_len=${#node_backup_arr[@]}
