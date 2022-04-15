@@ -44,7 +44,7 @@ FUNC_RESTORE_DECRYPT(){
     PLI_VARS_FILE="plinode_$(hostname -f)".vars
     #echo $PLI_VARS_FILE
     if [[ ! -e ~/$PLI_VARS_FILE ]]; then
-        read -r -p "please enter the previous systems .env.password key : " PASS_KEYSTORE      
+        read -r -p "please enter the previous systems .env.password key : " PASS_KEYSTORE
     fi
 
 
@@ -60,6 +60,10 @@ FUNC_RESTORE_DECRYPT(){
     #echo 
     #echo 
     gpg --verbose --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE  > /dev/null 2>&1 
+    if [[ $? != 0 ]]; then
+        echo "ERROR :: There was a problem with the entered KeyStore password... please check"
+        FUNC_EXIT_ERROR;
+    fi      
 
     #echo 
     #echo 
