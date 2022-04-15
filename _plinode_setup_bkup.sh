@@ -43,8 +43,8 @@ FUNC_PKG_CHECK(){
 
     BKUP_PACKAGES=(gpg shred gunzip)
 
-    echo -e "${GREEN}#########################################################################"
-    echo -e "${GREEN}## CHECK NECESSARY PACKAGES HAVE BEEN INSTALLED...${NC}"
+    #echo -e "${GREEN}#########################################################################"
+    #echo -e "${GREEN}## CHECK NECESSARY PACKAGES HAVE BEEN INSTALLED...${NC}"
 
     for i in "${BKUP_PACKAGES[@]}"
     do
