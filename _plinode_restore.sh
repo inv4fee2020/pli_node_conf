@@ -238,8 +238,8 @@ FUNC_RESTORE_MENU(){
 
 
     ### Call the setup script to set permissions & check installed pkgs
-    bash _plinode_setup_bkup.sh
-    
+    bash _plinode_setup_bkup.sh > /dev/null 2>&1
+
     node_backup_arr=()
     BACKUP_FILE=$'\n' read -r -d '' -a node_backup_arr < <( find /plinode_backups/ -type f -name *.gpg | head -n 8 | sort )
     #node_backup_arr+=(quit)
