@@ -337,7 +337,7 @@ All of these scenarios involved the installation of the node deployment files
             #?
 
 
-  **_NOTE ::_** _The code detects the file selection and calls the appropriate function to handle the file._
+  **_NOTE ::_** **_The code detects the file selection and calls the appropriate function to handle the file._**
 
 
   3. Choose a "db" file you will then be presented with the scenario check message as follows; where you confirm which approach you wish to execute;
