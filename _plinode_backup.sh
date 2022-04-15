@@ -204,9 +204,9 @@ FUNC_DB_PRE_CHECKS(){
 FUNC_CONF_BACKUP_LOCAL(){
 
     ### Call the setup script 
-    set -x
-    bash _plinode_setup.sh
-    set +x
+    #set -x
+    ./_plinode_setup.sh
+    #set +x
 
     #FUNC_PKG_CHECK
     FUNC_DB_VARS
