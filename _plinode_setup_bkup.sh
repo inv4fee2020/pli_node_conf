@@ -50,10 +50,10 @@ FUNC_PKG_CHECK(){
     do
         hash $i &> /dev/null
         if [ $? -eq 1 ]; then
-           echo >&2 "package "$i" not found. installing...."
+           #echo >&2 "package "$i" not found. installing...."
            sudo apt install -y "$i"
         fi
-        echo "packages "$i" exist. proceeding...."
+        #echo "packages "$i" exist. proceeding...."
     done
 
 }
