@@ -4,7 +4,7 @@ This document aims to provide guidance on the usage of the scripts associated wi
 
 _NOTE: There is no **TL:DR** section on this topic given the significance of operations being performed so please take the time to read the documentation_
 
-This particular document assumes that you already have a local clone of the repo on your node.
+This particular document assumes that you already have a local clone of the github repository on your new node [Setting up a Plugin $PLI node - Step 4](node_autosetup.md).
 
 
 ### What files are backed up?
