@@ -477,11 +477,13 @@ All of these scenarios involved the installation of the node deployment files
 
 **_NOTE :: Caution should be taken with the following steps as they will impact the success of running a restore_**
 
-## Renameing a VPS
+## Renaming a VPS
 
 By renaming the VPS it saves on having to rename a number of files, which can possibly introduce further issues.
 
-**Back ground ::**  The scripts uses the following command; from which the filenames are derived.
+
+
+**Back ground ::**  The deployment scripts use the following command; from which the filenames are derived.
 
         hostname -f
 
@@ -500,6 +502,9 @@ The above command sources the value from the following system setting "**Static 
 
 
 So to change your systems "**Static hostname**" value, you need to run the following command; the example is renaming the system to 'plitest-renamed'
+
+**IMPORTANT :: Do NOT use any underscores "_" in your name as these introduce further considerations** 
+  -- Lets just **K**eep **I**t **S**imple !!
 
         sudo hostnamectl set-hostname plitest-renamed
 
