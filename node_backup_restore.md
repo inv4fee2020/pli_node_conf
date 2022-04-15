@@ -474,6 +474,54 @@ All of these scenarios involved the installation of the node deployment files
 
 ---
 ---
+
+**_NOTE :: Caution should be taken with the following steps as they will impact the success of running a restore_**
+
+## Renameing a VPS
+
+By renaming the VPS it saves on having to rename a number of files, which can possibly introduce further issues.
+
+**Back ground ::**  The scripts uses the following command; from which the filenames are derived.
+
+        hostname -f
+
+The above command sources the value from the following system setting "**Static hostname**"; using the command **hostnamectl**
+
+        nmadmin@plitest:~$ hostnamectl
+           Static hostname: plitest
+                 Icon name: computer-vm
+                   Chassis: vm
+                Machine ID: c81f3d359a224cfba34b06e348e717aa
+                   Boot ID: 0f3571ddc762471ba83b09e6ea8e00cf
+            Virtualization: vmware
+          Operating System: Ubuntu 20.04.4 LTS
+                    Kernel: Linux 5.4.0-105-generic
+              Architecture: x86-64
+
+
+So to change your systems "**Static hostname**" value, you need to run the following command; the example is renaming the system to 'plitest-renamed'
+
+        sudo hostnamectl set-hostname plitest-renamed
+
+
+Now verify the change using the command **hostnamectl**
+
+        nmadmin@plitest:~$ hostnamectl
+           Static hostname: plitest-renamed
+                 Icon name: computer-vm
+                   Chassis: vm
+                Machine ID: c81f3d359a224cfba34b06e348e717aa
+                   Boot ID: 0f3571ddc762471ba83b09e6ea8e00cf
+            Virtualization: vmware
+          Operating System: Ubuntu 20.04.4 LTS
+                    Kernel: Linux 5.4.0-105-generic
+              Architecture: x86-64
+
+
+All the above information has been sourced from the following article which will provide more detail;
+_source: [How to Set or Change Hostname in Linux](https://linuxize.com/post/how-to-change-hostname-in-linux/)_
+
+
 ## Renaming files
 
 In the scenario where the restore system is different from the original system where the backup files were created, you will need to update the main 'vars' file at a minimum. The file name structure adheres to the following structure;
