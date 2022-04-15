@@ -17,29 +17,29 @@ source ~/"plinode_$(hostname -f)"_bkup.vars
 
 
 
-FUNC_PKG_CHECK(){
-
-    BKUP_PACKAGES=(gpg shred gunzip)
-
-    echo -e "${GREEN}#########################################################################"
-    echo -e "${GREEN}## CHECK NECESSARY PACKAGES HAVE BEEN INSTALLED...${NC}"
-
-    for i in "${BKUP_PACKAGES[@]}"
-    do
-        hash $i &> /dev/null
-        if [ $? -eq 1 ]; then
-           echo >&2 "package "$i" not found. installing...."
-           sudo apt install -y "$i"
-        fi
-        echo "packages "$i" exist. proceeding...."
-    done
-
-}
+#FUNC_PKG_CHECK(){
+#
+#    BKUP_PACKAGES=(gpg shred gunzip)
+#
+#    echo -e "${GREEN}#########################################################################"
+#    echo -e "${GREEN}## CHECK NECESSARY PACKAGES HAVE BEEN INSTALLED...${NC}"
+#
+#    for i in "${BKUP_PACKAGES[@]}"
+#    do
+#        hash $i &> /dev/null
+#        if [ $? -eq 1 ]; then
+#           echo >&2 "package "$i" not found. installing...."
+#           sudo apt install -y "$i"
+#        fi
+#        echo "packages "$i" exist. proceeding...."
+#    done
+#
+#}
 
 
 FUNC_RESTORE_DECRYPT(){
 
-    FUNC_PKG_CHECK
+    #FUNC_PKG_CHECK
     
     PLI_VARS_FILE="plinode_$(hostname -f)".vars
     #echo $PLI_VARS_FILE
@@ -61,7 +61,9 @@ FUNC_RESTORE_DECRYPT(){
     #echo 
     gpg --verbose --batch --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE  > /dev/null 2>&1 
     if [[ $? != 0 ]]; then
-        echo "ERROR :: There was a problem with the entered KeyStore password... please check"
+        echo
+        echo -e "${RED}ERROR :: There was a problem with the entered KeyStore password... please check${NC}"
+        echo
         FUNC_EXIT_ERROR;
     fi      
 
@@ -84,7 +86,7 @@ FUNC_RESTORE_DECRYPT(){
 
     #echo "if complete. existing..."
     if [[ ! -e "$RESTORE_FILE" ]]; then
-    echo "DECRYPT ERROR :: Restore file does not exist"
+    echo -e "{$RED}DECRYPT ERROR :: Restore file does not exist"
     FUNC_EXIT_ERROR;
     fi
 
@@ -234,6 +236,10 @@ FUNC_EXIT_ERROR(){
 FUNC_RESTORE_MENU(){
 
 
+
+    ### Call the setup script to set permissions & check installed pkgs
+    bash _plinode_setup_bkup.sh
+    
     node_backup_arr=()
     BACKUP_FILE=$'\n' read -r -d '' -a node_backup_arr < <( find /plinode_backups/ -type f -name *.gpg | head -n 8 | sort )
     #node_backup_arr+=(quit)
