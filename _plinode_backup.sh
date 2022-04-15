@@ -182,8 +182,8 @@ FUNC_DB_PRE_CHECKS(){
         #echo "${DB_GUSER_MEMBER[@]}"
     fi
     
-    #echo
-    #echo
+    
+    
     echo "pre-check vars - assiging user-group permissions.."
     for _user in "${DB_GUSER_MEMBER[@]}"
     do
@@ -234,37 +234,27 @@ FUNC_DB_BACKUP_LOCAL(){
         FUNC_CHECK_DIRS
     fi
 
-    #echo "$SET_ROOT_DIR"
     # checks if the '.pgpass' credentials file exists - if not creates in home folder & copies to dest folder
     # & sets perms
-    #echo "$DB_BACKUP_PATH"
-    #sleep 2s
+
     echo "local backup - checking pgpass file exists - create if necessary"
     if [ ! -e ~/.pgpass ]; then
-    #clear
 cat <<EOF > ~/.pgpass
 Localhost:5432:$DB_NAME:postgres:$DB_PWD_NEW
 EOF
     fi
 
-    #echo
     echo "local backup - setting pgpass file perms"
-    #if [ "$SET_ROOT_DIR" == "true" ]; then
-    #    cp -p ~/.pgpass /$DB_BACKUP_PATH/.pgpass
-    #    sudo chmod 600 /$DB_BACKUP_PATH/.pgpass
-    #    sudo chown postgres:postgres /$DB_BACKUP_PATH/.pgpass
-    #else
         cp -p ~/.pgpass $DB_BACKUP_PATH/.pgpass
         sudo chown postgres:postgres $DB_BACKUP_PATH/.pgpass
         sudo chmod 600 $DB_BACKUP_PATH/.pgpass
-    #fi
-    
-    #sleep 1s
-    #echo
+        sleep 2s
+        
+
     echo "local backup - running pgdump backup process"
+
     # switch to 'postgres' user and run command to create inital sql dump file
-    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; pg_dump -c -w -U postgres $DB_NAME | gzip > $DB_BACKUP_OBJ"
-    #error_exit;
+    sudo su postgres -c "export PGPASSFILE="$DB_BACKUP_PATH/.pgpass"; pg_dump -c -w -U postgres $DB_NAME | gzip > $DB_BACKUP_OBJ"  > /dev/null 2>&1
     
     #echo
     echo "local backup - successfully created unencrypted compressed gz file:  "$DB_BACKUP_OBJ""
@@ -281,9 +271,9 @@ EOF
         FUNC_DB_BACKUP_REMOTE
     fi
 
-    echo "removing pgpass from backup directory"
+    #echo "removing pgpass from backup directory"
     sudo rm -f $DB_BACKUP_PATH/.pgpass
-    sleep 5s
+    sleep 2s
 
 }
 
