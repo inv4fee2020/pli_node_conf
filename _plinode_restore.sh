@@ -72,7 +72,8 @@ FUNC_RESTORE_DECRYPT(){
     #echo 
     gpg --batch --yes --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE  > /dev/null 2>&1 
     echo $?
-    if [[ $? != 0 ]]; then
+    #if [[ $? != 0 ]]; then
+    if [[ $? -gt 128 ]]; then
         echo
         echo -e "${RED}ERROR :: There was a problem with the entered KeyStore password... please check${NC}"
         echo
@@ -304,7 +305,7 @@ FUNC_DB_DR_CHECK(){
             echo -e "${GREEN}       ##  this includes where you have reset your previous VPS installation to start again..${NC}"
             echo -e "${GREEN}       ##${NC}"
             echo
-            read -t15 -r -p "       Are you performing a Full Restore to BLANK / NEW VPS? - Please answer (Y)es or (N)o " _RES_INPUT
+            read -t15 -r -p "       Are you performing a Full Restore to BLANK / NEW VPS? - Please answer (Y)es or (N)o : " _RES_INPUT
             if [ $? -gt 128 ]; then
                 #clear
                 echo
