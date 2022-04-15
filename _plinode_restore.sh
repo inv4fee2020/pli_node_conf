@@ -54,9 +54,9 @@ FUNC_RESTORE_DECRYPT(){
     fi
 
 
-    #if [ -e ~/"plinode_$(hostname -f)".vars ]; then
+    if [ -e ~/"plinode_$(hostname -f)".vars ]; then
     source ~/"plinode_$(hostname -f)".vars
-    #fi
+    fi
 
 
     #BACKUP_FILE="$IFS"
