@@ -522,6 +522,9 @@ All the above information has been sourced from the following article which will
 _source: [How to Set or Change Hostname in Linux](https://linuxize.com/post/how-to-change-hostname-in-linux/)_
 
 
+
+---------
+
 ## Renaming files
 
 In the scenario where the restore system is different from the original system where the backup files were created, you will need to update the main 'vars' file at a minimum. The file name structure adheres to the following structure;
