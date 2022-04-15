@@ -202,6 +202,8 @@ All of these scenarios involved the installation of the node deployment files
 >
 
 ---
+>
+---
 ### How to perform a full restore
 
 > This is consists of 4 main steps;
