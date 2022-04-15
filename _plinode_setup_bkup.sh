@@ -39,6 +39,26 @@ FUNC_DB_VARS(){
 
 
 
+FUNC_PKG_CHECK(){
+
+    BKUP_PACKAGES=(gpg shred gunzip)
+
+    echo -e "${GREEN}#########################################################################"
+    echo -e "${GREEN}## CHECK NECESSARY PACKAGES HAVE BEEN INSTALLED...${NC}"
+
+    for i in "${BKUP_PACKAGES[@]}"
+    do
+        hash $i &> /dev/null
+        if [ $? -eq 1 ]; then
+           echo >&2 "package "$i" not found. installing...."
+           sudo apt install -y "$i"
+        fi
+        echo "packages "$i" exist. proceeding...."
+    done
+
+}
+
+
 
 FUNC_CHECK_DIRS(){
 
@@ -151,10 +171,7 @@ error_exit()
 }
 
 
-
-FUNC_DB_VARS
-FUNC_DB_PRE_CHECKS
-FUNC_CHECK_DIRS
-
-
-
+FUNC_PKG_CHECK;
+FUNC_DB_VARS;
+FUNC_DB_PRE_CHECKS;
+FUNC_CHECK_DIRS;
