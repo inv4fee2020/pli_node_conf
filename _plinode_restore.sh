@@ -104,6 +104,8 @@ FUNC_RESTORE_DB(){
 
     FUNC_DB_DR_CHECK
 
+    source ~/"plinode_$(hostname -f)".vars
+    
     ### removes last extension suffix to get next file name
     RESTORE_FILE_SQL=$(echo "$RESTORE_FILE" | sed -e 's/\.[^.]*$//')
     
