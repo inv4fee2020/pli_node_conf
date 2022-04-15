@@ -203,10 +203,8 @@ FUNC_DB_PRE_CHECKS(){
 
 FUNC_CONF_BACKUP_LOCAL(){
 
-    ### Call the setup script 
-    #set -x
+    ### Call the setup script to set permissions & check installed pkgs
     bash _plinode_setup_bkup.sh
-    #set +x
 
     #FUNC_PKG_CHECK
     FUNC_DB_VARS
@@ -234,6 +232,10 @@ FUNC_DB_BACKUP_LOCAL(){
 
 
     if [ "$_OPTION" == "-db" ]; then
+
+        ### Call the setup script to set permissions & check installed pkgs
+        bash _plinode_setup_bkup.sh
+
         FUNC_DB_VARS
         FUNC_DB_PRE_CHECKS
         FUNC_CHECK_DIRS
