@@ -189,7 +189,9 @@ With scenarios 2. & 3. the assumption is that you have copied the relevant backu
 
 All of these scenarios involved the installation of the node deployment files
 
-### KEY POINTS TO REMEMBER -- READ CAREFULLY 
+### KEY POINTS TO REMEMBER 
+
+**_!! READ CAREFULLY !!_**
 
 >
 >  - The "vars" configuration file name structure uses the 'hostname' of the VPS where it was created. When migrating to a new VPS hosting platform be aware that the newly provisioned VPS will have a different 'hostname'. 
