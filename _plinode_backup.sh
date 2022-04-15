@@ -281,6 +281,10 @@ EOF
         FUNC_DB_BACKUP_REMOTE
     fi
 
+    echo "removing pgpass from backup directory"
+    sudo rm -f $DB_BACKUP_PATH/.pgpass
+    sleep 5s
+
 }
 
 
