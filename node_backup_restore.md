@@ -503,8 +503,10 @@ The above command sources the value from the following system setting "**Static 
 
 So to change your systems "**Static hostname**" value, you need to run the following command; the example is renaming the system to 'plitest-renamed'
 
-**IMPORTANT :: Do NOT use any underscores "_" in your name as these introduce further considerations** 
-  -- Lets just **K**eep **I**t **S**imple !!
+**IMPORTANT :: Do NOT use any underscores "_" in your name as these introduce further considerations**
+
+-- Lets just **K**eep **I**t **S**imple !!
+
 
         sudo hostnamectl set-hostname plitest-renamed
 
