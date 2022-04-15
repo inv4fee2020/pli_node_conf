@@ -12,8 +12,9 @@ NC='\033[0m' # No Color
 USER_ID=$(getent passwd $EUID | cut -d: -f1)
 GROUP_ID=$(getent group $EUID | cut -d: -f1)
 
-source ~/"plinode_$(hostname -f)".vars
-
+if [ -e ~/"plinode_$(hostname -f)".vars ]; then
+    source ~/"plinode_$(hostname -f)".vars
+fi
 
 FUNC_DB_VARS(){
 ## VARIABLE / PARAMETER DEFINITIONS

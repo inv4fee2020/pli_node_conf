@@ -12,8 +12,14 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m' # No Color
 
-source ~/"plinode_$(hostname -f)".vars
-source ~/"plinode_$(hostname -f)"_bkup.vars
+if [ -e ~/"plinode_$(hostname -f)".vars ]; then
+    source ~/"plinode_$(hostname -f)".vars
+fi
+
+if [ -e ~/"plinode_$(hostname -f)"_bkup.vars ]; then
+    source ~/"plinode_$(hostname -f)"_bkup.vars
+fi
+
 
 
 
