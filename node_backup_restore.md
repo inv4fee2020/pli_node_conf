@@ -198,7 +198,7 @@ All of these scenarios involved the installation of the node deployment files
 >
 >  - The "vars" configuration file name structure uses the 'hostname' of the VPS where it was created. When migrating to a new VPS hosting platform be aware that the newly provisioned VPS will have a different 'hostname'. 
 >
->  - To reduce effort it is recommended that you rename the new VPS to match that of your original system. If this is not possible then you will therefor need to rename the restored files so that they are compatible with the scripts.  
+>  - To reduce effort it is recommended that you rename the new VPS to match that of your original system. If this is not possible then you will therefore need to rename the restored files so that they are compatible with the scripts.  See the [renaming files section](node_backup_restore.md#renaming-files) 
 >
 >  - The script will always restore to the location where the backup files originated. This is only a concern when performing a Full Restore. Operators should ensure that they maintain the same user account details when migrating
 >
