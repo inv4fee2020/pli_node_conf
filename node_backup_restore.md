@@ -20,7 +20,9 @@ Using the inbuilt postgres database utility, we take a full backup of the plugin
 
 
 ####   - File Encryption
-As touched on above, all compressed backup files are gpg encrypted.  The process follows the same approach as the actual node installation whereby the _KEYSTORE PASSWORD_ is used to secure the backup files.  As this password is already securely stored in your password manager / key safe, it was the logical method to employ rather than creating another strong password to have to store & document.
+As touched on above, all compressed backup files are gpg encrypted.  The process follows the same approach as the actual node installation whereby the _KEYSTORE PASSWORD_ is used to secure the backup files.  
+
+As you are already expected to have this password securely stored in your password manager / key safe, it was the logical method to employ rather than creating another strong password to have to store & document.
 
 
 ### Where are my backup files stored?
@@ -183,7 +185,7 @@ The full restore approach targets the following scenarios;
 >  3.  migration of your node to another VPS hosting platform 
 
 
-With scenario 1. the assumption is that there is no movement of any backup files are they have remained intact in their default location of "/plinode_backups".
+With scenario 1. the assumption is that there is no movement of any backup files and they have remained intact in their default location of "/plinode_backups".
 
 With scenarios 2. & 3. the assumption is that you have copied the relevant backup files to the original path "/plinode_backups" on your now reset / new VPS host.
 
@@ -206,11 +208,13 @@ All of these scenarios involved the installation of the node deployment files
 ---
 ### How to perform a full restore
 
-> This is consists of 4 main steps;
+> The process consists of 4 main steps;
+>
 >   1. Setup system permissions
 >   2. Restore the conf files
 >   3. Perform a fresh node deployment install
 >   4. Restore the database 
+>
 
 
 ---
@@ -224,7 +228,7 @@ All of these scenarios involved the installation of the node deployment files
 
             ./_plinode_setup_bkup.sh
 
-  3. This will produce output to the terminal as it executes, the following is an example of what you can expect;
+  3. This will produce output to the terminal as it executes, the following is an example of what you can expect to see;
 
             nmadmin@plitest:~/pli_node_conf$ ./_plinode_setup_bkup.sh
             [sudo] password for nmadmin:
@@ -235,14 +239,6 @@ All of these scenarios involved the installation of the node deployment files
             checking vars - assigning permissions for directory: /plinode_backups
             checking vars - assigning 'DB_BACKUP_PATH' variable: /plinode_backups
             nmadmin@plitest:~/pli_node_conf$
-
-  4. Lets check the permissions on the "/plinode_backups" folder
-
-            ll / | grep plinode
-
-  5. We should see the folder permissions set like the following example;
-
-            drwxrwxr-x   2 nmadmin nodebackup       4096 Apr 13 10:09 plinode_backups
 
 
 ---
