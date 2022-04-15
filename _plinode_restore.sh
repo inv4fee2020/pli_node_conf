@@ -54,6 +54,11 @@ FUNC_RESTORE_DECRYPT(){
     fi
 
 
+    if [ -e ~/"plinode_$(hostname -f)".vars ]; then
+        source ~/"plinode_$(hostname -f)".vars
+    fi
+
+
     #BACKUP_FILE="$IFS"
     RESTORE_FILE=""
     #echo "Starting value of 'Restore File' var: $RESTORE_FILE"
@@ -105,7 +110,7 @@ FUNC_RESTORE_DB(){
     FUNC_DB_DR_CHECK
 
     source ~/"plinode_$(hostname -f)".vars
-    
+
     ### removes last extension suffix to get next file name
     RESTORE_FILE_SQL=$(echo "$RESTORE_FILE" | sed -e 's/\.[^.]*$//')
     
