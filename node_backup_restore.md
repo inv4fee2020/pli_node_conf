@@ -10,16 +10,16 @@ This particular document assumes that you have already prepared your new node as
 ### What files are backed up?
 
 The following details clarify what we are backing up, but as part of the process all files are compressed using gunzip and then gpg encrypted
-#### Conf files;
+####   - Conf files;
 All files in you $HOME folder with the _'plinode'_ prefix are selected for backup. This covers the following as an example;
     - node & backup vars files
     - exported node recovery keys json files
 
-#### Database files;
+####   - Database files;
 Using the inbuilt postgres database utility, we take a full backup of the plugin node database *_"plugin_mainnet_db"_*, which produces a single sql data file.
 
 
-#### File Encryption
+####   - File Encryption
 As touched on above, all compressed backup files are gpg encrypted.  The process follows the same approach as the actual node installation whereby the _KEYSTORE PASSWORD_ is used to secure the backup files.  As this password is already securely stored in your password manager / key safe, it was the logical method to employ rather than creating another strong password to have to store & document.
 
 
