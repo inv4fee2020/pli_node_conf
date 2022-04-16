@@ -43,7 +43,7 @@ FUNC_RESTORE_DECRYPT(){
     #echo "Starting value of 'Restore File' var: $RESTORE_FILE"
     RESTORE_FILE=$(echo $BACKUP_FILE | sed 's/\.[^.]*$//')
     
-    _FILE --decrypt $BACKUP_FILE  > /dev/null 2>&1 
+    gpg --batch --yes --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE  > /dev/null 2>&1 
     echo $?
     #if [[ $? != 0 ]]; then
     if [[ $? -gt 128 ]]; then
