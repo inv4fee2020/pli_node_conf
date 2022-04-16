@@ -60,6 +60,7 @@
 |---|    
     
 The script will prompt you to input your Oracle contract address (in any format) e.g with a prefix of 'xdc' or '0x' and convert it as necessary to the correct format. 
+
 This script with then load the job to the node using the API & return the generated job id to the terminal screen for your use in the AlarmClockSample job in remix.
 
 This ensures that all the values from the node deployment are consistent throughout the process and reduces the likelihood of errors.
