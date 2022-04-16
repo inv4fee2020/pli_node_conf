@@ -113,6 +113,9 @@ FUNC_RESTORE_DB(){
     
     echo "   DB RESTORE.... restarting service postgresql"
     sudo systemctl restart postgresql
+
+
+    echo "   DB RESTORE.... waiting for node API to become available"
     until $(curl --output /dev/null --silent --head --fail http://localhost:6688); do
         printf '.'
         sleep 5
