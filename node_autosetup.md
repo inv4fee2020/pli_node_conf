@@ -56,6 +56,7 @@
         ./job_alarmclock_test.sh
 
 
+
 |<img src="https://github.com/inv4fee2020/docs_pli/blob/main/images/pli_node_testjob_jsonblob%202022-01-27%20at%2010.05.42.png" width=70% height=70%>|
 |---|    
     
