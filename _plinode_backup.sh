@@ -187,10 +187,10 @@ FUNC_CONF_BACKUP_LOCAL(){
     ### Call the setup script to set permissions & check installed pkgs
     bash _plinode_setup_bkup.sh > /dev/null 2>&1
 
-    #FUNC_PKG_CHECK
-    #FUNC_DB_VARS
-    #FUNC_DB_PRE_CHECKS  # order is specific as pre checks for user/groups which are assigned to dirs 
-    #FUNC_CHECK_DIRS
+    
+    FUNC_DB_VARS
+    FUNC_DB_PRE_CHECKS  # order is specific as pre checks for user/groups which are assigned to dirs 
+    FUNC_CHECK_DIRS
 
     #echo
     #echo "local backup - running tar backup process for configuration files"
