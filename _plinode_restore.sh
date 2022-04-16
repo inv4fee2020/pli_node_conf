@@ -292,8 +292,8 @@ FUNC_DB_DR_CHECK(){
                 #echo "....timed out waiting for user response - proceeding as standard in-place restore to existing system..."
                 echo
                 #DR_RESTORE=false
-                #break
                 FUNC_RESTORE_MENU;
+                break
             fi
             case $_RES_INPUT in
                 [Yy][Ee][Ss]|[Yy]* ) 
