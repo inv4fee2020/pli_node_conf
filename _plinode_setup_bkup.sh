@@ -108,7 +108,7 @@ if [ -z "$DB_BACKUP_GUSER" ] && [ ! $(getent group nodebackup) ]; then
     #echo
     #echo "pre-check vars - variable 'DB_BACKUP_GUSER is: NULL && 'default' does not exist"
     #echo "pre-check vars - creating group 'nodebackup'"
-    sudo groupadd nodebackup
+    sudo groupadd nodebackup > /dev/null 2>&1
 
     # adds the variable value to the VARS file
     #echo
@@ -121,7 +121,7 @@ elif [ ! -z "$DB_BACKUP_GUSER" ] && [ ! $(getent group $DB_BACKUP_GUSER) ]; then
     #echo "pre-check vars - variable 'DB_BACKUP_GUSER is: NOT NULL && does not exist"
     #echo
     #echo "pre-check vars - creating group "$DB_BACKUP_GUSER""
-    sudo groupadd $DB_BACKUP_GUSER
+    sudo groupadd $DB_BACKUP_GUSER > /dev/null 2>&1
     #echo "pre-check vars - updating file "$PLI_DB_VARS_FILE" variable DB_BACKUP_GUSER to: nodebackup"
     sed -i.bak 's/DB_BACKUP_GUSER=\"\"/DB_BACKUP_GUSER=\"$DB_BACKUP_GUSER\"/g' ~/$PLI_DB_VARS_FILE
 fi
