@@ -482,7 +482,6 @@ EOF
     #cat $BASH_FILE3
     chmod u+x $BASH_FILE3
 
-    set +x
 
     echo 
     echo -e "${GREEN}#########################################################################${NC}"
@@ -503,6 +502,7 @@ EOF
         #> /dev/null 2>&1
     fi
 
+    set +x
     FUNC_LOGROTATE;
     
 
