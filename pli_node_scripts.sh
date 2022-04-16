@@ -499,7 +499,6 @@ EOF
 
     if [ "$_OPTION" == "initiator" ]; then
         echo "CREATE / REPAIR  EXTERNAL INITIATOR COMPLETED"
-        break
         FUNC_EXIT;
         #> /dev/null 2>&1
     fi
