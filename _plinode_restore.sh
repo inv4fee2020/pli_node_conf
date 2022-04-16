@@ -126,7 +126,7 @@ FUNC_RESTORE_DB(){
 
 
     if [[ ! -e "$RESTORE_FILE" ]]; then
-    echo "ERROR :: Restore file does not exist"
+    echo -e "{$RED}ERROR :: DB Restore file does not exist${NC}"
     FUNC_EXIT_ERROR;
     fi
 
@@ -167,6 +167,11 @@ FUNC_RESTORE_DB(){
 
 
 FUNC_RESTORE_CONF(){
+
+    if [[ ! -e "$RESTORE_FILE" ]]; then
+    echo -e "{$RED}ERROR :: CONF Restore file does not exist${NC}"
+        FUNC_EXIT_ERROR;
+    fi
 
     RESTORE_FILE_CONF=$(echo "$RESTORE_FILE" | sed -e 's/\.[^.]*$//')
     echo "   CONFIG FILES RESTORE...."
