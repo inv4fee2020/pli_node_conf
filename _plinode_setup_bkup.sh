@@ -51,7 +51,7 @@ FUNC_PKG_CHECK(){
         hash $i &> /dev/null
         if [ $? -eq 1 ]; then
            #echo >&2 "package "$i" not found. installing...."
-           sudo apt install -y "$i"
+           sudo apt install -y "$i" > /dev/null 2>&1
         fi
         #echo "packages "$i" exist. proceeding...."
     done
@@ -151,7 +151,7 @@ for _user in "${DB_GUSER_MEMBER[@]}"
 do
     hash $_user &> /dev/null
     #echo "...adding user "$_user" to group "$DB_BACKUP_GUSER""
-    sudo usermod -aG "$DB_BACKUP_GUSER" "$_user"
+    sudo usermod -aG "$DB_BACKUP_GUSER" "$_user" > /dev/null 2>&1
 done 
 
 sleep 1s
