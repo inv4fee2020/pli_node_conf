@@ -426,6 +426,10 @@ FUNC_INITIATOR(){
     if [ $? != 0 ]; then
       echo "ERROR :: Name $PLI_L_INIT_NAME already exists"
       plugin initiators destroy $PLI_L_INIT_NAME
+
+      EI_FILE=$(echo "$BASH_FILE3" | sed -e 's/\.[^.]*$//')                       # cuts the file extension to get the namespace for pm2
+      pm2 stop $EI_FILE && pm2 delete $EI_FILE && pm2 reset all && pm2 save       # deletes existing EI process 
+      
       sleep 1s
       plugin initiators create $PLI_L_INIT_NAME http://localhost:8080/jobs > $PLI_INIT_RAWFILE &> /dev/null 2>&1
       #break;
