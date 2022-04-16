@@ -22,27 +22,6 @@ fi
 
 
 
-
-#FUNC_PKG_CHECK(){
-#
-#    BKUP_PACKAGES=(gpg shred gunzip)
-#
-#    echo -e "${GREEN}#########################################################################"
-#    echo -e "${GREEN}## CHECK NECESSARY PACKAGES HAVE BEEN INSTALLED...${NC}"
-#
-#    for i in "${BKUP_PACKAGES[@]}"
-#    do
-#        hash $i &> /dev/null
-#        if [ $? -eq 1 ]; then
-#           echo >&2 "package "$i" not found. installing...."
-#           sudo apt install -y "$i"
-#        fi
-#        echo "packages "$i" exist. proceeding...."
-#    done
-#
-#}
-
-
 FUNC_RESTORE_DECRYPT(){
 
     #FUNC_PKG_CHECK
@@ -63,14 +42,8 @@ FUNC_RESTORE_DECRYPT(){
     RESTORE_FILE=""
     #echo "Starting value of 'Restore File' var: $RESTORE_FILE"
     RESTORE_FILE=$(echo $BACKUP_FILE | sed 's/\.[^.]*$//')
-    #echo "Return new value of 'Restore File' var: $RESTORE_FILE"
-    #echo "key store secret used: $PASS_KEYSTORE"
-    #echo 
-    #echo 
-    #echo $(ls -lh  /plinode_backups/)
-    #echo 
-    #echo 
-    gpg --batch --yes --passphrase=$PASS_KEYSTORE -o $RESTORE_FILE --decrypt $BACKUP_FILE  > /dev/null 2>&1 
+    
+    _FILE --decrypt $BACKUP_FILE  > /dev/null 2>&1 
     echo $?
     #if [[ $? != 0 ]]; then
     if [[ $? -gt 128 ]]; then
@@ -82,11 +55,7 @@ FUNC_RESTORE_DECRYPT(){
 
     ##set +x
 
-    #echo 
-    #echo 
-    #echo $(ls -lh  /plinode_backups/)
-    #echo 
-    #echo 
+ 
     if [[ "$BACKUP_FILE" =~ "plugin_mainnet_db" ]]; then
         #echo "matched 'contains' db name..."
         FUNC_RESTORE_DB
