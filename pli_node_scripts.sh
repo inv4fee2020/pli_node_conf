@@ -396,7 +396,6 @@ FUNC_INITIATOR(){
         # Added to resolve error running 'plugin help'
         source ~/.profile
     
-    #if [ ! -d "/$PLI_DEPLOY_PATH/$PLI_INITOR_DIR" ]; then
         cd /$PLI_DEPLOY_PATH
         git clone https://github.com/GoPlugin/external-Initiator
         cd $PLI_INITOR_DIR
@@ -409,13 +408,14 @@ FUNC_INITIATOR(){
     echo -e "${GREEN}#########################################################################${NC}"
     echo -e "${GREEN}## CREATE / REPAIR  EXTERNAL INITIATOR...${NC}"
     
-    sleep 3a
+    sleep 3s
     export FEATURE_EXTERNAL_INITIATORS=true
     plugin admin login -f "/$PLI_DEPLOY_PATH/$FILE_API"
     if [ $? != 0 ]; then
       echo
       echo "ERROR :: Unable to Authenticate to Initiator API"
       echo "ERROR :: Re-run initiators function to resole - continuting deployment"
+      sleep 5s
       #FUNC_EXIT_ERROR;
     else
       echo "INFO :: Successfully Authenticated to Initiator API"
@@ -436,15 +436,9 @@ FUNC_INITIATOR(){
       
       sleep 1s
       plugin initiators create $PLI_L_INIT_NAME http://localhost:8080/jobs > $PLI_INIT_RAWFILE 
-      #&> /dev/null 2>&1
-      #break;
     else
       echo "INFO :: Successfully created Initiator"
     fi
-
-    # plugin initiators create xdc http://localhost:8080/jobs
-    # plugin initiators destroy xdc http://localhost:8080/jobs
-    # plugin initiators create xdc http://localhost:8080/jobs > $PLI_INIT_RAWFILE
 
 
     echo 
@@ -505,7 +499,6 @@ EOF
     if [ "$_OPTION" == "initiator" ]; then
         echo "CREATE / REPAIR  EXTERNAL INITIATOR COMPLETED"
         FUNC_EXIT;
-        #> /dev/null 2>&1
     fi
 
     
@@ -515,7 +508,6 @@ EOF
     if [ "$_OPTION" == "fullnode" ]; then
         echo "...INITIAL SETUP FOR BACKUP FOLDER & PERMS"
         bash ~/pli_node_conf/_plinode_setup_bkup.sh
-        #> /dev/null 2>&1
     fi
 
     echo
@@ -695,7 +687,7 @@ case "$1" in
                 echo 
                 echo "      fullnode      ==  deploys the full node incl. external initiator & exports the node keys"
                 echo 
-                echo "      initiator     ==  deploys the external initiator only"
+                echo "      initiator     ==  creates / rebuilds the external initiator only"
                 echo
                 echo "      keys          ==  extracts the node keys from DB and exports to json file for import to MetaMask"
                 echo
