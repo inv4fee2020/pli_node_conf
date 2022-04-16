@@ -1,7 +1,10 @@
 #!/bin/bash
 GREEN='\033[0;32m'
 NC='\033[0m' # No Color
-clear
+JOB_TITLE="Alarm Clock Sample"
+JOB_FNAME="plinode_job_alarmclock.json"
+
+#clear
 echo -e "${GREEN}#"
 echo -e "#   This script generates the necessary json blob for the Oracle Job-Setup section in the docs"
 echo -e "#   source: https://docs.goplugin.co/oracle/job-setup"
@@ -22,7 +25,7 @@ ORACLE_ADDR="$(echo $_INPUT | sed '/^$/d;/^\\s*$/d;s/^xdc/0x/g')"
 diff -u <(echo "$_INPUT") <(echo "$ORACLE_ADDR")
 sleep 2s
 
-cat <<EOF > ~/plinode_local_testjob.json
+cat <<EOF > ~/$JOB_FNAME
 {
     "initiators":[
         {
@@ -60,9 +63,23 @@ cat <<EOF > ~/plinode_local_testjob.json
     "endAt":null
 }
 EOF
-sleep 1s
-echo
-echo " Local node json blob for test job - copy & paste"
-echo
-echo
-cat ~/plinode_local_testjob.json
+#sleep 1s
+#echo
+#echo " Local node json blob for AlarmClockSample job - Reference only"
+#echo
+#cat ~/$JOB_FNAME
+
+plugin admin login -f ~/plugin-deployment/.env.apicred
+plugin job_specs create ~/$JOB_FNAME > /tmp/plinode_job_id.raw
+sed 's/ ║ /,/g;s/╬//g;s/═//g;s/║//g;s/╔//g;s/[[:space:]]//g' /tmp/plinode_job_id.raw > /tmp/plinode_job_id.raw1
+jobid=(); jobid=($(cat /tmp/plinode_job_id.raw1))
+alarmclock_jobid="$(echo ${jobid[2]} | sed 's/,,.*$//')"
+
+echo -e "${GREEN}#"
+echo -e "Local node $JOB_TITLE job id - Copy to your Solidity script"
+echo -e "================================================================="
+echo -e 
+echo -e "Your Oracle Contract Address is   : $ORACLE_ADDR"
+echo -e "Your $JOB_TITLE Job ID is : $alarmclock_jobid ${NC}"
+echo 
+echo 

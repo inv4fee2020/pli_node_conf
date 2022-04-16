@@ -27,7 +27,7 @@ FUNC_VARS(){
 
     PLI_VARS_FILE="plinode_$(hostname -f)".vars
     if [ ! -e ~/$PLI_VARS_FILE ]; then
-        clear
+        #clear
         echo
         echo -e "${RED} #### NOTICE: No VARIABLES file found. ####${NC}"
         echo -e "${RED} ..creating local vars file '$HOME/$PLI_VARS_FILE' ${NC}"
@@ -186,7 +186,7 @@ FUNC_NODE_DEPLOY(){
     echo -e "${GREEN}#########################################################################"
     echo -e "${GREEN}#########################################################################"
     echo -e "${GREEN}"
-    echo -e "${GREEN}                      Script Deployment menthod"
+    echo -e "${GREEN}                  Modular Deployment Script Method"
     echo -e "${GREEN}"
     echo -e "${GREEN}#########################################################################"
     echo -e "${GREEN}#########################################################################${NC}"
@@ -384,32 +384,61 @@ sleep 4s
 
 FUNC_INITIATOR(){
     FUNC_VARS;
-    echo 
-    echo -e "${GREEN}#########################################################################${NC}"
-    echo -e "${GREEN}## CLONE & INSTALL LOCAL INITIATOR...${NC}"
-    echo 
 
-    # Added to resolve error running 'plugin help'
     source ~/.profile
+
+    if [ ! -d "/$PLI_DEPLOY_PATH/$PLI_INITOR_DIR" ]; then
+        echo 
+        echo -e "${GREEN}#########################################################################${NC}"
+        echo -e "${GREEN}## CLONE & INSTALL LOCAL INITIATOR...${NC}"
+        echo 
+
+        # Added to resolve error running 'plugin help'
+        source ~/.profile
     
-    cd /$PLI_DEPLOY_PATH
-    git clone https://github.com/GoPlugin/external-Initiator
-    cd $PLI_INITOR_DIR
-    git checkout main
-    go install
+        cd /$PLI_DEPLOY_PATH
+        git clone https://github.com/GoPlugin/external-Initiator
+        cd $PLI_INITOR_DIR
+        git checkout main
+        go install
+    fi
+
 
     echo 
     echo -e "${GREEN}#########################################################################${NC}"
-    echo -e "${GREEN}## CREATE LOCAL INITIATOR...${NC}"
+    echo -e "${GREEN}## CREATE / REPAIR  EXTERNAL INITIATOR...${NC}"
     
+    sleep 3s
     export FEATURE_EXTERNAL_INITIATORS=true
-    plugin admin login -f "../$FILE_API"
-    sleep 0.5s
-    plugin initiators create $PLI_L_INIT_NAME http://localhost:8080/jobs > $PLI_INIT_RAWFILE
+    plugin admin login -f "/$PLI_DEPLOY_PATH/$FILE_API"
+    if [ $? != 0 ]; then
+      echo
+      echo "ERROR :: Unable to Authenticate to Initiator API"
+      echo "ERROR :: Re-run initiators function to resole - continuting deployment"
+      sleep 5s
+      #FUNC_EXIT_ERROR;
+    else
+      echo "INFO :: Successfully Authenticated to Initiator API"
+    fi
 
-    # plugin initiators create xdc http://localhost:8080/jobs
-    # plugin initiators destroy xdc http://localhost:8080/jobs
-    # plugin initiators create xdc http://localhost:8080/jobs > $PLI_INIT_RAWFILE
+    ### Check if intitator with name xdc already exists
+
+    sleep 0.5s
+
+    plugin initiators create $PLI_L_INIT_NAME http://localhost:8080/jobs > $PLI_INIT_RAWFILE 
+    #&> /dev/null 2>&1
+    if [ $? != 0 ]; then
+      echo "ERROR :: Name $PLI_L_INIT_NAME already exists"
+      plugin initiators destroy $PLI_L_INIT_NAME
+
+      EI_FILE=$(echo "$BASH_FILE3" | sed -e 's/\.[^.]*$//')                       # cuts the file extension to get the namespace for pm2
+      pm2 stop $EI_FILE && pm2 delete $EI_FILE && pm2 reset all && pm2 save       # deletes existing EI process 
+      
+      sleep 1s
+      plugin initiators create $PLI_L_INIT_NAME http://localhost:8080/jobs > $PLI_INIT_RAWFILE 
+    else
+      echo "INFO :: Successfully created Initiator"
+    fi
 
 
     echo 
@@ -454,6 +483,7 @@ EOF
     #cat $BASH_FILE3
     chmod u+x $BASH_FILE3
 
+
     echo 
     echo -e "${GREEN}#########################################################################${NC}"
     echo -e "${GREEN}## START INITIATOR PM2 SERVICE $BASH_FILE3 ${NC}"
@@ -466,8 +496,19 @@ EOF
     sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u $USER_ID --hp /home/$USER_ID
     pm2 save
 
+    if [ "$_OPTION" == "initiator" ]; then
+        echo "CREATE / REPAIR  EXTERNAL INITIATOR COMPLETED"
+        FUNC_EXIT;
+    fi
 
+    
     FUNC_LOGROTATE;
+    
+
+    if [ "$_OPTION" == "fullnode" ]; then
+        echo "...INITIAL SETUP FOR BACKUP FOLDER & PERMS"
+        bash ~/pli_node_conf/_plinode_setup_bkup.sh
+    fi
 
     echo
     echo -e "${GREEN}#########################################################################${NC}"
@@ -497,6 +538,7 @@ EOF
     export FEATURE_EXTERNAL_INITIATORS=true
     . ~/.profile
 
+    FUNC_NODE_ADDR;
     FUNC_EXIT;
 }
 
@@ -586,9 +628,23 @@ EOF
 }
 
 
+FUNC_NODE_ADDR(){
+    cd ~/plugin-deployment
+    plugin admin login -f .env.apicred
+    node_keys_arr=()
+    IFS=$'\n' read -r -d '' -a node_keys_arr < <( plugin keys eth list | grep Address && printf '\0' )
+    node_key_primary=$(echo ${node_keys_arr[0]} | sed s/Address:[[:space:]]/''/)
+    echo
+    echo -e "${GREEN}Your Plugin node regular address is:${NC} ${RED}$node_key_primary ${NC}"
+    echo
+    echo -e "${GREEN}#########################################################################${NC}"
+}
+
+
 FUNC_EXIT(){
     # remove the sudo timeout for USER_ID
     sudo sh -c 'rm -f /etc/sudoers.d/plinode_deploy'
+    source ~/.profile
 	exit 0
 	}
 
@@ -598,13 +654,15 @@ FUNC_EXIT_ERROR(){
 	}
   
 
-clear
+#clear
 case "$1" in
         fullnode)
+                _OPTION="fullnode"
                 FUNC_NODE_DEPLOY
                 #FUNC_VALUE_CHECK
                 ;;
         initiator)
+                _OPTION="initiator"
                 FUNC_INITIATOR
                 ;;
         keys)
@@ -612,6 +670,9 @@ case "$1" in
                 ;;
         logrotate)
                 FUNC_LOGROTATE
+                ;;
+        address)
+                FUNC_NODE_ADDR
                 ;;
         *)
                 
@@ -626,10 +687,12 @@ case "$1" in
                 echo 
                 echo "      fullnode      ==  deploys the full node incl. external initiator & exports the node keys"
                 echo 
-                echo "      initiator     ==  deploys the external initiator only"
+                echo "      initiator     ==  creates / rebuilds the external initiator only"
                 echo
-                echo "      keys          ==  extracts the node keys from DB and exports to json file "
+                echo "      keys          ==  extracts the node keys from DB and exports to json file for import to MetaMask"
                 echo
                 echo "      logrotate     ==  implements the logrotate conf file "
+                echo
+                echo "      address       ==  displays the local nodes address (after fullnode deploy) - required for the 'Fulfillment Request' remix step"
                 echo
 esac
