@@ -422,7 +422,7 @@ FUNC_INITIATOR(){
 
     sleep 0.5s
 
-    plugin initiators create $PLI_L_INIT_NAME http://localhost:8080/jobs > $PLI_INIT_RAWFILE
+    plugin initiators create $PLI_L_INIT_NAME http://localhost:8080/jobs > $PLI_INIT_RAWFILE &> /dev/null 2>&1
     if [ $? != 0 ]; then
       echo "ERROR :: Name $PLI_L_INIT_NAME already exists"
       plugin initiators destroy $PLI_L_INIT_NAME
