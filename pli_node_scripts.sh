@@ -497,6 +497,12 @@ EOF
     pm2 save
 
 
+    if [ "$_OPTION" == "initiator" ]; then
+        echo "CREATE / REPAIR  EXTERNAL INITIATOR COMPLETED"
+        FUNC_EXIT
+        #> /dev/null 2>&1
+    fi
+
     FUNC_LOGROTATE;
     
 
