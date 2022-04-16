@@ -404,8 +404,6 @@ FUNC_INITIATOR(){
         go install
     fi
 
-    set -x
-
 
     echo 
     echo -e "${GREEN}#########################################################################${NC}"
@@ -495,15 +493,13 @@ EOF
     sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u $USER_ID --hp /home/$USER_ID
     pm2 save
 
-    ECHO $_OPTION
-    
     if [ "$_OPTION" == "initiator" ]; then
         echo "CREATE / REPAIR  EXTERNAL INITIATOR COMPLETED"
         FUNC_EXIT;
         #> /dev/null 2>&1
     fi
 
-    set +x
+    
     FUNC_LOGROTATE;
     
 
@@ -665,6 +661,7 @@ case "$1" in
                 #FUNC_VALUE_CHECK
                 ;;
         initiator)
+                _OPTION="initiator"
                 FUNC_INITIATOR
                 ;;
         keys)
