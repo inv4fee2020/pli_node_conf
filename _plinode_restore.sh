@@ -126,7 +126,7 @@ FUNC_RESTORE_DB(){
 
 
     if [[ ! -e "$RESTORE_FILE" ]]; then
-    echo -e "{$RED}ERROR :: DB Restore file does not exist${NC}"
+    echo -e "${RED}ERROR :: DB Restore file does not exist${NC}"
     FUNC_EXIT_ERROR;
     fi
 
@@ -169,7 +169,7 @@ FUNC_RESTORE_DB(){
 FUNC_RESTORE_CONF(){
 
     if [[ ! -e "$RESTORE_FILE" ]]; then
-    echo -e "{$RED}ERROR :: CONF Restore file does not exist${NC}"
+    echo -e "${RED}ERROR :: CONF Restore file does not exist${NC}"
         FUNC_EXIT_ERROR;
     fi
 
