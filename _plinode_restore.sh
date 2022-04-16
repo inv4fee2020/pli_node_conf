@@ -120,8 +120,7 @@ FUNC_RESTORE_DB(){
         printf '.'
         sleep 5
     done
-
-    echo   
+   
     echo           
     echo "   DB RESTORE.... API connection responding - continuing"
     echo
@@ -155,11 +154,11 @@ FUNC_RESTORE_CONF(){
     RESTORE_FILE_CONF=$(echo "$RESTORE_FILE" | sed -e 's/\.[^.]*$//')
     echo "   CONFIG FILES RESTORE...."
 
-    echo "uncompressing gz file: $RESTORE_FILE"
+    echo "   uncompressing gz file: $RESTORE_FILE"
     gunzip -df $RESTORE_FILE > /dev/null 2>&1
     #sleep 2
 
-    echo "unpacking tar file: $RESTORE_FILE_CONF"
+    echo "   unpacking tar file: $RESTORE_FILE_CONF"
     tar -xvf $RESTORE_FILE_CONF --directory=/
     sleep 2
 
@@ -178,15 +177,15 @@ FUNC_REBUILD_EI(){
     sleep 3s
 
     #echo $PWD
-    echo "DB RESTORE - REBUILD EI - authenticate to API with credentials file: $FILE_API"
+    echo "   DB RESTORE - REBUILD EI - authenticate to API with credentials file: $FILE_API"
     plugin admin login -f ~/plugin-deployment/$FILE_API
 
-    echo "DB RESTORE - REBUILD EI - delete existing EI"
+    echo "   DB RESTORE - REBUILD EI - delete existing EI"
     plugin initiators destroy $PLI_L_INIT_NAME
     sleep 2s
     cd /$PLI_DEPLOY_PATH/$PLI_INITOR_DIR
 
-    echo "DB RESTORE - REBUILD EI - generating new EI values & extract to file"
+    echo "   DB RESTORE - REBUILD EI - generating new EI values & extract to file"
     plugin initiators create $PLI_L_INIT_NAME http://localhost:8080/jobs > $PLI_INIT_RAWFILE
 
     sed -i 's/ ║ /,/g;s/╬//g;s/═//g;s/║//g' $PLI_INIT_RAWFILE
@@ -199,11 +198,11 @@ FUNC_REBUILD_EI(){
     #cat $PLI_INIT_DATFILE
     sleep 2s
 
-    echo "DB RESTORE - REBUILD EI - reading new EI values to variables"
+    echo "   DB RESTORE - REBUILD EI - reading new EI values to variables"
     read -r -d '' EXT_ACCESSKEY EXT_SECRET EXT_OUTGOINGTOKEN EXT_OUTGOINGSECRET <$PLI_INIT_DATFILE
 
 
-    echo "DB RESTORE - REBUILD EI - creating new EI file"
+    echo "   DB RESTORE - REBUILD EI - creating new EI file"
     cd /$PLI_DEPLOY_PATH
     cat <<EOF > $BASH_FILE3
 #!/bin/bash
