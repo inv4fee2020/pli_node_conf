@@ -306,13 +306,14 @@ FUNC_DB_DR_CHECK(){
             fi
             case $_RES_INPUT in
                 [Yy][Ee][Ss]|[Yy]* ) 
-                    DR_RESTORE=true
+                    DR_RESTORE=true     #flag used to involke the EI REBUID FUNC
                     #FUNC_RESTORE_MENU
                     break
                     ;;
                 [Nn][Oo]|[Nn]* ) 
                     #FUNC_RESTORE_MENU
                     DR_RESTORE=false
+                    echo
                     break
                     ;;
                 * ) echo "Please answer (y)es or (n)o.";;
