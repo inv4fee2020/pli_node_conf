@@ -124,7 +124,7 @@ FUNC_DB_PRE_CHECKS(){
         #echo
         #echo "pre-check vars - variable 'DB_BACKUP_GUSER is: NULL && 'default' does not exist"
         #echo "pre-check vars - creating group 'nodebackup'"
-        sudo groupadd nodebackup
+        sudo groupadd nodebackup > /dev/null 2>&1
     
         # adds the variable value to the VARS file
         #echo
@@ -188,9 +188,9 @@ FUNC_CONF_BACKUP_LOCAL(){
     bash _plinode_setup_bkup.sh > /dev/null 2>&1
 
     #FUNC_PKG_CHECK
-    FUNC_DB_VARS
-    FUNC_DB_PRE_CHECKS  # order is specific as pre checks for user/groups which are assigned to dirs 
-    FUNC_CHECK_DIRS
+    #FUNC_DB_VARS
+    #FUNC_DB_PRE_CHECKS  # order is specific as pre checks for user/groups which are assigned to dirs 
+    #FUNC_CHECK_DIRS
 
     #echo
     #echo "local backup - running tar backup process for configuration files"
