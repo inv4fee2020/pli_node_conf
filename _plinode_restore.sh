@@ -115,13 +115,17 @@ FUNC_RESTORE_DB(){
     sudo systemctl restart postgresql
 
 
-    echo "   DB RESTORE.... waiting for node API to become available"
+    echo "   DB RESTORE.... waiting for API to respond"
     until $(curl --output /dev/null --silent --head --fail http://localhost:6688); do
         printf '.'
         sleep 5
-    done        
+    done
+
+    echo   
+    echo           
     echo "   DB RESTORE.... API connection responding - continuing"
-    #sleep 15
+    echo
+    echo       
 
     ### NOTE: .pgpass file would need to be manually re-created inorder to restore files? As would the .env.password keystore
 
@@ -132,7 +136,10 @@ FUNC_RESTORE_DB(){
         FUNC_REBUILD_EI
     fi
     
+    echo
+    echo
     echo "   DB RESTORE - COMPLETED"
+    echo
 
     FUNC_EXIT
 }
