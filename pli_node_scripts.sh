@@ -389,6 +389,8 @@ FUNC_INITIATOR(){
     echo -e "${GREEN}## CLONE & INSTALL LOCAL INITIATOR...${NC}"
     echo 
 
+    set -x
+
     # Added to resolve error running 'plugin help'
     source ~/.profile
     
@@ -453,6 +455,8 @@ EOF
     #sleep 1s
     #cat $BASH_FILE3
     chmod u+x $BASH_FILE3
+
+    set +x
 
     echo 
     echo -e "${GREEN}#########################################################################${NC}"
