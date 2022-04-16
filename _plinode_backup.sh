@@ -170,7 +170,7 @@ FUNC_DB_PRE_CHECKS(){
     do
         hash $_user &> /dev/null
         #echo "...adding user "$_user" to group "$DB_BACKUP_GUSER""
-        sudo usermod -aG "$DB_BACKUP_GUSER" "$_user"
+        sudo usermod -aG "$DB_BACKUP_GUSER" "$_user" > /dev/null 2>&1
     done 
     
     sleep 2s
@@ -298,7 +298,7 @@ FUNC_CONF_BACKUP_ENC(){
         sudo chown $DB_BACKUP_FUSER:$DB_BACKUP_GUSER $ENC_PATH/$ENC_CONFNAME
         #echo
         echo "local backup - securely erase unencrypted conf file:  "$CONF_BACKUP_OBJ""
-        shred -uz -n 1 $CONF_BACKUP_OBJ
+        shred -uz -n 1 $CONF_BACKUP_OBJ 
     fi
 }
 
