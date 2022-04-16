@@ -409,11 +409,14 @@ FUNC_INITIATOR(){
     echo -e "${GREEN}#########################################################################${NC}"
     echo -e "${GREEN}## CREATE / REPAIR  EXTERNAL INITIATOR...${NC}"
     
+    sleep 3a
     export FEATURE_EXTERNAL_INITIATORS=true
     plugin admin login -f "/$PLI_DEPLOY_PATH/$FILE_API"
     if [ $? != 0 ]; then
+      echo
       echo "ERROR :: Unable to Authenticate to Initiator API"
-      FUNC_EXIT_ERROR;
+      echo "ERROR :: Re-run initiators function to resole - continuting deployment"
+      #FUNC_EXIT_ERROR;
     else
       echo "INFO :: Successfully Authenticated to Initiator API"
     fi
