@@ -384,30 +384,56 @@ sleep 4s
 
 FUNC_INITIATOR(){
     FUNC_VARS;
-    echo 
-    echo -e "${GREEN}#########################################################################${NC}"
-    echo -e "${GREEN}## CLONE & INSTALL LOCAL INITIATOR...${NC}"
-    echo 
+
+    source ~/.profile
+
+    if [ ! -d "/$PLI_DEPLOY_PATH/$PLI_INITOR_DIR" ]; then
+        echo 
+        echo -e "${GREEN}#########################################################################${NC}"
+        echo -e "${GREEN}## CLONE & INSTALL LOCAL INITIATOR...${NC}"
+        echo 
+
+        # Added to resolve error running 'plugin help'
+        source ~/.profile
+    
+    #if [ ! -d "/$PLI_DEPLOY_PATH/$PLI_INITOR_DIR" ]; then
+        cd /$PLI_DEPLOY_PATH
+        git clone https://github.com/GoPlugin/external-Initiator
+        cd $PLI_INITOR_DIR
+        git checkout main
+        go install
+    fi
 
     set -x
 
-    # Added to resolve error running 'plugin help'
-    source ~/.profile
-    
-    cd /$PLI_DEPLOY_PATH
-    git clone https://github.com/GoPlugin/external-Initiator
-    cd $PLI_INITOR_DIR
-    git checkout main
-    go install
 
     echo 
     echo -e "${GREEN}#########################################################################${NC}"
-    echo -e "${GREEN}## CREATE LOCAL INITIATOR...${NC}"
+    echo -e "${GREEN}## CREATE / REPAIR  EXTERNAL INITIATOR...${NC}"
     
     export FEATURE_EXTERNAL_INITIATORS=true
     plugin admin login -f "../$FILE_API"
+    if [ $? != 0 ]; then
+      echo "ERROR :: Unable to Authenticate to Initiator API"
+      FUNC_EXIT_ERROR;
+    else
+      echo "INFO :: Successfully Authenticated to Initiator API"
+    fi
+
+    ### Check if intitator with name xdc already exists
+
     sleep 0.5s
+
     plugin initiators create $PLI_L_INIT_NAME http://localhost:8080/jobs > $PLI_INIT_RAWFILE
+    if [ $? != 0 ]; then
+      echo "ERROR :: Name $PLI_L_INIT_NAME already exists"
+      plugin initiators destroy $PLI_L_INIT_NAME
+      sleep 1s
+      plugin initiators create $PLI_L_INIT_NAME http://localhost:8080/jobs > $PLI_INIT_RAWFILE
+      break;
+    else
+      echo "INFO :: Successfully created Initiator"
+    fi
 
     # plugin initiators create xdc http://localhost:8080/jobs
     # plugin initiators destroy xdc http://localhost:8080/jobs
