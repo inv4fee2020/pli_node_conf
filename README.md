@@ -116,13 +116,11 @@ Testing the external initiator after a rebuild should be performed using the tes
 
 This test should return a job id to the terminal screen as follows;  
 
-       |---|
-       | Local node Alarm Clock Sample job id - Copy to your Solidity script|
-       | =================================================================|
-       ||
-       | Your Oracle Contract Address is   : 0xthisisadummyoca|
-       | Your Alarm Clock Sample Job ID is : 735e293770ce462eb010ec10dff8e5c6   <<<<<<<<<<<|
-       |---|
+        Local node Alarm Clock Sample job id - Copy to your Solidity script
+        =================================================================
+       
+        Your Oracle Contract Address is   : 0xthisisadummyoca
+        Your Alarm Clock Sample Job ID is : 735e293770ce462eb010ec10dff8e5c6   <<<<<<<<<<<
 
 
 
@@ -148,12 +146,11 @@ to check the state of the logrotate config, issue the following cmd;
 
 This function obtains the local nodes primary address. This is necessary for remix fulfillment & node submissions tasks.
 
-|nmadmin@plitest:~/pli_node_conf$ ./pli_node_scripts.sh address|
-||
-|Your Plugin node regular address is: 0x160C2b4b7ea040c58D733feec394774A915D0cb5|
-||
-|#########################################################################|
-|---|
+        nmadmin@plitest:~/pli_node_conf$ ./pli_node_scripts.sh address
+
+        Your Plugin node regular address is: 0x160C2b4b7ea040c58D733feec394774A915D0cb5
+
+        #########################################################################
 
 
 **_NOTE: The script uses a base install folder is your linux users $HOME folder - which is now set as a VARIABLE._**
