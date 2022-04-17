@@ -116,6 +116,7 @@ Testing the external initiator after a rebuild should be performed using the tes
 
 This test should return a job id to the terminal screen as follows;  
 
+       |---|
        | Local node Alarm Clock Sample job id - Copy to your Solidity script|
        | =================================================================|
        ||
