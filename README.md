@@ -1,8 +1,8 @@
 # pli_node_conf
-Misc. scripts for GoPlugin $PLI node setup using the SCRIPT METHOD.
+Modular scripts for @GoPlugin ($PLI) node setup & maintenance.
 
 ### contributers: 
-A very special thanks & shout out to;
+A very special thanks & shout out to the following discord members for their input & testing;
 - @samsam
 - @go140point6
 ---
@@ -13,7 +13,7 @@ A very special thanks & shout out to;
 
 ---
 
-# TL:DR - Fully Automated Installation
+# TL;DR - Fully Automated Installation
 
 *_Update 28.03.22 : code moved to performing automated installation by default. Operators that wish to use their own credentials should still continue to update the vars file manually before excuting the main script._*
 
@@ -24,9 +24,11 @@ The [node automated setup](node_autosetup.md) builds upon the previous 'node set
 
 Simply follow the steps in the [node automated setup](node_autosetup.md) & have a working node in approx 20-30mins _(depending on system specs)_ ready for you to perform your REMIX contract & jobs config steps.
 
-
+---
 |**NOTE : !! Be sure to perform a [Full Backup](node_backup_restore.md) of your system once it has been approved !!**|
 |---|
+---
+
 
 The following youtube shows the entire process from a fresh VPS installation to a running node based on the above setup steps;
  - [pli node deployment - automated script method](https://youtu.be/wOKA24sLmPM)
