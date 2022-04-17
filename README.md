@@ -121,6 +121,7 @@ This test should return a job id to the terminal screen as follows;
        ||
        | Your Oracle Contract Address is   : 0xthisisadummyoca|
        | Your Alarm Clock Sample Job ID is : 735e293770ce462eb010ec10dff8e5c6   <<<<<<<<<<<|
+       |---|
 
 
 
@@ -151,6 +152,7 @@ This function obtains the local nodes primary address. This is necessary for rem
 |Your Plugin node regular address is: 0x160C2b4b7ea040c58D733feec394774A915D0cb5|
 ||
 |#########################################################################|
+|---|
 
 
 **_NOTE: The script uses a base install folder is your linux users $HOME folder - which is now set as a VARIABLE._**
