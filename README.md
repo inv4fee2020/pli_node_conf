@@ -2,7 +2,7 @@
 Misc. scripts for GoPlugin $PLI node setup using the SCRIPT METHOD.
 
 ### contributers: 
-Thanks to all the Plugin discord community for their input / feedback with special mention to;
+A very special thanks & shout out to;
 - @samsam
 - @go140point6
 ---
@@ -91,7 +91,7 @@ The scripts has a number of functions, one of which must be passed to run the sc
         where {function} is one of the following;
 
               fullnode      ==  deploys the full node incl. external initiator & exports the node keys
-              initiator     ==  deploys the external initiator only
+              initiator     ==  Create / Rebuild the external initiator only
               keys          ==  extracts the node keys from DB and exports to json file
               logrotate     ==  implements the logrotate conf file
 
@@ -103,7 +103,24 @@ This function calls all other function as part of deploying the full node.
 
 ### Function: initiator
 This function performs just the external initiator section and skips the main node deployment. 
+
 The key aspect to this function is the file manipulation to extract the access secrets/tokens and complete the registration process vastly reducing the chances of any errors.
+
+This function has also been enhanced to accommodate scenarios where the initiator does not deploy correctly.  Running this command with perform necessary checks & rebuild the external initiator.  
+
+Testing the external initiator after a rebuild should be performed using the test alarm clock job with a dummy OCA eg 'xdcthisisadummyoca';
+
+        ./job_alarmclock_test.sh
+
+
+This test should return a job id to the terminal screen as follows;  
+
+       | Local node Alarm Clock Sample job id - Copy to your Solidity script
+       | =================================================================
+       |
+       | Your Oracle Contract Address is   : 0xthisisadummyoca
+       | Your Alarm Clock Sample Job ID is : 735e293770ce462eb010ec10dff8e5c6   <<<<<<<<<<<
+
 
 
 ### Function: keys
@@ -117,7 +134,7 @@ The output json file (example below) is then imported to MM as per step 5 of ['W
 
 This function implements the necessary logrotate configuration to aid with the management of the nodes PM2 logs. By default the logging level is DEBUGGING and so if left un-checked, these logs will eventually consume all available disk space.
 
-logs are set to rotate every 10 days.
+**NOTE: logs are set to rotate every 10 days.**
 
 to check the state of the logrotate config, issue the following cmd;
         
@@ -164,6 +181,8 @@ Basic function is to;
 - delete all postgres related system folders
 - remove the postgres user & group
 - delete all plugin installaton folders under the users $HOME folder
+
+This script resets your VPS to a pre-deployment state, allowing you to re-install the node software without reseting the VPS system.
 
 
 ---
