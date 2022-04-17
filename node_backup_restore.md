@@ -1,8 +1,8 @@
-# Performing Backup & Restore operations on your Plugin $PLI node
+# Performing Backup & Restore operations on your Plugin ($PLI) node
 
 This document aims to provide guidance on the usage of the scripts associated with performing manual backup & restore operations.
 
-_NOTE: There is no **TL:DR** section on this topic given the significance of operations being performed so please take the time to read the documentation_
+_NOTE: There is no **TL;DR** section on this topic given the significance of operations being performed so please take the time to read the documentation_
 
 This particular document assumes that you have already prepared your new node as per [Setting up a Plugin $PLI node - Steps 1 to 4](node_autosetup.md).
 
@@ -33,7 +33,13 @@ When you manually run the backup script, the file are always written to the fold
 
 ### When should I run the backup script?
 
-You should make your first backup after deploying the node for the first time. Follow up backups should be captured before every major system update & when you have added additional adapter/initiator configuration to the node.
+You should make your first backup after deploying the node and having completed the validation alarm clock test as part of node approval submission. 
+
+Follow up backups should be captured when you have added additional adapter/initiator configuration to the node.
+
+|---|
+| **CAUTION :: A backup is not guaranteed until you have performed a restore and validated the integrity of the data.** |
+|---|
 
 ---
 ---
