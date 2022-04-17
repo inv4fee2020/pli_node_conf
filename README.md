@@ -90,6 +90,7 @@ The scripts has a number of functions, one of which must be passed to run the sc
 >     initiators
 >     keys
 >     logrotate
+>     address
 
 ### Usage
 
