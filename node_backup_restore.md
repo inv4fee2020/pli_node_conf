@@ -37,7 +37,7 @@ You should make your first backup after deploying the node and having completed 
 
 Follow up backups should be captured when you have added additional adapter/initiator configuration to the node.
 
-|---|
+
 | **CAUTION :: A backup is not guaranteed until you have performed a restore and validated the integrity of the data.** |
 |---|
 
