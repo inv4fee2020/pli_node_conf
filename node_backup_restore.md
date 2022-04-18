@@ -43,7 +43,7 @@ Follow up backups should be captured when you have added additional adapter/init
 
 ### How do I integrate these new scripts to my nodes existing scripts
 
-To obtain the latest scripts, you simply update the local scripts folder (a.k.a. repo or repository). This is explained in the ['Refreshing your local repo](readme.md#refreshing-your-local-repo) section on the main readme.
+To obtain the latest scripts, you simply update the local scripts folder (a.k.a. repo or repository). This is explained in the ['Refreshing your local repo](pli_node_conf#refreshing-your-local-repo) section on the main readme.
 
 
 ---
