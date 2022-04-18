@@ -35,6 +35,8 @@ The following files/folders are not currently backed up as part of this process;
   - External Adapters & Bridges
 
 
+---
+
 ### Where are my backup files stored?
 
 When you manually run the backup script, the file are always written to the folder named **"plinode_backups"** which itself is located at the Root '/' folder.
