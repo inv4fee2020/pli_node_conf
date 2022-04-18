@@ -307,7 +307,7 @@ All of these scenarios involved the installation of the node deployment files
                 home/nmadmin/plinode_plitest.vars
 
         
-       **REMINDER :: _Be aware of changes to your systems hostname when migrating to a new VPS. At the very least you will need to rename the restore conf to match you new VPS._**
+       **REMINDER :: _Be aware of changes to your systems hostname when migrating to a new VPS. At the very least you will need to rename the restored conf file to match you new VPS hostname._**
        
        **Checkout the [renaming files](node_backup_restore.md#renaming-files) section on how to change the vars filename.**
 
