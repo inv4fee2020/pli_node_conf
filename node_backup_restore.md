@@ -59,7 +59,7 @@ In the scenario where you are backing up any files for the fisrt time, we need t
 
   1. Lets now run the setup script to ensure that the backup folder & permissions are in place;
 
-            ./_plinode_setup_bkup.sh
+            cd ~/pli_node_conf && ./_plinode_setup_bkup.sh
 
   2. This will produce output to the terminal as it executes, the following is an example of what you can expect;
 
