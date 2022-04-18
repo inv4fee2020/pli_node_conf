@@ -209,6 +209,7 @@ All of these scenarios involved the installation of the node deployment files
 >
 >  - To reduce effort it is recommended that you rename the new VPS to match that of your original system. If this is not possible then you will therefore need to rename the restored files so that they are compatible with the scripts.  See the [renaming files section](node_backup_restore.md#renaming-files) 
 >
+>
 >  - The script will always restore to the location where the backup files originated. This is only a concern when performing a Full Restore. Operators should ensure that they maintain the same user account details when migrating
 >
 
@@ -219,25 +220,29 @@ All of these scenarios involved the installation of the node deployment files
 
 > The process consists of 4 main steps;
 >
->   1. Setup system permissions
->   2. Restore the conf files
->   3. Perform a fresh node deployment install
->   4. Restore the database 
+>   1. Perform system updates & clone the repo
+>   2. Setup system permissions
+>   3. Restore the conf files
+>   4. Perform a fresh node deployment install
+>   5. Restore the database 
 >
 
 
 ---
 #### Setup system permissions
 
-  1. With the necessary files copied to the fresh VPS under folder "/plinode_backups", we need to set the necessary file permissions so that the main scripts can execute. Lets get into the correct folder to run the scripts;
+  1. To update your system & clone the deployment scripts from github, simply follow steps 1 through 4 of the [Setting up a Plugin $PLI node - Automated Script Method](node_autosetup.md) & logon as your new admin user.
+  
+  
+  2. With the necessary files copied to the fresh VPS under folder "/plinode_backups", we need to set the necessary file permissions so that the main scripts can execute. Lets get into the correct folder to run the scripts;
 
             cd ~/pli_node_conf
 
-  2. Lets now run the setup script to ensure that the backup folder & permissions are in place;
+  3. Lets now run the setup script to ensure that the backup folder & permissions are in place;
 
             ./_plinode_setup_bkup.sh
 
-  3. This will produce output to the terminal as it executes, the following is an example of what you can expect to see;
+  4. This will produce output to the terminal as it executes, the following is an example of what you can expect to see;
 
             nmadmin@plitest:~/pli_node_conf$ ./_plinode_setup_bkup.sh
             [sudo] password for nmadmin:
