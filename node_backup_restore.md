@@ -295,7 +295,7 @@ All of these scenarios involved the installation of the node deployment files
 
 >  **NOTE :: At this point you would copy the backup files onto the new VPS host, now that the backups folder has been re-created.**
 >
->  **An example of this would be using SCP to copy from another linux VPS**
+>  **An example of this would be using SCP to copy between linux VPS e.g. Scenario 3 and [copy backup files between 2 Linux VPS hosts](node_backup_restore.md#Copy-backup-files-between-Linux-VPS-hosts)**
 >
 >  **You will need to re-run the above setup script `_plinode_setup_bkup.sh` to reset the file permissions for the files that you have copied into the backups folder in order that the scripts will have the correct permissions to the files as part of the restore process.**
 
@@ -534,8 +534,7 @@ All of these scenarios involved the installation of the node deployment files
 
 ## Renaming a VPS
 
-By renaming the VPS it saves on having to rename a number of files, which can possibly introduce further issues.
-
+By renaming the VPS it can potentially save on having to rename a number of files, which can possibly introduce further issues.
 
 
 **Back ground ::**  The deployment scripts use the following command; from which the filenames are derived.
@@ -583,6 +582,8 @@ Now verify the change using the command **hostnamectl**
 All the above information has been sourced from the following article which will provide more detail;
 _source: [How to Set or Change Hostname in Linux](https://linuxize.com/post/how-to-change-hostname-in-linux/)_
 
+Once the 'Static hostname' has been changed, you must ensure that you also update the 'hosts' file.
+
 
 
 ---------
@@ -599,6 +600,28 @@ Once the "conf" files are restored you should rename the file to match your curr
 
             cd /$HOME
 
-  2. now we rename the file to match the current system 'hostname'
+  2. now we rename the file to match the current system 'hostname'. The following example shows the original vars file of a host system named 'plitest';
 
             mv plinode_plitest.vars "plinode_$(hostname -f)".vars
+
+
+
+---------
+
+## Copy backup files between Linux VPS hosts
+
+The following steps provide an example of how to move your backup files from the 'original' VPS to a new 'target' VPS. 
+
+As set out above in other parts of this documentation, the following steps assume that you have maintained the same username & password on the 'target' VPS as was used on the 'original' VPS. If this is not the case then you should adjust appropriately.
+
+  1. Logon to your new 'target' VPS with your user admin account.
+
+  2. From the 'target' VPS run the following command; 
+
+            scp bhcadmin@162.55.179.118:/plinode_backups/*.gpg ~/
+
+     - This will connect into the 'original' VPS and copy the backup files to the 'target' VPS. The following exmaple shows the admin user account as 'bhcadmin' with the IP address of the 'original' VPS. 
+
+     - The ':/plinode_backups/*.gpg' portion of the command is the backups folder where we know our backup scripts create the back files to.  We also know that the created backup files are encrypted with the extension 'gpg', so we copy all the 'gpg' files.
+     
+     - The final portion of the command '~/' is the linux alias for the user home folder and represents the home folder on the 'target' VPS to where you are copying the files. 
