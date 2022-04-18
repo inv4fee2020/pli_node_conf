@@ -110,6 +110,29 @@ The following commands will perform a **DATABASE** only backup
 
 ---
 
+### Check the backups folder contents
+
+Once you have run any of the backup functions listed above, you may way to confirm that the files have been created successfully to verfiy the completion messages that the scripts provide.
+
+To do this simply list the contents of the `plinode_backups` folder as follows;
+
+    ll /plinode_backups
+
+
+You should see something similar to the following;
+
+
+    nmadmin@plitest:~/pli_node_conf$ ll /plinode_backups/
+    total 628
+    drwxrwxr-x  2 nmadmin nodebackup  4096 Apr 15 23:34 ./
+    drwxr-xr-x 21 nmadmin       1007  4096 Apr 12 22:43 ../
+    -rw-r--r--  1 nmadmin nodebackup  2658 Apr 12 22:43 plitest_conf_vars_2022_04_12_22_43.tar.gz.gpg
+    -rw-r--r--  1 nmadmin nodebackup  2891 Apr 13 10:09 plitest_conf_vars_2022_04_13_10_09.tar.gz.gpg
+    -rw-r--r--  1 nmadmin nodebackup  2924 Apr 15 22:52 plitest_conf_vars_2022_04_15_22_52.tar.gz.gpg
+    -rw-r--r--  1 nmadmin nodebackup 28277 Apr 12 22:43 plitest_plugin_mainnet_db_2022_04_12_22_43.sql.gz.gpg
+    -rw-r--r--  1 nmadmin nodebackup 28763 Apr 12 22:54 plitest_plugin_mainnet_db_2022_04_12_22_54.sql.gz.gpg
+    -rw-r--r--  1 nmadmin nodebackup 29059 Apr 15 22:52 plitest_plugin_mainnet_db_2022_04_15_22_52.sql.gz.gpg
+    nmadmin@plitest:~/pli_node_conf$
 
     
 ---
