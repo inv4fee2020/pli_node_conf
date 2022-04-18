@@ -204,13 +204,13 @@ All of these scenarios involved the installation of the node deployment files
 **_!! READ CAREFULLY !!_**
 
 >
->  - The "vars" configuration file name structure uses the 'hostname' of the VPS where it was created. When migrating to a new VPS hosting platform be aware that the newly provisioned VPS will have a different 'hostname'.  See the [renaming a VPS section](node_backup_restore.md#renaming-a-vps) 
+>  - The "vars" configuration file name structure uses the 'hostname' of the VPS where it was created. When migrating to a new VPS hosting platform be aware that the newly provisioned VPS will have a different 'hostname'.  
 >
 >
->  - To reduce effort it is recommended that you rename the new VPS to match that of your original system. If this is not possible then you will therefore need to rename the restored files so that they are compatible with the scripts.  See the [renaming files section](node_backup_restore.md#renaming-files) 
+>  - To reduce effort it is recommended that you rename the restored conf files so that they are compatible with the scripts.  See the [renaming files section](node_backup_restore.md#renaming-files) 
 >
 >
->  - The script will always restore to the location where the backup files originated. This is only a concern when performing a Full Restore. Operators should ensure that they maintain the same user account details when migrating
+>  - The script will always restore to the location where the backup files originated. This is only a concern when performing a Full Restore. Operators should ensure that they maintain the same user account details when migrating.
 >
 
 ---
@@ -307,7 +307,7 @@ All of these scenarios involved the installation of the node deployment files
                 home/nmadmin/plinode_plitest.vars
 
         
-       **INPORTANT REMINDER :: _Be aware of changes to your systems hostname when migrating to a new VPS. At the very least you will need to rename the restored conf file to match you new VPS hostname._**
+       **INPORTANT REMINDER :: _Be aware of changes to your systems hostname when migrating to a new VPS. At the very least you will need to rename the restored conf file to match your new VPS hostname._**
        
        **Checkout the [renaming files](node_backup_restore.md#renaming-files) section on how to change the vars filename.**
 
@@ -336,7 +336,7 @@ All of these scenarios involved the installation of the node deployment files
     
             cd ~/pli_node_conf
             ./_plinode_restore.sh
-            
+
 
   2. Now to selecting the type & date-time stamp backup file to restore. You should be presented with a list of files similar to the following;
      **NOTE ::** _The list of files that you see will be dependent on how many backups you have performed._
