@@ -246,12 +246,7 @@ All of these scenarios involved the installation of the node deployment files
 
             nmadmin@plitest:~/pli_node_conf$ ./_plinode_setup_bkup.sh
             [sudo] password for nmadmin:
-            pre-check vars - checking if gdrive user exits
-            pre-check vars - setting group members for backups - without gdrive
-            pre-check vars - assiging user-group permissions..
-            checking vars - updating file plinode_plitest_bkup.vars variable 'DB_BACKUP_DIR' to: plinode_backups
-            checking vars - assigning permissions for directory: /plinode_backups
-            checking vars - assigning 'DB_BACKUP_PATH' variable: /plinode_backups
+            COMPELTED BACKUP SETUP SCRIPT
             nmadmin@plitest:~/pli_node_conf$
 
 
@@ -262,7 +257,7 @@ All of these scenarios involved the installation of the node deployment files
 >
 >  **An example of this would be using SCP to copy from another linux VPS**
 >
->  **You will need to re-run the above setup script to reset the file permissions for the files that you have copied into the backups folder in order that the scripts will have the correct permissions to the files as part of the restore process.**
+>  **You will need to re-run the above setup script `_plinode_setup_bkup.sh` to reset the file permissions for the files that you have copied into the backups folder in order that the scripts will have the correct permissions to the files as part of the restore process.**
 
 ---
 ---
