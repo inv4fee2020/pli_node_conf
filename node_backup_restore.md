@@ -316,7 +316,7 @@ All of these scenarios involved the installation of the node deployment files
 #### Perform a fresh node deployment install
 
   1. We now have your original conf files restored & [renamed](node_backup_restore.md#renaming-files) the conf file to match your new VPS hostname (`hostname -f`)
-  
+
   Now we can perform a fresh node installation which will re-use those existing credentials & settings
 
             ./pli_node_scripts.sh fullnode
@@ -334,7 +334,9 @@ All of these scenarios involved the installation of the node deployment files
 
   1. Lets kick off the "db" file restore by running the main restore script;
     
+            cd ~/pli_node_conf
             ./_plinode_restore.sh
+            
 
   2. Now to selecting the type & date-time stamp backup file to restore. You should be presented with a list of files similar to the following;
      **NOTE ::** _The list of files that you see will be dependent on how many backups you have performed._
