@@ -260,10 +260,12 @@ As the code is updated it will be necessary to update your local repo from time 
 
 1. Force git to update the local repo by overwriting the local changes, which in this case are the file permission changes. Copy and paste the following code;
         
+        cd ~/pli_node_conf
         git fetch
         git reset --hard HEAD
         git merge '@{u}'
         chmod +x *.sh
+
 
 
    _source: https://www.freecodecamp.org/news/git-pull-force-how-to-overwrite-local-changes-with-git/_
@@ -276,6 +278,7 @@ As the code is updated it will be necessary to update your local repo from time 
         git clone https://github.com/inv4fee2020/pli_node_conf.git
         cd pli_node_conf
         chmod +x *.sh
+        
 
 
 
