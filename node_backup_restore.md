@@ -9,7 +9,7 @@ This particular document assumes that you have already prepared your new node as
 
 ### What files are backed up?
 
-The following details clarify what we are backing up, but as part of the process all files are compressed using gunzip and then gpg encrypted
+The following details clarify what we are backing up, but as part of the process all files are compressed using gunzip and then gpg encrypted.
 ####   - Conf files
 All files in you $HOME folder with the _'plinode'_ prefix are selected for backup. This covers the following as an example;
 
@@ -27,9 +27,19 @@ As touched on above, all compressed backup files are gpg encrypted.  The process
 As you are already expected to have this password securely stored in your password manager / key safe, it was the logical method to employ rather than creating another strong password to have to store & document.
 
 
+#### Exclusions disclaimer
+
+The following files/folders are not currently backed up as part of this process;
+
+  - External Initiators
+  - External Adapters & Bridges
+
+
 ### Where are my backup files stored?
 
 When you manually run the backup script, the file are always written to the folder named **"plinode_backups"** which itself is located at the Root '/' folder.
+
+   Backups Folder is `/plinode_backups`
 
 ### When should I run the backup script?
 
