@@ -258,7 +258,7 @@ All of these scenarios involved the installation of the node deployment files
 ---
 ---
 
->  **NOTE :: At this point you would copy the backup files onto the new VPS host at this stage, now that the backups folder has been re-created.**
+>  **NOTE :: At this point you would copy the backup files onto the new VPS host, now that the backups folder has been re-created.**
 >
 >  **An example of this would be using SCP to copy from another linux VPS**
 >
@@ -307,7 +307,9 @@ All of these scenarios involved the installation of the node deployment files
                 home/nmadmin/plinode_plitest.vars
 
         
-       **REMINDER :: _Be aware of changes to your systems hostname when migrating to a new VPS_**
+       **REMINDER :: _Be aware of changes to your systems hostname when migrating to a new VPS. At the very least you will need to rename the restore conf to match you new VPS._**
+       
+       **Checkout the [renaming files](node_backup_restore.md#renaming-files) section on how to change the vars filename.**
 
 
 ---
