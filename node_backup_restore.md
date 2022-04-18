@@ -307,7 +307,7 @@ All of these scenarios involved the installation of the node deployment files
                 home/nmadmin/plinode_plitest.vars
 
         
-       **REMINDER :: _Be aware of changes to your systems hostname when migrating to a new VPS. At the very least you will need to rename the restored conf file to match you new VPS hostname._**
+       **INPORTANT REMINDER :: _Be aware of changes to your systems hostname when migrating to a new VPS. At the very least you will need to rename the restored conf file to match you new VPS hostname._**
        
        **Checkout the [renaming files](node_backup_restore.md#renaming-files) section on how to change the vars filename.**
 
@@ -315,7 +315,9 @@ All of these scenarios involved the installation of the node deployment files
 ---
 #### Perform a fresh node deployment install
 
-  1. We now have your original conf files restored so now we can perform a fresh node installation which will re-use those existing credentials & settings
+  1. We now have your original conf files restored & [renamed](node_backup_restore.md#renaming-files) the conf file to match your new VPS hostname (`hostname -f`)
+  
+  Now we can perform a fresh node installation which will re-use those existing credentials & settings
 
             ./pli_node_scripts.sh fullnode
 
