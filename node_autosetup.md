@@ -59,7 +59,7 @@
 ---
 
 
-        |nmadmin@plitest:~/pli_node_conf$ ./job_alarmclock_test.sh
+        nmadmin@plitest:~/pli_node_conf$ ./job_alarmclock_test.sh
         #
         #   This script generates the necessary json blob for the Oracle Job-Setup section in the docs
         #   source: https://docs.goplugin.co/oracle/job-setup
