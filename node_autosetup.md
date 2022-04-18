@@ -94,5 +94,5 @@ This script with then load the job to the node using the API & return the genera
 
 This ensures that all the values from the node deployment are consistent throughout the process and reduces the likelihood of errors.
 
-|<img src="https://github.com/inv4fee2020/docs_pli/blob/main/images/pli_node_ui_new_job%202022-01-27%20at%2009.47.41.png" width=70% height=70%>|
-|---|
+**NOTE : If NO job ID is returned then this indicates a potential issue with the External Initiator.**
+
