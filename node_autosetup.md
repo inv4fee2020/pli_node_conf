@@ -55,6 +55,8 @@
         cd ~/pli_node_conf
         ./job_alarmclock_test.sh
 
+---
+---
 
 
         |nmadmin@plitest:~/pli_node_conf$ ./job_alarmclock_test.sh
@@ -84,7 +86,7 @@
         
         
         nmadmin@plitest:~/pli_node_conf$
-        |---|
+
     
 The script will prompt you to input your Oracle contract address (in any format) e.g with a prefix of 'xdc' or '0x' and convert it as necessary to the correct format. 
 
