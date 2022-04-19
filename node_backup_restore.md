@@ -616,12 +616,12 @@ As set out above in other parts of this documentation, the following steps assum
 
   1. Logon to your new 'target' VPS with your user admin account.
 
-  2. From the 'target' VPS run the following command; 
+  2. From the 'target' VPS run the following command;
 
-            scp bhcadmin@162.55.179.118:/plinode_backups/*.gpg ~/
+            scp -P 5329 bhcadmin@162.55.179.118:/plinode_backups/*.gpg ~/
 
-     - This will connect into the 'original' VPS and copy the backup files to the 'target' VPS. The following exmaple shows the admin user account as 'bhcadmin' with the IP address of the 'original' VPS. 
+     - This will connect into the 'original' VPS, using the specified `-P` port number and copy the backup files to the 'target' VPS. The following exmaple shows the admin user account as `bhcadmin` with the IP address of the 'original' VPS. 
 
-     - The ':/plinode_backups/*.gpg' portion of the command is the backups folder where we know our backup scripts create the back files to.  We also know that the created backup files are encrypted with the extension 'gpg', so we copy all the 'gpg' files.
+     - The `:/plinode_backups/*.gpg` portion of the command is the backups folder where we know our backup scripts create the back files to.  We also know that the created backup files are encrypted with the extension `gpg`, so we copy all the `gpg` files.
      
-     - The final portion of the command '~/' is the linux alias for the user home folder and represents the home folder on the 'target' VPS to where you are copying the files. 
+     - The final portion of the command `~/` is the linux alias for the user home folder and represents the home folder on the 'target' VPS to where you are copying the files. 
