@@ -57,7 +57,8 @@ In order to utilise the backup script so that you can quickly recover your node 
            *    API_EMAIL="user123@gmail.com"
            *    API_PASS='passW0rd123'
 
-      You will notice the variation in types of quotations that the values are wrapped in. This format *MUST* be maintained.
+         You will notice the variation in types of quotations that the values are wrapped in. This format *MUST* be maintained.
+
 
       Below is an example of the values generated & stored by the autosetup script;
 
