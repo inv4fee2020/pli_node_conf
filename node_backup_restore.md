@@ -625,3 +625,8 @@ As set out above in other parts of this documentation, the following steps assum
      - The `:/plinode_backups/*.gpg` portion of the command is the backups folder where we know our backup scripts create the back files to.  We also know that the created backup files are encrypted with the extension `gpg`, so we copy all the `gpg` files.
      
      - The final portion of the command `~/` is the linux alias for the user home folder and represents the home folder on the 'target' VPS to where you are copying the files. 
+
+
+If using ssh keys then there is an extra parameter `-i ~/.ssh/my_user.key` that you need to include in the command, as follows;
+
+            scp -i ~/.ssh/my_user.key -P 5329 my_user@original_vps_ip:/plinode_backups/*.gpg ~/
