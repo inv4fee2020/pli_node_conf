@@ -68,10 +68,9 @@ In order to utilise the backup script so that you can quickly recover your node 
       The following table shows the 
 
       Legacy | Updated
-      :--- | ---: 
+      :---: | :---: 
       |apicredentials.txt | .env.apicred
       |password.txt | .env.password
-      |---|
 
 
    5. Setup the backup folder & permissions.
