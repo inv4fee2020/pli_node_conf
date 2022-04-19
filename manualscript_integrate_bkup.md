@@ -49,19 +49,19 @@ In order to utilise the backup script so that you can quickly recover your node 
       +  The following variables inside the new vars file are what require updating with your values from above. 
       **IMPORTANT: You must ensure that formatting of each variable field it maintained.**
 
-          +    PASS_KEYSTORE='$oM3$tr*nGp4$$w0Rd$'
-          +    DB_PWD_NEW="testdbpwd1234"
-          +    API_EMAIL="user123@gmail.com"
-          +    API_PASS='passW0rd123'
+           *    PASS_KEYSTORE='$oM3$tr*nGp4$$w0Rd$'
+           *    DB_PWD_NEW="testdbpwd1234"
+           *    API_EMAIL="user123@gmail.com"
+           *    API_PASS='passW0rd123'
 
       You will notice the variation in types of quotations that the values are wrapped in. This format *MUST* be maintained.
 
       Below is an example of the values generated & stored by the autosetup script;
 
-          +    PASS_KEYSTORE='Xqe7.?2p+8Ox.hOWQs+IMJYy!7ZJW+tF'
-          +    DB_PWD_NEW="s8kZVmapDgkwAEa5cbdgFU9XqcuZ3z"
-          +    API_EMAIL="VyfKJSPcwS@plinode.local"
-          +    API_PASS='Vw5hps4SPIcN6dWRDH'
+           *    PASS_KEYSTORE='Xqe7.?2p+8Ox.hOWQs+IMJYy!7ZJW+tF'
+           *    DB_PWD_NEW="s8kZVmapDgkwAEa5cbdgFU9XqcuZ3z"
+           *    API_EMAIL="VyfKJSPcwS@plinode.local"
+           *    API_PASS='Vw5hps4SPIcN6dWRDH'
 
 
    4. Copy the legacy credentials files to conform with the updated standard.
