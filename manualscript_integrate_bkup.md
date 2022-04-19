@@ -90,5 +90,5 @@ In order to utilise the backup script so that you can quickly recover your node 
             cd ~/pli_node_conf &&  ./_plinode_setup_bkup.sh
 
 
-   6. [Perform a Full Backup of your node](node_backup_restore.md#usage-syntax)
+   6. [Perform a Full Backup of your node](node_backup_restore.md#performing-a-backup)
    7. Validate your backup with a restore to a temporary test / sandbox VPS
