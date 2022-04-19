@@ -72,12 +72,14 @@ In order to utilise the backup script so that you can quickly recover your node 
 ---
 
    4. Copy the legacy credentials files to conform with the updated standard.
-      The following table shows the 
+      The following table shows the transform path from legacy to updated;
 
       Legacy | Updated
       :---: | :---: 
       |apicredentials.txt | .env.apicred
       |password.txt | .env.password
+
+      run the following commands to achieve the file standardisation;
 
             cd ~/plugin-deployment
             cp apicredentials.txt .env.apicred
