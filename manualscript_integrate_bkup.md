@@ -57,7 +57,7 @@ In order to utilise the backup script so that you can quickly recover your node 
       You will notice the variation in types of quotations that the values are wrapped in. This format *MUST* be maintained.
 
       Below is an example of the values generated & stored by the autosetup script;
-      
+
       - PASS_KEYSTORE='Xqe7.?2p+8Ox.hOWQs+IMJYy!7ZJW+tF'
       - DB_PWD_NEW="s8kZVmapDgkwAEa5cbdgFU9XqcuZ3z"
       - API_EMAIL="VyfKJSPcwS@plinode.local"
@@ -71,6 +71,10 @@ In order to utilise the backup script so that you can quickly recover your node 
       :---: | :---: 
       |apicredentials.txt | .env.apicred
       |password.txt | .env.password
+
+            cd ~/plugin-deployment
+            cp apicredentials.txt .env.apicred
+            cp password.txt .env.password
 
 
    5. Setup the backup folder & permissions.
