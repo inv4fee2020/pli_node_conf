@@ -49,7 +49,8 @@ In order to utilise the backup script so that you can quickly recover your node 
 
 
       +  The following variables inside the new vars file are what require updating with your values from above. 
-      **IMPORTANT: You must ensure that formatting of each variable field it maintained.**
+      
+         **IMPORTANT: You must ensure that formatting of each variable field it maintained.**
 
            *    PASS_KEYSTORE='$oM3$tr*nGp4$$w0Rd$'
            *    DB_PWD_NEW="testdbpwd1234"
