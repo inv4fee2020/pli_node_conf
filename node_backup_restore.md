@@ -629,4 +629,4 @@ As set out above in other parts of this documentation, the following steps assum
 
 If using ssh keys then there is an extra parameter `-i ~/.ssh/my_user.key` that you need to include in the command, as follows;
 
-            scp -i ~/.ssh/my_user.key -P 5329 my_user@original_vps_ip:/plinode_backups/*.gpg ~/
+      scp -i ~/.ssh/my_user.key -P 5329 my_user@original_vps_ip:/plinode_backups/*.gpg ~/
