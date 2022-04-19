@@ -43,12 +43,39 @@ In order to utilise the backup script so that you can quickly recover your node 
 
       - KeyStore Password _(sourced from the password.txt file)_
       - Postgres Password _(sourced from the_ _2\_nodeStartPM2.sh file)_
+      - API Username & Password _(sourced from the apicredentials.txt file)_
 
 
-   4. Setup the backup folder & permissions
+      +  The following variables inside the new vars file are what require updating with your values from above. 
+      **IMPORTANT: You must ensure that formatting of each variable field it maintained.**
+
+        >    PASS_KEYSTORE='$oM3$tr*nGp4$$w0Rd$'
+        >    DB_PWD_NEW="testdbpwd1234"
+        >    API_EMAIL="user123@gmail.com"
+        >    API_PASS='passW0rd123'
+
+      You will notice the variation in types of quotations that the values are wrapped in. This format *MUST* be maintained.
+
+      Below is an example of the values generated & stored by the autosetup script;
+
+        >    PASS_KEYSTORE='Xqe7.?2p+8Ox.hOWQs+IMJYy!7ZJW+tF'
+        >    DB_PWD_NEW="s8kZVmapDgkwAEa5cbdgFU9XqcuZ3z"
+        >    API_EMAIL="VyfKJSPcwS@plinode.local"
+        >    API_PASS='Vw5hps4SPIcN6dWRDH'
+
+
+   4. Copy the legacy credentials files to conform with the updated standard.
+      The following table shows the 
+
+      |apicredentials.txt  |     .env.apicred|
+      |password.txt        |     .env.password|
+      |---|
+
+
+   5. Setup the backup folder & permissions.
    
             cd ~/pli_node_conf &&  ./_plinode_setup_bkup.sh
 
 
-   5. Perform a Full Backup of your node
-   6. Validate your backup with a restore to a temporary test / sandbox VPS
+   6. Perform a Full Backup of your node
+   7. Validate your backup with a restore to a temporary test / sandbox VPS
