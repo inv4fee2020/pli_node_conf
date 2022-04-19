@@ -23,16 +23,16 @@ In order to utilise the backup script so that you can quickly recover your node 
 
    1. Clone down the scripts repositoty from github
 
-        cd $HOME
-        git clone https://github.com/inv4fee2020/pli_node_conf.git
-        cd pli_node_conf
-        chmod +x *.sh
+            cd $HOME
+            git clone https://github.com/inv4fee2020/pli_node_conf.git
+            cd pli_node_conf
+            chmod +x *.sh
 
 
    2. Create the new vars file for your node
    
-        cd ~/pli_node_conf && cp sample.vars ~/"plinode_$(hostname -f)".vars
-        chmod 600 ~/"plinode_$(hostname -f)".vars
+            cd ~/pli_node_conf && cp sample.vars ~/"plinode_$(hostname -f)".vars
+            chmod 600 ~/"plinode_$(hostname -f)".vars
 
 
    3. Update the new vars file with your nodes credentials
@@ -47,7 +47,7 @@ In order to utilise the backup script so that you can quickly recover your node 
 
    4. Setup the backup folder & permissions
    
-        cd ~/pli_node_conf &&  ./_plinode_setup_bkup.sh
+            cd ~/pli_node_conf &&  ./_plinode_setup_bkup.sh
 
 
    5. Perform a Full Backup of your node
