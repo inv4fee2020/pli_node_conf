@@ -28,12 +28,14 @@ In order to utilise the backup script so that you can quickly recover your node 
             cd pli_node_conf
             chmod +x *.sh
 
+---
 
    2. Create the new vars file for your node
    
             cd ~/pli_node_conf && cp sample.vars ~/"plinode_$(hostname -f)".vars
             chmod 600 ~/"plinode_$(hostname -f)".vars
 
+---
 
    3. Update the new vars file with your nodes credentials
 
@@ -63,6 +65,9 @@ In order to utilise the backup script so that you can quickly recover your node 
       - API_EMAIL="VyfKJSPcwS@plinode.local"
       - API_PASS='Vw5hps4SPIcN6dWRDH'
 
+      **_NOTE : The above values are taken from a private development host which is regularly erased_**
+
+---
 
    4. Copy the legacy credentials files to conform with the updated standard.
       The following table shows the 
@@ -76,6 +81,7 @@ In order to utilise the backup script so that you can quickly recover your node 
             cp apicredentials.txt .env.apicred
             cp password.txt .env.password
 
+---
 
    5. Setup the backup folder & permissions.
    
