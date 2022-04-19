@@ -72,6 +72,7 @@ In order to utilise the backup script so that you can quickly recover your node 
 ---
 
    4. Copy the legacy credentials files to conform with the updated standard.
+      
       The following table shows the transform path from legacy to updated;
 
       Legacy | Updated
