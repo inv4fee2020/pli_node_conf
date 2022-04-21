@@ -69,11 +69,11 @@ In order to utilise the backup script so that you can quickly recover your node 
 
       **_NOTE : The above values are taken from a private development host which is regularly erased_**
 
-   To edit you new vars file using the guidelines set out above, run the command; 
+   To edit your new vars file using the guidelines set out above, run the command; 
 
          nano ~/"plinode_$(hostname -f)".vars
    
-   In this example I use 'nano' but you can replace with the editor that you are more comfortable with e.g. vim, vi etc.
+   In this example I use `nano` but you can replace this with the editor that you are more comfortable with e.g. vim, vi etc.
 
 
 ---
