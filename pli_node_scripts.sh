@@ -641,6 +641,17 @@ FUNC_NODE_ADDR(){
 }
 
 
+FUNC_NODE_GUI_IPADDR(){
+
+    echo
+    echo -e "${GREEN}Your Plugin node GUI IP address is as follows:${NC}"
+    echo
+    echo -e "            ${RED}https://$(hostname -I | awk '{print $1}'):6689${NC}"
+    echo
+    echo -e "${GREEN}#########################################################################${NC}"
+}
+
+
 FUNC_EXIT(){
     # remove the sudo timeout for USER_ID
     sudo sh -c 'rm -f /etc/sudoers.d/plinode_deploy'
@@ -674,6 +685,9 @@ case "$1" in
         address)
                 FUNC_NODE_ADDR
                 ;;
+        node-gui)
+                FUNC_NODE_GUI_IPADDR
+                ;;
         *)
                 
                 echo 
@@ -694,5 +708,7 @@ case "$1" in
                 echo "      logrotate     ==  implements the logrotate conf file "
                 echo
                 echo "      address       ==  displays the local nodes address (after fullnode deploy) - required for the 'Fulfillment Request' remix step"
+                echo
+                echo "      node-gui       ==  displays the local nodes address (after fullnode deploy) - required for the 'Fulfillment Request' remix step"
                 echo
 esac
