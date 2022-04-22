@@ -17,8 +17,8 @@ if [ -e ~/"plinode_$(hostname -f)".vars ]; then
 fi
 
 FUNC_DB_VARS(){
-## VARIABLE / PARAMETER DEFINITIONS
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    ## VARIABLE / PARAMETER DEFINITIONS
+    # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
     PLI_DB_VARS_FILE="plinode_$(hostname -f)"_bkup.vars
@@ -201,9 +201,9 @@ FUNC_CONF_BACKUP_LOCAL(){
 
     if [ "$_OPTION" == "-full" ]; then
         FUNC_DB_BACKUP_LOCAL
-        FUNC_SCP_CMD
     fi
 
+    FUNC_EXIT;
 
 }
 
@@ -263,7 +263,7 @@ EOF
     #echo "removing pgpass from backup directory"
     sudo rm -f $DB_BACKUP_PATH/.pgpass
     sleep 2s
-
+    FUNC_EXIT;
 }
 
 
@@ -328,18 +328,42 @@ FUNC_SCP_CMD(){
     echo
     echo -e "${GREEN}   The SCP commands to copy your Plugin node backup files is as follows:${NC}"
     echo
+    keys_arr=()
     CPORT=$(sudo ss -tlpn | grep sshd | awk '{print$4}' | cut -d ':' -f 2 -s)
-    if [ $CPORT != "22" ]; then
-        echo -e "${GREEN}INFO :: non-std ssh port detected: $CPORT${NC}"
-        echo -e "${RED}         scp -P $CPORT $USER@$(hostname -I | awk '{print $1}'):/plinode_backups/*.gpg ~/${NC}"
+
+    if [ -s "$HOME/.ssh/authorized_keys" ] && [ $CPORT != "22" ]; then
+        echo -e "${GREEN}               INFO :: ssh-keys & non-std ssh port detected"
+        echo
+        echo -e "${GREEN}   NOTE :: The following command(s) are based on the # of keys detected on this system"
+        echo -e "${GREEN}   NOTE :: the path to your private key file has been assumed - please update as needed"
+        echo 
+        IFS=$'\n' read -r -d '' -a keys_arr < <( cat ~/.ssh/authorized_keys | awk '{print$4}')
+        keys_arr_len=${#keys_arr[@]}
+
+        for (( i = 0 ; i < $keys_arr_len ; i++))
+        do
+            echo -e "${RED}     scp -i ~/.ssh/${keys_arr[$i]}.key -P $CPORT $USER@$(hostname -I | awk '{print $1}'):/plinode_backups/*.gpg ~/${NC}"
+        done
+    elif [ $CPORT != "22" ]; then
+        echo -e "${GREEN}               INFO :: non-std ssh port detected: $CPORT${NC}"
+        echo
+        echo -e "${RED}     scp -P $CPORT $USER@$(hostname -I | awk '{print $1}'):/plinode_backups/*.gpg ~/${NC}"
     else
-        echo -e "${RED}         scp $USER@$(hostname -I | awk '{print $1}'):/plinode_backups/*.gpg ~/${NC}"
+        echo -e "${RED}     scp $USER@$(hostname -I | awk '{print $1}'):/plinode_backups/*.gpg ~/${NC}"
     fi
     echo
     echo -e "${GREEN}#########################################################################${NC}"
     echo
 
 }
+
+
+
+FUNC_EXIT(){
+    FUNC_SCP_CMD
+	exit 0
+}
+
 
 
 error_exit(){
