@@ -91,6 +91,7 @@ The scripts has a number of functions, one of which must be passed to run the sc
 >     keys
 >     logrotate
 >     address
+>     node-gui
 
 ### Usage
 
