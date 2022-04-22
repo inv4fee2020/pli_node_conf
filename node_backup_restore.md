@@ -77,12 +77,7 @@ In the scenario where you are backing up any files for the fisrt time, we need t
 
             nmadmin@plitest:~/pli_node_conf$ ./_plinode_setup_bkup.sh
             [sudo] password for nmadmin:
-            pre-check vars - checking if gdrive user exits
-            pre-check vars - setting group members for backups - without gdrive
-            pre-check vars - assiging user-group permissions..
-            checking vars - updating file plinode_plitest_bkup.vars variable 'DB_BACKUP_DIR' to: plinode_backups
-            checking vars - assigning permissions for directory: /plinode_backups
-            checking vars - assigning 'DB_BACKUP_PATH' variable: /plinode_backups
+            COMPELTED BACKUP SETUP SCRIPT
             nmadmin@plitest:~/pli_node_conf$
 
   3. Lets check the permissions on the "/plinode_backups" folder
@@ -105,6 +100,8 @@ A brief explanation of the function syntax
               -conf      ==  performs a local backup of config files only
               -db        ==  performs a local backup of DB files only
 
+              -scp       ==  displays the secure copy (scp) cmds to download backup files
+
 
 The following commands will perform a **FULL** backup
 
@@ -119,6 +116,26 @@ The following commands will perform a **CONFIG files** only backup
 The following commands will perform a **DATABASE** only backup 
 
     cd ~/pli_node_conf && ./_plinode_backup.sh -db
+
+
+#### Secure Copy (SCP) backups file off your node
+
+Following each backup the script will present the necessary command to remotely copy all the backup files from your node. This script will attempt to present as near complete a command set for the operator based on the local node configuration.
+
+If ssh keys are detected & a non-default ssh port, then the script provides a near complete command set as shown below;
+
+
+         The SCP commands to copy your Plugin node backup files is as follows:
+
+                     INFO :: ssh-keys & non-std ssh port detected
+
+         NOTE :: The following command(s) are based on the # of keys detected on this system
+         NOTE :: the path to your private key file has been assumed - please update as needed
+
+           scp -i ~/.ssh/bhcadmin.key -P 6222 bhcadmin@162.55.179.118:/plinode_backups/*.gpg ~/
+           scp -i ~/.ssh/testuser123.key -P 6222 bhcadmin@162.55.179.118:/plinode_backups/*.gpg ~/
+
+      #########################################################################
 
 ---
 
