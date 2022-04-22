@@ -33,22 +33,22 @@
 
         ./pli_node_scripts.sh fullnode
 
-   - NOTE: At the UFW enable section of the install, you may notice your terminal pause when the warning about the journal rotation. This is an intermittent occurance that simply requires user input.  
+   - **NOTE:** At the UFW enable section of the install, you may notice your terminal pause when the warning about the journal rotation. This is an intermittent occurance that simply requires user input.  
    
    IF you are presented with this scenario, simply press `q` followed by `enter`..
     
         
-                ## Setup: Enable Firewall...
+        ## Setup: Enable Firewall..        
 
-                ● ufw.service - Uncomplicated firewall
-                     Loaded: loaded (/lib/systemd/system/ufw.service; enabled; vendor preset: enabled)
-                     Active: active (exited) since Thu 2022-04-21 08:49:28 UTC; 4min 22s ago
-                       Docs: man:ufw(8)
-                    Process: 413 ExecStart=/lib/ufw/ufw-init start quiet (code=exited, status=0/SUCCESS)
-                   Main PID: 413 (code=exited, status=0/SUCCESS)
+        ● ufw.service - Uncomplicated firewall
+             Loaded: loaded (/lib/systemd/system/ufw.service; enabled; vendor preset: enabled)
+             Active: active (exited) since Thu 2022-04-21 08:49:28 UTC; 4min 22s ago
+               Docs: man:ufw(8)
+            Process: 413 ExecStart=/lib/ufw/ufw-init start quiet (code=exited, status=0/SUCCESS)
+           Main PID: 413 (code=exited, status=0/SUCCESS    
 
-                Warning: journal has been rotated since unit was started, output may be incomplete.
-                Command may disrupt existing ssh connections. Proceed with operation (y|n)? Firewall is active and enabled on system startup
+        Warning: journal has been rotated since unit was started, output may be incomplete.
+        Command may disrupt existing ssh connections. Proceed with operation (y|n)? Firewall is active and enabled on          system startup
 
 
 
@@ -62,28 +62,31 @@
 
 
 ***
+
+8. At this stage you start your [Remix Oracle deployment tasks](https://docs.goplugin.co/oracle/deployment) as set out on the offical docs site.  Follow the steps set out there through to Fulfillment. Your Node Primary Address was printed to the terminal screen above for ease.
+
 ***
 
 
-**> When connecting to your nodes plugin GUI as outlined in ['fund your node'](https://docs.goplugin.co/plugin-installations/fund-your-node), you must use *_'https://your_node_ip:6689'_* instead due to the configuration applied by the [main script](https://github.com/inv4fee2020/pli_node_conf#main-script-actions)**
+**NOTE - When connecting to your nodes plugin GUI as outlined in ['fund your node'](https://docs.goplugin.co/plugin-installations/fund-your-node), you must use *_'HTTPS://your_node_ip:6689'_* instead.  This is due to the configuration applied by the [main script](node_scripts_details.md#main-script-actions)**
 
 ***
 
 **_IMPORTANT : Do not skip step 8. This script creates the job using values specific to this script deployment method._**
 
 
-8. Before proceeding to the next step, please run the following command to ensure all the newly implemented settings take effect;
+9. Before proceeding to the next step, please run the following command to ensure all the newly implemented settings take effect;
 
         source ~/.profile
         
 
-9. When you get to the [Job Setup](https://docs.goplugin.co/oracle/job-setup) section on the main docs & have successfully created your Oracle Contract Address (OCA). You can then run the following script to generate the necessary json blob required to create the test job on your local node;
+10. When you get to the [Job Setup](https://docs.goplugin.co/oracle/job-setup) section on the main docs & have successfully created your Oracle Contract Address (OCA). You can then run the following script to generate the necessary json blob required to create the test job on your local node;
 
         cd ~/pli_node_conf && ./job_alarmclock_test.sh
 
 ---
 
-10. When you execute the script, you will be prompted to input your Oracle Contract Address (OCA) (in any format) e.g with a prefix of 'xdc' or '0x'. The script will convert the address as necessary to the correct format. 
+11. When you execute the script, you will be prompted to input your Oracle Contract Address (OCA) (in any format) e.g with a prefix of 'xdc' or '0x'. The script will convert the address as necessary to the correct format. 
 
         nmadmin@plitest:~/pli_node_conf$ ./job_alarmclock_test.sh
         #
@@ -100,7 +103,9 @@
         Enter your Oracle Contract Address :
 
 
----
+The script will then load the job to the node using the API & return the generated job id to the terminal screen for your use in the AlarmClockSample job in remix.
+
+This ensures that all the values from the node deployment are consistent throughout the process and reduces the likelihood of errors.
 
 
         nmadmin@plitest:~/pli_node_conf$ ./job_alarmclock_test.sh
@@ -133,20 +138,16 @@
 
     
 
-This script will then load the job to the node using the API & return the generated job id to the terminal screen for your use in the AlarmClockSample job in remix.
-
-This ensures that all the values from the node deployment are consistent throughout the process and reduces the likelihood of errors.
-
-**NOTE : If NO job ID is returned then this indicates a potential issue with the External Initiator.**
+**NOTE : If NO job ID is returned then this indicates a missed step above (step 9) or potential issue with the External Initiator. Run `pm2 list` to ensure that the processes are running.**
 
 
 ---
 
-11. Once you have completed the [testing](https://docs.goplugin.co/oracle/testing) steps & the AlarmClockSample job run was successfully, you can now progres to [register an account](https://docs.goplugin.co/node-operators/how-to-register-sign-up) on the [oracles.goplugin.co](https://oracles.goplugin.co/) site and [submit your node for approval](https://docs.goplugin.co/node-operators/how-to-submit-node-details)
+12. Once you have completed the [testing](https://docs.goplugin.co/oracle/testing) steps & the AlarmClockSample job run was successfully, you can now progres to [register an account](https://docs.goplugin.co/node-operators/how-to-register-sign-up) on the [oracles.goplugin.co](https://oracles.goplugin.co/) site and [submit your node for approval](https://docs.goplugin.co/node-operators/how-to-submit-node-details)
 
 ---
 
-12. What should I do now? 
+13. What should I do now? 
 
     All operators should proceed to implement the following;
       - Setup some for of basic monitoring
