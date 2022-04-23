@@ -507,7 +507,7 @@ EOF
 
     if [ "$_OPTION" == "fullnode" ]; then
         echo "...INITIAL SETUP FOR BACKUP FOLDER & PERMS"
-        bash ~/$PLI_DEPLOY_DIR/_plinode_setup_bkup.sh
+        bash ~/pli_node_conf/_plinode_setup_bkup.sh
     fi
 
     echo
@@ -539,6 +539,7 @@ EOF
     . ~/.profile
 
     FUNC_NODE_ADDR;
+    FUNC_NODE_GUI_IPADDR;
     FUNC_EXIT;
 }
 
