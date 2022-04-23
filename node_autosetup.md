@@ -77,7 +77,7 @@
 
         #########################################################################
 
-**The port 6689 is used due to the configuration applied by the [main script](pli_node_conf/#main-script-actions)**
+**The port 6689 is used due to the configuration applied by the [main script](README.md#main-script-actions)**
 
 ***
 
