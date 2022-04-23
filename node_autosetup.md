@@ -68,7 +68,7 @@
 ***
 
 
-**NOTE - When connecting to your nodes plugin GUI as outlined in ['fund your node'](https://docs.goplugin.co/plugin-installations/fund-your-node), you must use *_'HTTPS://your_node_ip:6689'_* instead. You will also note that the full URL is now printed to your screen.**
+**NOTE - When connecting to your nodes plugin GUI as outlined in ['fund your node'](https://docs.goplugin.co/plugin-installations/fund-your-node), you must use *_'HTTPS://your_node_ip:6689'_* instead. You will also note that the full URL is now printed to your screen as per the example below.**
 
 
         Your Plugin node GUI IP address is as follows:
