@@ -77,7 +77,7 @@
 
         #########################################################################
 
-**The port 6689 is used due to the configuration applied by the [main script](node_scripts_details.md#main-script-actions)**
+**The port 6689 is used due to the configuration applied by the [main script](readme.md#main-script-actions)**
 
 ***
 
