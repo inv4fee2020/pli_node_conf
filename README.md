@@ -275,6 +275,8 @@ _You can reveiw the 'sample.vars' file for the full list of VARIABLES._
 
 As the code is updated it will be necessary to update your local repo from time to time. To do this you have two options;
 
+** ### USE CAUTION HERE : The following refresh commands will overwrite any existing local files that may contain specific configuration for your node**
+
 1. Force git to update the local repo by overwriting the local changes, which in this case are the file permission changes. Copy and paste the following code;
         
         cd ~/pli_node_conf
