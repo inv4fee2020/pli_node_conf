@@ -4,21 +4,23 @@
 apt install -y mkpasswd
 
 ## Create a hash of your chosen password 'letmein123' is a test password - please ensure you update to be stronger and more random etc.
-mkpasswd -m sha256crypt letmein123
+
+    mkpasswd -m sha256crypt letmein123
 
 **With the password hashed - you can safely re-use this for copy & pasting to your other nodes**
 
 
 ## replace 'bhcadmin' with your user account that you wish to use & update the password hash with the output of your password hash !!
-export usergrp=bhcadmin
-sudo groupadd $usergrp
-sudo useradd -p '_ADD_YOUR_PERSONAL_PASSWORD_HERE_' $usergrp -m -s /bin/bash -g $usergrp -G sudo
+
+    export usergrp=bhcadmin
+    sudo groupadd $usergrp
+    sudo useradd -p '_ADD_YOUR_PERSONAL_PASSWORD_HERE_' $usergrp -m -s /bin/bash -g $usergrp -G sudo
 
 
 
 ## stop & delete all the PM2 processes
 
-pm2 stop all ; pm2 delete all; pm2 save 
+    pm2 stop all ; pm2 delete all; pm2 save 
 
 
 
@@ -27,42 +29,45 @@ pm2 stop all ; pm2 delete all; pm2 save
 **these can take a few mins!!**
 
 
-sudo cp -pR ~/plugin-deployment /home/$usergrp
-sudo chown $usergrp:$usergrp  -R  /home/$usergrp/plugin-deployment
+    sudo cp -pR ~/plugin-deployment /home/$usergrp
+    sudo chown $usergrp:$usergrp  -R  /home/$usergrp/plugin-deployment
 
 
-sudo cp -pR /root/work /home/$usergrp/
-sudo chown -R $usergrp:$usergrp /home/$usergrp/work
+    sudo cp -pR /root/work /home/$usergrp/
+    sudo chown -R $usergrp:$usergrp /home/$usergrp/work
 
 
-sudo cp -pR ~/external-Initiator /home/$usergrp/plugin-deployment
-sudo chown $usergrp:$usergrp  -R  /home/$usergrp/plugin-deployment/external-Initiator
+    sudo cp -pR ~/external-Initiator /home/$usergrp/plugin-deployment
+    sudo chown $usergrp:$usergrp  -R  /home/$usergrp/plugin-deployment/external-Initiator
 
 
-sudo cp -pR ~/.tmp_profile /home/$usergrp/
-sudo chown $usergrp:$usergrp  /home/$usergrp/.tmp_profile
+    sudo cp -pR ~/.tmp_profile /home/$usergrp/
+    sudo chown $usergrp:$usergrp  /home/$usergrp/.tmp_profile
 
 
 ## copy export lines to /home/$usergrp/.profile
-cat ~/.profile | grep export >> /home/$usergrp/.profile
+
+    cat ~/.profile | grep export >> /home/$usergrp/.profile
 
 
 
 ## impersonate the new user account created above (same as logging into a new terminal session)
-sudo -i -u $usergrp
-cd ~/
-pwd
 
-cd ~/plugin-deployment
-source ~/.profile
+    sudo -i -u $usergrp
+    cd ~/
+    pwd
 
+---
 
-```
-pm2 start 2_nodeStartPM2.sh
-sleep 3s
-pm2 status
-pm2 startup systemd
-```
+    cd ~/plugin-deployment
+    source ~/.profile
+
+---
+
+    pm2 start 2_nodeStartPM2.sh
+    sleep 3s
+    pm2 status
+    pm2 startup systemd
 
 ## after entering the systemd command you will see similiar output to the following
 
@@ -76,8 +81,10 @@ bhcadmin@plitest1:~/plugin-deployment$
 
 
 ## Copy the list that starts with 'sudo env' and paste in onto the terminal
-sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u bhcadmin --hp /home/bhcadmin
 
+```
+sudo env PATH=$PATH:/usr/bin /usr/lib/node_modules/pm2/bin/pm2 startup systemd -u bhcadmin --hp /home/bhcadmin
+```
 
 ## you should be prompted for the password of your user account and will then see similar output as follows;
 
@@ -130,13 +137,17 @@ bhcadmin@plitest1:~/plugin-deployment$
 
 
 ## Now we continue to start the external-initiator
+
+```
 pm2 start 3_initiatorStartPM2.sh
 pm2 save
 sleep 3s
 pm2 status
+```
 
 
 ## all the processes should be running as follows;
+
 ```
 bhcadmin@plitest1:~/plugin-deployment$ pm2 list
 ┌─────┬────────────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
@@ -147,11 +158,14 @@ bhcadmin@plitest1:~/plugin-deployment$ pm2 list
 └─────┴────────────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
 
 ```
+
 **pay special attention to the restarts column indicated by '↺' - if this value is increasing constantly then you have an issue that should be resolved before proceeding**
 
 
 # repeat the following command to watch for changes in the restart column;
+```
 pm2 list
+```
 
 
 **lets try a reboot to make sure that the services restart automatically !!**
