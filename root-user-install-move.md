@@ -12,7 +12,7 @@ mkpasswd -m sha256crypt letmein123
 ## replace 'bhcadmin' with your user account that you wish to use & update the password hash with the output of your password hash !!
 export usergrp=bhcadmin
 sudo groupadd $usergrp
-sudo useradd -p '$5$RRyoz3uXGmP5lgI1$ZUfwA2szy7CV6v95iRUQ8JBJwSE37HOcgAO2fbKkpx0' $usergrp -m -s /bin/bash -g $usergrp -G sudo
+sudo useradd -p '_ADD_YOUR_PERSONAL_PASSWORD_HERE_' $usergrp -m -s /bin/bash -g $usergrp -G sudo
 
 
 
