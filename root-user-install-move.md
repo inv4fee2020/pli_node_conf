@@ -6,7 +6,8 @@
 
 
 ## Install mkpasswd to generate the password hash
-apt install -y mkpasswd
+
+    apt install -y mkpasswd
 
 ## Create a hash of your chosen password 'letmein123' is a test password - please ensure you update to be stronger and more random etc.
 
