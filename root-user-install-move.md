@@ -9,6 +9,11 @@
 
     apt install -y mkpasswd
 
+> You may need to install using the 'whois' package depending on your VPS provider; If you get issues with the above, try the following;
+
+    apt install -y whois
+    
+
 ## Create a hash of your chosen password 'letmein123' is a test password - please ensure you update to be stronger and more random etc.
 
     mkpasswd -m sha256crypt letmein123
