@@ -12,7 +12,7 @@
 > You may need to install using the 'whois' package depending on your VPS provider; If you get issues with the above, try the following;
 
     apt install -y whois
-    
+
 
 ## Create a hash of your chosen password 'letmein123' is a test password - please ensure you update to be stronger and more random etc.
 
@@ -56,7 +56,28 @@
     sudo chown $usergrp:$usergrp  /home/$usergrp/.tmp_profile
 
 
+
+You may get an error here - ignore it!  We are guessing that the 'external-initiator' folder will be in one of the two locations, so we will try both. One will fail and throw an error but the other should succeed.
+
+    sudo cp /root/work/bin/external-initiator /home/$usergrp/work/bin
+    sudo cp /root/go/bin/external-initiator /home/$usergrp/work/bin
+    sudo chown $usergrp:$usergrp  -R /home/$usergrp/work/bin
+
+
+
 ## copy export lines to /home/$usergrp/.profile
+
+You can examine the contents of the file and where any lines are missing when compared to the below example, simply manually add them using the editor of your choice eg. `nano`
+
+Example;
+
+    export GOROOT=/usr/local/go
+    export GOPATH=$HOME/work
+    export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+    export FEATURE_EXTERNAL_INITIATORS=true
+
+
+Command to run;
 
     cat ~/.profile | grep export >> /home/$usergrp/.profile
 
