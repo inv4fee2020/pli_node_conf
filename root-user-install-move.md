@@ -1,6 +1,6 @@
 #  root user install move
 
-### Acompanying video for visual aid.
+### Accompanying video for visual aid.
 
 [Youtube Playlist : Plugin ($PLI )Node - Root user move & legacy script migration](https://www.youtube.com/watch?v=jq9mDfvptGw&list=PL2_76-uvpc8zOFfuAIVaEI2YJr0JGlXPo)
 
