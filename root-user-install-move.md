@@ -21,7 +21,10 @@
 **With the password hashed - you can safely re-use this for copy & pasting to your other nodes**
 
 
-## replace 'bhcadmin' with your user account that you wish to use & update the password hash with the output of your password hash !!
+## replace 'bhcadmin' with your user account that you wish to use & update the password hash with the output of your password hash !!  
+
+**Replace _\_ADD\_YOUR\_PERSONAL\_PASSWORD\_HERE\__ with your hash produced above**
+**NOTE: you must maintain the single quotes encasing the hash**
 
     export usergrp=bhcadmin
     sudo groupadd $usergrp
