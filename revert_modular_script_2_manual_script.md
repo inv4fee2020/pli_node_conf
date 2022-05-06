@@ -1,6 +1,6 @@
 # Move modular script to manual script deployment for upgrade/migration testing 
 
-'''
+```
 pm2 stop all ; pm2 delete all ; pm2 save
 
 cd ~/plugin-deployment
@@ -31,7 +31,8 @@ pm2 start 3_initiatorStartPM2.sh
 
 pm2 save
 pm2 startup systemd
-'''
+```
+
 ---
 **Reboot the host to ensure the processes startup automatically**
 ---
