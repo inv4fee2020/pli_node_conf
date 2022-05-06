@@ -7,6 +7,12 @@ _NOTE: There is no **TL;DR** section on this topic given the significance of ope
 This particular document assumes that you have already prepared your new node as per [Setting up a Plugin $PLI node - Steps 1 to 4](node_autosetup.md).
 
 
+## Acompanying videos for visual aid.
+
+[Youtube Playlist : Plugin ($PLI ) Node - Script method deployment](https://youtube.com/playlist?list=PL2_76-uvpc8ybm-GW3yTQRZFHTZOsE6aQ)
+
+
+
 ### What files are backed up?
 
 The following details clarify what we are backing up, but as part of the process all files are compressed using gunzip and then gpg encrypted.

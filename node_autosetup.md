@@ -1,4 +1,10 @@
-# Setting up a Plugin $PLI node - Automated Script Method;
+# Setting up a Plugin $PLI node - Automated Script Method
+
+## Acompanying videos for visual aid.
+
+[Youtube Playlist : Plugin ($PLI ) Node - Script method deployment](https://youtube.com/playlist?list=PL2_76-uvpc8ybm-GW3yTQRZFHTZOsE6aQ)
+
+
 
 1. Logon as root to your new VPS
    
