@@ -33,6 +33,9 @@
         git clone https://github.com/inv4fee2020/pli_node_conf.git
         cd pli_node_conf
         chmod +x *.sh
+        
+
+   ii. press enter to get a new line before proceeding
   
 
 5. At this point we are ready to go ahead and deploy the Plugin node - run the following commands;
