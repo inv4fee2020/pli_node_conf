@@ -36,7 +36,7 @@
 
 ## stop & delete all the PM2 processes
 
-    pm2 stop all ; pm2 delete all; pm2 save 
+    pm2 stop all ; pm2 delete all; pm2 save --force
 
 
 
