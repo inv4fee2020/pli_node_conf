@@ -643,11 +643,11 @@ FUNC_NODE_ADDR(){
 
 
 FUNC_NODE_GUI_IPADDR(){
-
+    GUI_IP=$(curl ipinfo.io/ip)
     echo
     echo -e "${GREEN}Your Plugin node GUI IP address is as follows:${NC}"
     echo
-    echo -e "            ${RED}https://$(hostname -I | awk '{print $1}'):6689${NC}"
+    echo -e "            ${RED}https://$GUI_IP:6689${NC}"
     echo
     echo -e "${GREEN}#########################################################################${NC}"
 }
