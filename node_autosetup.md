@@ -33,6 +33,8 @@
         git clone https://github.com/inv4fee2020/pli_node_conf.git
         cd pli_node_conf
         chmod +x *.sh
+          
+          
         
 
    ii. press enter to get a new line before proceeding
